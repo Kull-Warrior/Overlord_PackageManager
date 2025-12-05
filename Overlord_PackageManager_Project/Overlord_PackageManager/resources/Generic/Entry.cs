@@ -340,6 +340,8 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
+        #region ImageDictionaries
+        #region TifTgaImageDictionaries
         public static Entry RawTifTgaTextureDataDictionary(uint id, uint relOffset)
         {
             return id switch
@@ -364,6 +366,10 @@ namespace Overlord_PackageManager.resources.Generic
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
         }
+
+        #endregion TifTgaImageDictionaries
+
+        #region DDSImageDictionaries
 
         public static Entry RawDDSTextureDataDictionary(uint id, uint relOffset)
         {
@@ -401,7 +407,7 @@ namespace Overlord_PackageManager.resources.Generic
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
         }
-
-        
+        #endregion DDSImageDictionaries
+        #endregion ImageDictionaries
     }
 }
