@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes;
+using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
@@ -340,6 +341,37 @@ namespace Overlord_PackageManager.resources.Generic
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
         }
+
+
+        #region SFXDictionaries
+
+        public static Entry SFXDataDictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                30 => new Int32Entry(id, relOffset),    // Length of SFX Data
+                31 => new BinaryEntry(id, relOffset),    // SFX Data, Header + Raw Audio Data, full wav style file
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        public static Entry SFXAssetDictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                1 => new SFXData(id, relOffset),        // Sub reference table containing a int32 and a full wav style file
+                19 => new Int32Entry(id, relOffset),    // FFFF Block unkown use
+                20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
+                21 => new StringEntry(id, relOffset),   // Sound name
+                100 => new StringEntry(id, relOffset),  // File name
+                101 => new Int32Entry(id, relOffset),   // FFFF Block unkown use
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        #endregion SFXDictionaries
 
         #region ImageDictionaries
         #region TifTgaImageDictionaries

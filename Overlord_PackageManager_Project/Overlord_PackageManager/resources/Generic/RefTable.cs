@@ -2,6 +2,7 @@
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using System.IO;
 using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap;
+using Overlord_PackageManager.resources.EntryTypes.Audio;
 
 namespace Overlord_PackageManager.resources.Generic
 {
@@ -100,6 +101,7 @@ namespace Overlord_PackageManager.resources.Generic
                     case 4259893:   // Mesh Asset
                         break;
                     case 10551296:  // SFX Asset
+                        Entries.Add(new SFXAsset(ids[i], relativeOffsets[i]));
                         break;
                     default:
                         break;

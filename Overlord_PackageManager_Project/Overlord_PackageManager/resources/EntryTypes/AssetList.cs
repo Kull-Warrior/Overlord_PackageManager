@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
+﻿using Overlord_PackageManager.resources.EntryTypes.Audio;
+using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap;
 using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.Generic;
@@ -30,6 +31,10 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 if (entry is TgaTifTextureAsset)
                 {
                     ((TgaTifTextureAsset)entry).Read(reader, varRefTable.origin, TgaTifTextureAssetDictionary);
+                }
+                if (entry is SFXAsset)
+                {
+                    ((SFXAsset)entry).Read(reader, varRefTable.origin, SFXAssetDictionary);
                 }
             }
         }
