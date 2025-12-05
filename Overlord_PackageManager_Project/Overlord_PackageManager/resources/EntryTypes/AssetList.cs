@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
+using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap;
 using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.Generic;
 using System.IO;
@@ -18,6 +19,10 @@ namespace Overlord_PackageManager.resources.EntryTypes
 
             foreach (var entry in varRefTable.Entries)
             {
+                if (entry is ReflectionMapTextureAsset)
+                {
+                    ((ReflectionMapTextureAsset)entry).Read(reader, varRefTable.origin, ReflectionMapTextureAssetDictionary);
+                }
                 if (entry is DDSTextureAsset)
                 {
                     ((DDSTextureAsset)entry).Read(reader, varRefTable.origin,DDSTextureAssetDictionary);

@@ -409,6 +409,22 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
         #endregion DDSImageDictionaries
+
+        #region ReflectionMapImageDictionaries
+        public static Entry ReflectionMapTextureAssetDictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                1 => new DDSTextureAssetSubTableType1(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
+                19 => new Int32Entry(id, relOffset),    // FFFF Block unkown use
+                20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
+                21 => new StringEntry(id, relOffset),   // File name
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+        #endregion ReflectionMapImageDictionaries
+
         #endregion ImageDictionaries
     }
 }
