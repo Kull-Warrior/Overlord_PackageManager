@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
+using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.Generic;
 using System.IO;
 
@@ -20,6 +21,10 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 if (entry is DDSTextureAsset)
                 {
                     ((DDSTextureAsset)entry).Read(reader, varRefTable.origin,DDSTextureAssetDictionary);
+                }
+                if (entry is TgaTifTextureAsset)
+                {
+                    ((TgaTifTextureAsset)entry).Read(reader, varRefTable.origin, TgaTifTextureAssetDictionary);
                 }
             }
         }

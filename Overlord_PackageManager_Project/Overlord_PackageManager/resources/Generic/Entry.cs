@@ -1,6 +1,7 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes;
 using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
+using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.EntryTypes.Lua;
 using Overlord_PackageManager.resources.EntryTypes.XML;
 using Overlord_PackageManager.resources.Generic.EntryTypes;
@@ -342,7 +343,7 @@ namespace Overlord_PackageManager.resources.Generic
 
         #region ImageDictionaries
         #region TifTgaImageDictionaries
-        public static Entry RawTifTgaTextureDataDictionary(uint id, uint relOffset)
+        public static Entry RawTgaTifTextureDataDictionary(uint id, uint relOffset)
         {
             return id switch
             {
@@ -352,11 +353,11 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry TifTgaTextureAssetDictionary(uint id, uint relOffset)
+        public static Entry TgaTifTextureAssetDictionary(uint id, uint relOffset)
         {
             return id switch
             {
-                1 => new BinaryEntry(id, relOffset),
+                1 => new TgaTifTextureData(id, relOffset),
                 19 => new Int32Entry(id, relOffset),
                 20 => new StringEntry(id, relOffset),
                 21 => new StringEntry(id, relOffset),

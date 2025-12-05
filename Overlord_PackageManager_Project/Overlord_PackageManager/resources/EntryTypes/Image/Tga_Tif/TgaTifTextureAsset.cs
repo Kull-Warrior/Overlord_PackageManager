@@ -25,15 +25,14 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
                 if (entry is TgaTifTextureData)
                 {
                     List<Int32Entry> intEntries = varRefTable.Entries.OfType<Int32Entry>().ToList();
-                    List<Int32Entry> lastTwoIntEntries = intEntries.TakeLast(2).ToList();
 
-                    if (lastTwoIntEntries == null)
+                    if (intEntries == null)
                         throw new InvalidOperationException("No width and height length found");
 
                     uint bytesPerPixel = 4;
-                    uint rawTextureDataLength = lastTwoIntEntries[0].varInt * lastTwoIntEntries[1].varInt * bytesPerPixel;
+                    uint rawTextureDataLength = intEntries[0].varInt * intEntries[1].varInt * bytesPerPixel;
 
-                    ((TgaTifTextureData)entry).Read(reader, varRefTable.origin, RawTifTgaTextureDataDictionary, rawTextureDataLength);
+                    ((TgaTifTextureData)entry).Read(reader, varRefTable.origin, RawTgaTifTextureDataDictionary, rawTextureDataLength);
                 }
             }
         }
