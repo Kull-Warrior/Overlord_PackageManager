@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.EntryTypes.Audio;
+﻿using Overlord_PackageManager.resources.EntryTypes.Animation;
+using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap;
 using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
@@ -35,6 +36,10 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 if (entry is SFXAsset)
                 {
                     ((SFXAsset)entry).Read(reader, varRefTable.origin, SFXAssetDictionary);
+                }
+                if (entry is AnimationAsset)
+                {
+                    ((AnimationAsset)entry).Read(reader, varRefTable.origin, AnimationAssetDictionary);
                 }
             }
         }

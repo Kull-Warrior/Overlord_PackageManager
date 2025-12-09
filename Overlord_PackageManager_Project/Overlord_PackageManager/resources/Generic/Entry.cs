@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes;
+using Overlord_PackageManager.resources.EntryTypes.Animation;
 using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
@@ -327,20 +328,106 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry AnimationEntryDictionary(uint id, uint relOffset)
+        #region AnimationDictionaries
+
+        public static Entry BoneAnimationSubTableType22Dictionary(uint id, uint relOffset)
         {
             return id switch
             {
-                //01  => new BoneAnimationEntry(id, relOffset),
-                19 => new Int32Entry(id, relOffset),
-                20 => new StringEntry(id, relOffset),
-                21 => new StringEntry(id, relOffset),
-                30 => new Int32Entry(id, relOffset),
-                31 => new BinaryEntry(id, relOffset),
+                20 => new Int32Entry(id, relOffset),    // Unkown u32
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
         }
+
+        public static Entry BoneAnimationSubTableType23Dictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                20 => new Int32Entry(id, relOffset),    // Unkown u32
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        public static Entry BoneAnimationSubTableType24Dictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                20 => new Int32Entry(id, relOffset),                // Unkown u32
+                21 => new Int32Entry(id, relOffset),                // Number of Bone positions, if the bone does not move in the animation only a single entry can be found here
+                22 => new BonePositionDataArray(id, relOffset),     // Array of Bone positions
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        public static Entry BoneAnimationSubTableType25SubTableType21Dictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                22 => new Int32Entry(id, relOffset),                // Number of Bone rotations
+                23 => new BoneRotationDataArray(id, relOffset),     // Array of Bone rotations
+                24 => new BinaryEntry(id, relOffset),               // Unkown 12 Bytes
+                30 => new Int32Entry(id, relOffset),                // Number of Bone scales
+                31 => new BoneScaleDataArray(id, relOffset),        // Number of Bone scales
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        public static Entry BoneAnimationSubTableType25Dictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                20 => new Int32Entry(id, relOffset),                                    // Unkown u32
+                21 => new BoneAnimationSubTableType25SubTableType21(id, relOffset),     // Contains Bone Rotation and Scale data
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        public static Entry BoneAnimationDataDictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                20 => new StringEntry(id, relOffset),                   // Bone Name
+                21 => new Int64Entry(id, relOffset),                    // Unkown u64
+                22 => new BoneAnimationSubTableType22(id, relOffset),   // Unkown use
+                23 => new BoneAnimationSubTableType23(id, relOffset),   // Unkown use
+                24 => new BoneAnimationSubTableType24(id, relOffset),   // Contains Bone Position data at deeper levels
+                25 => new BoneAnimationSubTableType25(id, relOffset),   // Contains Bone Rotation and Scale data at deeper levels
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        public static Entry AnimationAssetSubTableType1Dictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                10 => new ListOfBoneAnimationData(id, relOffset),
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        public static Entry AnimationAssetDictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                01 => new AnimationAssetSubTableType1(id, relOffset),   // Sub reference table containing a list of Bone Animation Data
+                19 => new Int32Entry(id, relOffset),                    // FFFF Block unkown use
+                20 => new StringEntry(id, relOffset),                   // Chunk or In-Game Object Name
+                21 => new StringEntry(id, relOffset),                   // Animation name
+                30 => new FloatEntry(id, relOffset),                    // Unkown float and unknown use
+                31 => new Int64Entry(id, relOffset),                    // unkown u64 and unknown use
+                // Add more IDs here
+                _ => throw new ArgumentException($"Unknown entry ID {id}")
+            };
+        }
+
+        #endregion AnimationDictionaries
 
 
         #region SFXDictionaries

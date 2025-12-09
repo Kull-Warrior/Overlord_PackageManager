@@ -3,6 +3,7 @@ using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using System.IO;
 using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap;
 using Overlord_PackageManager.resources.EntryTypes.Audio;
+using Overlord_PackageManager.resources.EntryTypes.Animation;
 
 namespace Overlord_PackageManager.resources.Generic
 {
@@ -97,6 +98,10 @@ namespace Overlord_PackageManager.resources.Generic
                         Entries.Add(new RawDDSTextureData(ids[i], relativeOffsets[i]));
                         break;
                     case 4259845:   // Animation Asset
+                        Entries.Add(new AnimationAsset(ids[i], relativeOffsets[i]));
+                        break;
+                    case 4259847:   // Bone Animation Data
+                        Entries.Add(new BoneAnimationData(ids[i], relativeOffsets[i]));
                         break;
                     case 4259893:   // Mesh Asset
                         break;
