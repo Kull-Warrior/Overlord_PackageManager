@@ -5,7 +5,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
     class BinaryEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
-        byte[] varBytes;
+        public byte[] varBytes;
 
         public void Read(BinaryReader reader, long origin, uint length)
         {

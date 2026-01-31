@@ -34,5 +34,80 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap
         {
             throw new NotImplementedException();
         }
+
+        public void WriteToFile(string baseDir)
+        {
+            byte[] fileHeader;
+            string fileName = "";
+
+            string objectName = ((StringEntry)varRefTable.Entries[1]).varString;
+            Directory.CreateDirectory(baseDir + objectName);
+
+            List<RawDDSTextureData> rawDDSTextures;
+
+            DDSTextureAssetSubTableType1 subTable = (DDSTextureAssetSubTableType1)varRefTable.Entries[3];
+            ListOfRawDDSTextureData listOfDDSTextureEntries = (ListOfRawDDSTextureData)subTable.varRefTable.Entries[0];
+
+            rawDDSTextures = listOfDDSTextureEntries.varRefTable.Entries.OfType<RawDDSTextureData>().ToList();
+
+            uint baseMipMapCount;
+            
+            // Determine mip count from first texture
+            {
+                uint width = ((Int32Entry)rawDDSTextures[0].varRefTable.Entries[0]).varInt;
+                uint height = ((Int32Entry)rawDDSTextures[0].varRefTable.Entries[1]).varInt;
+                baseMipMapCount = DDSTextureAsset.CalculateMipMapCount(width, height);
+            }
+
+            // Sanity check
+            if (rawDDSTextures.Count % baseMipMapCount != 0)
+            {
+                throw new InvalidDataException(
+                    "Raw DDS texture count is not a multiple of the mip map count.");
+            }
+
+            for (int i = 0; i < rawDDSTextures.Count; i++)
+            {
+                if (i % baseMipMapCount == 0 && i <= rawDDSTextures.Count - baseMipMapCount)
+                {
+                    fileName = $"\\ReflectionMap_Section_{i / baseMipMapCount}.dds";
+                    uint width = ((Int32Entry)rawDDSTextures[i].varRefTable.Entries[0]).varInt;
+                    uint height = ((Int32Entry)rawDDSTextures[i].varRefTable.Entries[1]).varInt;
+                    uint rawFormat = ((Int32Entry)rawDDSTextures[i].varRefTable.Entries[2]).varInt;
+                    DDSFormat format = (DDSFormat)rawFormat;
+                    uint mipMapCount = DDSTextureAsset.CalculateMipMapCount(width, height);
+
+                    switch (format)
+                    {
+                        case DDSFormat.UncompressedRGBA:
+                            fileHeader = DDSTextureAsset.CreateDDSHeader(width, height, mipMapCount, format);
+                            break;
+
+                        case DDSFormat.DXT1:
+                        case DDSFormat.DXT3:
+                        case DDSFormat.DXT5:
+                            fileHeader = DDSTextureAsset.CreateDDSHeader(width, height, mipMapCount, format);
+                            break;
+
+                        default:
+                            throw new NotSupportedException(
+                                $"Unknown DDS format value: {rawFormat}");
+                    }
+                    using FileStream fileHeaderStream = File.Open(baseDir + objectName + fileName, FileMode.Create);
+                    using BinaryWriter fileHeaderBinaryWriter = new BinaryWriter(fileHeaderStream);
+                    {
+                        fileHeaderBinaryWriter.Write(fileHeader);
+                    }
+                }
+
+                byte[] textureData = ((BinaryEntry)rawDDSTextures[i].varRefTable.Entries[3]).varBytes;
+
+                using FileStream fs = File.Open(baseDir + objectName + fileName, FileMode.Append);
+                using BinaryWriter br = new BinaryWriter(fs);
+                {
+                    br.Write(textureData);
+                }
+            }
+        }
     }
 }

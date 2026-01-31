@@ -16,9 +16,12 @@ namespace Overlord_PackageManager
             OMPFile mapFile = new OMPFile();
             //mapFile.Parse("D:\\Downloads\\26092025\\OL\\OMP\\Tower.omp");
 
+            string baseDir = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Overlord\\Resources\\";
+            string fileName = "System Content1";
+            string fileExtension = ".prp";
             RpkFile file = new RpkFile();
-            file.Parse("D:\\Downloads\\26092025\\OL\\RPK FIles\\System.psp");
-
+            file.Read(baseDir + fileName + fileExtension);
+            file.WriteAllAssetsToFile(baseDir + fileName);
             Console.WriteLine();
         }
     }

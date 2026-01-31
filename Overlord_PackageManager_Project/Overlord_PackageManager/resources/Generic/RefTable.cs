@@ -98,7 +98,7 @@ namespace Overlord_PackageManager.resources.Generic
                         Entries.Add(new RawDDSTextureData(ids[i], relativeOffsets[i]));
                         break;
                     case 4259845:   // Animation Asset
-                        Entries.Add(new AnimationAsset(ids[i], relativeOffsets[i]));
+                        //Entries.Add(new AnimationAsset(ids[i], relativeOffsets[i]));
                         break;
                     case 4259847:   // Bone Animation Data
                         Entries.Add(new BoneAnimationData(ids[i], relativeOffsets[i]));

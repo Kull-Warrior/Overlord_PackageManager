@@ -261,6 +261,8 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
+                16 => new RefTableEntry(id, relOffset),     // Unknown
+                17 => new RefTableEntry(id, relOffset),     // Unknown
                 19 => new Int32Entry(id, relOffset),
                 20 => new Int32Entry(id, relOffset),
                 22 => new StringEntry(id, relOffset),       // Character/Rescource Name
@@ -270,6 +272,7 @@ namespace Overlord_PackageManager.resources.Generic
                 26 => new AssetList(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
                 27 => new StringArrayEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
                 28 => new XMLEntry(id, relOffset),          // Contains XML Data
+                29 => new RefTableEntry(id, relOffset),     // Unknown
                 30 => new RefTableEntry(id, relOffset),     // Contains "2" Type Data Unknown use, contains lua scripts
                 31 => new RefTableEntry(id, relOffset),     // Contains Animation Data
                 32 => new RefTableEntry(id, relOffset),     // Unknown
@@ -281,6 +284,9 @@ namespace Overlord_PackageManager.resources.Generic
                 38 => new RefTableEntry(id, relOffset),     // Contains FXE Data ( Raw file)
                 39 => new RefTableEntry(id, relOffset),     // 
                 40 => new RefTableEntry(id, relOffset),
+                41 => new RefTableEntry(id, relOffset),     // Unkown
+                42 => new RefTableEntry(id, relOffset),     // Unkown
+                43 => new RefTableEntry(id, relOffset),     // Unkown
                 60 => new RefTableEntry(id, relOffset),
                 61 => new RefTableEntry(id, relOffset),
                 62 => new RefTableEntry(id, relOffset),
@@ -453,6 +459,9 @@ namespace Overlord_PackageManager.resources.Generic
                 21 => new StringEntry(id, relOffset),   // Sound name
                 100 => new StringEntry(id, relOffset),  // File name
                 101 => new Int32Entry(id, relOffset),   // FFFF Block unkown use
+                105 => new ByteEntry(id, relOffset),    // Unkown single byte
+                106 => new Int32Entry(id, relOffset),   // Unkown int32
+                107 => new Int32Entry(id, relOffset),   // Unkown int32
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -510,6 +519,8 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 20 => new ListOfRawDDSTextureData(id, relOffset),
                 21 => new Int32Entry(id, relOffset),
+                23 => new Int32Entry(id, relOffset),
+                24 => new RefTableEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };

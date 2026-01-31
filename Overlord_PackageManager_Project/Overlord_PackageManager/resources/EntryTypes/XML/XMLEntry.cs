@@ -13,19 +13,22 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
             reader.BaseStream.Position = origin + RelOffset;
             varRefTable = new RefTable(reader, entryFactory);
 
-            foreach (var entry in varRefTable.Entries)
+            if (varRefTable.Count8 > 0 || varRefTable.Count32 > 0)
             {
-                if (entry is StringEntry || entry is Int32Entry)
+                foreach (var entry in varRefTable.Entries)
                 {
-                    entry.Read(reader, varRefTable.origin);
-                }
-                if (entry is BinaryEntry)
-                {
-                    Int32Entry? intEntry = varRefTable.Entries.OfType<Int32Entry>().LastOrDefault();
-                    if (intEntry == null)
-                        throw new InvalidOperationException("No XML length found");
+                    if (entry is StringEntry || entry is Int32Entry)
+                    {
+                        entry.Read(reader, varRefTable.origin);
+                    }
+                    if (entry is BinaryEntry)
+                    {
+                        Int32Entry? intEntry = varRefTable.Entries.OfType<Int32Entry>().LastOrDefault();
+                        if (intEntry == null)
+                            throw new InvalidOperationException("No XML length found");
 
-                    ((BinaryEntry)entry).Read(reader, varRefTable.origin, intEntry.varInt);
+                        ((BinaryEntry)entry).Read(reader, varRefTable.origin, intEntry.varInt);
+                    }
                 }
             }
         }
@@ -33,6 +36,23 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
         public override void Read(BinaryReader reader, long origin)
         {
             throw new NotImplementedException();
+        }
+
+        public void WriteToFile(string baseDir)
+        {
+            if (varRefTable.Count8 > 0 || varRefTable.Count32 > 0)
+            {
+                string resourcePath = ((StringEntry)varRefTable.Entries[0]).varString;
+                string fileName = Path.GetFileName(resourcePath);
+
+                byte[] data = ((BinaryEntry)varRefTable.Entries[2]).varBytes;
+
+                using FileStream fileHeaderStream = File.Open(baseDir + "\\" + fileName, FileMode.Create);
+                using BinaryWriter fileHeaderBinaryWriter = new BinaryWriter(fileHeaderStream);
+                {
+                    fileHeaderBinaryWriter.Write(data);
+                }
+            }
         }
     }
 }

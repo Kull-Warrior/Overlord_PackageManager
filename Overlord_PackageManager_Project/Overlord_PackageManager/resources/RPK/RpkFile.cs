@@ -33,7 +33,7 @@ namespace Overlord_PackageManager.resources.RPK
     {
         public RpkHeader Header;
         public RPKBody Body;
-        public void Parse(string path)
+        public void Read(string path)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Overlord_PackageManager.resources.RPK
                         {
                             ((AssetList)entry).Read(br, Body.Data.origin);
                         }
-                        if (entry is XMLEntry)
+                        else if (entry is XMLEntry)
                         {
                             ((XMLEntry)entry).Read(br, Body.Data.origin, 0, Entry.XMLDictionary);
                         }
@@ -65,7 +65,31 @@ namespace Overlord_PackageManager.resources.RPK
             }
             catch (Exception e)
             {
-                //throw;
+                Console.WriteLine("Error reading RPK file: " + e.Message);
+            }
+        }
+        public void WriteAllAssetsToFile(string baseDir)
+        {
+            try
+            {
+                foreach (var entry in Body.Data.Entries)
+                {
+                    if (entry is AssetList)
+                    {
+                        Directory.CreateDirectory(baseDir);
+                        ((AssetList)entry).WriteToFiles(baseDir);
+                    }
+                    else if (entry is XMLEntry)
+                    {
+                        Directory.CreateDirectory(baseDir);
+                        ((XMLEntry)entry).WriteToFile(baseDir);
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error writing RPK assets to thier respective file format: " + e.Message);
             }
         }
     }

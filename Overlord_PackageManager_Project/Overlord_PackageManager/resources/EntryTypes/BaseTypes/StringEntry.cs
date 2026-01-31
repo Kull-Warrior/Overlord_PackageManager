@@ -7,7 +7,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
     class StringEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
         uint stringLength;
-        string varString;
+        public string varString;
 
         public override void Read(BinaryReader reader, long origin)
         {

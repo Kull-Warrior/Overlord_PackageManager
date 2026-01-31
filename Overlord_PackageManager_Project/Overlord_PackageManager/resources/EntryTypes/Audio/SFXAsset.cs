@@ -17,7 +17,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
 
             foreach (var entry in varRefTable.Entries)
             {
-                if(entry is StringEntry || entry is Int32Entry)
+                if (entry is StringEntry || entry is Int32Entry)
                 {
                     entry.Read(reader, varRefTable.origin);
                 }
@@ -31,6 +31,21 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
         public override void Read(BinaryReader reader, long origin)
         {
             throw new NotImplementedException();
+        }
+
+        public void WriteToFile(string baseDir)
+        {
+            List<StringEntry> sfxAssetStrings = varRefTable.Entries.OfType<StringEntry>().ToList();
+            string rawName = sfxAssetStrings[2].varString;
+            string fileName = Path.GetFileName(rawName);
+            List<SFXData> sfxData = varRefTable.Entries.OfType<SFXData>().ToList();
+            byte[] audioData = ((BinaryEntry)sfxData[0].varRefTable.Entries[1]).varBytes;
+
+            using FileStream fs = File.Open(baseDir + fileName, FileMode.Create);
+            using BinaryWriter br = new BinaryWriter(fs);
+            {
+                br.Write(audioData);
+            }
         }
     }
 }

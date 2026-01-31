@@ -43,5 +43,41 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 }
             }
         }
+        public void WriteToFiles(string baseDir)
+        {
+            foreach (var entry in varRefTable.Entries)
+            {
+                if (entry is ReflectionMapTextureAsset)
+                {
+                    Directory.CreateDirectory(baseDir + "\\ReflectionMap");
+                    ((ReflectionMapTextureAsset)entry).WriteToFile(baseDir + "\\ReflectionMap\\");
+                }
+                if (entry is DDSTextureAsset)
+                {
+                    Directory.CreateDirectory(baseDir + "\\Image");
+                    Directory.CreateDirectory(baseDir + "\\Image\\DDS");
+                    ((DDSTextureAsset)entry).WriteToFile(baseDir + "\\Image\\DDS\\");
+                }
+                if (entry is TgaTifTextureAsset)
+                {
+                    Directory.CreateDirectory(baseDir + "\\Image");
+                    ((TgaTifTextureAsset)entry).WriteToFile(baseDir + "\\Image\\");
+                }
+                if (entry is SFXAsset)
+                {
+                    Directory.CreateDirectory(baseDir + "\\SFX");
+                    ((SFXAsset)entry).WriteToFile(baseDir + "\\SFX\\");
+                }
+                if (entry is AnimationAsset)
+                {
+                    //NotImplemented
+                }
+            }
+        }
+
+        private void WriteToFile(string baseDir)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

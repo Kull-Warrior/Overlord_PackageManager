@@ -32,16 +32,17 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
                     
                     uint width = lastThree[0].varInt;
                     uint height = lastThree[1].varInt;
-                    uint format = lastThree[2].varInt;
+                    uint rawFormat = lastThree[2].varInt;
+                    DDSFormat format = (DDSFormat)rawFormat;
 
                     uint rawByteLength = 0;
                     uint blockSize = 0;
                     uint blocksWidth = 0;
                     uint blocksHeight = 0;
 
-                    if (format == 7 || format == 11 || format == 9)
+                    if (format == DDSFormat.DXT1 || format == DDSFormat.DXT3 || format == DDSFormat.DXT5)
                     {
-                        if (format == 7)
+                        if (format == DDSFormat.DXT1)
                         {
                             blockSize = 8;
                         }
@@ -55,9 +56,17 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 
                         rawByteLength = blocksWidth * blocksHeight * blockSize;
                     }
+                    else if (format == DDSFormat.UncompressedRGB)
+                    {
+                        rawByteLength = width * height * 3;
+                    }
+                    else if (format == DDSFormat.UncompressedRGBA)
+                    {
+                        rawByteLength = width * height * 4;
+                    }
                     else
                     {
-                        rawByteLength = width * height;
+                        throw new NotImplementedException("Unkown Image Format : " + rawFormat);
                     }
 
                     ((BinaryEntry)entry).Read(reader, varRefTable.origin, rawByteLength);
