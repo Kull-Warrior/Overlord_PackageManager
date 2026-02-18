@@ -4,27 +4,27 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Audio
 {
-    class SFXAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
+    class SFXAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public uint TypeIdentifier;
-        public RefTable Table;
-        public RefTable GetRefTable() => Table;
+        public ReferenceTable Table;
+        public ReferenceTable GetReferenceTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
             TypeIdentifier = reader.ReadUInt32();
-            Table = new RefTable(reader, entryFactory);
+            Table = new ReferenceTable(reader, entryFactory);
 
             foreach (var entry in Table.Entries)
             {
                 if (entry is StringEntry || entry is Int32Entry)
                 {
-                    entry.Read(reader, Table.origin);
+                    entry.Read(reader, Table.OffsetOrigin);
                 }
                 if (entry is SFXData)
                 {
-                    ((SFXData)entry).Read(reader, Table.origin, SFXDataDictionary);
+                    ((SFXData)entry).Read(reader, Table.OffsetOrigin, SFXDataDictionary);
                 }
             }
         }

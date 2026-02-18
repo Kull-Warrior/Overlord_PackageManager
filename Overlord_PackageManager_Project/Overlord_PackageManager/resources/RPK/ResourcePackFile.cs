@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Overlord_PackageManager.resources.RPK
 {
-    public class RpkHeader
+    public class ResourcePackHeader
     {
         public string Magic = "";          // should be "RPK\0"
         public uint Version;
@@ -14,7 +14,7 @@ namespace Overlord_PackageManager.resources.RPK
         public uint TotalDataSize;
         public string Name = "";
 
-        public RpkHeader(BinaryReader br)
+        public ResourcePackHeader(BinaryReader br)
         {
             Magic = Encoding.ASCII.GetString(br.ReadBytes(4));
             Version = br.ReadUInt32();
@@ -24,15 +24,15 @@ namespace Overlord_PackageManager.resources.RPK
             Name = Encoding.ASCII.GetString(nameBytes).TrimEnd('\0');
         }
     }
-    public class RPKBody
+    public class ResourcePackBody
     {
-        public RefTable Data;
+        public ReferenceTable Data;
     }
 
-    public class RpkFile
+    public class ResourcePackFile
     {
-        public RpkHeader Header;
-        public RPKBody Body;
+        public ResourcePackHeader Header;
+        public ResourcePackBody Body;
         public void Read(string path)
         {
             try
@@ -40,24 +40,24 @@ namespace Overlord_PackageManager.resources.RPK
                 using FileStream fs = File.OpenRead(path);
                 using BinaryReader br = new BinaryReader(fs);
                 {
-                    Header = new RpkHeader(br);
-                    Body = new RPKBody();
+                    Header = new ResourcePackHeader(br);
+                    Body = new ResourcePackBody();
 
-                    Body.Data = new RefTable(br, Entry.RPKRootDictionary);
+                    Body.Data = new ReferenceTable(br, Entry.ResourcePackRootTableDictionary);
 
                     foreach (var entry in Body.Data.Entries)
                     {
                         if (entry is AssetList)
                         {
-                            ((AssetList)entry).Read(br, Body.Data.origin);
+                            ((AssetList)entry).Read(br, Body.Data.OffsetOrigin);
                         }
                         else if (entry is XMLEntry)
                         {
-                            ((XMLEntry)entry).Read(br, Body.Data.origin, 0, Entry.XMLDictionary);
+                            ((XMLEntry)entry).Read(br, Body.Data.OffsetOrigin, 0, Entry.XMLDictionary);
                         }
-                        else if (entry is not RefTableEntry)
+                        else if (entry is not ReferenceTableEntry)
                         {
-                            entry.Read(br, Body.Data.origin);
+                            entry.Read(br, Body.Data.OffsetOrigin);
                         }
                         
                     }

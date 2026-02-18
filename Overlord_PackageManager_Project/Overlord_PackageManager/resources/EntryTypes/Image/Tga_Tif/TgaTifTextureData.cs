@@ -4,21 +4,21 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
 {
-    class TgaTifTextureData(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
+    class TgaTifTextureData(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
-        public RefTable Table;
-        public RefTable GetRefTable() => Table;
+        public ReferenceTable Table;
+        public ReferenceTable GetReferenceTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory, uint rawTextureDataLength)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            Table = new RefTable(reader, entryFactory);
+            Table = new ReferenceTable(reader, entryFactory);
 
             foreach (var entry in Table.Entries)
             {
                 if (entry is BinaryEntry)
                 {
-                    ((BinaryEntry)entry).Read(reader, Table.origin, rawTextureDataLength);
+                    ((BinaryEntry)entry).Read(reader, Table.OffsetOrigin, rawTextureDataLength);
                 }
             }
         }

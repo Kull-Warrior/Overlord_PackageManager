@@ -3,18 +3,22 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    class RefTableEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
+    class ResourcePackLinkEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public byte[] leadingBytes;
-        public RefTable Table;
-
-        public RefTable GetRefTable() => Table;
+        public ReferenceTable Table;
+        public ReferenceTable GetReferenceTable() => Table;
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
             leadingBytes = reader.ReadBytes((int)numberOfLeadingBytes);
-            Table = new RefTable(reader,entryFactory);
+            Table = new ReferenceTable(reader, entryFactory);
+
+            foreach (var entry in Table.Entries)
+            {
+                //((ResourcePackRootEntry)entry).Read(reader, Table.origin, 0, RPKDictionary);
+            }
         }
 
         public override void Read(BinaryReader reader, long origin)

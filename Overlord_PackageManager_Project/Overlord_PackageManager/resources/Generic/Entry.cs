@@ -35,7 +35,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 20 => new Int32Entry(id, relOffset),
                 21 => new Int32Entry(id, relOffset),
-                22 => new RefTableEntry(id, relOffset),
+                22 => new ReferenceTableEntry(id, relOffset),
                 30 => new StringEntry(id, relOffset),
                 31 => new Int32Entry(id, relOffset),
                 32 => new BinaryEntry(id, relOffset),
@@ -60,16 +60,16 @@ namespace Overlord_PackageManager.resources.Generic
                 23 => new BinaryEntry(id, relOffset),
                 24 => new BinaryEntry(id, relOffset),
                 25 => new LuaListEntry(id, relOffset),
-                26 => new RefTableEntry(id, relOffset),
-                27 => new RefTableEntry(id, relOffset),
-                28 => new RefTableEntry(id, relOffset),
+                26 => new ReferenceTableEntry(id, relOffset),
+                27 => new ReferenceTableEntry(id, relOffset),
+                28 => new ReferenceTableEntry(id, relOffset),
                 29 => new ByteEntry(id, relOffset),
-                30 => new RefTableEntry(id, relOffset),
+                30 => new ReferenceTableEntry(id, relOffset),
                 31 => new BinaryEntry(id, relOffset),
-                32 => new RPKListEntry(id, relOffset),
+                32 => new ResourcePackLinkEntry(id, relOffset),
                 33 => new LuaEntry(id, relOffset),
                 34 => new StringEntry(id, relOffset),
-                35 => new RefTableEntry(id, relOffset),
+                35 => new ReferenceTableEntry(id, relOffset),
                 36 => new LuaEntry(id, relOffset),
                 37 => new FloatEntry(id, relOffset),
                 38 => new FloatEntry(id, relOffset),
@@ -80,16 +80,16 @@ namespace Overlord_PackageManager.resources.Generic
                 43 => new Int32Entry(id, relOffset),
                 45 => new LuaEntry(id, relOffset),
                 46 => new StringArrayEntry(id, relOffset),
-                47 => new RefTableEntry(id, relOffset),
-                48 => new RefTableEntry(id, relOffset),
+                47 => new ReferenceTableEntry(id, relOffset),
+                48 => new ReferenceTableEntry(id, relOffset),
                 49 => new Int32Entry(id, relOffset),
                 51 => new Int32Entry(id, relOffset),
-                52 => new RefTableEntry(id, relOffset),
-                53 => new RefTableEntry(id, relOffset),
-                100 => new RefTableEntry(id, relOffset),
-                101 => new RefTableEntry(id, relOffset),
-                102 => new RefTableEntry(id, relOffset),
-                103 => new RefTableEntry(id, relOffset),
+                52 => new ReferenceTableEntry(id, relOffset),
+                53 => new ReferenceTableEntry(id, relOffset),
+                100 => new ReferenceTableEntry(id, relOffset),
+                101 => new ReferenceTableEntry(id, relOffset),
+                102 => new ReferenceTableEntry(id, relOffset),
+                103 => new ReferenceTableEntry(id, relOffset),
                 104 => new Int32Entry(id, relOffset),
                 106 => new ByteEntry(id, relOffset),
                 108 => new ByteEntry(id, relOffset),
@@ -101,20 +101,20 @@ namespace Overlord_PackageManager.resources.Generic
                 115 => new Int32Entry(id, relOffset),
                 116 => new ByteEntry(id, relOffset),
                 117 => new ByteEntry(id, relOffset),
-                120 => new RefTableEntry(id, relOffset),
+                120 => new ReferenceTableEntry(id, relOffset),
                 121 => new Int32Entry(id, relOffset),
                 122 => new LuaEntry(id, relOffset),
                 123 => new LuaEntry(id, relOffset),
-                124 => new RefTableEntry(id, relOffset),
+                124 => new ReferenceTableEntry(id, relOffset),
                 125 => new Int32Entry(id, relOffset),
                 126 => new Int32Entry(id, relOffset),
                 127 => new LuaEntry(id, relOffset),
                 128 => new Int32Entry(id, relOffset),
                 129 => new Int32Entry(id, relOffset),
-                130 => new RefTableEntry(id, relOffset),
-                131 => new RefTableEntry(id, relOffset),
+                130 => new ReferenceTableEntry(id, relOffset),
+                131 => new ReferenceTableEntry(id, relOffset),
                 132 => new BinaryEntry(id, relOffset),
-                133 => new RefTableEntry(id, relOffset),
+                133 => new ReferenceTableEntry(id, relOffset),
                 134 => new StringEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
@@ -144,7 +144,7 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
-                20 => new RefTableEntry(id, relOffset),
+                20 => new ReferenceTableEntry(id, relOffset),
                 21 => new Int32Entry(id, relOffset),
                 22 => new ByteEntry(id, relOffset),
                 // Add more IDs here
@@ -158,8 +158,8 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 30 => new Int32Entry(id, relOffset),
                 31 => new StringEntry(id, relOffset),
-                32 => new RefTableEntry(id, relOffset),
-                34 => new RefTableEntry(id, relOffset),
+                32 => new ReferenceTableEntry(id, relOffset),
+                34 => new ReferenceTableEntry(id, relOffset),
                 35 => new Int32Entry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
@@ -181,8 +181,8 @@ namespace Overlord_PackageManager.resources.Generic
                 40 => new ByteEntry(id, relOffset),
                 42 => new ByteEntry(id, relOffset),
                 60 => new StringEntry(id, relOffset),
-                61 => new RefTableEntry(id, relOffset),
-                62 => new RefTableEntry(id, relOffset),
+                61 => new ReferenceTableEntry(id, relOffset),
+                62 => new ReferenceTableEntry(id, relOffset),
                 63 => new ByteEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
@@ -243,7 +243,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry RPKDictionary(uint id, uint relOffset)
+        public static Entry ResourcePackLinkDictionary(uint id, uint relOffset)
         {
             return id switch
             {
@@ -256,66 +256,66 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry RPKRootDictionary(uint id, uint relOffset)
+        public static Entry ResourcePackRootTableDictionary(uint id, uint relOffset)
         {
             return id switch
             {
-                16 => new RefTableEntry(id, relOffset),     // Unknown
-                17 => new RefTableEntry(id, relOffset),     // Unknown
+                16 => new ReferenceTableEntry(id, relOffset),     // Unknown
+                17 => new ReferenceTableEntry(id, relOffset),     // Unknown
                 19 => new Int32Entry(id, relOffset),
                 20 => new Int32Entry(id, relOffset),
                 22 => new StringEntry(id, relOffset),       // Character/Rescource Name
-                23 => new RefTableEntry(id, relOffset),     // Contains Effects and Light Data of some sort
-                24 => new RefTableEntry(id, relOffset),     // Contains "TS", Texture related Data
-                25 => new RefTableEntry(id, relOffset),     // Contains "0" Type Data Unknown use, Map editor friendly apperently
+                23 => new ReferenceTableEntry(id, relOffset),     // Contains Effects and Light Data of some sort
+                24 => new ReferenceTableEntry(id, relOffset),     // Contains "TS", Texture related Data
+                25 => new ReferenceTableEntry(id, relOffset),     // Contains "0" Type Data Unknown use, Map editor friendly apperently
                 26 => new AssetList(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
                 27 => new StringArrayEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
                 28 => new XMLEntry(id, relOffset),          // Contains XML Data
-                29 => new RefTableEntry(id, relOffset),     // Unknown
-                30 => new RefTableEntry(id, relOffset),     // Contains "2" Type Data Unknown use, contains lua scripts
-                31 => new RefTableEntry(id, relOffset),     // Contains Animation Data
-                32 => new RefTableEntry(id, relOffset),     // Unknown
-                33 => new RefTableEntry(id, relOffset),     // Contains Object, Mesh Data //MapEditor Objects apperently
-                34 => new RefTableEntry(id, relOffset),     // Contains Object Data, Animation Data
-                35 => new RefTableEntry(id, relOffset),     // Unknown
-                36 => new RefTableEntry(id, relOffset),     // Unknown
-                37 => new RefTableEntry(id, relOffset),     // Contains SFX Data
-                38 => new RefTableEntry(id, relOffset),     // Contains FXE Data ( Raw file)
-                39 => new RefTableEntry(id, relOffset),     // 
-                40 => new RefTableEntry(id, relOffset),
-                41 => new RefTableEntry(id, relOffset),     // Unkown
-                42 => new RefTableEntry(id, relOffset),     // Unkown
-                43 => new RefTableEntry(id, relOffset),     // Unkown
-                60 => new RefTableEntry(id, relOffset),
-                61 => new RefTableEntry(id, relOffset),
-                62 => new RefTableEntry(id, relOffset),
-                63 => new RefTableEntry(id, relOffset),
-                64 => new RefTableEntry(id, relOffset),
-                65 => new RefTableEntry(id, relOffset),
-                66 => new RefTableEntry(id, relOffset),
-                67 => new RefTableEntry(id, relOffset),
-                68 => new RefTableEntry(id, relOffset),
-                69 => new RefTableEntry(id, relOffset),
-                70 => new RefTableEntry(id, relOffset),
-                71 => new RefTableEntry(id, relOffset),
-                72 => new RefTableEntry(id, relOffset),
-                73 => new RefTableEntry(id, relOffset),
-                74 => new RefTableEntry(id, relOffset),
-                75 => new RefTableEntry(id, relOffset),
-                77 => new RefTableEntry(id, relOffset),
-                78 => new RefTableEntry(id, relOffset),
-                80 => new RefTableEntry(id, relOffset),
-                81 => new RefTableEntry(id, relOffset),
+                29 => new ReferenceTableEntry(id, relOffset),     // Unknown
+                30 => new ReferenceTableEntry(id, relOffset),     // Contains "2" Type Data Unknown use, contains lua scripts
+                31 => new ReferenceTableEntry(id, relOffset),     // Contains Animation Data
+                32 => new ReferenceTableEntry(id, relOffset),     // Unknown
+                33 => new ReferenceTableEntry(id, relOffset),     // Contains Object, Mesh Data //MapEditor Objects apperently
+                34 => new ReferenceTableEntry(id, relOffset),     // Contains Object Data, Animation Data
+                35 => new ReferenceTableEntry(id, relOffset),     // Unknown
+                36 => new ReferenceTableEntry(id, relOffset),     // Unknown
+                37 => new ReferenceTableEntry(id, relOffset),     // Contains SFX Data
+                38 => new ReferenceTableEntry(id, relOffset),     // Contains FXE Data ( Raw file)
+                39 => new ReferenceTableEntry(id, relOffset),     // 
+                40 => new ReferenceTableEntry(id, relOffset),
+                41 => new ReferenceTableEntry(id, relOffset),     // Unkown
+                42 => new ReferenceTableEntry(id, relOffset),     // Unkown
+                43 => new ReferenceTableEntry(id, relOffset),     // Unkown
+                60 => new ReferenceTableEntry(id, relOffset),
+                61 => new ReferenceTableEntry(id, relOffset),
+                62 => new ReferenceTableEntry(id, relOffset),
+                63 => new ReferenceTableEntry(id, relOffset),
+                64 => new ReferenceTableEntry(id, relOffset),
+                65 => new ReferenceTableEntry(id, relOffset),
+                66 => new ReferenceTableEntry(id, relOffset),
+                67 => new ReferenceTableEntry(id, relOffset),
+                68 => new ReferenceTableEntry(id, relOffset),
+                69 => new ReferenceTableEntry(id, relOffset),
+                70 => new ReferenceTableEntry(id, relOffset),
+                71 => new ReferenceTableEntry(id, relOffset),
+                72 => new ReferenceTableEntry(id, relOffset),
+                73 => new ReferenceTableEntry(id, relOffset),
+                74 => new ReferenceTableEntry(id, relOffset),
+                75 => new ReferenceTableEntry(id, relOffset),
+                77 => new ReferenceTableEntry(id, relOffset),
+                78 => new ReferenceTableEntry(id, relOffset),
+                80 => new ReferenceTableEntry(id, relOffset),
+                81 => new ReferenceTableEntry(id, relOffset),
                 82 => new XMLEntry(id, relOffset),          // Contains XML Data (System_Quests)
                 83 => new XMLEntry(id, relOffset),          // Contains XML Data (Tower_GeneralMessages)
                 84 => new XMLEntry(id, relOffset),          // Contains XML Data (TutorialMessages_Mouse)
                 85 => new XMLEntry(id, relOffset),          // Contains XML Data (TutorialMessages_Gamepad)
-                86 => new RefTableEntry(id, relOffset),     // Contains CPT_ Data
-                87 => new RefTableEntry(id, relOffset),     // Contains CPTX Data
-                88 => new RefTableEntry(id, relOffset),     // "Contains a string. with : 0D = Carriage Return(CR) 0A = Line Feed(LF) to break lines. Referencing here the multiplayer maps"
-                89 => new RefTableEntry(id, relOffset),
+                86 => new ReferenceTableEntry(id, relOffset),     // Contains CPT_ Data
+                87 => new ReferenceTableEntry(id, relOffset),     // Contains CPTX Data
+                88 => new ReferenceTableEntry(id, relOffset),     // "Contains a string. with : 0D = Carriage Return(CR) 0A = Line Feed(LF) to break lines. Referencing here the multiplayer maps"
+                89 => new ReferenceTableEntry(id, relOffset),
                 90 => new XMLEntry(id, relOffset),          // Contains XML Data (Credits)
-                91 => new RefTableEntry(id, relOffset),
+                91 => new ReferenceTableEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -326,8 +326,8 @@ namespace Overlord_PackageManager.resources.Generic
             return id switch
             {
                 20 => new StringEntry(id, relOffset),
-                21 => new RefTableEntry(id, relOffset),
-                30 => new RefTableEntry(id, relOffset),
+                21 => new ReferenceTableEntry(id, relOffset),
+                30 => new ReferenceTableEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -519,7 +519,7 @@ namespace Overlord_PackageManager.resources.Generic
                 20 => new ListOfRawDDSTextureData(id, relOffset),
                 21 => new Int32Entry(id, relOffset),
                 23 => new Int32Entry(id, relOffset),
-                24 => new RefTableEntry(id, relOffset),
+                24 => new ReferenceTableEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };

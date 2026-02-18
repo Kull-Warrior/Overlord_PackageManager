@@ -4,21 +4,21 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Audio
 {
-    class SFXData(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
+    class SFXData(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
-        public RefTable Table;
-        public RefTable GetRefTable() => Table;
+        public ReferenceTable Table;
+        public ReferenceTable GetReferenceTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            Table = new RefTable(reader, entryFactory);
+            Table = new ReferenceTable(reader, entryFactory);
 
             foreach (var entry in Table.Entries)
             {
                 if(entry is Int32Entry)
                 {
-                    entry.Read(reader, Table.origin);
+                    entry.Read(reader, Table.OffsetOrigin);
                 }
                 if (entry is BinaryEntry)
                 {
@@ -27,7 +27,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
                     if (intEntry == null)
                         throw new InvalidOperationException("No ByteCode length found");
 
-                    ((BinaryEntry)entry).Read(reader, Table.origin, intEntry.varInt);
+                    ((BinaryEntry)entry).Read(reader, Table.OffsetOrigin, intEntry.varInt);
                 }
             }
         }

@@ -4,26 +4,26 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class BoneAnimationSubTableType25(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
+    class BoneAnimationSubTableType25(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
-        public RefTable Table;
-        public RefTable GetRefTable() => Table;
+        public ReferenceTable Table;
+        public ReferenceTable GetReferenceTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            Table = new RefTable(reader, entryFactory);
+            Table = new ReferenceTable(reader, entryFactory);
 
 
             foreach (var entry in Table.Entries)
             {
                 if (entry is Int32Entry)
                 {
-                    entry.Read(reader, Table.origin);
+                    entry.Read(reader, Table.OffsetOrigin);
                 }
                 if (entry is BoneAnimationSubTableType25SubTableType21)
                 {
-                    ((BoneAnimationSubTableType25SubTableType21)entry).Read(reader, Table.origin, BoneAnimationSubTableType25SubTableType21Dictionary);
+                    ((BoneAnimationSubTableType25SubTableType21)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType25SubTableType21Dictionary);
                 }
             }
         }

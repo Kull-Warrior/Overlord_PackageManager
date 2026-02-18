@@ -8,41 +8,41 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    class AssetList(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
+    class AssetList(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public byte[] LeadingBytes;
-        public RefTable Table;
+        public ReferenceTable Table;
 
-        public RefTable GetRefTable() => Table;
+        public ReferenceTable GetReferenceTable() => Table;
 
 
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelOffset;
             LeadingBytes = reader.ReadBytes(3);
-            Table = new RefTable(reader);
+            Table = new ReferenceTable(reader);
 
             foreach (var entry in Table.Entries)
             {
                 if (entry is ReflectionMapTextureAsset)
                 {
-                    ((ReflectionMapTextureAsset)entry).Read(reader, Table.origin, ReflectionMapTextureAssetDictionary);
+                    ((ReflectionMapTextureAsset)entry).Read(reader, Table.OffsetOrigin, ReflectionMapTextureAssetDictionary);
                 }
                 if (entry is DDSTextureAsset)
                 {
-                    ((DDSTextureAsset)entry).Read(reader, Table.origin,DDSTextureAssetDictionary);
+                    ((DDSTextureAsset)entry).Read(reader, Table.OffsetOrigin,DDSTextureAssetDictionary);
                 }
                 if (entry is TgaTifTextureAsset)
                 {
-                    ((TgaTifTextureAsset)entry).Read(reader, Table.origin, TgaTifTextureAssetDictionary);
+                    ((TgaTifTextureAsset)entry).Read(reader, Table.OffsetOrigin, TgaTifTextureAssetDictionary);
                 }
                 if (entry is SFXAsset)
                 {
-                    ((SFXAsset)entry).Read(reader, Table.origin, SFXAssetDictionary);
+                    ((SFXAsset)entry).Read(reader, Table.OffsetOrigin, SFXAssetDictionary);
                 }
                 if (entry is AnimationAsset)
                 {
-                    ((AnimationAsset)entry).Read(reader, Table.origin, AnimationAssetDictionary);
+                    ((AnimationAsset)entry).Read(reader, Table.OffsetOrigin, AnimationAssetDictionary);
                 }
             }
         }

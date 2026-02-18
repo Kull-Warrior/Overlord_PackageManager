@@ -7,15 +7,15 @@ using Overlord_PackageManager.resources.EntryTypes.Animation;
 
 namespace Overlord_PackageManager.resources.Generic
 {
-    public class RefTable
+    public class ReferenceTable
     {
         public bool HasBigEntry;
         public int Count8;
         public int Count32 = 0;
         public List<Entry> Entries = new List<Entry>();
-        public long origin;
+        public long OffsetOrigin;
 
-        public RefTable(BinaryReader reader, Func<uint, uint, Entry> entryFactory)
+        public ReferenceTable(BinaryReader reader, Func<uint, uint, Entry> entryFactory)
         {
             byte temp = reader.ReadByte();
             HasBigEntry = Convert.ToBoolean(temp >> 7);
@@ -42,10 +42,10 @@ namespace Overlord_PackageManager.resources.Generic
                 Entries.Add(entryFactory(id, offset));
             }
 
-            origin = reader.BaseStream.Position;
+            OffsetOrigin = reader.BaseStream.Position;
         }
 
-        public RefTable(BinaryReader reader)
+        public ReferenceTable(BinaryReader reader)
         {
             byte temp = reader.ReadByte();
             HasBigEntry = Convert.ToBoolean(temp >> 7);
@@ -71,11 +71,11 @@ namespace Overlord_PackageManager.resources.Generic
                 relativeOffsets.Add(reader.ReadUInt32());
             }
 
-            origin = reader.BaseStream.Position;
+            OffsetOrigin = reader.BaseStream.Position;
 
             for (int i = 0; i < ids.Count; i++)
             {
-                reader.BaseStream.Position = origin + relativeOffsets[i];
+                reader.BaseStream.Position = OffsetOrigin + relativeOffsets[i];
 
                 uint typeIdentifier = reader.ReadUInt32();
 

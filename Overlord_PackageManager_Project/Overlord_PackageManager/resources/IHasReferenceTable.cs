@@ -2,8 +2,8 @@
 
 namespace Overlord_PackageManager.resources
 {
-    public interface IHasRefTable
+    public interface IHasReferenceTable
     {
-        RefTable GetRefTable();
+        ReferenceTable GetReferenceTable();
     }
 }

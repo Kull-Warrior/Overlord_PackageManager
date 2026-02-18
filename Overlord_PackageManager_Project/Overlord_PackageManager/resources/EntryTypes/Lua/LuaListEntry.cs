@@ -6,19 +6,19 @@ namespace Overlord_PackageManager.resources.EntryTypes.Lua
     class LuaListEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
         public byte[] leadingBytes;
-        public RefTable Table;
+        public ReferenceTable Table;
 
-        public RefTable GetRefTable() => Table;
+        public ReferenceTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
             leadingBytes = reader.ReadBytes((int)numberOfLeadingBytes);
-            Table = new RefTable(reader, entryFactory);
+            Table = new ReferenceTable(reader, entryFactory);
 
             foreach (var entry in Table.Entries)
             {
-                ((LuaEntry)entry).Read(reader, Table.origin, 19, LuaDataDictionary);
+                ((LuaEntry)entry).Read(reader, Table.OffsetOrigin, 19, LuaDataDictionary);
             }
         }
 

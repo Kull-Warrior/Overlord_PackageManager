@@ -21,8 +21,8 @@ namespace Overlord_PackageManager.resources.OMP
     }
     public class OMPBody
     {
-        public RefTable Info;
-        public RefTable Data;
+        public ReferenceTable Info;
+        public ReferenceTable Data;
     }
 
     public class OMPFile
@@ -40,33 +40,33 @@ namespace Overlord_PackageManager.resources.OMP
                     Header = new OMPHeader(br);
                     Body = new OMPBody();
 
-                    Body.Info = new RefTable(br, Entry.InfoTableDictionary);
+                    Body.Info = new ReferenceTable(br, Entry.InfoTableDictionary);
 
                     foreach (var entry in Body.Info.Entries)
                     {
-                        entry.Read(br, Body.Info.origin);
+                        entry.Read(br, Body.Info.OffsetOrigin);
                     }
 
-                    Body.Data = new RefTable(br, Entry.OMPDataRootTableDictionary);
+                    Body.Data = new ReferenceTable(br, Entry.OMPDataRootTableDictionary);
 
                     foreach (var entry in Body.Data.Entries)
                     {
-                        if ( entry is RefTableEntry)
+                        if ( entry is ReferenceTableEntry)
                         {
                             switch (entry.Id)
                             {
                                 case 21:
-                                    ((RefTableEntry)entry).Read(br, Body.Data.origin, 0, Entry.UnknownType21Dictionary);
+                                    ((ReferenceTableEntry)entry).Read(br, Body.Data.OffsetOrigin, 0, Entry.UnknownType21Dictionary);
 
-                                    foreach (var subEntry in ((RefTableEntry)entry).Table.Entries)
+                                    foreach (var subEntry in ((ReferenceTableEntry)entry).Table.Entries)
                                     {
-                                        if (entry is RefTableEntry)
+                                        if (entry is ReferenceTableEntry)
                                         {
 
                                         }
                                         else
                                         {
-                                            subEntry.Read(br, ((RefTableEntry)entry).Table.origin);
+                                            subEntry.Read(br, ((ReferenceTableEntry)entry).Table.OffsetOrigin);
                                         }
                                     }
                                     break;
@@ -109,32 +109,32 @@ namespace Overlord_PackageManager.resources.OMP
 
                         if (entry is TerrainDataEntry)
                         {
-                            ((TerrainDataEntry)entry).Read(br, Body.Data.origin, 0, Entry.TerrainDataDictionary);
+                            ((TerrainDataEntry)entry).Read(br, Body.Data.OffsetOrigin, 0, Entry.TerrainDataDictionary);
                         }
 
                         if (entry is UnknownTableType21Entry)
                         {
-                            ((UnknownTableType21Entry)entry).Read(br, Body.Data.origin, 0, Entry.RPKListDictionary);
+                            ((UnknownTableType21Entry)entry).Read(br, Body.Data.OffsetOrigin, 0, Entry.RPKListDictionary);
                         }
 
-                        if (entry is RPKListEntry)
+                        if (entry is ResourcePackLinkEntry)
                         {
-                            ((RPKListEntry)entry).Read(br, Body.Data.origin, 3, Entry.RPKListDictionary);
+                            ((ResourcePackLinkEntry)entry).Read(br, Body.Data.OffsetOrigin, 3, Entry.RPKListDictionary);
                         }
 
                         if (entry is LuaListEntry)
                         {
-                            ((LuaListEntry)entry).Read(br, Body.Data.origin, 3, Entry.LuaListDictionary);
+                            ((LuaListEntry)entry).Read(br, Body.Data.OffsetOrigin, 3, Entry.LuaListDictionary);
                         }
 
                         if (entry is LuaEntry)
                         {
-                            ((LuaEntry)entry).Read(br, Body.Data.origin, 0, Entry.LuaDataDictionary);
+                            ((LuaEntry)entry).Read(br, Body.Data.OffsetOrigin, 0, Entry.LuaDataDictionary);
                         }
                         
                         if (entry is StringEntry || entry is Int32Entry || entry is FloatEntry || entry is Int64Entry)
                         {
-                            entry.Read(br, Body.Data.origin);
+                            entry.Read(br, Body.Data.OffsetOrigin);
                         }
 
                         if (entry is BinaryEntry)
@@ -157,7 +157,7 @@ namespace Overlord_PackageManager.resources.OMP
                                     length = 0;
                                     break;
                             }
-                            ((BinaryEntry)entry).Read(br, Body.Data.origin, length);
+                            ((BinaryEntry)entry).Read(br, Body.Data.OffsetOrigin, length);
                         }
                     }
                 }
