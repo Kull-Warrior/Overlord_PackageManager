@@ -77,9 +77,9 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 reader.BaseStream.Position = origin + relativeOffsets[i];
 
-                uint identifier = reader.ReadUInt32();
+                uint typeIdentifier = reader.ReadUInt32();
 
-                switch (identifier)
+                switch (typeIdentifier)
                 {
                     case 4259915:   // Object -> Meshes & used materials by these meshs assignment block.  Skeleton Data as well
                         break;

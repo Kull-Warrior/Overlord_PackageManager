@@ -4,42 +4,43 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class BoneAnimationSubTableType25SubTableType21(uint id, uint relOffset) : Entry(id, relOffset)
+    class BoneAnimationSubTableType25SubTableType21(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public RefTable varRefTable;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            varRefTable = new RefTable(reader, entryFactory);
+            Table = new RefTable(reader, entryFactory);
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is Int32Entry)
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
                 if (entry is BinaryEntry)
                 {
-                    ((BinaryEntry)entry).Read(reader, varRefTable.origin, 12);
+                    ((BinaryEntry)entry).Read(reader, Table.origin, 12);
                 }
                 if (entry is BoneRotationDataArray)
                 {
-                    List<Int32Entry> intEntries = varRefTable.Entries.OfType<Int32Entry>().ToList();
+                    List<Int32Entry> intEntries = Table.Entries.OfType<Int32Entry>().ToList();
 
                     if (intEntries == null)
                         throw new InvalidOperationException("No ByteCode length found");
                     
-                    ((BoneRotationDataArray)entry).Read(reader, varRefTable.origin, intEntries[0].varInt);
+                    ((BoneRotationDataArray)entry).Read(reader, Table.origin, intEntries[0].varInt);
                 }
                 if (entry is BoneScaleDataArray)
                 {
-                    List<Int32Entry> intEntries = varRefTable.Entries.OfType<Int32Entry>().ToList();
+                    List<Int32Entry> intEntries = Table.Entries.OfType<Int32Entry>().ToList();
 
                     if (intEntries == null)
                         throw new InvalidOperationException("No ByteCode length found");
 
-                    ((BoneScaleDataArray)entry).Read(reader, varRefTable.origin, intEntries[1].varInt);
+                    ((BoneScaleDataArray)entry).Read(reader, Table.origin, intEntries[1].varInt);
                 }
             }
         }

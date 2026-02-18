@@ -5,27 +5,28 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap
 {
-    class ReflectionMapTextureAsset(uint id, uint relOffset) : Entry(id, relOffset)
+    class ReflectionMapTextureAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public byte[] identifier;
-        public RefTable varRefTable;
+        public uint TypeIdentifier;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            identifier = reader.ReadBytes(4);
-            varRefTable = new RefTable(reader, entryFactory);
+            TypeIdentifier = reader.ReadUInt32();
+            Table = new RefTable(reader, entryFactory);
 
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if(entry is StringEntry || entry is Int32Entry)
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
                 if (entry is DDSTextureAssetSubTableType1)
                 {
-                    ((DDSTextureAssetSubTableType1)entry).Read(reader, varRefTable.origin, DDSTextureAssetSubTableType1Dictionary);
+                    ((DDSTextureAssetSubTableType1)entry).Read(reader, Table.origin, DDSTextureAssetSubTableType1Dictionary);
                 }
             }
         }
@@ -40,22 +41,22 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap
             byte[] fileHeader;
             string fileName = "";
 
-            string objectName = ((StringEntry)varRefTable.Entries[1]).varString;
+            string objectName = ((StringEntry)Table.Entries[1]).varString;
             Directory.CreateDirectory(baseDir + objectName);
 
             List<RawDDSTextureData> rawDDSTextures;
 
-            DDSTextureAssetSubTableType1 subTable = (DDSTextureAssetSubTableType1)varRefTable.Entries[3];
-            ListOfRawDDSTextureData listOfDDSTextureEntries = (ListOfRawDDSTextureData)subTable.varRefTable.Entries[0];
+            DDSTextureAssetSubTableType1 subTable = (DDSTextureAssetSubTableType1)Table.Entries[3];
+            ListOfRawDDSTextureData listOfDDSTextureEntries = (ListOfRawDDSTextureData)subTable.Table.Entries[0];
 
-            rawDDSTextures = listOfDDSTextureEntries.varRefTable.Entries.OfType<RawDDSTextureData>().ToList();
+            rawDDSTextures = listOfDDSTextureEntries.Table.Entries.OfType<RawDDSTextureData>().ToList();
 
             uint baseMipMapCount;
             
             // Determine mip count from first texture
             {
-                uint width = ((Int32Entry)rawDDSTextures[0].varRefTable.Entries[0]).varInt;
-                uint height = ((Int32Entry)rawDDSTextures[0].varRefTable.Entries[1]).varInt;
+                uint width = ((Int32Entry)rawDDSTextures[0].Table.Entries[0]).varInt;
+                uint height = ((Int32Entry)rawDDSTextures[0].Table.Entries[1]).varInt;
                 baseMipMapCount = DDSTextureAsset.CalculateMipMapCount(width, height);
             }
 
@@ -71,9 +72,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap
                 if (i % baseMipMapCount == 0 && i <= rawDDSTextures.Count - baseMipMapCount)
                 {
                     fileName = $"\\ReflectionMap_Section_{i / baseMipMapCount}.dds";
-                    uint width = ((Int32Entry)rawDDSTextures[i].varRefTable.Entries[0]).varInt;
-                    uint height = ((Int32Entry)rawDDSTextures[i].varRefTable.Entries[1]).varInt;
-                    uint rawFormat = ((Int32Entry)rawDDSTextures[i].varRefTable.Entries[2]).varInt;
+                    uint width = ((Int32Entry)rawDDSTextures[i].Table.Entries[0]).varInt;
+                    uint height = ((Int32Entry)rawDDSTextures[i].Table.Entries[1]).varInt;
+                    uint rawFormat = ((Int32Entry)rawDDSTextures[i].Table.Entries[2]).varInt;
                     DDSFormat format = (DDSFormat)rawFormat;
                     uint mipMapCount = DDSTextureAsset.CalculateMipMapCount(width, height);
 
@@ -100,7 +101,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap
                     }
                 }
 
-                byte[] textureData = ((BinaryEntry)rawDDSTextures[i].varRefTable.Entries[3]).varBytes;
+                byte[] textureData = ((BinaryEntry)rawDDSTextures[i].Table.Entries[3]).varBytes;
 
                 using FileStream fs = File.Open(baseDir + objectName + fileName, FileMode.Append);
                 using BinaryWriter br = new BinaryWriter(fs);

@@ -4,23 +4,19 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    class TerrainDataEntry : Entry
+    class TerrainDataEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
         public byte[] leadingBytes;
-        public RefTable varRefTable;
-
-        public TerrainDataEntry(uint id, uint relOffset) : base(id, relOffset)
-        {
-
-        }
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
             leadingBytes = reader.ReadBytes((int)numberOfLeadingBytes);
-            varRefTable = new RefTable(reader, entryFactory);
+            Table = new RefTable(reader, entryFactory);
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is BinaryEntry)
                 {
@@ -40,11 +36,11 @@ namespace Overlord_PackageManager.resources.EntryTypes
                             length = 0;
                             break;
                     }
-                    ((BinaryEntry)entry).Read(reader, varRefTable.origin, length);
+                    ((BinaryEntry)entry).Read(reader, Table.origin, length);
                 }
                 else
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
             }
         }

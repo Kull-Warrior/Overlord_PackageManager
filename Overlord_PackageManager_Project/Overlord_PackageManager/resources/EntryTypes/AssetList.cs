@@ -8,44 +8,47 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    class AssetList(uint id, uint relOffset) : Entry(id, relOffset)
+    class AssetList(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public byte[] leadingBytes;
-        public RefTable varRefTable;
+        public byte[] LeadingBytes;
+        public RefTable Table;
+
+        public RefTable GetRefTable() => Table;
+
 
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            leadingBytes = reader.ReadBytes(3);
-            varRefTable = new RefTable(reader);
+            LeadingBytes = reader.ReadBytes(3);
+            Table = new RefTable(reader);
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is ReflectionMapTextureAsset)
                 {
-                    ((ReflectionMapTextureAsset)entry).Read(reader, varRefTable.origin, ReflectionMapTextureAssetDictionary);
+                    ((ReflectionMapTextureAsset)entry).Read(reader, Table.origin, ReflectionMapTextureAssetDictionary);
                 }
                 if (entry is DDSTextureAsset)
                 {
-                    ((DDSTextureAsset)entry).Read(reader, varRefTable.origin,DDSTextureAssetDictionary);
+                    ((DDSTextureAsset)entry).Read(reader, Table.origin,DDSTextureAssetDictionary);
                 }
                 if (entry is TgaTifTextureAsset)
                 {
-                    ((TgaTifTextureAsset)entry).Read(reader, varRefTable.origin, TgaTifTextureAssetDictionary);
+                    ((TgaTifTextureAsset)entry).Read(reader, Table.origin, TgaTifTextureAssetDictionary);
                 }
                 if (entry is SFXAsset)
                 {
-                    ((SFXAsset)entry).Read(reader, varRefTable.origin, SFXAssetDictionary);
+                    ((SFXAsset)entry).Read(reader, Table.origin, SFXAssetDictionary);
                 }
                 if (entry is AnimationAsset)
                 {
-                    ((AnimationAsset)entry).Read(reader, varRefTable.origin, AnimationAssetDictionary);
+                    ((AnimationAsset)entry).Read(reader, Table.origin, AnimationAssetDictionary);
                 }
             }
         }
         public void WriteToFiles(string baseDir)
         {
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is ReflectionMapTextureAsset)
                 {
@@ -73,11 +76,6 @@ namespace Overlord_PackageManager.resources.EntryTypes
                     //NotImplemented
                 }
             }
-        }
-
-        private void WriteToFile(string baseDir)
-        {
-            throw new NotImplementedException();
         }
     }
 }

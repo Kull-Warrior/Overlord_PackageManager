@@ -3,17 +3,14 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    class Int32ArrayEntry : Entry
+    class Int32ArrayEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
         public byte[] leadingBytes;
-        public RefTable varRefTable;
+        public RefTable Table;
 
         public uint[] varIntArray;
 
-        public Int32ArrayEntry(uint id, uint relOffset) : base (id, relOffset)
-        {
-
-        }
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, uint arraySize)
         {

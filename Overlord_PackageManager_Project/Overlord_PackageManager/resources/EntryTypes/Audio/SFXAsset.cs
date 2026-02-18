@@ -4,26 +4,27 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Audio
 {
-    class SFXAsset(uint id, uint relOffset) : Entry(id, relOffset)
+    class SFXAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public byte[] identifier;
-        public RefTable varRefTable;
+        public uint TypeIdentifier;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            identifier = reader.ReadBytes(4);
-            varRefTable = new RefTable(reader, entryFactory);
+            TypeIdentifier = reader.ReadUInt32();
+            Table = new RefTable(reader, entryFactory);
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is StringEntry || entry is Int32Entry)
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
                 if (entry is SFXData)
                 {
-                    ((SFXData)entry).Read(reader, varRefTable.origin, SFXDataDictionary);
+                    ((SFXData)entry).Read(reader, Table.origin, SFXDataDictionary);
                 }
             }
         }
@@ -35,11 +36,11 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
 
         public void WriteToFile(string baseDir)
         {
-            List<StringEntry> sfxAssetStrings = varRefTable.Entries.OfType<StringEntry>().ToList();
+            List<StringEntry> sfxAssetStrings = Table.Entries.OfType<StringEntry>().ToList();
             string rawName = sfxAssetStrings[2].varString;
             string fileName = Path.GetFileName(rawName);
-            List<SFXData> sfxData = varRefTable.Entries.OfType<SFXData>().ToList();
-            byte[] audioData = ((BinaryEntry)sfxData[0].varRefTable.Entries[1]).varBytes;
+            List<SFXData> sfxData = Table.Entries.OfType<SFXData>().ToList();
+            byte[] audioData = ((BinaryEntry)sfxData[0].Table.Entries[1]).varBytes;
 
             using FileStream fs = File.Open(baseDir + fileName, FileMode.Create);
             using BinaryWriter br = new BinaryWriter(fs);

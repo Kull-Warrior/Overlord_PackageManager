@@ -4,16 +4,17 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class FXEEntry(uint id, uint relOffset) : Entry(id, relOffset)
+    class FXEEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public RefTable varRefTable;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            varRefTable = new RefTable(reader, entryFactory);
+            Table = new RefTable(reader, entryFactory);
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is BinaryEntry)
                 {
@@ -33,11 +34,11 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
                             length = 0;
                             break;
                     }
-                    ((BinaryEntry)entry).Read(reader, varRefTable.origin, length);
+                    ((BinaryEntry)entry).Read(reader, Table.origin, length);
                 }
                 else
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
             }
         }

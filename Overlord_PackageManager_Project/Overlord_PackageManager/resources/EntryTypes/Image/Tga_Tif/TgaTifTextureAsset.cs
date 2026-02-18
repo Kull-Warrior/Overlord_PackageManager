@@ -4,27 +4,28 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
 {
-    class TgaTifTextureAsset(uint id, uint relOffset) : Entry(id, relOffset)
+    class TgaTifTextureAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public byte[] identifier;
-        public RefTable varRefTable;
+        public uint TypeIdentifier;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            identifier = reader.ReadBytes(4);
-            varRefTable = new RefTable(reader, entryFactory);
+            TypeIdentifier = reader.ReadUInt32();
+            Table = new RefTable(reader, entryFactory);
 
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is StringEntry || entry is Int32Entry)
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
                 if (entry is TgaTifTextureData)
                 {
-                    List<Int32Entry> intEntries = varRefTable.Entries.OfType<Int32Entry>().ToList();
+                    List<Int32Entry> intEntries = Table.Entries.OfType<Int32Entry>().ToList();
 
                     if (intEntries == null)
                         throw new InvalidOperationException("No width and height length found");
@@ -32,7 +33,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
                     uint bytesPerPixel = 4;
                     uint rawTextureDataLength = intEntries[0].varInt * intEntries[1].varInt * bytesPerPixel;
 
-                    ((TgaTifTextureData)entry).Read(reader, varRefTable.origin, RawTgaTifTextureDataDictionary, rawTextureDataLength);
+                    ((TgaTifTextureData)entry).Read(reader, Table.origin, RawTgaTifTextureDataDictionary, rawTextureDataLength);
                 }
             }
         }
@@ -118,15 +119,15 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
         {
             byte[] header;
             string filePath = "";
-            List<StringEntry> tgaTifAssetStrings = varRefTable.Entries.OfType<StringEntry>().ToList();
+            List<StringEntry> tgaTifAssetStrings = Table.Entries.OfType<StringEntry>().ToList();
             string fileName = tgaTifAssetStrings[1].varString;
 
-            List<Int32Entry> ints = varRefTable.Entries.OfType<Int32Entry>().ToList();
+            List<Int32Entry> ints = Table.Entries.OfType<Int32Entry>().ToList();
             uint width = ints[0].varInt;
             uint height = ints[1].varInt;
 
-            TgaTifTextureData dataContainer = (TgaTifTextureData)varRefTable.Entries[5];
-            byte[] rawRGBA = ((BinaryEntry)dataContainer.varRefTable.Entries[0]).varBytes;
+            TgaTifTextureData dataContainer = (TgaTifTextureData)Table.Entries[5];
+            byte[] rawRGBA = ((BinaryEntry)dataContainer.Table.Entries[0]).varBytes;
 
             if (fileName.ToLower().EndsWith(".tif"))
             {

@@ -6,7 +6,6 @@ using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.EntryTypes.Lua;
 using Overlord_PackageManager.resources.EntryTypes.XML;
-using Overlord_PackageManager.resources.Generic.EntryTypes;
 using System.IO;
 
 namespace Overlord_PackageManager.resources.Generic
@@ -240,7 +239,7 @@ namespace Overlord_PackageManager.resources.Generic
             return id switch
             {
                 // Add more IDs here
-                _ => new RPKEntry(id, relOffset) //Any ID is of this type
+                //_ => new ResourcePackRootEntry(id, relOffset) //Any ID is of this type
             };
         }
 

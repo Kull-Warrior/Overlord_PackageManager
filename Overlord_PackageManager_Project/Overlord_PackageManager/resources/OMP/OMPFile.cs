@@ -58,7 +58,7 @@ namespace Overlord_PackageManager.resources.OMP
                                 case 21:
                                     ((RefTableEntry)entry).Read(br, Body.Data.origin, 0, Entry.UnknownType21Dictionary);
 
-                                    foreach (var subEntry in ((RefTableEntry)entry).varRefTable.Entries)
+                                    foreach (var subEntry in ((RefTableEntry)entry).Table.Entries)
                                     {
                                         if (entry is RefTableEntry)
                                         {
@@ -66,7 +66,7 @@ namespace Overlord_PackageManager.resources.OMP
                                         }
                                         else
                                         {
-                                            subEntry.Read(br, ((RefTableEntry)entry).varRefTable.origin);
+                                            subEntry.Read(br, ((RefTableEntry)entry).Table.origin);
                                         }
                                     }
                                     break;

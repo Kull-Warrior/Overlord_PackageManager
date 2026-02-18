@@ -4,26 +4,27 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class AnimationAsset(uint id, uint relOffset) : Entry(id, relOffset)
+    class AnimationAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public byte[] identifier;
-        public RefTable varRefTable;
+        public uint TypeIdentifier;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            identifier = reader.ReadBytes(4);
-            varRefTable = new RefTable(reader, entryFactory);
+            TypeIdentifier = reader.ReadUInt32();
+            Table = new RefTable(reader, entryFactory);
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if(entry is StringEntry || entry is Int32Entry || entry is Int64Entry || entry is FloatEntry)
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
                 if (entry is AnimationAssetSubTableType1)
                 {
-                    ((AnimationAssetSubTableType1)entry).Read(reader, varRefTable.origin, AnimationAssetSubTableType1Dictionary);
+                    ((AnimationAssetSubTableType1)entry).Read(reader, Table.origin, AnimationAssetSubTableType1Dictionary);
                 }
             }
         }

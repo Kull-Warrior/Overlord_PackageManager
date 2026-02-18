@@ -4,24 +4,20 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    class UnknownTableType21Entry : Entry
+    class UnknownTableType21Entry(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
         public byte[] leadingBytes;
-        public RefTable varRefTable;
-
-        public UnknownTableType21Entry(uint id, uint relOffset) : base(id, relOffset)
-        {
-
-        }
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
             leadingBytes = reader.ReadBytes((int)numberOfLeadingBytes);
-            varRefTable = new RefTable(reader, entryFactory);
+            Table = new RefTable(reader, entryFactory);
 
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 /*if (entry is DataSubTableType21SubTableType20Entry)
                 {
@@ -29,7 +25,7 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 }*/
                 if (entry is Int32Entry || entry is ByteEntry)
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
             }
         }

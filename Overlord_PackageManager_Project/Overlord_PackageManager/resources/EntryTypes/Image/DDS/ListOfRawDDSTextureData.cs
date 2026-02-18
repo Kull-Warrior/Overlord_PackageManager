@@ -3,22 +3,23 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    class ListOfRawDDSTextureData(uint id, uint relOffset) : Entry(id, relOffset)
+    class ListOfRawDDSTextureData(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
         public byte[] leadingBytes;
-        public RefTable varRefTable;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelOffset;
             leadingBytes = reader.ReadBytes(3);
-            varRefTable = new RefTable(reader);
+            Table = new RefTable(reader);
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is RawDDSTextureData)
                 {
-                    ((RawDDSTextureData)entry).Read(reader, varRefTable.origin, 0, RawDDSTextureDataDictionary);
+                    ((RawDDSTextureData)entry).Read(reader, Table.origin, 0, RawDDSTextureDataDictionary);
                 }
             }
         }

@@ -4,38 +4,39 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class BoneAnimationData(uint id, uint relOffset) : Entry(id, relOffset)
+    class BoneAnimationData(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public uint entryTypeIdentifier;
-        public RefTable varRefTable;
+        public uint TypeIdentifier;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            entryTypeIdentifier = reader.ReadUInt32();
-            varRefTable = new RefTable(reader, entryFactory);
+            TypeIdentifier = reader.ReadUInt32();
+            Table = new RefTable(reader, entryFactory);
 
-            foreach (var entry in varRefTable.Entries)
+            foreach (var entry in Table.Entries)
             {
                 if (entry is Int64Entry || entry is StringEntry)
                 {
-                    entry.Read(reader, varRefTable.origin);
+                    entry.Read(reader, Table.origin);
                 }
                 if (entry is BoneAnimationSubTableType22)
                 {
-                    ((BoneAnimationSubTableType22)entry).Read(reader, varRefTable.origin, BoneAnimationSubTableType22Dictionary);
+                    ((BoneAnimationSubTableType22)entry).Read(reader, Table.origin, BoneAnimationSubTableType22Dictionary);
                 }
                 if (entry is BoneAnimationSubTableType23)
                 {
-                    ((BoneAnimationSubTableType23)entry).Read(reader, varRefTable.origin, BoneAnimationSubTableType23Dictionary);
+                    ((BoneAnimationSubTableType23)entry).Read(reader, Table.origin, BoneAnimationSubTableType23Dictionary);
                 }
                 if (entry is BoneAnimationSubTableType24)
                 {
-                    ((BoneAnimationSubTableType24)entry).Read(reader, varRefTable.origin, BoneAnimationSubTableType24Dictionary);
+                    ((BoneAnimationSubTableType24)entry).Read(reader, Table.origin, BoneAnimationSubTableType24Dictionary);
                 }
                 if (entry is BoneAnimationSubTableType25)
                 {
-                    ((BoneAnimationSubTableType25)entry).Read(reader, varRefTable.origin, BoneAnimationSubTableType25Dictionary);
+                    ((BoneAnimationSubTableType25)entry).Read(reader, Table.origin, BoneAnimationSubTableType25Dictionary);
                 }
             }
         }

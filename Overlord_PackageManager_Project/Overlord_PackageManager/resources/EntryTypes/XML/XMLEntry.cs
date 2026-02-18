@@ -4,30 +4,31 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.XML
 {
-    class XMLEntry(uint id, uint relOffset) : Entry(id, relOffset)
+    class XMLEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasRefTable
     {
-        public RefTable varRefTable;
+        public RefTable Table;
+        public RefTable GetRefTable() => Table;
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            varRefTable = new RefTable(reader, entryFactory);
+            Table = new RefTable(reader, entryFactory);
 
-            if (varRefTable.Count8 > 0 || varRefTable.Count32 > 0)
+            if (Table.Count8 > 0 || Table.Count32 > 0)
             {
-                foreach (var entry in varRefTable.Entries)
+                foreach (var entry in Table.Entries)
                 {
                     if (entry is StringEntry || entry is Int32Entry)
                     {
-                        entry.Read(reader, varRefTable.origin);
+                        entry.Read(reader, Table.origin);
                     }
                     if (entry is BinaryEntry)
                     {
-                        Int32Entry? intEntry = varRefTable.Entries.OfType<Int32Entry>().LastOrDefault();
+                        Int32Entry? intEntry = Table.Entries.OfType<Int32Entry>().LastOrDefault();
                         if (intEntry == null)
                             throw new InvalidOperationException("No XML length found");
 
-                        ((BinaryEntry)entry).Read(reader, varRefTable.origin, intEntry.varInt);
+                        ((BinaryEntry)entry).Read(reader, Table.origin, intEntry.varInt);
                     }
                 }
             }
@@ -40,12 +41,12 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
 
         public void WriteToFile(string baseDir)
         {
-            if (varRefTable.Count8 > 0 || varRefTable.Count32 > 0)
+            if (Table.Count8 > 0 || Table.Count32 > 0)
             {
-                string resourcePath = ((StringEntry)varRefTable.Entries[0]).varString;
+                string resourcePath = ((StringEntry)Table.Entries[0]).varString;
                 string fileName = Path.GetFileName(resourcePath);
 
-                byte[] data = ((BinaryEntry)varRefTable.Entries[2]).varBytes;
+                byte[] data = ((BinaryEntry)Table.Entries[2]).varBytes;
 
                 using FileStream fileHeaderStream = File.Open(baseDir + "\\" + fileName, FileMode.Create);
                 using BinaryWriter fileHeaderBinaryWriter = new BinaryWriter(fileHeaderStream);
