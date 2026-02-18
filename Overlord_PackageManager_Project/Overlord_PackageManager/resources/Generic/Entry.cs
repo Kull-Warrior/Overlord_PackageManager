@@ -38,8 +38,8 @@ namespace Overlord_PackageManager.resources.Generic
                 22 => new ReferenceTableEntry(id, relOffset),
                 30 => new StringEntry(id, relOffset),
                 31 => new Int32Entry(id, relOffset),
-                32 => new BinaryEntry(id, relOffset),
-                33 => new BinaryEntry(id, relOffset),
+                32 => new BlobEntry(id, relOffset),
+                33 => new BlobEntry(id, relOffset),
                 36 => new Int32Entry(id, relOffset),
                 37 => new Int32Entry(id, relOffset),
                 38 => new Int32Entry(id, relOffset),
@@ -56,16 +56,16 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 20 => new TerrainDataEntry(id, relOffset),
                 21 => new UnknownTableType21Entry(id, relOffset),
-                22 => new BinaryEntry(id, relOffset),
-                23 => new BinaryEntry(id, relOffset),
-                24 => new BinaryEntry(id, relOffset),
+                22 => new BlobEntry(id, relOffset),
+                23 => new BlobEntry(id, relOffset),
+                24 => new BlobEntry(id, relOffset),
                 25 => new LuaListEntry(id, relOffset),
                 26 => new ReferenceTableEntry(id, relOffset),
                 27 => new ReferenceTableEntry(id, relOffset),
                 28 => new ReferenceTableEntry(id, relOffset),
-                29 => new ByteEntry(id, relOffset),
+                29 => new SingleByteEntry(id, relOffset),
                 30 => new ReferenceTableEntry(id, relOffset),
-                31 => new BinaryEntry(id, relOffset),
+                31 => new BlobEntry(id, relOffset),
                 32 => new ResourcePackLinkEntry(id, relOffset),
                 33 => new LuaEntry(id, relOffset),
                 34 => new StringEntry(id, relOffset),
@@ -74,8 +74,8 @@ namespace Overlord_PackageManager.resources.Generic
                 37 => new FloatEntry(id, relOffset),
                 38 => new FloatEntry(id, relOffset),
                 39 => new FloatEntry(id, relOffset),
-                40 => new ByteEntry(id, relOffset),
-                41 => new ByteEntry(id, relOffset),
+                40 => new SingleByteEntry(id, relOffset),
+                41 => new SingleByteEntry(id, relOffset),
                 42 => new Int32Entry(id, relOffset),
                 43 => new Int32Entry(id, relOffset),
                 45 => new LuaEntry(id, relOffset),
@@ -91,16 +91,16 @@ namespace Overlord_PackageManager.resources.Generic
                 102 => new ReferenceTableEntry(id, relOffset),
                 103 => new ReferenceTableEntry(id, relOffset),
                 104 => new Int32Entry(id, relOffset),
-                106 => new ByteEntry(id, relOffset),
-                108 => new ByteEntry(id, relOffset),
+                106 => new SingleByteEntry(id, relOffset),
+                108 => new SingleByteEntry(id, relOffset),
                 110 => new Int32Entry(id, relOffset),
                 111 => new Int32Entry(id, relOffset),
                 112 => new Int32Entry(id, relOffset),
                 113 => new Int32Entry(id, relOffset),
                 114 => new StringEntry(id, relOffset),
                 115 => new Int32Entry(id, relOffset),
-                116 => new ByteEntry(id, relOffset),
-                117 => new ByteEntry(id, relOffset),
+                116 => new SingleByteEntry(id, relOffset),
+                117 => new SingleByteEntry(id, relOffset),
                 120 => new ReferenceTableEntry(id, relOffset),
                 121 => new Int32Entry(id, relOffset),
                 122 => new LuaEntry(id, relOffset),
@@ -113,7 +113,7 @@ namespace Overlord_PackageManager.resources.Generic
                 129 => new Int32Entry(id, relOffset),
                 130 => new ReferenceTableEntry(id, relOffset),
                 131 => new ReferenceTableEntry(id, relOffset),
-                132 => new BinaryEntry(id, relOffset),
+                132 => new BlobEntry(id, relOffset),
                 133 => new ReferenceTableEntry(id, relOffset),
                 134 => new StringEntry(id, relOffset),
                 // Add more IDs here
@@ -127,14 +127,14 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 30 => new Int32Entry(id, relOffset),
                 31 => new Int32Entry(id, relOffset),
-                33 => new BinaryEntry(id, relOffset),
+                33 => new BlobEntry(id, relOffset),
                 34 => new StringEntry(id, relOffset),
                 35 => new StringEntry(id, relOffset),
                 36 => new FloatEntry(id, relOffset),
-                37 => new BinaryEntry(id, relOffset),
-                38 => new ByteEntry(id, relOffset),
-                39 => new BinaryEntry(id, relOffset),
-                40 => new ByteEntry(id, relOffset),
+                37 => new BlobEntry(id, relOffset),
+                38 => new SingleByteEntry(id, relOffset),
+                39 => new BlobEntry(id, relOffset),
+                40 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -146,7 +146,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 20 => new ReferenceTableEntry(id, relOffset),
                 21 => new Int32Entry(id, relOffset),
-                22 => new ByteEntry(id, relOffset),
+                22 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -173,17 +173,17 @@ namespace Overlord_PackageManager.resources.Generic
                 10 => new Int32Entry(id, relOffset),
                 11 => new Int32Entry(id, relOffset),
                 12 => new StringEntry(id, relOffset),
-                20 => new BinaryEntry(id, relOffset),
-                21 => new BinaryEntry(id, relOffset),
+                20 => new BlobEntry(id, relOffset),
+                21 => new BlobEntry(id, relOffset),
                 22 => new Int32Entry(id, relOffset),
                 23 => new Int32Entry(id, relOffset),
                 24 => new Int32Entry(id, relOffset),
-                40 => new ByteEntry(id, relOffset),
-                42 => new ByteEntry(id, relOffset),
+                40 => new SingleByteEntry(id, relOffset),
+                42 => new SingleByteEntry(id, relOffset),
                 60 => new StringEntry(id, relOffset),
                 61 => new ReferenceTableEntry(id, relOffset),
                 62 => new ReferenceTableEntry(id, relOffset),
-                63 => new ByteEntry(id, relOffset),
+                63 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -207,7 +207,7 @@ namespace Overlord_PackageManager.resources.Generic
                 20 => new StringEntry(id, relOffset),
                 21 => new StringArrayEntry(id, relOffset),
                 22 => new Int32Entry(id, relOffset),
-                23 => new BinaryEntry(id, relOffset),
+                23 => new BlobEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -228,7 +228,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 10 => new StringEntry(id, relOffset),
                 11 => new Int32Entry(id, relOffset),
-                12 => new BinaryEntry(id, relOffset),
+                12 => new BlobEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -250,7 +250,7 @@ namespace Overlord_PackageManager.resources.Generic
                 30 => new Int32Entry(id, relOffset),
                 31 => new StringEntry(id, relOffset),
                 32 => new StringEntry(id, relOffset),
-                33 => new ByteEntry(id, relOffset),
+                33 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -373,7 +373,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 22 => new Int32Entry(id, relOffset),                // Number of Bone rotations
                 23 => new BoneRotationDataArray(id, relOffset),     // Array of Bone rotations
-                24 => new BinaryEntry(id, relOffset),               // Unkown 12 Bytes
+                24 => new BlobEntry(id, relOffset),               // Unkown 12 Bytes
                 30 => new Int32Entry(id, relOffset),                // Number of Bone scales
                 31 => new BoneScaleDataArray(id, relOffset),        // Number of Bone scales
                 // Add more IDs here
@@ -442,7 +442,7 @@ namespace Overlord_PackageManager.resources.Generic
             return id switch
             {
                 30 => new Int32Entry(id, relOffset),    // Length of SFX Data
-                31 => new BinaryEntry(id, relOffset),    // SFX Data, Header + Raw Audio Data, full wav style file
+                31 => new BlobEntry(id, relOffset),    // SFX Data, Header + Raw Audio Data, full wav style file
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -458,7 +458,7 @@ namespace Overlord_PackageManager.resources.Generic
                 21 => new StringEntry(id, relOffset),   // Sound name
                 100 => new StringEntry(id, relOffset),  // File name
                 101 => new Int32Entry(id, relOffset),   // FFFF Block unkown use
-                105 => new ByteEntry(id, relOffset),    // Unkown single byte
+                105 => new SingleByteEntry(id, relOffset),    // Unkown single byte
                 106 => new Int32Entry(id, relOffset),   // Unkown int32
                 107 => new Int32Entry(id, relOffset),   // Unkown int32
                 // Add more IDs here
@@ -474,7 +474,7 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
-                30 => new BinaryEntry(id, relOffset),
+                30 => new BlobEntry(id, relOffset),
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -505,7 +505,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 20 => new Int32Entry(id, relOffset),    // Image width
                 21 => new Int32Entry(id, relOffset),    // Image height
-                22 => new BinaryEntry(id, relOffset),   // Raw image data
+                22 => new BlobEntry(id, relOffset),   // Raw image data
                 23 => new Int32Entry(id, relOffset),    // DDS Format
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")

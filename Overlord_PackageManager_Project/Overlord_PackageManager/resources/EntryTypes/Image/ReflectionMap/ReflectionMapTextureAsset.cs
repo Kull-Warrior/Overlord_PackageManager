@@ -101,7 +101,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap
                     }
                 }
 
-                byte[] textureData = ((BinaryEntry)rawDDSTextures[i].Table.Entries[3]).varBytes;
+                byte[] textureData = ((BlobEntry)rawDDSTextures[i].Table.Entries[3]).varBytes;
 
                 using FileStream fs = File.Open(baseDir + objectName + fileName, FileMode.Append);
                 using BinaryWriter br = new BinaryWriter(fs);

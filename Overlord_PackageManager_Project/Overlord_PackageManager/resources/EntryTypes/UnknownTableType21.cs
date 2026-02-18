@@ -23,7 +23,7 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 {
                     ((DataSubTableType21SubTableType20ListEntry)entry).Read(reader, varRefTable.origin, 3, GameObjectDataSubTableType20ListDictionary);
                 }*/
-                if (entry is Int32Entry || entry is ByteEntry)
+                if (entry is Int32Entry || entry is SingleByteEntry)
                 {
                     entry.Read(reader, Table.OffsetOrigin);
                 }

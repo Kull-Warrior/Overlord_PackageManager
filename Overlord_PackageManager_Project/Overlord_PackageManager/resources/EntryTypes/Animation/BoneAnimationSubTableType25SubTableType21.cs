@@ -20,9 +20,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
                 {
                     entry.Read(reader, Table.OffsetOrigin);
                 }
-                if (entry is BinaryEntry)
+                if (entry is BlobEntry)
                 {
-                    ((BinaryEntry)entry).Read(reader, Table.OffsetOrigin, 12);
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, 12);
                 }
                 if (entry is BoneRotationDataArray)
                 {

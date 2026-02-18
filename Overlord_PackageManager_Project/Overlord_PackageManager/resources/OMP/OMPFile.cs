@@ -137,7 +137,7 @@ namespace Overlord_PackageManager.resources.OMP
                             entry.Read(br, Body.Data.OffsetOrigin);
                         }
 
-                        if (entry is BinaryEntry)
+                        if (entry is BlobEntry)
                         {
                             uint length;
                             switch (entry.Id)
@@ -157,7 +157,7 @@ namespace Overlord_PackageManager.resources.OMP
                                     length = 0;
                                     break;
                             }
-                            ((BinaryEntry)entry).Read(br, Body.Data.OffsetOrigin, length);
+                            ((BlobEntry)entry).Read(br, Body.Data.OffsetOrigin, length);
                         }
                     }
                 }

@@ -23,7 +23,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
                 {
                     entry.Read(reader, Table.OffsetOrigin);
                 }
-                if (entry is BinaryEntry)
+                if (entry is BlobEntry)
                 {
                     List<Int32Entry> intEntries = Table.Entries.OfType<Int32Entry>().ToList();
 
@@ -71,7 +71,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
                         throw new NotImplementedException("Unkown Image Format : " + rawFormat);
                     }
 
-                    ((BinaryEntry)entry).Read(reader, Table.OffsetOrigin, rawByteLength);
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, rawByteLength);
                 }
             }
         }

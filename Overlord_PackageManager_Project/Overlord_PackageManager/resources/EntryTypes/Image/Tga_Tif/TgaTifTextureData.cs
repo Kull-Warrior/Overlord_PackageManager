@@ -16,9 +16,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is BinaryEntry)
+                if (entry is BlobEntry)
                 {
-                    ((BinaryEntry)entry).Read(reader, Table.OffsetOrigin, rawTextureDataLength);
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, rawTextureDataLength);
                 }
             }
         }

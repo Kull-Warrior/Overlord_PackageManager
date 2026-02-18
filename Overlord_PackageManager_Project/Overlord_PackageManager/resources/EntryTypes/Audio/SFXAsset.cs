@@ -40,7 +40,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
             string rawName = sfxAssetStrings[2].varString;
             string fileName = Path.GetFileName(rawName);
             List<SFXData> sfxData = Table.Entries.OfType<SFXData>().ToList();
-            byte[] audioData = ((BinaryEntry)sfxData[0].Table.Entries[1]).varBytes;
+            byte[] audioData = ((BlobEntry)sfxData[0].Table.Entries[1]).varBytes;
 
             using FileStream fs = File.Open(baseDir + fileName, FileMode.Create);
             using BinaryWriter br = new BinaryWriter(fs);

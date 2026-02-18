@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
-    class BinaryEntry(uint id, uint relOffset) : Entry(id, relOffset)
+    class BlobEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
         public byte[] varBytes;
 

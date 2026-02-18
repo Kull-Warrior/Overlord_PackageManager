@@ -16,7 +16,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is BinaryEntry)
+                if (entry is BlobEntry)
                 {
                     uint length;
                     switch (entry.Id)
@@ -34,7 +34,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
                             length = 0;
                             break;
                     }
-                    ((BinaryEntry)entry).Read(reader, Table.OffsetOrigin, length);
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, length);
                 }
                 else
                 {

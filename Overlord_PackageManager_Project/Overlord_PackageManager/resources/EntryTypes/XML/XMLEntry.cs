@@ -22,13 +22,13 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
                     {
                         entry.Read(reader, Table.OffsetOrigin);
                     }
-                    if (entry is BinaryEntry)
+                    if (entry is BlobEntry)
                     {
                         Int32Entry? intEntry = Table.Entries.OfType<Int32Entry>().LastOrDefault();
                         if (intEntry == null)
                             throw new InvalidOperationException("No XML length found");
 
-                        ((BinaryEntry)entry).Read(reader, Table.OffsetOrigin, intEntry.varInt);
+                        ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, intEntry.varInt);
                     }
                 }
             }
@@ -46,7 +46,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
                 string resourcePath = ((StringEntry)Table.Entries[0]).varString;
                 string fileName = Path.GetFileName(resourcePath);
 
-                byte[] data = ((BinaryEntry)Table.Entries[2]).varBytes;
+                byte[] data = ((BlobEntry)Table.Entries[2]).varBytes;
 
                 using FileStream fileHeaderStream = File.Open(baseDir + "\\" + fileName, FileMode.Create);
                 using BinaryWriter fileHeaderBinaryWriter = new BinaryWriter(fileHeaderStream);

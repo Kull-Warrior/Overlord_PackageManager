@@ -3,14 +3,9 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
-    class ByteEntry : Entry
+    class SingleByteEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
         byte varByte;
-
-        public ByteEntry(uint id, uint relOffset) : base(id, relOffset)
-        {
-
-        }
 
         public override void Read(BinaryReader reader, long origin)
         {
