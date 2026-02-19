@@ -1,9 +1,12 @@
 ﻿using Microsoft.Win32;
 using Overlord_PackageManager.resources;
+using Overlord_PackageManager.resources.EntryEditor;
+using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.OMP;
 using Overlord_PackageManager.resources.RPK;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Overlord_PackageManager
 {
@@ -77,6 +80,44 @@ namespace Overlord_PackageManager
             else
             {
                 resourceFile.WriteAllAssetsToFile(parentDir + dirName);
+            }
+        }
+
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (treeView.SelectedItem is TreeViewItem item)
+            {
+                ShowEditor(item.Tag);
+            }
+        }
+
+        private void ShowEditor(object obj)
+        {
+            EditorHost.Content = null;
+
+            switch (obj)
+            {
+                case Int32Entry int32Entry:
+                    EditorHost.Content = new Int32EntryEditor(int32Entry);
+                    break;
+                case Int64Entry int64Entry:
+                    EditorHost.Content = new Int64EntryEditor(int64Entry);
+                    break;
+                case FloatEntry floatEntry:
+                    EditorHost.Content = new FloatEntryEditor(floatEntry);
+                    break;
+                case BlobEntry blobEntry:
+                    EditorHost.Content = new BlobEntryEditor(blobEntry);
+                    break;
+                case StringEntry stringEntry:
+                    EditorHost.Content = new StringEntryEditor(stringEntry);
+                    break;
+                default:
+                    EditorHost.Content = new TextBlock
+                    {
+                        Text = obj?.ToString() ?? "null"
+                    };
+                    break;
             }
         }
     }

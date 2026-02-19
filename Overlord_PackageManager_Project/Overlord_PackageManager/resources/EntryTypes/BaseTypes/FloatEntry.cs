@@ -3,9 +3,9 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
-    class FloatEntry : Entry
+    public class FloatEntry : Entry
     {
-        float varFloat;
+        public float varFloat;
 
         public FloatEntry(uint id, uint relOffset) : base(id, relOffset)
         {

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    class Int32ArrayEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public class Int32ArrayEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public byte[] leadingBytes;
         public ReferenceTable Table;

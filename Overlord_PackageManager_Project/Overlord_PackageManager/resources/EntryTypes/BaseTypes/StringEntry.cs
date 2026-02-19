@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
-    class StringEntry(uint id, uint relOffset) : Entry(id, relOffset)
+    public class StringEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
         uint stringLength;
         public string varString;

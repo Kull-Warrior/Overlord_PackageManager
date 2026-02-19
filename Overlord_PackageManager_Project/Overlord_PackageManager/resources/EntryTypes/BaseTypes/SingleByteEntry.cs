@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
-    class SingleByteEntry(uint id, uint relOffset) : Entry(id, relOffset)
+    public class SingleByteEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
         byte varByte;
 

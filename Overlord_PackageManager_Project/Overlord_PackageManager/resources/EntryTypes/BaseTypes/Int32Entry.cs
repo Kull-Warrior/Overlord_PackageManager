@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
-    class Int32Entry(uint id, uint relOffset) : Entry(id, relOffset)
+    public class Int32Entry(uint id, uint relOffset) : Entry(id, relOffset)
     {
         public uint varInt;
 

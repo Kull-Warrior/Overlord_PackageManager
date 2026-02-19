@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
-    class StringArrayEntry : Entry
+    public class StringArrayEntry : Entry
     {
         uint stringCount;
         List<uint> stringLength = new List<uint>();
