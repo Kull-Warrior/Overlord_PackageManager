@@ -24,9 +24,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap
                 {
                     entry.Read(reader, Table.OffsetOrigin);
                 }
-                if (entry is DDSTextureAssetSubTableType1)
+                if (entry is DDSTextureAssetDataContainer)
                 {
-                    ((DDSTextureAssetSubTableType1)entry).Read(reader, Table.OffsetOrigin, DDSTextureAssetSubTableType1Dictionary);
+                    ((DDSTextureAssetDataContainer)entry).Read(reader, Table.OffsetOrigin, DDSTextureAssetDataContainerDictionary);
                 }
             }
         }
@@ -44,12 +44,12 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap
             string objectName = ((StringEntry)Table.Entries[1]).varString;
             Directory.CreateDirectory(baseDir + objectName);
 
-            List<RawDDSTextureData> rawDDSTextures;
+            List<DDSTextures> rawDDSTextures;
 
-            DDSTextureAssetSubTableType1 subTable = (DDSTextureAssetSubTableType1)Table.Entries[3];
-            ListOfRawDDSTextureData listOfDDSTextureEntries = (ListOfRawDDSTextureData)subTable.Table.Entries[0];
+            DDSTextureAssetDataContainer subTable = (DDSTextureAssetDataContainer)Table.Entries[3];
+            ListOfDDSTextures listOfDDSTextureEntries = (ListOfDDSTextures)subTable.Table.Entries[0];
 
-            rawDDSTextures = listOfDDSTextureEntries.Table.Entries.OfType<RawDDSTextureData>().ToList();
+            rawDDSTextures = listOfDDSTextureEntries.Table.Entries.OfType<DDSTextures>().ToList();
 
             uint baseMipMapCount;
             

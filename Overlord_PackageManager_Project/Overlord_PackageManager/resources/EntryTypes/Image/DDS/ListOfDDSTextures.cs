@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    class ListOfRawDDSTextureData(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    class ListOfDDSTextures(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public byte[] leadingBytes;
         public ReferenceTable Table;
@@ -17,9 +17,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is RawDDSTextureData)
+                if (entry is DDSTextures)
                 {
-                    ((RawDDSTextureData)entry).Read(reader, Table.OffsetOrigin, 0, RawDDSTextureDataDictionary);
+                    ((DDSTextures)entry).Read(reader, Table.OffsetOrigin, 0, DDSTextureDictionary);
                 }
             }
         }

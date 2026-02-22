@@ -24,9 +24,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
                 {
                     entry.Read(reader, Table.OffsetOrigin);
                 }
-                if (entry is DDSTextureAssetSubTableType1)
+                if (entry is DDSTextureAssetDataContainer)
                 {
-                    ((DDSTextureAssetSubTableType1)entry).Read(reader, Table.OffsetOrigin, DDSTextureAssetSubTableType1Dictionary);
+                    ((DDSTextureAssetDataContainer)entry).Read(reader, Table.OffsetOrigin, DDSTextureAssetDataContainerDictionary);
                 }
             }
         }
@@ -151,12 +151,12 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
                 fileName += ".dds";
             }
 
-            List<RawDDSTextureData> rawDDSTextures;
+            List<DDSTextures> rawDDSTextures;
 
-            DDSTextureAssetSubTableType1 subTable = (DDSTextureAssetSubTableType1)Table.Entries[3];
-            ListOfRawDDSTextureData listOfDDSTextureEntries = (ListOfRawDDSTextureData)subTable.Table.Entries[0];
+            DDSTextureAssetDataContainer subTable = (DDSTextureAssetDataContainer)Table.Entries[3];
+            ListOfDDSTextures listOfDDSTextureEntries = (ListOfDDSTextures)subTable.Table.Entries[0];
 
-            rawDDSTextures = listOfDDSTextureEntries.Table.Entries.OfType<RawDDSTextureData>().ToList();
+            rawDDSTextures = listOfDDSTextureEntries.Table.Entries.OfType<DDSTextures>().ToList();
 
             for (int i = 0; i < rawDDSTextures.Count; i++)
             {

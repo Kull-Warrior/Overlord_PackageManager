@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    class RawDDSTextureData(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    class DDSTextures(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public uint TypeIdentifier;
         public ReferenceTable Table;

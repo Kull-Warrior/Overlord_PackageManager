@@ -499,7 +499,7 @@ namespace Overlord_PackageManager.resources.Generic
 
         #region DDSImageDictionaries
 
-        public static Entry RawDDSTextureDataDictionary(uint id, uint relOffset)
+        public static Entry DDSTextureDictionary(uint id, uint relOffset)
         {
             return id switch
             {
@@ -512,14 +512,14 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry DDSTextureAssetSubTableType1Dictionary(uint id, uint relOffset)
+        public static Entry DDSTextureAssetDataContainerDictionary(uint id, uint relOffset)
         {
             return id switch
             {
-                20 => new ListOfRawDDSTextureData(id, relOffset),
-                21 => new Int32Entry(id, relOffset),
-                23 => new Int32Entry(id, relOffset),
-                24 => new ReferenceTableEntry(id, relOffset),
+                20 => new ListOfDDSTextures(id, relOffset),     // List of all dds images making up the entire dds file, meaning the main image and each mipmap
+                21 => new Int32Entry(id, relOffset),     // Unkown
+                23 => new Int32Entry(id, relOffset),     // Unkown
+                24 => new ReferenceTableEntry(id, relOffset),     // Unkown
                 // Add more IDs here
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
@@ -529,7 +529,7 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
-                1 => new DDSTextureAssetSubTableType1(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
+                1 => new DDSTextureAssetDataContainer(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
                 19 => new Int32Entry(id, relOffset),    // FFFF Block unkown use
                 20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),   // File name
@@ -544,7 +544,7 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
-                1 => new DDSTextureAssetSubTableType1(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
+                1 => new DDSTextureAssetDataContainer(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
                 19 => new Int32Entry(id, relOffset),    // FFFF Block unkown use
                 20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),   // File name

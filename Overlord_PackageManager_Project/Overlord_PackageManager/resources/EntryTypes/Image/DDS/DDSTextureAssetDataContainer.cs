@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    class DDSTextureAssetSubTableType1(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    class DDSTextureAssetDataContainer(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public ReferenceTable Table;
         public ReferenceTable GetReferenceTable() => Table;
@@ -17,7 +17,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 
             foreach (var entry in Table.Entries)
             {
-                if(entry is Int32Entry || entry is ListOfRawDDSTextureData)
+                if(entry is Int32Entry || entry is ListOfDDSTextures)
                 {
                     entry.Read(reader, Table.OffsetOrigin);
                 }
