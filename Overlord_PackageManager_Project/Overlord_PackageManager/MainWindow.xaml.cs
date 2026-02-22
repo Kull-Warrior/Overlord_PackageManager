@@ -31,6 +31,7 @@ namespace Overlord_PackageManager
                 "PVP Files (*.pvp)|*.pvp|" +
                 "OMP Files (*.omp)|*.omp|" +
                 "All files (*.*)| *.*";
+            openFileDialog.FilterIndex = 6;
             if (openFileDialog.ShowDialog() == true)
             {
                 filePath.Text = openFileDialog.FileName;
