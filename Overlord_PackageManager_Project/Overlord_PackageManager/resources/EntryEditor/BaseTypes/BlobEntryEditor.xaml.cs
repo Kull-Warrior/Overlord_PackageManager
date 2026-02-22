@@ -1,4 +1,7 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
+using Microsoft.Win32;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.EntryEditor
@@ -51,5 +54,40 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             HexList.ItemsSource = HexFormatter.Format(entry.varBytes);
         }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "Binary files (*.bin)|*.bin",
+                DefaultExt = ".bin",
+                FileName = "export.bin"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                File.WriteAllBytes(dialog.FileName, _entry.varBytes);
+            }
+        }
+
+        private void Import_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Filter = "Binary files (*.bin)|*.bin"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                byte[] newData = File.ReadAllBytes(dialog.FileName);
+
+                // Replace internal byte array
+                _entry.varBytes = newData;
+
+                // Refresh viewer
+                HexList.ItemsSource = HexFormatter.Format(newData);
+            }
+        }
+
     }
 }

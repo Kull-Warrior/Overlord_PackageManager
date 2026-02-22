@@ -3,7 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Hex Viewer -->
         <ListBox Name="HexList"
+                 Grid.Row="0"
                  FontFamily="Consolas"
                  FontSize="13"
                  VirtualizingPanel.IsVirtualizing="True"
@@ -28,5 +35,23 @@
             </ListBox.ItemTemplate>
 
         </ListBox>
+
+        <!-- Buttons -->
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Export .bin"
+            Grid.Column="0"
+            Margin="0,0,5,0"
+            Click="Export_Click"/>
+
+            <Button Content="Import .bin"
+            Grid.Column="1"
+            Margin="5,0,0,0"
+            Click="Import_Click"/>
+        </Grid>
     </Grid>
 </UserControl>
