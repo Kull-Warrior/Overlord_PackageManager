@@ -45,7 +45,7 @@ namespace Overlord_PackageManager.resources
 
         private static string Describe(Entry e)
         {
-            return $"{e.GetType().Name}  Id={e.Id:X}  Offset=0x{e.RelOffset:X}";
+            return $"Id={e.Id:X4} {e.GetType().Name}";
         }
     }
 }
