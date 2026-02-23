@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    class ListOfDDSTextures(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public class ListOfDDSTextures(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public byte[] leadingBytes;
         public ReferenceTable Table;
