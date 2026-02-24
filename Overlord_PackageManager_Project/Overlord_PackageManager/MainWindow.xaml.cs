@@ -120,6 +120,9 @@ namespace Overlord_PackageManager
                 case ListOfDDSTextures listOfDDSTextures:
                     EditorHost.Content = new DDSMipChainEditor(listOfDDSTextures);
                     break;
+                case DDSTextureAsset asset:
+                    EditorHost.Content = new DDSTextureAssetEditor(asset);
+                    break;
                 default:
                     EditorHost.Content = new TextBlock
                     {

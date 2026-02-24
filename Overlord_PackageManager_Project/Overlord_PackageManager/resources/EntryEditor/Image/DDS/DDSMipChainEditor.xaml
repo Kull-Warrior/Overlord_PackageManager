@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                  VerticalScrollBarVisibility="Disabled">
+                  VerticalScrollBarVisibility="Auto">
 
         <StackPanel x:Name="MipContainer"
                     Orientation="Horizontal"
