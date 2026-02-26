@@ -15,6 +15,10 @@ namespace Overlord_PackageManager.resources.Generic
         public List<Entry> Entries = new List<Entry>();
         public long OffsetOrigin;
 
+        public ReferenceTable()
+        {
+
+        }
         public ReferenceTable(BinaryReader reader, Func<uint, uint, Entry> entryFactory)
         {
             byte temp = reader.ReadByte();

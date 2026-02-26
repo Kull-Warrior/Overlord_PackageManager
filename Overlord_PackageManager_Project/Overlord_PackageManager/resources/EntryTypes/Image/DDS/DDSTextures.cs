@@ -4,11 +4,25 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    public class DDSTextures(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public class DDSTextures : Entry, IHasReferenceTable
     {
         public uint TypeIdentifier;
         public ReferenceTable Table;
         public ReferenceTable GetReferenceTable() => Table;
+
+        public DDSTextures(uint id, uint relOffset) : base(id, relOffset)
+        {
+
+        }
+
+        public DDSTextures (uint width, uint height, DDSFormat format, byte[] data)
+        {
+            Table = new ReferenceTable();
+            Table.Entries.Add(new Int32Entry(20, 0) { varInt = width });
+            Table.Entries.Add(new Int32Entry(21, 4) { varInt = height });
+            Table.Entries.Add(new Int32Entry(23, 8) { varInt = (uint)format });
+            Table.Entries.Add(new BlobEntry(22, 12) { varBytes = data });
+        }
 
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)

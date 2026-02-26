@@ -1,12 +1,28 @@
 ﻿<UserControl x:Class="Overlord_PackageManager.resources.EntryEditor.DDSTextureAssetEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
+        <!-- Buttons -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Margin="5">
+
+            <Button Content="Export DDS"
+                    Width="120"
+                    Margin="0,0,10,0"
+                    Click="Export_Click"/>
+
+            <Button Content="Import DDS"
+                    Width="120"
+                    Click="Import_Click"/>
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
 
         <StackPanel x:Name="RootPanel"
                     Margin="10"
                     Orientation="Vertical"/>
-    </ScrollViewer>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>
