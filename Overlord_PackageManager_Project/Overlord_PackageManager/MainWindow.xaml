@@ -25,6 +25,13 @@
         </GroupBox>
         <TreeView x:Name="treeView" HorizontalAlignment="Left" Height="414" Margin="10,139,0,0" VerticalAlignment="Top" Width="300" SelectedItemChanged="TreeView_SelectedItemChanged"/>
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Height="19" Margin="10,558,0,0" VerticalAlignment="Top" Width="84" Click="Save"/>
-        <ContentControl Name="EditorHost" Margin="315,139,10,73"/>
+        <Border Margin="315,139,10,73"
+                BorderBrush="#444444" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Background="#F5F5F5"
+                Padding="5">
+            <ContentControl Name="EditorHost" Margin="0"/>
+        </Border>
     </Grid>
 </Window>
