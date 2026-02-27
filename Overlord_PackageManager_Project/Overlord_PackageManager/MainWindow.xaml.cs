@@ -18,6 +18,9 @@ namespace Overlord_PackageManager
     {
         ResourcePackFile resourceFile;
         OMPFile mapFile;
+
+        string filePath = "";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,47 +38,44 @@ namespace Overlord_PackageManager
             openFileDialog.FilterIndex = 6;
             if (openFileDialog.ShowDialog() == true)
             {
-                filePath.Text = openFileDialog.FileName;
+                filePath = openFileDialog.FileName;
             }
-        }
 
-        private void Open_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(filePath.Text) || !File.Exists(filePath.Text))
+            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
             {
                 MessageBox.Show("Please select a valid resource file.");
                 return;
             }
 
-            if (filePath.Text.EndsWith(".omp"))
+            if (filePath.EndsWith(".omp"))
             {
                 mapFile = new OMPFile();
-                mapFile.Parse(filePath.Text);
+                mapFile.Parse(filePath);
                 treeView.Items.Clear();
                 treeView.Items.Add(RefTableTreeBuilder.Build(mapFile.Body.Data, "Root"));
             }
             else
             {
                 resourceFile = new ResourcePackFile();
-                resourceFile.Read(filePath.Text);
+                resourceFile.Read(filePath);
                 treeView.Items.Clear();
                 treeView.Items.Add(RefTableTreeBuilder.Build(resourceFile.Body.Data, "Root"));
             }
         }
 
-        private void Save(object sender, RoutedEventArgs e)
+        private void ExportAssets(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(filePath.Text) || !File.Exists(filePath.Text))
+            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
             {
                 MessageBox.Show("Please select a valid resource file.");
                 return;
             }
 
-            DirectoryInfo dirInfo = new DirectoryInfo(filePath.Text);
+            DirectoryInfo dirInfo = new DirectoryInfo(filePath);
             string parentDir = dirInfo.Parent.FullName + "\\";
-            string dirName = Path.GetFileNameWithoutExtension(filePath.Text);
+            string dirName = Path.GetFileNameWithoutExtension(filePath);
 
-            if (filePath.Text.EndsWith(".omp"))
+            if (filePath.EndsWith(".omp"))
             {
                 //mapFile.WriteAllAssetsToFile(parentDir + dirName);
             }
@@ -130,6 +130,21 @@ namespace Overlord_PackageManager
                     };
                     break;
             }
+        }
+
+        private void New(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Save(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Exit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

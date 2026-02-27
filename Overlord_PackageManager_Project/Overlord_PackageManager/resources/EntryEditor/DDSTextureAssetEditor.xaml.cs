@@ -29,11 +29,18 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             if (stringEntries.Count >= 2)
             {
-                StringEntryEditor tagEditor = new StringEntryEditor(stringEntries[0]);
-                StringEntryEditor fileNameEditor = new StringEntryEditor(stringEntries[1]);
+                StringEntryEditor tagEditor = new StringEntryEditor(stringEntries[0])
+                {
+                    Label = "Tag"
+                };
 
-                RootPanel.Children.Add(CreateSection("Tag", tagEditor));
-                RootPanel.Children.Add(CreateSection("File Name", fileNameEditor));
+                StringEntryEditor fileNameEditor = new StringEntryEditor(stringEntries[1])
+                {
+                    Label = "File Name"
+                };
+
+                RootPanel.Children.Add(tagEditor);
+                RootPanel.Children.Add(fileNameEditor);
             }
 
             if (mipContainer != null)

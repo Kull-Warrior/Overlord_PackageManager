@@ -23,5 +23,11 @@ namespace Overlord_PackageManager.resources.EntryEditor
         {
             _entry.varString = ValueBox.Text;
         }
+
+        public string Label
+        {
+            get => LabelBlock.Text;
+            set => LabelBlock.Text = value;
+        }
     }
 }
