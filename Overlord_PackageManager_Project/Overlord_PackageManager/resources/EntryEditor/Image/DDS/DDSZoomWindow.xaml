@@ -1,0 +1,21 @@
+﻿<Window x:Class="Overlord_PackageManager.resources.EntryEditor.DDSZoomWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DDS Viewer"
+        WindowState="Maximized">
+
+    <Grid>
+        <ScrollViewer x:Name="Scroll"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+
+            <Image x:Name="ZoomImage"
+                   RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <ScaleTransform x:Name="ScaleTransform"/>
+                </Image.RenderTransform>
+            </Image>
+
+        </ScrollViewer>
+    </Grid>
+</Window>
