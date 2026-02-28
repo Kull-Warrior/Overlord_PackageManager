@@ -50,28 +50,9 @@ namespace Overlord_PackageManager.resources.EntryEditor
                 if (mipList != null)
                 {
                     DDSMipChainEditor mipEditor = new DDSMipChainEditor(mipList);
-                    RootPanel.Children.Add(CreateSection("Mip Chain", mipEditor));
+                    RootPanel.Children.Add(mipEditor);
                 }
             }
-        }
-
-        private UIElement CreateSection(string title, UIElement content)
-        {
-            StackPanel panel = new StackPanel
-            {
-                Margin = new Thickness(0, 0, 0, 15)
-            };
-
-            panel.Children.Add(new TextBlock
-            {
-                Text = title,
-                FontWeight = FontWeights.Bold,
-                Margin = new Thickness(0, 0, 0, 5)
-            });
-
-            panel.Children.Add(content);
-
-            return panel;
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
