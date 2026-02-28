@@ -52,7 +52,9 @@
 
             <Viewbox Stretch="Uniform">
                 <Image x:Name="PreviewImage"
-                       Stretch="Fill"/>
+                       Stretch="Fill"
+                       Cursor="Hand"
+                       ToolTip="Double-click to open full-size viewer"/>
             </Viewbox>
         </Border>
 
