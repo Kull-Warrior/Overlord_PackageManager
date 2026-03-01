@@ -17,11 +17,35 @@ namespace Overlord_PackageManager.resources.EntryEditor
         {
             InitializeComponent();
 
+            MipSelector.SelectionChanged += MipSelector_SelectionChanged;
+            PreviewImage.MouseLeftButtonDown += PreviewImage_MouseLeftButtonDown;
+
             List<DDSTextures> ddsEntries = list.Table.Entries.OfType<DDSTextures>().ToList();
 
+            BuildFromDDSList(ddsEntries);
+
+            if (_mips.Count > 0)
+                MipSelector.SelectedIndex = 0;
+        }
+
+        public DDSMipChainEditor(List<DDSTextures> ddsEntries)
+        {
+            InitializeComponent();
+
+            MipSelector.SelectionChanged += MipSelector_SelectionChanged;
+            PreviewImage.MouseLeftButtonDown += PreviewImage_MouseLeftButtonDown;
+
+            BuildFromDDSList(ddsEntries);
+
+            if (_mips.Count > 0)
+                MipSelector.SelectedIndex = 0;
+        }
+
+        private void BuildFromDDSList(List<DDSTextures> ddsEntries)
+        {
             int level = 0;
 
-            foreach (var dds in ddsEntries)
+            foreach (DDSTextures dds in ddsEntries)
             {
                 List<Int32Entry> intEntries = dds.Table.Entries.OfType<Int32Entry>().ToList();
 
@@ -46,12 +70,6 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
                 level++;
             }
-
-            MipSelector.SelectionChanged += MipSelector_SelectionChanged;
-            PreviewImage.MouseLeftButtonDown += PreviewImage_MouseLeftButtonDown;
-
-            if (_mips.Count > 0)
-                MipSelector.SelectedIndex = 0;
         }
 
         private void MipSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

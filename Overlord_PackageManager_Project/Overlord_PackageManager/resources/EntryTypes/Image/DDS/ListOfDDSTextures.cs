@@ -3,11 +3,20 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    public class ListOfDDSTextures(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public class ListOfDDSTextures : Entry, IHasReferenceTable
     {
         public byte[] leadingBytes;
         public ReferenceTable Table;
         public ReferenceTable GetReferenceTable() => Table;
+
+        public ListOfDDSTextures()
+        {
+
+        }
+        public ListOfDDSTextures(uint id, uint relOffset) : base(id, relOffset)
+        {
+
+        }
 
         public override void Read(BinaryReader reader, long origin)
         {

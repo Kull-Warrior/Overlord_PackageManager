@@ -1,7 +1,7 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using System.IO;
-using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap;
+using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionCubeMap;
 using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.Animation;
 
@@ -87,10 +87,10 @@ namespace Overlord_PackageManager.resources.Generic
                 {
                     case 4259915:   // Object -> Meshes & used materials by these meshs assignment block.  Skeleton Data as well
                         break;
-                    case 4261412:   // Material -> Used textures assignment block. So Skin, reflectionmap, etc etc
+                    case 4261412:   // Material -> Used textures assignment block. So Skin, ReflectionCubeMap, etc etc
                         break;
                     case 4259993:
-                        Entries.Add(new ReflectionMapTextureAsset(ids[i], relativeOffsets[i]));
+                        Entries.Add(new ReflectionCubeMapAsset(ids[i], relativeOffsets[i]));
                         break;
                     case 4259992:   // Tif Image, tga32 Image
                         Entries.Add(new TgaTifTextureAsset(ids[i], relativeOffsets[i]));

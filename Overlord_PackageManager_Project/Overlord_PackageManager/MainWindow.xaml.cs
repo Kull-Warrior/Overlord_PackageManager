@@ -3,6 +3,7 @@ using Overlord_PackageManager.resources;
 using Overlord_PackageManager.resources.EntryEditor;
 using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
+using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionCubeMap;
 using Overlord_PackageManager.resources.OMP;
 using Overlord_PackageManager.resources.RPK;
 using System.IO;
@@ -122,6 +123,9 @@ namespace Overlord_PackageManager
                     break;
                 case DDSTextureAsset asset:
                     EditorHost.Content = new DDSTextureAssetEditor(asset);
+                    break;
+                case ReflectionCubeMapAsset reflectionCubeMap:
+                    EditorHost.Content = new ReflectionCubeMapEditor(reflectionCubeMap);
                     break;
                 default:
                     EditorHost.Content = new TextBlock

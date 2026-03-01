@@ -42,164 +42,48 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
             return (uint)Math.Floor(Math.Log2(maxDim)) + 1;
         }
 
-        public static void WriteDDSHeaderCore(BinaryWriter bw, uint width, uint height, uint mipMapCount, uint pitchOrLinearSize)
-        {
-            bw.Write(new[] { 'D', 'D', 'S', ' ' });
-            bw.Write(0x0000007C);
-            bw.Write(0x00021007);
-            bw.Write(height);
-            bw.Write(width);
-            bw.Write(pitchOrLinearSize);
-            bw.Write(0x00000000);
-            bw.Write(mipMapCount);
-
-            for (int i = 0; i < 11; i++)
-                bw.Write(0);
-        }
-
-        public static void WriteDXTPixelFormat(BinaryWriter bw, string fourCC)
-        {
-            bw.Write(0x00000020);
-            bw.Write(0x00000004);
-            bw.Write(Encoding.ASCII.GetBytes(fourCC));
-            bw.Write(0x00000000);
-            bw.Write(0x00000000);
-            bw.Write(0x00000000);
-            bw.Write(0x00000000);
-            bw.Write(0x00000000);
-        }
-
-        public static void WriteUncompressedRGBPixelFormat(BinaryWriter bw)
-        {
-            bw.Write(0x00000020);
-            bw.Write(0x00000040);
-            bw.Write(0x00000000);
-            bw.Write(0x00000018);
-            bw.Write(0x00FF0000);
-            bw.Write(0x0000FF00);
-            bw.Write(0x000000FF);
-            bw.Write(0x00000000);
-        }
-
-        public static void WriteUncompressedRGBAPixelFormat(BinaryWriter bw)
-        {
-            bw.Write(0x00000020);
-            bw.Write(0x00000041);
-            bw.Write(0x00000000);
-            bw.Write(0x00000020);
-            bw.Write(0x00FF0000);
-            bw.Write(0x0000FF00);
-            bw.Write(0x000000FF);
-            bw.Write(0xFF000000);
-        }
-
-        public static byte[] CreateDDSHeader(uint width, uint height, uint mipMapCount, DDSFormat format)
-        {
-            byte[] header = new byte[128];
-            using var ms = new MemoryStream(header);
-            using var bw = new BinaryWriter(ms);
-
-            uint pitch;
-            if (format == DDSFormat.UncompressedRGB)
-            {
-                // Each pixel takes up 4 Bytes (R, G, B)
-                pitch = width * 3;
-            }
-            else if (format == DDSFormat.UncompressedRGBA)
-            {
-                // Each pixel takes up 4 Bytes (R, G, B, A)
-                pitch = width * 4;
-            }
-            else
-            {
-                pitch = 0;
-            }
-
-            WriteDDSHeaderCore(bw, width, height, mipMapCount, pitch);
-
-            if (format == DDSFormat.UncompressedRGB)
-            {
-                WriteUncompressedRGBPixelFormat(bw);
-                bw.Write(0x00401000);
-            }
-            else if (format == DDSFormat.UncompressedRGBA)
-            {
-                WriteUncompressedRGBAPixelFormat(bw);
-                bw.Write(0x00401000);
-            }
-            else
-            {
-                WriteDXTPixelFormat(bw, format.ToString());
-                bw.Write(0x00401008);
-            }
-
-            bw.Write(0x00000000);
-            bw.Write(0x00000000);
-            bw.Write(0x00000000);
-            bw.Write(0x00000000);
-
-            return header;
-        }
-
         public void WriteToFile(string baseDir)
         {
-            byte[] fileHeader;
-            
+            if (!Directory.Exists(baseDir))
+            {
+                Directory.CreateDirectory(baseDir);
+            }
+
             string fileName = ((StringEntry)Table.Entries[1]).varString;
-            if (!fileName.ToLower().EndsWith(".dds"))
+            if (!fileName.EndsWith(".dds", StringComparison.OrdinalIgnoreCase))
             {
                 fileName += ".dds";
             }
 
-            List<DDSTextures> rawDDSTextures;
+            DDSTextureAssetDataContainer container = (DDSTextureAssetDataContainer)Table.Entries[3];
 
-            DDSTextureAssetDataContainer subTable = (DDSTextureAssetDataContainer)Table.Entries[3];
-            ListOfDDSTextures listOfDDSTextureEntries = (ListOfDDSTextures)subTable.Table.Entries[0];
+            ListOfDDSTextures list = (ListOfDDSTextures)container.Table.Entries[0];
 
-            rawDDSTextures = listOfDDSTextureEntries.Table.Entries.OfType<DDSTextures>().ToList();
+            List<DDSTextures> textures = list.Table.Entries.OfType<DDSTextures>().ToList();
 
-            for (int i = 0; i < rawDDSTextures.Count; i++)
+            if (textures.Count == 0)
             {
-                if (i == 0)
+                return;
+            }
+
+            uint width = ((Int32Entry)textures[0].Table.Entries[0]).varInt;
+            uint height = ((Int32Entry)textures[0].Table.Entries[1]).varInt;
+            DDSFormat format = (DDSFormat)((Int32Entry)textures[0].Table.Entries[2]).varInt;
+
+            uint mipCount = DDSWriter.CalculateMipMapCount(width, height);
+
+            byte[] header = DDSWriter.CreateDDSHeader(width, height, mipCount, format, false);
+
+            using FileStream fs = File.Create(Path.Combine(baseDir, fileName));
+            using BinaryWriter bw = new BinaryWriter(fs);
+            {
+                bw.Write(header);
+
+                // Standard 2D texture: just write sequential mips
+                foreach (DDSTextures tex in textures)
                 {
-                    uint width = ((Int32Entry)rawDDSTextures[i].Table.Entries[0]).varInt;
-                    uint height = ((Int32Entry)rawDDSTextures[i].Table.Entries[1]).varInt;
-                    uint rawFormat = ((Int32Entry)rawDDSTextures[i].Table.Entries[2]).varInt;
-                    DDSFormat format = (DDSFormat)rawFormat;
-                    uint mipMapCount = CalculateMipMapCount(width, height);
-
-                    if (mipMapCount > rawDDSTextures.Count)
-                    {
-                        mipMapCount = 1;
-                    }
-
-                    switch (format)
-                    {
-                        case DDSFormat.UncompressedRGB:
-                        case DDSFormat.UncompressedRGBA:
-                        case DDSFormat.DXT1:
-                        case DDSFormat.DXT3:
-                        case DDSFormat.DXT5:
-                            fileHeader = CreateDDSHeader(width, height, mipMapCount, format);
-                            break;
-
-                        default:
-                            throw new NotSupportedException(
-                                $"Unknown DDS format value: {rawFormat}");
-                    }
-                    using FileStream fileHeaderStream = File.Open(baseDir + fileName, FileMode.Create);
-                    using BinaryWriter fileHeaderBinaryWriter = new BinaryWriter(fileHeaderStream);
-                    {
-                        fileHeaderBinaryWriter.Write(fileHeader);
-                    }
-                }
-                
-                byte[] textureData = ((BlobEntry)rawDDSTextures[i].Table.Entries[3]).varBytes;
-                
-                using FileStream fs = File.Open(baseDir + fileName, FileMode.Append);
-                using BinaryWriter br = new BinaryWriter(fs);
-                {
-                    br.Write(textureData);
+                    BlobEntry blob = tex.Table.Entries.OfType<BlobEntry>().First();
+                    bw.Write(blob.varBytes);
                 }
             }
         }

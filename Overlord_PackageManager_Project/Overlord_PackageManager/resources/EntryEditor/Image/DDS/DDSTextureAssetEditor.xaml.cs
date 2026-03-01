@@ -65,7 +65,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
             }
         }
 
-        private uint CalculateMipByteSize(uint width, uint height, DDSFormat format)
+        public static uint CalculateMipByteSize(uint width, uint height, DDSFormat format)
         {
             if (format == DDSFormat.UncompressedRGB)
                 return width * height * 3;

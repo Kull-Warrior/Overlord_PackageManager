@@ -539,8 +539,8 @@ namespace Overlord_PackageManager.resources.Generic
         }
         #endregion DDSImageDictionaries
 
-        #region ReflectionMapImageDictionaries
-        public static Entry ReflectionMapTextureAssetDictionary(uint id, uint relOffset)
+        #region ReflectionCubeMapDictionaries
+        public static Entry ReflectionCubeMapAssetDictionary(uint id, uint relOffset)
         {
             return id switch
             {
@@ -552,7 +552,7 @@ namespace Overlord_PackageManager.resources.Generic
                 _ => throw new ArgumentException($"Unknown entry ID {id}")
             };
         }
-        #endregion ReflectionMapImageDictionaries
+        #endregion ReflectionCubeMapDictionaries
 
         #endregion ImageDictionaries
     }

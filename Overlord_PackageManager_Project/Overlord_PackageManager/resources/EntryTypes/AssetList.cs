@@ -1,7 +1,7 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes.Animation;
 using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
-using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionMap;
+using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionCubeMap;
 using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.Generic;
 using System.IO;
@@ -24,9 +24,9 @@ namespace Overlord_PackageManager.resources.EntryTypes
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is ReflectionMapTextureAsset)
+                if (entry is ReflectionCubeMapAsset)
                 {
-                    ((ReflectionMapTextureAsset)entry).Read(reader, Table.OffsetOrigin, ReflectionMapTextureAssetDictionary);
+                    ((ReflectionCubeMapAsset)entry).Read(reader, Table.OffsetOrigin, ReflectionCubeMapAssetDictionary);
                 }
                 if (entry is DDSTextureAsset)
                 {
@@ -50,10 +50,10 @@ namespace Overlord_PackageManager.resources.EntryTypes
         {
             foreach (var entry in Table.Entries)
             {
-                if (entry is ReflectionMapTextureAsset)
+                if (entry is ReflectionCubeMapAsset)
                 {
-                    Directory.CreateDirectory(baseDir + "\\ReflectionMap");
-                    ((ReflectionMapTextureAsset)entry).WriteToFile(baseDir + "\\ReflectionMap\\");
+                    Directory.CreateDirectory(baseDir + "\\ReflectionCubeMap");
+                    ((ReflectionCubeMapAsset)entry).WriteToFile(baseDir + "\\ReflectionCubeMap\\");
                 }
                 if (entry is DDSTextureAsset)
                 {
