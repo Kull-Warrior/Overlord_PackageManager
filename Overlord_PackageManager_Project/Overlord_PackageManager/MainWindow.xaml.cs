@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Overlord_PackageManager.resources;
 using Overlord_PackageManager.resources.EntryEditor;
+using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionCubeMap;
@@ -126,6 +127,9 @@ namespace Overlord_PackageManager
                     break;
                 case ReflectionCubeMapAsset reflectionCubeMap:
                     EditorHost.Content = new ReflectionCubeMapEditor(reflectionCubeMap);
+                    break;
+                case SFXAsset sfxAsset:
+                    EditorHost.Content = new SFXAssetEditor(sfxAsset);
                     break;
                 default:
                     EditorHost.Content = new TextBlock

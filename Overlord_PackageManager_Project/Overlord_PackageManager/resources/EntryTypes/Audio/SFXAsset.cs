@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Audio
 {
-    class SFXAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public class SFXAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public uint TypeIdentifier;
         public ReferenceTable Table;
