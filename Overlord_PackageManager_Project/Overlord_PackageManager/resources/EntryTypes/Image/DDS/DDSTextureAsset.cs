@@ -36,12 +36,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
             throw new NotImplementedException();
         }
 
-        public static uint CalculateMipMapCount(uint width, uint height)
-        {
-            uint maxDim = Math.Max(width, height);
-            return (uint)Math.Floor(Math.Log2(maxDim)) + 1;
-        }
-
         public void WriteToFile(string baseDir)
         {
             if (!Directory.Exists(baseDir))

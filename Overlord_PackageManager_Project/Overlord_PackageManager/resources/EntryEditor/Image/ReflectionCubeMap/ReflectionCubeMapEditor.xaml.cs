@@ -84,7 +84,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
             uint height = ((Int32Entry)allTextures[0].Table.Entries[1]).varInt;
             DDSFormat format = (DDSFormat)((Int32Entry)allTextures[0].Table.Entries[2]).varInt;
 
-            uint baseMipCount = DDSTextureAsset.CalculateMipMapCount(width, height);
+            uint baseMipCount = DDSWriter.CalculateMipMapCount(width, height);
 
             if (allTextures.Count % baseMipCount != 0 || allTextures.Count % (baseMipCount * 6) != 0)
                 throw new InvalidDataException("Cubemap texture count does not match expected 6-face x mip-count layout.");
