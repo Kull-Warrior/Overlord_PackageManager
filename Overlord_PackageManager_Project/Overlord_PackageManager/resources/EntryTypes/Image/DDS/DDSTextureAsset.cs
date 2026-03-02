@@ -1,85 +1,63 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
-using Overlord_PackageManager.resources.Generic;
 using System.IO;
-using System.Text;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    public class DDSTextureAsset(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public sealed class DDSTextureAsset : DDSImageAssetBase
     {
-        public uint TypeIdentifier;
-        public ReferenceTable Table;
-        public ReferenceTable GetReferenceTable() => Table;
-
-        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
-        {
-            reader.BaseStream.Position = origin + RelOffset;
-            TypeIdentifier = reader.ReadUInt32();
-            Table = new ReferenceTable(reader, entryFactory);
-
-
-            foreach (var entry in Table.Entries)
-            {
-                if(entry is StringEntry || entry is Int32Entry)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
-                if (entry is DDSTextureAssetDataContainer)
-                {
-                    ((DDSTextureAssetDataContainer)entry).Read(reader, Table.OffsetOrigin, DDSTextureAssetDataContainerDictionary);
-                }
-            }
-        }
+        public DDSTextureAsset(uint id, uint relOffset) : base(id, relOffset) { }
 
         public override void Read(BinaryReader reader, long origin)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteToFile(string baseDir)
+        public override void ReplaceFromDDS(byte[] fileBytes)
         {
-            if (!Directory.Exists(baseDir))
+            DDSFile dds = DDSImageReader.Read(fileBytes);
+            ListOfDDSTextures list = GetTextureList();
+            list.Table.Entries.Clear();
+
+            foreach (DDSMipFace face in dds.Faces)
             {
-                Directory.CreateDirectory(baseDir);
+                DDSTextures tex = new DDSTextures(face.Width, face.Height, dds.Format, face.Data);
+                list.Table.Entries.Add(tex);
             }
+        }
 
-            string fileName = ((StringEntry)Table.Entries[1]).varString;
-            if (!fileName.EndsWith(".dds", StringComparison.OrdinalIgnoreCase))
+        public override void WriteToDDS(Stream output)
+        {
+            List<DDSTextures> textures = GetTextureList().Table.Entries.OfType<DDSTextures>().ToList();
+
+            DDSTextures first = textures.First();
+            uint width = ((Int32Entry)first.Table.Entries[0]).varInt;
+            uint height = ((Int32Entry)first.Table.Entries[1]).varInt;
+            DDSFormat format = (DDSFormat)((Int32Entry)first.Table.Entries[2]).varInt;
+
+            List<DDSMipFace> faces = textures.Select((t, i) =>
             {
-                fileName += ".dds";
-            }
-
-            DDSTextureAssetDataContainer container = (DDSTextureAssetDataContainer)Table.Entries[3];
-
-            ListOfDDSTextures list = (ListOfDDSTextures)container.Table.Entries[0];
-
-            List<DDSTextures> textures = list.Table.Entries.OfType<DDSTextures>().ToList();
-
-            if (textures.Count == 0)
-            {
-                return;
-            }
-
-            uint width = ((Int32Entry)textures[0].Table.Entries[0]).varInt;
-            uint height = ((Int32Entry)textures[0].Table.Entries[1]).varInt;
-            DDSFormat format = (DDSFormat)((Int32Entry)textures[0].Table.Entries[2]).varInt;
-
-            uint mipCount = DDSWriter.CalculateMipMapCount(width, height);
-
-            byte[] header = DDSWriter.CreateDDSHeader(width, height, mipCount, format, false);
-
-            using FileStream fs = File.Create(Path.Combine(baseDir, fileName));
-            using BinaryWriter bw = new BinaryWriter(fs);
-            {
-                bw.Write(header);
-
-                // Standard 2D texture: just write sequential mips
-                foreach (DDSTextures tex in textures)
+                BlobEntry blob = t.Table.Entries.OfType<BlobEntry>().First();
+                return new DDSMipFace
                 {
-                    BlobEntry blob = tex.Table.Entries.OfType<BlobEntry>().First();
-                    bw.Write(blob.varBytes);
-                }
-            }
+                    FaceIndex = 0,
+                    MipIndex = i,
+                    Width = width >> i,
+                    Height = height >> i,
+                    Data = blob.varBytes
+                };
+            }).ToList();
+
+            DDSFile file = new DDSFile
+            {
+                Width = width,
+                Height = height,
+                MipCount = (uint)faces.Count,
+                Format = format,
+                IsCubemap = false,
+                Faces = faces
+            };
+
+            DDSImageWriter.Write(output, file);
         }
     }
 }

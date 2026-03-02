@@ -13,7 +13,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             byte[] rgbaData = DDSDecoder.Decode(width, height, format, rawData);
 
-            var bitmap = new WriteableBitmap(
+            WriteableBitmap bitmap = new WriteableBitmap(
                 (int)width,
                 (int)height,
                 96,

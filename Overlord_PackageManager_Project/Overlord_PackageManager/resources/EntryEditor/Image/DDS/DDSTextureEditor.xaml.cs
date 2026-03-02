@@ -10,25 +10,25 @@ namespace Overlord_PackageManager.resources.EntryEditor
         {
             InitializeComponent();
 
-            var intEntries = dds.Table.Entries
-                .OfType<Int32Entry>()
-                .ToList();
+            List<Int32Entry> intEntries = dds.Table.Entries.OfType<Int32Entry>().ToList();
 
             if (intEntries.Count < 3)
+            {
                 return;
+            }
 
-            var lastThree = intEntries.TakeLast(3).ToList();
+            List<Int32Entry> lastThree = intEntries.TakeLast(3).ToList();
 
             uint width = lastThree[0].varInt;
             uint height = lastThree[1].varInt;
             DDSFormat format = (DDSFormat)lastThree[2].varInt;
 
-            var blob = dds.Table.Entries
-                .OfType<BlobEntry>()
-                .FirstOrDefault();
+            BlobEntry? blob = dds.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
 
             if (blob == null)
+            {
                 return;
+            }
 
             MetaText.Text = $"Width: {width}   Height: {height}   Format: {format}";
 

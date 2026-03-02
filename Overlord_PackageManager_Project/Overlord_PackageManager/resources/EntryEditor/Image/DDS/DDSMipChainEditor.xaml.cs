@@ -61,12 +61,13 @@ namespace Overlord_PackageManager.resources.EntryEditor
                 BlobEntry? blob = dds.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
 
                 if (blob == null)
+                {
                     continue;
+                }
 
                 _mips.Add(new MipLevelData(width, height, format, blob.varBytes));
 
-                MipSelector.Items.Add(
-                    $"Level {level}  ({width}x{height})");
+                MipSelector.Items.Add($"Level {level}  ({width}x{height})");
 
                 level++;
             }
@@ -75,7 +76,9 @@ namespace Overlord_PackageManager.resources.EntryEditor
         private void MipSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MipSelector.SelectedIndex < 0)
+            {
                 return;
+            }
 
             _currentIndex = MipSelector.SelectedIndex;
             RenderCurrent();
@@ -84,7 +87,9 @@ namespace Overlord_PackageManager.resources.EntryEditor
         private void RenderCurrent()
         {
             if (_mips.Count == 0)
+            {
                 return;
+            }
 
             MipLevelData mip = _mips[_currentIndex];
 

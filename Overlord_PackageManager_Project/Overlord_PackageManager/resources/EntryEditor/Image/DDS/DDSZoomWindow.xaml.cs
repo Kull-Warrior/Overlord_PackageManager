@@ -22,7 +22,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
                 mip.Format,
                 mip.Data);
 
-            var bmp = new WriteableBitmap(
+            WriteableBitmap bmp = new WriteableBitmap(
                 (int)mip.Width,
                 (int)mip.Height,
                 96,

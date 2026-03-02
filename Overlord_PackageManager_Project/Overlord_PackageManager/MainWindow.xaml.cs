@@ -4,7 +4,6 @@ using Overlord_PackageManager.resources.EntryEditor;
 using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
-using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionCubeMap;
 using Overlord_PackageManager.resources.OMP;
 using Overlord_PackageManager.resources.RPK;
 using System.IO;

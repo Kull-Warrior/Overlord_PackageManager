@@ -1,7 +1,6 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using System.IO;
-using Overlord_PackageManager.resources.EntryTypes.Image.ReflectionCubeMap;
 using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.Animation;
 
