@@ -78,15 +78,19 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new();
-            dialog.FileName = ((StringEntry)_asset.Table.Entries[1]).varString;
+            OpenFolderDialog dialog = new();
 
             if (dialog.ShowDialog() != true)
-            {
                 return;
-            }
 
-            using FileStream fs = File.Create(dialog.FileName);
+            string fileName = ((StringEntry)_asset.Table.Entries[1]).varString;
+
+            if (!fileName.EndsWith(".dds", StringComparison.OrdinalIgnoreCase))
+                fileName += ".dds";
+
+            string fullPath = Path.Combine(dialog.FolderName, fileName);
+
+            using FileStream fs = File.Create(fullPath);
             _asset.WriteToDDS(fs);
         }
     }
