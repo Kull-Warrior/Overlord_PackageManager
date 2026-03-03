@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Overlord_PackageManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="732" Width="1000">
+        Title="Overlord Package Manager" Height="732" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
