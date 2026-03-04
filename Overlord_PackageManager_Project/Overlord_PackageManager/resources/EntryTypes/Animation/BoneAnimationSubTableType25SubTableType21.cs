@@ -26,7 +26,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
                 }
                 if (entry is BlobEntry)
                 {
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, 12);
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
                 }
                 if (entry is BoneRotationDataArray)
                 {

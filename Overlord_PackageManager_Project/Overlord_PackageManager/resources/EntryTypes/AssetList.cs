@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes.Animation;
 using Overlord_PackageManager.resources.EntryTypes.Audio;
+using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
 using Overlord_PackageManager.resources.Generic;
@@ -46,6 +47,10 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 if (entry is AnimationAsset)
                 {
                     ((AnimationAsset)entry).Read(reader, Table.OffsetOrigin, AnimationAssetDictionary);
+                }
+                if (entry is BlobEntry)
+                {
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
                 }
             }
         }

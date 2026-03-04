@@ -22,30 +22,7 @@ namespace Overlord_PackageManager.resources.EntryTypes
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is BlobEntry)
-                {
-                    uint length;
-                    switch (entry.Id)
-                    {
-                        case 33:
-                            length = 1048576;
-                            break;
-                        case 37:
-                            length = 131072;
-                            break;
-                        case 39:
-                            length = 256;
-                            break;
-                        default:
-                            length = 0;
-                            break;
-                    }
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, length);
-                }
-                else
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

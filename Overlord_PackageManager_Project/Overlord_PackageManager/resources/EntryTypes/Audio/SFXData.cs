@@ -26,12 +26,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
                 }
                 if (entry is BlobEntry)
                 {
-                    Int32Entry? intEntry = Table.Entries.OfType<Int32Entry>().LastOrDefault();
-
-                    if (intEntry == null)
-                        throw new InvalidOperationException("No ByteCode length found");
-
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, intEntry.varInt);
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
                 }
             }
         }

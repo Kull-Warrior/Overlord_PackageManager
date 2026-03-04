@@ -132,32 +132,9 @@ namespace Overlord_PackageManager.resources.OMP
                             ((LuaEntry)entry).Read(br, Body.Data.OffsetOrigin, 0, Entry.LuaDataDictionary);
                         }
                         
-                        if (entry is StringEntry || entry is Int32Entry || entry is FloatEntry || entry is Int64Entry)
+                        if (entry is StringEntry || entry is Int32Entry || entry is FloatEntry || entry is Int64Entry || entry is BlobEntry)
                         {
                             entry.Read(br, Body.Data.OffsetOrigin);
-                        }
-
-                        if (entry is BlobEntry)
-                        {
-                            uint length;
-                            switch (entry.Id)
-                            {
-                                case 22:
-                                case 23:
-                                case 24:
-                                    length = 12;
-                                    break;
-                                case 31:
-                                    length = 60;
-                                    break;
-                                case 132:
-                                    length = 7;
-                                    break;
-                                default:
-                                    length = 0;
-                                    break;
-                            }
-                            ((BlobEntry)entry).Read(br, Body.Data.OffsetOrigin, length);
                         }
                     }
                 }

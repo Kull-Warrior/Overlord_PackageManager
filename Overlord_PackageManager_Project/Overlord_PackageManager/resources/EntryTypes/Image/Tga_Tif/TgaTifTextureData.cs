@@ -22,7 +22,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
             {
                 if (entry is BlobEntry)
                 {
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, rawTextureDataLength);
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
                 }
             }
         }

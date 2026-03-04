@@ -3,6 +3,7 @@ using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using System.IO;
 using Overlord_PackageManager.resources.EntryTypes.Audio;
 using Overlord_PackageManager.resources.EntryTypes.Animation;
+using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 
 namespace Overlord_PackageManager.resources.Generic
 {
@@ -88,10 +89,10 @@ namespace Overlord_PackageManager.resources.Generic
 
                 switch (typeIdentifier)
                 {
-                    case 4259915:   // Object -> Meshes & used materials by these meshs assignment block.  Skeleton Data as well
+                    /*case 4259915:   // Object -> Meshes & used materials by these meshs assignment block.  Skeleton Data as well
                         break;
                     case 4261412:   // Material -> Used textures assignment block. So Skin, ReflectionCubeMap, etc etc
-                        break;
+                        break;*/
                     case 4259993:
                         Entries.Add(new ReflectionCubeMapAsset(ids[i], relativeOffsets[i]));
                         break;
@@ -110,12 +111,13 @@ namespace Overlord_PackageManager.resources.Generic
                     case 4259847:   // Bone Animation Data
                         Entries.Add(new BoneAnimationData(ids[i], relativeOffsets[i]));
                         break;
-                    case 4259893:   // Mesh Asset
-                        break;
+                    /*case 4259893:   // Mesh Asset
+                        break;*/
                     case 10551296:  // SFX Asset
                         Entries.Add(new SFXAsset(ids[i], relativeOffsets[i]));
                         break;
                     default:
+                        Entries.Add(new BlobEntry(ids[i], relativeOffsets[i]));
                         break;
                 }
             }

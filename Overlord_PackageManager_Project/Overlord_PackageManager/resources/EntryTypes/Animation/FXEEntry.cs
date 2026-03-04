@@ -22,23 +22,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             {
                 if (entry is BlobEntry)
                 {
-                    uint length;
-                    switch (entry.Id)
-                    {
-                        case 33:
-                            length = 1048576;
-                            break;
-                        case 37:
-                            length = 131072;
-                            break;
-                        case 39:
-                            length = 256;
-                            break;
-                        default:
-                            length = 0;
-                            break;
-                    }
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin, length);
+                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
                 }
                 else
                 {

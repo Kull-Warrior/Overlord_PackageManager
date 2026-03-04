@@ -48,7 +48,7 @@ namespace Overlord_PackageManager.resources.Generic
                 39 => new Int32Entry(id, relOffset),
                 40 => new StringEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -119,7 +119,7 @@ namespace Overlord_PackageManager.resources.Generic
                 133 => new ReferenceTableEntry(id, relOffset),
                 134 => new StringEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -138,7 +138,7 @@ namespace Overlord_PackageManager.resources.Generic
                 39 => new BlobEntry(id, relOffset),
                 40 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -150,7 +150,7 @@ namespace Overlord_PackageManager.resources.Generic
                 21 => new Int32Entry(id, relOffset),
                 22 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -164,7 +164,7 @@ namespace Overlord_PackageManager.resources.Generic
                 34 => new ReferenceTableEntry(id, relOffset),
                 35 => new Int32Entry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -187,7 +187,7 @@ namespace Overlord_PackageManager.resources.Generic
                 62 => new ReferenceTableEntry(id, relOffset),
                 63 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -198,7 +198,7 @@ namespace Overlord_PackageManager.resources.Generic
                 22 => new Int32Entry(id, relOffset),
                 23 => new Int32ArrayEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -211,7 +211,7 @@ namespace Overlord_PackageManager.resources.Generic
                 22 => new Int32Entry(id, relOffset),
                 23 => new BlobEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -232,7 +232,7 @@ namespace Overlord_PackageManager.resources.Generic
                 11 => new Int32Entry(id, relOffset),
                 12 => new BlobEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -254,7 +254,7 @@ namespace Overlord_PackageManager.resources.Generic
                 32 => new StringEntry(id, relOffset),
                 33 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -319,7 +319,7 @@ namespace Overlord_PackageManager.resources.Generic
                 90 => new XMLEntry(id, relOffset),          // Contains XML Data (Credits)
                 91 => new ReferenceTableEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -331,7 +331,7 @@ namespace Overlord_PackageManager.resources.Generic
                 21 => new ReferenceTableEntry(id, relOffset),
                 30 => new ReferenceTableEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -343,7 +343,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 20 => new Int32Entry(id, relOffset),    // Unkown u32
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -353,7 +353,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 20 => new Int32Entry(id, relOffset),    // Unkown u32
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -365,7 +365,7 @@ namespace Overlord_PackageManager.resources.Generic
                 21 => new Int32Entry(id, relOffset),                // Number of Bone positions, if the bone does not move in the animation only a single entry can be found here
                 22 => new BonePositionDataArray(id, relOffset),     // Array of Bone positions
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -379,7 +379,7 @@ namespace Overlord_PackageManager.resources.Generic
                 30 => new Int32Entry(id, relOffset),                // Number of Bone scales
                 31 => new BoneScaleDataArray(id, relOffset),        // Number of Bone scales
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -390,7 +390,7 @@ namespace Overlord_PackageManager.resources.Generic
                 20 => new Int32Entry(id, relOffset),                                    // Unkown u32
                 21 => new BoneAnimationSubTableType25SubTableType21(id, relOffset),     // Contains Bone Rotation and Scale data
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -405,7 +405,7 @@ namespace Overlord_PackageManager.resources.Generic
                 24 => new BoneAnimationSubTableType24(id, relOffset),   // Contains Bone Position data at deeper levels
                 25 => new BoneAnimationSubTableType25(id, relOffset),   // Contains Bone Rotation and Scale data at deeper levels
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -415,7 +415,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 10 => new ListOfBoneAnimationData(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -430,7 +430,7 @@ namespace Overlord_PackageManager.resources.Generic
                 30 => new FloatEntry(id, relOffset),                    // Unkown float and unknown use
                 31 => new Int64Entry(id, relOffset),                    // unkown u64 and unknown use
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -446,7 +446,7 @@ namespace Overlord_PackageManager.resources.Generic
                 30 => new Int32Entry(id, relOffset),    // Length of SFX Data
                 31 => new BlobEntry(id, relOffset),    // SFX Data, Header + Raw Audio Data, full wav style file
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -465,7 +465,7 @@ namespace Overlord_PackageManager.resources.Generic
                 106 => new Int32Entry(id, relOffset),   // Unkown int32
                 107 => new Int32Entry(id, relOffset),   // Unkown int32
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -479,7 +479,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 30 => new BlobEntry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -494,7 +494,7 @@ namespace Overlord_PackageManager.resources.Generic
                 32 => new Int32Entry(id, relOffset),
                 33 => new Int32Entry(id, relOffset),
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -511,7 +511,7 @@ namespace Overlord_PackageManager.resources.Generic
                 22 => new BlobEntry(id, relOffset),   // Raw image data
                 23 => new Int32Entry(id, relOffset),    // DDS Format
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -524,7 +524,7 @@ namespace Overlord_PackageManager.resources.Generic
                 23 => new Int32Entry(id, relOffset),     // Unkown
                 24 => new ReferenceTableEntry(id, relOffset),     // Unkown
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -537,7 +537,7 @@ namespace Overlord_PackageManager.resources.Generic
                 20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),   // File name
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
         #endregion DDSImageDictionaries
@@ -552,7 +552,7 @@ namespace Overlord_PackageManager.resources.Generic
                 20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),   // File name
                 // Add more IDs here
-                _ => throw new ArgumentException($"Unknown entry ID {id}")
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
         #endregion ReflectionCubeMapDictionaries
