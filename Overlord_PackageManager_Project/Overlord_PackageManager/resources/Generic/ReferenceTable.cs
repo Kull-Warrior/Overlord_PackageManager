@@ -12,14 +12,16 @@ namespace Overlord_PackageManager.resources.Generic
         public int Count8;
         public int Count32 = 0;
         public List<Entry> Entries = new List<Entry>();
-        public long OffsetOrigin;
+        public long OffsetOrigin;   // Start of entry payload region
+        public long TableEnd;       // Absolute end boundary of this table
 
         public ReferenceTable()
         {
 
         }
-        public ReferenceTable(BinaryReader reader, Func<uint, uint, Entry> entryFactory)
+        public ReferenceTable(BinaryReader reader, long tableEnd, Func<uint, uint, Entry> entryFactory)
         {
+            TableEnd = tableEnd;
             byte temp = reader.ReadByte();
             HasBigEntry = Convert.ToBoolean(temp >> 7);
             Count8 = temp & 0x7F;
@@ -46,10 +48,12 @@ namespace Overlord_PackageManager.resources.Generic
             }
 
             OffsetOrigin = reader.BaseStream.Position;
+            ComputeEntryLengths();
         }
 
-        public ReferenceTable(BinaryReader reader)
+        public ReferenceTable(BinaryReader reader, long tableEnd)
         {
+            TableEnd = tableEnd;
             byte temp = reader.ReadByte();
             HasBigEntry = Convert.ToBoolean(temp >> 7);
             Count8 = temp & 0x7F;
@@ -114,6 +118,23 @@ namespace Overlord_PackageManager.resources.Generic
                     default:
                         break;
                 }
+            }
+            ComputeEntryLengths();
+        }
+
+        private void ComputeEntryLengths()
+        {
+            for (int i = 0; i < Entries.Count; i++)
+            {
+                long start = OffsetOrigin + Entries[i].RelOffset;
+                long end;
+
+                if (i < Entries.Count - 1)
+                    end = OffsetOrigin + Entries[i + 1].RelOffset;
+                else
+                    end = TableEnd;
+
+                Entries[i].Length = end - start;
             }
         }
     }

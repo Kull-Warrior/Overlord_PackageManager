@@ -27,9 +27,13 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
+            long start = origin + RelOffset;
+            long end = start + Length;
+
+            reader.BaseStream.Position = start;
             reader.BaseStream.Position = origin + RelOffset;
             TypeIdentifier = reader.ReadUInt32();
-            Table = new ReferenceTable(reader, entryFactory);
+            Table = new ReferenceTable(reader, end, entryFactory);
 
             foreach (var entry in Table.Entries)
             {

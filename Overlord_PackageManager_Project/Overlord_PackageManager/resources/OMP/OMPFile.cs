@@ -40,14 +40,14 @@ namespace Overlord_PackageManager.resources.OMP
                     Header = new OMPHeader(br);
                     Body = new OMPBody();
 
-                    Body.Info = new ReferenceTable(br, Entry.InfoTableDictionary);
+                    Body.Info = new ReferenceTable(br, br.BaseStream.Length, Entry.InfoTableDictionary);
 
                     foreach (var entry in Body.Info.Entries)
                     {
                         entry.Read(br, Body.Info.OffsetOrigin);
                     }
 
-                    Body.Data = new ReferenceTable(br, Entry.OMPDataRootTableDictionary);
+                    Body.Data = new ReferenceTable(br, br.BaseStream.Length,Entry.OMPDataRootTableDictionary);
 
                     foreach (var entry in Body.Data.Entries)
                     {

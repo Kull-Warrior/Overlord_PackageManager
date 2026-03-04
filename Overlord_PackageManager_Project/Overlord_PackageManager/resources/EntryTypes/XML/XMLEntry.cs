@@ -11,8 +11,12 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
 
         public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
         {
+            long start = origin + RelOffset;
+            long end = start + Length;
+
+            reader.BaseStream.Position = start;
             reader.BaseStream.Position = origin + RelOffset;
-            Table = new ReferenceTable(reader, entryFactory);
+            Table = new ReferenceTable(reader, end, entryFactory);
 
             if (Table.Count8 > 0 || Table.Count32 > 0)
             {

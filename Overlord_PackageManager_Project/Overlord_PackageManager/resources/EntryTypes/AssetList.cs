@@ -17,9 +17,13 @@ namespace Overlord_PackageManager.resources.EntryTypes
 
         public override void Read(BinaryReader reader, long origin)
         {
+            long start = origin + RelOffset;
+            long end = start + Length;
+
+            reader.BaseStream.Position = start;
             reader.BaseStream.Position = origin + RelOffset;
             LeadingBytes = reader.ReadBytes(3);
-            Table = new ReferenceTable(reader);
+            Table = new ReferenceTable(reader, end);
 
             foreach (var entry in Table.Entries)
             {

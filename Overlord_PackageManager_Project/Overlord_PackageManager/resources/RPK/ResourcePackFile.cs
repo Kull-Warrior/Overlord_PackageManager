@@ -2,6 +2,7 @@
 using Overlord_PackageManager.resources.EntryTypes.XML;
 using Overlord_PackageManager.resources.Generic;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Text;
 
 namespace Overlord_PackageManager.resources.RPK
@@ -43,7 +44,7 @@ namespace Overlord_PackageManager.resources.RPK
                     Header = new ResourcePackHeader(br);
                     Body = new ResourcePackBody();
 
-                    Body.Data = new ReferenceTable(br, Entry.ResourcePackRootTableDictionary);
+                    Body.Data = new ReferenceTable(br, br.BaseStream.Length, Entry.ResourcePackRootTableDictionary);
 
                     foreach (var entry in Body.Data.Entries)
                     {

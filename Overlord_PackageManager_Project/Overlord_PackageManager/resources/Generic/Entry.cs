@@ -14,6 +14,8 @@ namespace Overlord_PackageManager.resources.Generic
     {
         public uint Id;
         public uint RelOffset;
+        // Absolute payload size of this entry
+        public long Length;
 
         protected Entry()
         {
@@ -458,6 +460,7 @@ namespace Overlord_PackageManager.resources.Generic
                 21 => new StringEntry(id, relOffset),   // Sound name
                 100 => new StringEntry(id, relOffset),  // File name
                 101 => new Int32Entry(id, relOffset),   // FFFF Block unkown use
+                104 => new Int32Entry(id, relOffset),    // Unkown int32
                 105 => new SingleByteEntry(id, relOffset),    // Unkown single byte
                 106 => new Int32Entry(id, relOffset),   // Unkown int32
                 107 => new Int32Entry(id, relOffset),   // Unkown int32

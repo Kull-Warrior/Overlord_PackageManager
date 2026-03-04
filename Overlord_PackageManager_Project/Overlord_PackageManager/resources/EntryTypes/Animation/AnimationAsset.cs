@@ -12,9 +12,12 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
-            reader.BaseStream.Position = origin + RelOffset;
+            long start = origin + RelOffset;
+            long end = start + Length;
+
+            reader.BaseStream.Position = start;
             TypeIdentifier = reader.ReadUInt32();
-            Table = new ReferenceTable(reader, entryFactory);
+            Table = new ReferenceTable(reader, end, entryFactory);
 
             foreach (var entry in Table.Entries)
             {
