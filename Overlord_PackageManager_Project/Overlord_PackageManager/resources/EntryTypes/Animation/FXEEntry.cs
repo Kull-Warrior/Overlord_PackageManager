@@ -20,14 +20,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is BlobEntry)
-                {
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
-                }
-                else
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

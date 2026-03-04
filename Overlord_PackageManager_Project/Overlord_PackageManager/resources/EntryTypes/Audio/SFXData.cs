@@ -20,14 +20,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
 
             foreach (var entry in Table.Entries)
             {
-                if(entry is Int32Entry)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
-                if (entry is BlobEntry)
-                {
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

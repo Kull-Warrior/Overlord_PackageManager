@@ -21,10 +21,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 
             foreach (var entry in Table.Entries)
             {
-                if(entry is Int32Entry || entry is ListOfDDSTextures)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

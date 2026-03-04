@@ -9,7 +9,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
         public ReferenceTable Table;
         public ReferenceTable GetReferenceTable() => Table;
 
-        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory, uint rawTextureDataLength)
+        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             long start = origin + RelOffset;
             long end = start + Length;
@@ -20,10 +20,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is BlobEntry)
-                {
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

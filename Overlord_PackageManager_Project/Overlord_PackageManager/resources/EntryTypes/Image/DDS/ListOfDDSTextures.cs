@@ -32,7 +32,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
             {
                 if (entry is DDSTextures)
                 {
-                    ((DDSTextures)entry).Read(reader, Table.OffsetOrigin, 0, DDSTextureDictionary);
+                    ((DDSTextures)entry).Read(reader, Table.OffsetOrigin, DDSTextureDictionary);
                 }
             }
         }

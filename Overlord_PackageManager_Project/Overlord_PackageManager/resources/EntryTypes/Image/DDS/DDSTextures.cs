@@ -25,7 +25,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
         }
 
 
-        public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
+        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             long start = origin + RelOffset;
             long end = start + Length;
@@ -37,14 +37,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is Int32Entry)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
-                if (entry is BlobEntry)
-                {
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

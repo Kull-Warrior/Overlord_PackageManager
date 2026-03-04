@@ -50,7 +50,7 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 }
                 if (entry is BlobEntry)
                 {
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
+                    entry.Read(reader, Table.OffsetOrigin);
                 }
             }
         }

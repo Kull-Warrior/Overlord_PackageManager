@@ -20,17 +20,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Lua
             leadingBytes = reader.ReadBytes((int)numberOfLeadingBytes);
             Table = new ReferenceTable(reader, end, entryFactory);
 
-
             foreach (var entry in Table.Entries)
             {
-                if(entry is StringEntry || entry is StringArrayEntry || entry is Int32Entry)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
-                if (entry is BlobEntry)
-                {
-                    ((BlobEntry)entry).Read(reader, Table.OffsetOrigin);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

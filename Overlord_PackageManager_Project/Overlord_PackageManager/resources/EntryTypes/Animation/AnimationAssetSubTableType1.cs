@@ -20,10 +20,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
             foreach (var entry in Table.Entries)
             {
-                if(entry is ListOfBoneAnimationData)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

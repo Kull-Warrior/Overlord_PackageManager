@@ -29,15 +29,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
                 }
                 if (entry is TgaTifTextureData)
                 {
-                    List<Int32Entry> intEntries = Table.Entries.OfType<Int32Entry>().ToList();
-
-                    if (intEntries == null)
-                        throw new InvalidOperationException("No width and height length found");
-
-                    uint bytesPerPixel = 4;
-                    uint rawTextureDataLength = intEntries[0].varInt * intEntries[1].varInt * bytesPerPixel;
-
-                    ((TgaTifTextureData)entry).Read(reader, Table.OffsetOrigin, RawTgaTifTextureDataDictionary, rawTextureDataLength);
+                    ((TgaTifTextureData)entry).Read(reader, Table.OffsetOrigin, RawTgaTifTextureDataDictionary);
                 }
             }
         }
