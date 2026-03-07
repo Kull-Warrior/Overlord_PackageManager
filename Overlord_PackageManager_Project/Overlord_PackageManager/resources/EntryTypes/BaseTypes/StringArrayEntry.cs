@@ -6,9 +6,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
     public class StringArrayEntry : Entry
     {
-        uint stringCount;
-        List<uint> stringLength = new List<uint>();
-        List<string> varString = new List<string>();
+        uint Count;
+        List<uint> Lengths = new List<uint>();
+        List<string> Values = new List<string>();
 
         public StringArrayEntry(uint id, uint relOffset) : base(id, relOffset)
         {
@@ -17,12 +17,12 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            stringCount = reader.ReadUInt32();
-            for (uint i = 0; i < stringCount; i++)
+            Count = reader.ReadUInt32();
+            for (uint i = 0; i < Count; i++)
             {
                 uint length = reader.ReadUInt32();
-                stringLength.Add(length);
-                varString.Add(Encoding.ASCII.GetString(reader.ReadBytes((int)length)));
+                Lengths.Add(length);
+                Values.Add(Encoding.ASCII.GetString(reader.ReadBytes((int)length)));
             }
         }
     }

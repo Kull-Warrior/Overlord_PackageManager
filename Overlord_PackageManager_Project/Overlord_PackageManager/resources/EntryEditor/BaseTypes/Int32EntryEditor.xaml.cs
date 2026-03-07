@@ -15,14 +15,14 @@ namespace Overlord_PackageManager.resources.EntryEditor
             InitializeComponent();
 
             _entry = entry;
-            ValueBox.Text = entry.varInt.ToString();
+            ValueBox.Text = entry.Value.ToString();
             ValueBox.TextChanged += ValueChanged;
         }
 
         private void ValueChanged(object sender, TextChangedEventArgs e)
         {
             if (uint.TryParse(ValueBox.Text, out uint v))
-                _entry.varInt = v;
+                _entry.Value = v;
         }
     }
 }

@@ -30,9 +30,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
             List<DDSTextures> textures = GetTextureList().Table.Entries.OfType<DDSTextures>().ToList();
 
             DDSTextures first = textures.First();
-            uint width = ((Int32Entry)first.Table.Entries[0]).varInt;
-            uint height = ((Int32Entry)first.Table.Entries[1]).varInt;
-            DDSFormat format = (DDSFormat)((Int32Entry)first.Table.Entries[2]).varInt;
+            uint width = ((Int32Entry)first.Table.Entries[0]).Value;
+            uint height = ((Int32Entry)first.Table.Entries[1]).Value;
+            DDSFormat format = (DDSFormat)((Int32Entry)first.Table.Entries[2]).Value;
 
             List<DDSMipFace> faces = textures.Select((t, i) =>
             {
@@ -43,7 +43,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
                     MipIndex = i,
                     Width = width >> i,
                     Height = height >> i,
-                    Data = blob.varBytes
+                    Data = blob.Data
                 };
             }).ToList();
 

@@ -5,7 +5,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
     public class FloatEntry : Entry
     {
-        public float varFloat;
+        public float Value;
 
         public FloatEntry(uint id, uint relOffset) : base(id, relOffset)
         {
@@ -14,7 +14,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            varFloat = reader.ReadSingle();
+            Value = reader.ReadSingle();
         }
     }
 }

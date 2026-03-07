@@ -6,21 +6,21 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
     public class StringEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
-        uint stringLength;
-        public string varString;
+        uint Length;
+        public string Value;
 
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            stringLength = reader.ReadUInt32();
-            varString = Encoding.ASCII.GetString(reader.ReadBytes((int)stringLength));
+            Length = reader.ReadUInt32();
+            Value = Encoding.ASCII.GetString(reader.ReadBytes((int)Length));
         }
 
         public void Read(BinaryReader reader, long origin, uint length)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            stringLength = length;
-            varString = Encoding.ASCII.GetString(reader.ReadBytes((int)stringLength));
+            Length = length;
+            Value = Encoding.ASCII.GetString(reader.ReadBytes((int)Length));
         }
     }
 }

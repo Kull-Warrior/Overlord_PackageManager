@@ -5,15 +5,15 @@ namespace Overlord_PackageManager.resources.EntryTypes
 {
     public class Int32ArrayEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
-        public uint[] varIntArray;
+        public uint[] Values;
 
         public void Read(BinaryReader reader, long origin, uint arraySize)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            varIntArray = new uint[arraySize];
+            Values = new uint[arraySize];
             for (int i = 0; i < arraySize; i++)
             {
-                varIntArray[i] = reader.ReadUInt32();
+                Values[i] = reader.ReadUInt32();
             }
         }
 

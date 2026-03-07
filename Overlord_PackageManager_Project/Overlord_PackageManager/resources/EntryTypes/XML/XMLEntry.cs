@@ -36,10 +36,10 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
         {
             if (Table.SmallEntryCount > 0 || Table.LargeEntryCount > 0)
             {
-                string resourcePath = ((StringEntry)Table.Entries[0]).varString;
+                string resourcePath = ((StringEntry)Table.Entries[0]).Value;
                 string fileName = Path.GetFileName(resourcePath);
 
-                byte[] data = ((BlobEntry)Table.Entries[2]).varBytes;
+                byte[] data = ((BlobEntry)Table.Entries[2]).Data;
 
                 using FileStream fileHeaderStream = File.Open(baseDir + "\\" + fileName, FileMode.Create);
                 using BinaryWriter fileHeaderBinaryWriter = new BinaryWriter(fileHeaderStream);

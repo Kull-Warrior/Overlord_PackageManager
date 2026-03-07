@@ -18,10 +18,10 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
         public DDSTextures (uint width, uint height, DDSFormat format, byte[] data)
         {
             Table = new ReferenceTable();
-            Table.Entries.Add(new Int32Entry(20, 0) { varInt = width });
-            Table.Entries.Add(new Int32Entry(21, 4) { varInt = height });
-            Table.Entries.Add(new Int32Entry(23, 8) { varInt = (uint)format });
-            Table.Entries.Add(new BlobEntry(22, 12) { varBytes = data });
+            Table.Entries.Add(new Int32Entry(20, 0) { Value = width });
+            Table.Entries.Add(new Int32Entry(21, 4) { Value = height });
+            Table.Entries.Add(new Int32Entry(23, 8) { Value = (uint)format });
+            Table.Entries.Add(new BlobEntry(22, 12) { Data = data });
         }
 
 

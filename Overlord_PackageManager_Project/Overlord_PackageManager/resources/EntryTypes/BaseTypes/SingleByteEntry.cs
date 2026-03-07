@@ -5,12 +5,12 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
     public class SingleByteEntry(uint id, uint relOffset) : Entry(id, relOffset)
     {
-        byte varByte;
+        byte Value;
 
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            varByte = reader.ReadByte();
+            Value = reader.ReadByte();
         }
     }
 }

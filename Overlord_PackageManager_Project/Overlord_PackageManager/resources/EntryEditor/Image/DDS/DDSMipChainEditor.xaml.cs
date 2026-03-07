@@ -55,9 +55,9 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
                 List<Int32Entry> lastThree = intEntries.TakeLast(3).ToList();
 
-                uint width = lastThree[0].varInt;
-                uint height = lastThree[1].varInt;
-                DDSFormat format = (DDSFormat)lastThree[2].varInt;
+                uint width = lastThree[0].Value;
+                uint height = lastThree[1].Value;
+                DDSFormat format = (DDSFormat)lastThree[2].Value;
 
                 BlobEntry? blob = dds.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
 
@@ -66,7 +66,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
                     continue;
                 }
 
-                _mips.Add(new MipLevelData(width, height, format, blob.varBytes));
+                _mips.Add(new MipLevelData(width, height, format, blob.Data));
 
                 MipSelector.Items.Add($"Level {level}  ({width}x{height})");
 

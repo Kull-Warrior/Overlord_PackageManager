@@ -19,9 +19,9 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             List<Int32Entry> lastThree = intEntries.TakeLast(3).ToList();
 
-            uint width = lastThree[0].varInt;
-            uint height = lastThree[1].varInt;
-            DDSFormat format = (DDSFormat)lastThree[2].varInt;
+            uint width = lastThree[0].Value;
+            uint height = lastThree[1].Value;
+            DDSFormat format = (DDSFormat)lastThree[2].Value;
 
             BlobEntry? blob = dds.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
 
@@ -33,7 +33,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
             MetaText.Text = $"Width: {width}   Height: {height}   Format: {format}";
 
             ImageHost.Content =
-                new DDSImageViewer(width, height, format, blob.varBytes);
+                new DDSImageViewer(width, height, format, blob.Data);
         }
     }
 }

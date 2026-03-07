@@ -48,7 +48,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
                 Directory.CreateDirectory(directory);
 
             StringEntry fileNameEntry = (StringEntry)Table.Entries[1];
-            string fileName = fileNameEntry.varString;
+            string fileName = fileNameEntry.Value;
 
             if (!fileName.EndsWith(".dds", StringComparison.OrdinalIgnoreCase))
                 fileName += ".dds";

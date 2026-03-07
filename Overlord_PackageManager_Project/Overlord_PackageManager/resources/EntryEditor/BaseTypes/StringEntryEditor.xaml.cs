@@ -15,13 +15,13 @@ namespace Overlord_PackageManager.resources.EntryEditor
             InitializeComponent();
 
             _entry = entry;
-            ValueBox.Text = entry.varString;
+            ValueBox.Text = entry.Value;
             ValueBox.TextChanged += ValueChanged;
         }
 
         private void ValueChanged(object sender, TextChangedEventArgs e)
         {
-            _entry.varString = ValueBox.Text;
+            _entry.Value = ValueBox.Text;
         }
 
         public string Label

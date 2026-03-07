@@ -5,7 +5,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
     public class Int64Entry : Entry
     {
-        public ulong varInt;
+        public ulong Value;
 
         public Int64Entry(uint id, uint relOffset) : base(id, relOffset)
         {
@@ -14,7 +14,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            varInt = reader.ReadUInt64();
+            Value = reader.ReadUInt64();
         }
     }
 }

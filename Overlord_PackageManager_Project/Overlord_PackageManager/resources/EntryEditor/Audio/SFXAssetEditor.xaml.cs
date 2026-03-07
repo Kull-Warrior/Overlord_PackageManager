@@ -83,7 +83,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
         {
             SFXData? sfxData = _asset.Table.Entries.OfType<SFXData>().FirstOrDefault();
             BlobEntry? blob = sfxData?.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
-            return blob?.varBytes;
+            return blob?.Data;
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
@@ -171,8 +171,8 @@ namespace Overlord_PackageManager.resources.EntryEditor
                 return;
             }
 
-            blob.varBytes = fileBytes;
-            lengthEntry.varInt = (uint)fileBytes.Length;
+            blob.Data = fileBytes;
+            lengthEntry.Value = (uint)fileBytes.Length;
 
             // Update StringEntryEditors UI (automatically updates varString)
             _fileNameEditor!.ValueBox.Text = Path.GetFileName(openFile.FileName);

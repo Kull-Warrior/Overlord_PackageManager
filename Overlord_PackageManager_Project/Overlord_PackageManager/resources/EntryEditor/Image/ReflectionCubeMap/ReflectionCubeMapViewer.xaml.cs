@@ -70,13 +70,13 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             List<Int32Entry> intEntries = tex.Table.Entries.OfType<Int32Entry>().Take(3).ToList();
 
-            uint width = intEntries[0].varInt;
-            uint height = intEntries[1].varInt;
-            DDSFormat format = (DDSFormat)intEntries[2].varInt;
+            uint width = intEntries[0].Value;
+            uint height = intEntries[1].Value;
+            DDSFormat format = (DDSFormat)intEntries[2].Value;
 
             BlobEntry blob = tex.Table.Entries.OfType<BlobEntry>().First();
 
-            return new MipLevelData(width, height, format, blob.varBytes);
+            return new MipLevelData(width, height, format, blob.Data);
         }
 
         private void BuildPreviewGrid()

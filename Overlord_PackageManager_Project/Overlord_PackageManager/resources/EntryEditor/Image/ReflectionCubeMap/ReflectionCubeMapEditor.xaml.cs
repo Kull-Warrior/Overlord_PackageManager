@@ -64,7 +64,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             // Update filename entry
             StringEntry fileNameEntry = (StringEntry)_asset.Table.Entries[1];
-            fileNameEntry.varString = Path.GetFileName(dialog.FileName);
+            fileNameEntry.Value = Path.GetFileName(dialog.FileName);
 
             BuildUI();
         }
@@ -76,7 +76,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
             if (dialog.ShowDialog() != true)
                 return;
 
-            string fileName = ((StringEntry)_asset.Table.Entries[1]).varString;
+            string fileName = ((StringEntry)_asset.Table.Entries[1]).Value;
 
             if (!fileName.EndsWith(".dds", System.StringComparison.OrdinalIgnoreCase))
                 fileName += ".dds";
