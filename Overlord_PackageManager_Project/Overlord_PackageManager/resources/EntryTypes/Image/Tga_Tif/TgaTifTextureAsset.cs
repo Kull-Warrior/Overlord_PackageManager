@@ -12,11 +12,11 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             TypeIdentifier = reader.ReadUInt32();
             Table = new ReferenceTable(reader, end, entryFactory);
 
@@ -25,11 +25,11 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
             {
                 if (entry is StringEntry || entry is Int32Entry)
                 {
-                    entry.Read(reader, Table.OffsetOrigin);
+                    entry.Read(reader, Table.PayloadStartOffset);
                 }
                 if (entry is TgaTifTextureData)
                 {
-                    ((TgaTifTextureData)entry).Read(reader, Table.OffsetOrigin, RawTgaTifTextureDataDictionary);
+                    ((TgaTifTextureData)entry).Read(reader, Table.PayloadStartOffset, RawTgaTifTextureDataDictionary);
                 }
             }
         }

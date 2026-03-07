@@ -44,7 +44,7 @@ namespace Overlord_PackageManager.resources.OMP
 
                     foreach (var entry in Body.Info.Entries)
                     {
-                        entry.Read(br, Body.Info.OffsetOrigin);
+                        entry.Read(br, Body.Info.PayloadStartOffset);
                     }
 
                     Body.Data = new ReferenceTable(br, br.BaseStream.Length,Entry.OMPDataRootTableDictionary);
@@ -53,32 +53,32 @@ namespace Overlord_PackageManager.resources.OMP
                     {
                         if (entry is TerrainDataEntry)
                         {
-                            ((TerrainDataEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.TerrainDataDictionary);
+                            ((TerrainDataEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.TerrainDataDictionary);
                         }
 
                         if (entry is UnknownTableType21Entry)
                         {
-                            ((UnknownTableType21Entry)entry).Read(br, Body.Data.OffsetOrigin, Entry.RPKListDictionary);
+                            ((UnknownTableType21Entry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.RPKListDictionary);
                         }
 
                         if (entry is ResourcePackLinkEntry)
                         {
-                            ((ResourcePackLinkEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.RPKListDictionary);
+                            ((ResourcePackLinkEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.RPKListDictionary);
                         }
 
                         if (entry is LuaListEntry)
                         {
-                            ((LuaListEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.LuaListDictionary);
+                            ((LuaListEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.LuaListDictionary);
                         }
 
                         if (entry is LuaEntry)
                         {
-                            ((LuaEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.LuaDataDictionary);
+                            ((LuaEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.LuaDataDictionary);
                         }
                         
                         if (entry is StringEntry || entry is Int32Entry || entry is FloatEntry || entry is Int64Entry || entry is BlobEntry)
                         {
-                            entry.Read(br, Body.Data.OffsetOrigin);
+                            entry.Read(br, Body.Data.PayloadStartOffset);
                         }
                     }
                 }

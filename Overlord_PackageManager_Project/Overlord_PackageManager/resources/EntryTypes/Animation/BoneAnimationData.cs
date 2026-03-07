@@ -12,11 +12,11 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             TypeIdentifier = reader.ReadUInt32();
             Table = new ReferenceTable(reader, end, entryFactory);
 
@@ -24,23 +24,23 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             {
                 if (entry is BoneAnimationSubTableType22)
                 {
-                    ((BoneAnimationSubTableType22)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType22Dictionary);
+                    ((BoneAnimationSubTableType22)entry).Read(reader, Table.PayloadStartOffset, BoneAnimationSubTableType22Dictionary);
                 }
                 else if (entry is BoneAnimationSubTableType23)
                 {
-                    ((BoneAnimationSubTableType23)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType23Dictionary);
+                    ((BoneAnimationSubTableType23)entry).Read(reader, Table.PayloadStartOffset, BoneAnimationSubTableType23Dictionary);
                 }
                 else if (entry is BoneAnimationSubTableType24)
                 {
-                    ((BoneAnimationSubTableType24)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType24Dictionary);
+                    ((BoneAnimationSubTableType24)entry).Read(reader, Table.PayloadStartOffset, BoneAnimationSubTableType24Dictionary);
                 }
                 else if (entry is BoneAnimationSubTableType25)
                 {
-                    ((BoneAnimationSubTableType25)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType25Dictionary);
+                    ((BoneAnimationSubTableType25)entry).Read(reader, Table.PayloadStartOffset, BoneAnimationSubTableType25Dictionary);
                 }
                 else
                 {
-                    entry.Read(reader, Table.OffsetOrigin);
+                    entry.Read(reader, Table.PayloadStartOffset);
                 }
             }
         }

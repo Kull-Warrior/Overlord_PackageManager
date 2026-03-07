@@ -16,7 +16,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
         }
         public override void Read(BinaryReader reader, long origin)
         {
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             stringCount = reader.ReadUInt32();
             for (uint i = 0; i < stringCount; i++)
             {

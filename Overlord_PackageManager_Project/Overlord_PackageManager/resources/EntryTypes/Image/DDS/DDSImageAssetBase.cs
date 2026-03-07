@@ -15,21 +15,21 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> factory)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             TypeIdentifier = reader.ReadUInt32();
             Table = new ReferenceTable(reader, end, factory);
 
             foreach (var entry in Table.Entries)
             {
                 if (entry is StringEntry or Int32Entry)
-                    entry.Read(reader, Table.OffsetOrigin);
+                    entry.Read(reader, Table.PayloadStartOffset);
 
                 if (entry is DDSTextureAssetDataContainer container)
-                    container.Read(reader, Table.OffsetOrigin, DDSTextureAssetDataContainerDictionary);
+                    container.Read(reader, Table.PayloadStartOffset, DDSTextureAssetDataContainerDictionary);
             }
         }
 

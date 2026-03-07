@@ -9,10 +9,10 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
         public override void Read(BinaryReader reader, long origin)
         {
-            reader.BaseStream.Position = origin + RelOffset;
-            boneScales = new BoneScaleData[Length / 6];
+            reader.BaseStream.Position = origin + RelativeOffset;
+            boneScales = new BoneScaleData[PayloadLength / 6];
 
-            for (int i = 0; i < (Length / 6); i++)
+            for (int i = 0; i < (PayloadLength / 6); i++)
             {
                 boneScales[i] = new BoneScaleData();
                 boneScales[i].Read(reader);

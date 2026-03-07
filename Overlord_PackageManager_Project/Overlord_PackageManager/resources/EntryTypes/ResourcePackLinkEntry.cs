@@ -11,11 +11,11 @@ namespace Overlord_PackageManager.resources.EntryTypes
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             leadingBytes = reader.ReadBytes(3);
             Table = new ReferenceTable(reader, end, entryFactory);
 

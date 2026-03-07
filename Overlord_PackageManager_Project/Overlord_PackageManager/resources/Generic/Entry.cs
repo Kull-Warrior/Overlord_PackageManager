@@ -13,9 +13,9 @@ namespace Overlord_PackageManager.resources.Generic
     public abstract class Entry
     {
         public uint Id;
-        public uint RelOffset;
+        public uint RelativeOffset;
         // Absolute payload size of this entry
-        public long Length;
+        public long PayloadLength;
 
         protected Entry()
         {
@@ -25,7 +25,7 @@ namespace Overlord_PackageManager.resources.Generic
         protected Entry(uint id, uint relOffset)
         {
             Id = id;
-            RelOffset = relOffset;
+            RelativeOffset = relOffset;
         }
 
         // Each entry knows how to read itself

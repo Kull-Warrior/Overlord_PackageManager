@@ -12,8 +12,8 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
             TypeIdentifier = reader.ReadUInt32();
@@ -23,11 +23,11 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             {
                 if (entry is AnimationAssetDataContainer)
                 {
-                    ((AnimationAssetDataContainer)entry).Read(reader, Table.OffsetOrigin, AnimationAssetDataContainerDictionary);
+                    ((AnimationAssetDataContainer)entry).Read(reader, Table.PayloadStartOffset, AnimationAssetDataContainerDictionary);
                 }
                 else
                 {
-                    entry.Read(reader, Table.OffsetOrigin);
+                    entry.Read(reader, Table.PayloadStartOffset);
                 }
             }
         }

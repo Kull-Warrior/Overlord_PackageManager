@@ -9,7 +9,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 
         public override void Read(BinaryReader reader, long origin)
         {
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             varByte = reader.ReadByte();
         }
     }

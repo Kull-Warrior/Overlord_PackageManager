@@ -18,11 +18,11 @@ namespace Overlord_PackageManager.resources.EntryTypes
 
         public override void Read(BinaryReader reader, long origin)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             LeadingBytes = reader.ReadBytes(3);
             Table = new ReferenceTable(reader, end);
 
@@ -30,35 +30,35 @@ namespace Overlord_PackageManager.resources.EntryTypes
             {
                 if (entry is ReflectionCubeMapAsset)
                 {
-                    ((ReflectionCubeMapAsset)entry).Read(reader, Table.OffsetOrigin, ReflectionCubeMapAssetDictionary);
+                    ((ReflectionCubeMapAsset)entry).Read(reader, Table.PayloadStartOffset, ReflectionCubeMapAssetDictionary);
                 }
                 if (entry is DDSTextureAsset)
                 {
-                    ((DDSTextureAsset)entry).Read(reader, Table.OffsetOrigin,DDSTextureAssetDictionary);
+                    ((DDSTextureAsset)entry).Read(reader, Table.PayloadStartOffset,DDSTextureAssetDictionary);
                 }
                 if (entry is DDSTextures)
                 {
-                    ((DDSTextures)entry).Read(reader, Table.OffsetOrigin, DDSTextureDictionary);
+                    ((DDSTextures)entry).Read(reader, Table.PayloadStartOffset, DDSTextureDictionary);
                 }
                 if (entry is TgaTifTextureAsset)
                 {
-                    ((TgaTifTextureAsset)entry).Read(reader, Table.OffsetOrigin, TgaTifTextureAssetDictionary);
+                    ((TgaTifTextureAsset)entry).Read(reader, Table.PayloadStartOffset, TgaTifTextureAssetDictionary);
                 }
                 if (entry is SFXAsset)
                 {
-                    ((SFXAsset)entry).Read(reader, Table.OffsetOrigin, SFXAssetDictionary);
+                    ((SFXAsset)entry).Read(reader, Table.PayloadStartOffset, SFXAssetDictionary);
                 }
                 if (entry is AnimationAsset)
                 {
-                    ((AnimationAsset)entry).Read(reader, Table.OffsetOrigin, AnimationAssetDictionary);
+                    ((AnimationAsset)entry).Read(reader, Table.PayloadStartOffset, AnimationAssetDictionary);
                 }
                 if (entry is BoneAnimationData)
                 {
-                    ((BoneAnimationData)entry).Read(reader, Table.OffsetOrigin, BoneAnimationDataDictionary);
+                    ((BoneAnimationData)entry).Read(reader, Table.PayloadStartOffset, BoneAnimationDataDictionary);
                 }
                 if (entry is BlobEntry)
                 {
-                    entry.Read(reader, Table.OffsetOrigin);
+                    entry.Read(reader, Table.PayloadStartOffset);
                 }
             }
         }

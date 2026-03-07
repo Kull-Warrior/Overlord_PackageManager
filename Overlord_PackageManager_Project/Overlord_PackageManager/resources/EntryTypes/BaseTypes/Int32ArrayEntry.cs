@@ -9,7 +9,7 @@ namespace Overlord_PackageManager.resources.EntryTypes
 
         public void Read(BinaryReader reader, long origin, uint arraySize)
         {
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             varIntArray = new uint[arraySize];
             for (int i = 0; i < arraySize; i++)
             {

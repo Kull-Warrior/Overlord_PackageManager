@@ -9,12 +9,12 @@ namespace Overlord_PackageManager.resources.Generic
 {
     public class ReferenceTable
     {
-        public bool HasBigEntry;
-        public int Count8;
-        public int Count32 = 0;
+        public bool HasLargeEntries;
+        public uint SmallEntryCount;
+        public uint LargeEntryCount = 0;
         public List<Entry> Entries = new List<Entry>();
-        public long OffsetOrigin;   // Start of entry payload region
-        public long TableEnd;       // Absolute end boundary of this table
+        public long PayloadStartOffset;   // Start of entry payload region
+        public long TableEndOffset;       // Absolute end boundary of this table
 
         public ReferenceTable()
         {
@@ -22,17 +22,17 @@ namespace Overlord_PackageManager.resources.Generic
         }
         public ReferenceTable(BinaryReader reader, long tableEnd, Func<uint, uint, Entry> entryFactory)
         {
-            TableEnd = tableEnd;
+            TableEndOffset = tableEnd;
             byte temp = reader.ReadByte();
-            HasBigEntry = Convert.ToBoolean(temp >> 7);
-            Count8 = temp & 0x7F;
+            HasLargeEntries = Convert.ToBoolean(temp >> 7);
+            SmallEntryCount = (uint)(temp & 0x7F);
 
-            if (HasBigEntry == true)
+            if (HasLargeEntries == true)
             {
-                Count32 = reader.ReadInt32();
+                LargeEntryCount = reader.ReadUInt32();
             }
 
-            for (int i = 0; i < Count8; i++)
+            for (int i = 0; i < SmallEntryCount; i++)
             {
                 uint id = reader.ReadByte();
                 uint offset = reader.ReadByte();
@@ -40,50 +40,50 @@ namespace Overlord_PackageManager.resources.Generic
                 Entries.Add(entryFactory(id,offset));
             }
 
-            for (int i = 0; i < Count32; i++)
+            for (int i = 0; i < LargeEntryCount; i++)
             {
-                uint id = (uint)reader.ReadInt32();
-                uint offset = (uint)reader.ReadInt32();
+                uint id = reader.ReadUInt32();
+                uint offset = reader.ReadUInt32();
 
                 Entries.Add(entryFactory(id, offset));
             }
 
-            OffsetOrigin = reader.BaseStream.Position;
+            PayloadStartOffset = reader.BaseStream.Position;
             ComputeEntryLengths();
         }
 
         public ReferenceTable(BinaryReader reader, long tableEnd)
         {
-            TableEnd = tableEnd;
+            TableEndOffset = tableEnd;
             byte temp = reader.ReadByte();
-            HasBigEntry = Convert.ToBoolean(temp >> 7);
-            Count8 = temp & 0x7F;
+            HasLargeEntries = Convert.ToBoolean(temp >> 7);
+            SmallEntryCount = (uint)(temp & 0x7F);
 
             List<uint> ids = new List<uint>();
             List<uint> relativeOffsets = new List<uint>();
 
-            if (HasBigEntry == true)
+            if (HasLargeEntries == true)
             {
-                Count32 = reader.ReadInt32();
+                LargeEntryCount = reader.ReadUInt32();
             }
 
-            for (int i = 0; i < Count8; i++)
+            for (int i = 0; i < SmallEntryCount; i++)
             {
                 ids.Add(reader.ReadByte());
                 relativeOffsets.Add(reader.ReadByte());
             }
 
-            for (int i = 0; i < Count32; i++)
+            for (int i = 0; i < LargeEntryCount; i++)
             {
                 ids.Add(reader.ReadUInt32());
                 relativeOffsets.Add(reader.ReadUInt32());
             }
 
-            OffsetOrigin = reader.BaseStream.Position;
+            PayloadStartOffset = reader.BaseStream.Position;
 
             for (int i = 0; i < ids.Count; i++)
             {
-                reader.BaseStream.Position = OffsetOrigin + relativeOffsets[i];
+                reader.BaseStream.Position = PayloadStartOffset + relativeOffsets[i];
 
                 uint typeIdentifier = reader.ReadUInt32();
 
@@ -128,15 +128,15 @@ namespace Overlord_PackageManager.resources.Generic
         {
             for (int i = 0; i < Entries.Count; i++)
             {
-                long start = OffsetOrigin + Entries[i].RelOffset;
+                long start = PayloadStartOffset + Entries[i].RelativeOffset;
                 long end;
 
                 if (i < Entries.Count - 1)
-                    end = OffsetOrigin + Entries[i + 1].RelOffset;
+                    end = PayloadStartOffset + Entries[i + 1].RelativeOffset;
                 else
-                    end = TableEnd;
+                    end = TableEndOffset;
 
-                Entries[i].Length = end - start;
+                Entries[i].PayloadLength = end - start;
             }
         }
     }

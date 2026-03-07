@@ -11,16 +11,16 @@ namespace Overlord_PackageManager.resources.EntryTypes.Lua
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             Table = new ReferenceTable(reader, end, entryFactory);
 
             foreach (var entry in Table.Entries)
             {
-                ((LuaEntry)entry).Read(reader, Table.OffsetOrigin, LuaDataDictionary);
+                ((LuaEntry)entry).Read(reader, Table.PayloadStartOffset, LuaDataDictionary);
             }
         }
 

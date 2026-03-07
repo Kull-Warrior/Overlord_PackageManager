@@ -50,11 +50,11 @@ namespace Overlord_PackageManager.resources.RPK
                     {
                         if (entry is XMLEntry)
                         {
-                            ((XMLEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.XMLDictionary);
+                            ((XMLEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.XMLDictionary);
                         }
                         else
                         {
-                            entry.Read(br, Body.Data.OffsetOrigin);
+                            entry.Read(br, Body.Data.PayloadStartOffset);
                         }
                         
                     }

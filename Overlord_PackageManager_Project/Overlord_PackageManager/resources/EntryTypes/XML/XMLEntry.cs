@@ -11,18 +11,18 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             Table = new ReferenceTable(reader, end, entryFactory);
 
-            if (Table.Count8 > 0 || Table.Count32 > 0)
+            if (Table.SmallEntryCount > 0 || Table.LargeEntryCount > 0)
             {
                 foreach (var entry in Table.Entries)
                 {
-                    entry.Read(reader, Table.OffsetOrigin);
+                    entry.Read(reader, Table.PayloadStartOffset);
                 }
             }
         }
@@ -34,7 +34,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
 
         public void WriteToFile(string baseDir)
         {
-            if (Table.Count8 > 0 || Table.Count32 > 0)
+            if (Table.SmallEntryCount > 0 || Table.LargeEntryCount > 0)
             {
                 string resourcePath = ((StringEntry)Table.Entries[0]).varString;
                 string fileName = Path.GetFileName(resourcePath);

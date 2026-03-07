@@ -11,14 +11,14 @@ namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 
         public override void Read(BinaryReader reader, long origin)
         {
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             stringLength = reader.ReadUInt32();
             varString = Encoding.ASCII.GetString(reader.ReadBytes((int)stringLength));
         }
 
         public void Read(BinaryReader reader, long origin, uint length)
         {
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             stringLength = length;
             varString = Encoding.ASCII.GetString(reader.ReadBytes((int)stringLength));
         }

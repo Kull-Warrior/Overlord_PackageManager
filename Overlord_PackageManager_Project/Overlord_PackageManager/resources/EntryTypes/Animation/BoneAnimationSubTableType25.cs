@@ -11,22 +11,22 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
-            long start = origin + RelOffset;
-            long end = start + Length;
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelOffset;
+            reader.BaseStream.Position = origin + RelativeOffset;
             Table = new ReferenceTable(reader, end, entryFactory);
 
             foreach (var entry in Table.Entries)
             {
                 if (entry is BoneAnimationSubTableType25SubTableType21)
                 {
-                    ((BoneAnimationSubTableType25SubTableType21)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType25SubTableType21Dictionary);
+                    ((BoneAnimationSubTableType25SubTableType21)entry).Read(reader, Table.PayloadStartOffset, BoneAnimationSubTableType25SubTableType21Dictionary);
                 }
                 else
                 {
-                    entry.Read(reader, Table.OffsetOrigin);
+                    entry.Read(reader, Table.PayloadStartOffset);
                 }
             }
         }
