@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
+﻿using Overlord_PackageManager.resources.EntryTypes;
+using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +14,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
         private readonly List<MipLevelData> _mips = new();
         private int _currentIndex = 0;
 
-        public DDSMipChainEditor(ListOfDDSTextures list)
+        public DDSMipChainEditor(AssetList list)
         {
             InitializeComponent();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Overlord_PackageManager.resources.EntryTypes;
 using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using System.IO;
@@ -45,7 +46,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             if (mipContainer != null)
             {
-                ListOfDDSTextures? mipList = mipContainer.Table.Entries.OfType<ListOfDDSTextures>().FirstOrDefault();
+                AssetList? mipList = mipContainer.Table.Entries.OfType<AssetList>().FirstOrDefault();
 
                 if (mipList != null)
                 {

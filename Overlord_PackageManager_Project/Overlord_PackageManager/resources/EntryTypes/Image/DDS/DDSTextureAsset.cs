@@ -15,7 +15,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
         public override void ReplaceFromDDS(byte[] fileBytes)
         {
             DDSFile dds = DDSImageReader.Read(fileBytes);
-            ListOfDDSTextures list = GetTextureList();
+            AssetList list = GetTextureList();
             list.Table.Entries.Clear();
 
             foreach (DDSMipFace face in dds.Faces)

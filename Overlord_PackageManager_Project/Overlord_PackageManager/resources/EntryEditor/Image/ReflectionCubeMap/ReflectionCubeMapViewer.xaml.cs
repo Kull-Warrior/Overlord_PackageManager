@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
+﻿using Overlord_PackageManager.resources.EntryTypes;
+using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
 using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,9 +32,9 @@ namespace Overlord_PackageManager.resources.EntryEditor
         {
             _mips.Clear();
 
-            ListOfDDSTextures? list = ((DDSTextureAssetDataContainer)_asset.Table.Entries[3])
+            AssetList? list = ((DDSTextureAssetDataContainer)_asset.Table.Entries[3])
                 .Table.Entries
-                .OfType<ListOfDDSTextures>()
+                .OfType<AssetList>()
                 .FirstOrDefault();
 
             if (list == null)

@@ -3,29 +3,30 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class ListOfBoneAnimationData(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    class AnimationAssetDataContainer(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
-        public byte[] leadingBytes;
         public ReferenceTable Table;
         public ReferenceTable GetReferenceTable() => Table;
 
-        public override void Read(BinaryReader reader, long origin)
+        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             long start = origin + RelOffset;
             long end = start + Length;
 
             reader.BaseStream.Position = start;
             reader.BaseStream.Position = origin + RelOffset;
-            leadingBytes = reader.ReadBytes(3);
-            Table = new ReferenceTable(reader, end);
+            Table = new ReferenceTable(reader, end, entryFactory);
+
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is BoneAnimationData)
-                {
-                    ((BoneAnimationData)entry).Read(reader, Table.OffsetOrigin, BoneAnimationDataDictionary);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
+        }
+
+        public override void Read(BinaryReader reader, long origin)
+        {
+            throw new NotImplementedException();
         }
     }
 }

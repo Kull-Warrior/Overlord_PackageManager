@@ -409,13 +409,13 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry AnimationAssetSubTableType1Dictionary(uint id, uint relOffset)
+        public static Entry AnimationAssetDataContainerDictionary(uint id, uint relOffset)
         {
             return id switch
             {
-                10 => new ListOfBoneAnimationData(id, relOffset),
+                10 => new AssetList(id, relOffset),     // List of all bone animations making up the entire animation, meaning each bone and its corresponding animation data
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new BlobEntry(id, relOffset),      // Unknown entry
             };
         }
 
@@ -423,7 +423,7 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
-                01 => new AnimationAssetSubTableType1(id, relOffset),   // Sub reference table containing a list of Bone Animation Data
+                01 => new AnimationAssetDataContainer(id, relOffset),   // Sub reference table containing a list of Bone Animation Data
                 19 => new Int32Entry(id, relOffset),                    // FFFF Block unkown use
                 20 => new StringEntry(id, relOffset),                   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),                   // Animation name
@@ -519,7 +519,7 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
-                20 => new ListOfDDSTextures(id, relOffset),     // List of all dds images making up the entire dds file, meaning the main image and each mipmap
+                20 => new AssetList(id, relOffset),     // List of all dds images making up the entire dds file, meaning the main image and each mipmap
                 21 => new Int32Entry(id, relOffset),     // Unkown
                 23 => new Int32Entry(id, relOffset),     // Unkown
                 24 => new BlobEntry(id, relOffset),   // Unknown entry

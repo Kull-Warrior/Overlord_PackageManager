@@ -21,13 +21,13 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
             foreach (var entry in Table.Entries)
             {
-                if(entry is StringEntry || entry is Int32Entry || entry is Int64Entry || entry is FloatEntry)
+                if (entry is AnimationAssetDataContainer)
+                {
+                    ((AnimationAssetDataContainer)entry).Read(reader, Table.OffsetOrigin, AnimationAssetDataContainerDictionary);
+                }
+                else
                 {
                     entry.Read(reader, Table.OffsetOrigin);
-                }
-                if (entry is AnimationAssetSubTableType1)
-                {
-                    ((AnimationAssetSubTableType1)entry).Read(reader, Table.OffsetOrigin, AnimationAssetSubTableType1Dictionary);
                 }
             }
         }

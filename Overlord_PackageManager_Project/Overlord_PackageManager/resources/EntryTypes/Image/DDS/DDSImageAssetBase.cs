@@ -36,10 +36,10 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
         public abstract void ReplaceFromDDS(byte[] fileBytes);
         public abstract void WriteToDDS(Stream output);
 
-        protected ListOfDDSTextures GetTextureList()
+        protected AssetList GetTextureList()
         {
             DDSTextureAssetDataContainer container = (DDSTextureAssetDataContainer)Table.Entries[3];
-            return (ListOfDDSTextures)container.Table.Entries[0];
+            return (AssetList)container.Table.Entries[0];
         }
 
         public void WriteToFile(string directory)

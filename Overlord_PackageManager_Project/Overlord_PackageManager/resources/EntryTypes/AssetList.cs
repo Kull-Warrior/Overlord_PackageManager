@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    class AssetList(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public class AssetList(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
         public byte[] LeadingBytes;
         public ReferenceTable Table;
@@ -36,6 +36,10 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 {
                     ((DDSTextureAsset)entry).Read(reader, Table.OffsetOrigin,DDSTextureAssetDictionary);
                 }
+                if (entry is DDSTextures)
+                {
+                    ((DDSTextures)entry).Read(reader, Table.OffsetOrigin, DDSTextureDictionary);
+                }
                 if (entry is TgaTifTextureAsset)
                 {
                     ((TgaTifTextureAsset)entry).Read(reader, Table.OffsetOrigin, TgaTifTextureAssetDictionary);
@@ -47,6 +51,10 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 if (entry is AnimationAsset)
                 {
                     ((AnimationAsset)entry).Read(reader, Table.OffsetOrigin, AnimationAssetDictionary);
+                }
+                if (entry is BoneAnimationData)
+                {
+                    ((BoneAnimationData)entry).Read(reader, Table.OffsetOrigin, BoneAnimationDataDictionary);
                 }
                 if (entry is BlobEntry)
                 {
