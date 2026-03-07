@@ -10,7 +10,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
         public ReferenceTable Table;
         public ReferenceTable GetReferenceTable() => Table;
 
-        public void Read(BinaryReader reader, long origin, uint numberOfLeadingBytes, Func<uint, uint, Entry> entryFactory)
+        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             long start = origin + RelOffset;
             long end = start + Length;

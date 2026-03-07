@@ -54,7 +54,7 @@ namespace Overlord_PackageManager.resources.RPK
                         }
                         else if (entry is XMLEntry)
                         {
-                            ((XMLEntry)entry).Read(br, Body.Data.OffsetOrigin, 0, Entry.XMLDictionary);
+                            ((XMLEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.XMLDictionary);
                         }
                         else if (entry is not ReferenceTableEntry)
                         {

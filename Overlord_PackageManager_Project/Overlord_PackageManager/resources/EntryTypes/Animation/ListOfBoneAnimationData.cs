@@ -23,7 +23,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             {
                 if (entry is BoneAnimationData)
                 {
-                    ((BoneAnimationData)entry).Read(reader, Table.OffsetOrigin, 0, BoneAnimationDataDictionary);
+                    ((BoneAnimationData)entry).Read(reader, Table.OffsetOrigin, BoneAnimationDataDictionary);
                 }
             }
         }

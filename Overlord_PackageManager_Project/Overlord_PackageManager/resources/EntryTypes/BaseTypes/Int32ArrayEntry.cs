@@ -5,7 +5,6 @@ namespace Overlord_PackageManager.resources.EntryTypes
 {
     public class Int32ArrayEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
-        public byte[] leadingBytes;
         public ReferenceTable Table;
 
         public uint[] varIntArray;
