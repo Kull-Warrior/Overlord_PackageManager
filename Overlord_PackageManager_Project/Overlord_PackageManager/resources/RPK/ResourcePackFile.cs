@@ -48,15 +48,11 @@ namespace Overlord_PackageManager.resources.RPK
 
                     foreach (var entry in Body.Data.Entries)
                     {
-                        if (entry is AssetList)
-                        {
-                            ((AssetList)entry).Read(br, Body.Data.OffsetOrigin);
-                        }
-                        else if (entry is XMLEntry)
+                        if (entry is XMLEntry)
                         {
                             ((XMLEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.XMLDictionary);
                         }
-                        else if (entry is not ReferenceTableEntry)
+                        else
                         {
                             entry.Read(br, Body.Data.OffsetOrigin);
                         }

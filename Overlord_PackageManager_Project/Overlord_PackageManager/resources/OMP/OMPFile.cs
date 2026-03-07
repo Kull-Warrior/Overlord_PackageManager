@@ -51,62 +51,6 @@ namespace Overlord_PackageManager.resources.OMP
 
                     foreach (var entry in Body.Data.Entries)
                     {
-                        if ( entry is ReferenceTableEntry)
-                        {
-                            switch (entry.Id)
-                            {
-                                case 21:
-                                    ((ReferenceTableEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.UnknownType21Dictionary);
-
-                                    foreach (var subEntry in ((ReferenceTableEntry)entry).Table.Entries)
-                                    {
-                                        if (entry is ReferenceTableEntry)
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            subEntry.Read(br, ((ReferenceTableEntry)entry).Table.OffsetOrigin);
-                                        }
-                                    }
-                                    break;
-                                case 26:
-                                    break;
-                                case 27:
-                                    break;
-                                case 28:
-                                    break;
-                                case 30:
-                                    break;
-                                case 48:
-                                    break;
-                                case 52:
-                                    break;
-                                case 53:
-                                    break;
-                                case 100:
-                                    break;
-                                case 101:
-                                    break;
-                                case 102:
-                                    break;
-                                case 103:
-                                    break;
-                                case 120:
-                                    break;
-                                case 124:
-                                    break;
-                                case 130:
-                                    break;
-                                case 131:
-                                    break;
-                                case 133:
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-
                         if (entry is TerrainDataEntry)
                         {
                             ((TerrainDataEntry)entry).Read(br, Body.Data.OffsetOrigin, Entry.TerrainDataDictionary);
