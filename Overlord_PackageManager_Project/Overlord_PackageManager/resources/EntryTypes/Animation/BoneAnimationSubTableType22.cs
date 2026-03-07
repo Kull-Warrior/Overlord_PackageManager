@@ -18,7 +18,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             reader.BaseStream.Position = origin + RelOffset;
             Table = new ReferenceTable(reader, end, entryFactory);
 
-
             foreach (var entry in Table.Entries)
             {
                 entry.Read(reader, Table.OffsetOrigin);

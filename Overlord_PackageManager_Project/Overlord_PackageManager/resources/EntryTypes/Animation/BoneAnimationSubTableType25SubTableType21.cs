@@ -20,28 +20,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is Int32Entry || entry is BlobEntry)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
-                if (entry is BoneRotationDataArray)
-                {
-                    List<Int32Entry> intEntries = Table.Entries.OfType<Int32Entry>().ToList();
-
-                    if (intEntries == null)
-                        throw new InvalidOperationException("No ByteCode length found");
-                    
-                    ((BoneRotationDataArray)entry).Read(reader, Table.OffsetOrigin, intEntries[0].varInt);
-                }
-                if (entry is BoneScaleDataArray)
-                {
-                    List<Int32Entry> intEntries = Table.Entries.OfType<Int32Entry>().ToList();
-
-                    if (intEntries == null)
-                        throw new InvalidOperationException("No ByteCode length found");
-
-                    ((BoneScaleDataArray)entry).Read(reader, Table.OffsetOrigin, intEntries[1].varInt);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

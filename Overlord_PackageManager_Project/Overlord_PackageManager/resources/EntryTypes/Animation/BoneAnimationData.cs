@@ -22,25 +22,25 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is Int64Entry || entry is StringEntry)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
                 if (entry is BoneAnimationSubTableType22)
                 {
                     ((BoneAnimationSubTableType22)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType22Dictionary);
                 }
-                if (entry is BoneAnimationSubTableType23)
+                else if (entry is BoneAnimationSubTableType23)
                 {
                     ((BoneAnimationSubTableType23)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType23Dictionary);
                 }
-                if (entry is BoneAnimationSubTableType24)
+                else if (entry is BoneAnimationSubTableType24)
                 {
                     ((BoneAnimationSubTableType24)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType24Dictionary);
                 }
-                if (entry is BoneAnimationSubTableType25)
+                else if (entry is BoneAnimationSubTableType25)
                 {
                     ((BoneAnimationSubTableType25)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType25Dictionary);
+                }
+                else
+                {
+                    entry.Read(reader, Table.OffsetOrigin);
                 }
             }
         }

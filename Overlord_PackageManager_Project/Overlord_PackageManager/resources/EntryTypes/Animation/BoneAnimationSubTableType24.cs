@@ -18,22 +18,9 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             reader.BaseStream.Position = origin + RelOffset;
             Table = new ReferenceTable(reader, end, entryFactory);
 
-
             foreach (var entry in Table.Entries)
             {
-                if (entry is Int32Entry)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
-                if (entry is BonePositionDataArray)
-                {
-                    Int32Entry? intEntry = Table.Entries.OfType<Int32Entry>().LastOrDefault();
-
-                    if (intEntry == null)
-                        throw new InvalidOperationException("No position data count found");
-
-                    ((BonePositionDataArray)entry).Read(reader, Table.OffsetOrigin, intEntry.varInt);
-                }
+                entry.Read(reader, Table.OffsetOrigin);
             }
         }
 

@@ -18,16 +18,15 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             reader.BaseStream.Position = origin + RelOffset;
             Table = new ReferenceTable(reader, end, entryFactory);
 
-
             foreach (var entry in Table.Entries)
             {
-                if (entry is Int32Entry)
-                {
-                    entry.Read(reader, Table.OffsetOrigin);
-                }
                 if (entry is BoneAnimationSubTableType25SubTableType21)
                 {
                     ((BoneAnimationSubTableType25SubTableType21)entry).Read(reader, Table.OffsetOrigin, BoneAnimationSubTableType25SubTableType21Dictionary);
+                }
+                else
+                {
+                    entry.Read(reader, Table.OffsetOrigin);
                 }
             }
         }

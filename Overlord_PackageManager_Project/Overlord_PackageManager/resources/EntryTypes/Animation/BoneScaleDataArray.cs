@@ -7,21 +7,16 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
     {
         public BoneScaleData[] boneScales;
 
-        public void Read(BinaryReader reader, long origin, uint length)
+        public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelOffset;
-            boneScales = new BoneScaleData[length];
+            boneScales = new BoneScaleData[Length / 6];
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < (Length / 6); i++)
             {
                 boneScales[i] = new BoneScaleData();
                 boneScales[i].Read(reader);
             }
-        }
-
-        public override void Read(BinaryReader reader, long origin)
-        {
-            throw new NotImplementedException();
         }
     }
 }
