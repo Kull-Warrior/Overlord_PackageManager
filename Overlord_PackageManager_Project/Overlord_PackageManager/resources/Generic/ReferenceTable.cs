@@ -126,6 +126,7 @@ namespace Overlord_PackageManager.resources.Generic
 
         private void ComputeEntryLengths()
         {
+            Entries = Entries.OrderBy(e => e.RelativeOffset).ToList();
             for (int i = 0; i < Entries.Count; i++)
             {
                 long start = PayloadStartOffset + Entries[i].RelativeOffset;
@@ -136,7 +137,7 @@ namespace Overlord_PackageManager.resources.Generic
                 else
                     end = TableEndOffset;
 
-                Entries[i].PayloadLength = end - start;
+                Entries[i].PayloadLength = Math.Max(0, end - start);
             }
         }
     }
