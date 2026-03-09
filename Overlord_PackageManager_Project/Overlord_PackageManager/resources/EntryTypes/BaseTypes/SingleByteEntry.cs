@@ -3,10 +3,8 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.BaseTypes
 {
-    public class SingleByteEntry(uint id, uint relOffset) : Entry(id, relOffset)
+    public class SingleByteEntry(uint id, uint relOffset) : ValueEntry<byte>(id, relOffset)
     {
-        byte Value;
-
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;

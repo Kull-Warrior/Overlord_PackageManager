@@ -76,7 +76,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             BlobEntry blob = tex.Table.Entries.OfType<BlobEntry>().First();
 
-            return new MipLevelData(width, height, format, blob.Data);
+            return new MipLevelData(width, height, format, blob.Value);
         }
 
         private void BuildPreviewGrid()

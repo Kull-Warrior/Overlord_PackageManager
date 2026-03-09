@@ -21,7 +21,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
             Table.Entries.Add(new Int32Entry(20, 0) { Value = width });
             Table.Entries.Add(new Int32Entry(21, 4) { Value = height });
             Table.Entries.Add(new Int32Entry(23, 8) { Value = (uint)format });
-            Table.Entries.Add(new BlobEntry(22, 12) { Data = data });
+            Table.Entries.Add(new BlobEntry(22, 12) { Value = data });
         }
 
 

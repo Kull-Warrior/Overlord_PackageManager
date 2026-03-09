@@ -3,24 +3,20 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    public class Int32ArrayEntry(uint id, uint relOffset) : Entry(id, relOffset)
+    public class Int32ArrayEntry(uint id, uint relOffset) : ValueEntry<uint[]>(id, relOffset)
     {
-        public uint[] Values;
-
-        public void Read(BinaryReader reader, long origin, uint arraySize)
-        {
-            reader.BaseStream.Position = origin + RelativeOffset;
-            Values = new uint[arraySize];
-            for (int i = 0; i < arraySize; i++)
-            {
-                Values[i] = reader.ReadUInt32();
-            }
-        }
+        public uint NumberOfValues;
 
         public override void Read(BinaryReader reader, long origin)
         {
-
-            throw new NotImplementedException();
+            reader.BaseStream.Position = origin + RelativeOffset;
+            NumberOfValues = reader.ReadUInt32();
+            Value = new uint[NumberOfValues];
+            
+            for (int i = 0; i < NumberOfValues; i++)
+            {
+                Value[i] = reader.ReadUInt32();
+            }
         }
     }
 }

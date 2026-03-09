@@ -81,7 +81,7 @@ namespace Overlord_PackageManager.resources.Generic
                 42 => new Int32Entry(id, relOffset),
                 43 => new Int32Entry(id, relOffset),
                 45 => new LuaEntry(id, relOffset),
-                46 => new StringArrayEntry(id, relOffset),
+                46 => new StringListEntry(id, relOffset),
                 47 => new BlobEntry(id, relOffset),   // Unknown entry
                 48 => new BlobEntry(id, relOffset),   // Unknown entry
                 49 => new Int32Entry(id, relOffset),
@@ -207,7 +207,7 @@ namespace Overlord_PackageManager.resources.Generic
             return id switch
             {
                 20 => new StringEntry(id, relOffset),
-                21 => new StringArrayEntry(id, relOffset),
+                21 => new StringListEntry(id, relOffset),
                 22 => new Int32Entry(id, relOffset),
                 23 => new BlobEntry(id, relOffset),
                 // Add more IDs here
@@ -271,7 +271,7 @@ namespace Overlord_PackageManager.resources.Generic
                 24 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains "TS", Texture related Data
                 25 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains "0" Type Data Unknown use, Map editor friendly apperently
                 26 => new AssetList(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
-                27 => new StringArrayEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
+                27 => new StringListEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
                 28 => new XMLEntry(id, relOffset),          // Contains XML Data
                 29 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
                 30 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains "2" Type Data Unknown use, contains lua scripts

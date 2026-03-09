@@ -123,7 +123,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
             uint height = ints[1].Value;
 
             TgaTifTextureData dataContainer = (TgaTifTextureData)Table.Entries[5];
-            byte[] rawRGBA = ((BlobEntry)dataContainer.Table.Entries[0]).Data;
+            byte[] rawRGBA = ((BlobEntry)dataContainer.Table.Entries[0]).Value;
 
             if (fileName.ToLower().EndsWith(".tif"))
             {

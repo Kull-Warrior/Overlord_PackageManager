@@ -83,7 +83,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
         {
             SFXData? sfxData = _asset.Table.Entries.OfType<SFXData>().FirstOrDefault();
             BlobEntry? blob = sfxData?.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
-            return blob?.Data;
+            return blob?.Value;
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
@@ -171,7 +171,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
                 return;
             }
 
-            blob.Data = fileBytes;
+            blob.Value = fileBytes;
             lengthEntry.Value = (uint)fileBytes.Length;
 
             // Update StringEntryEditors UI (automatically updates varString)

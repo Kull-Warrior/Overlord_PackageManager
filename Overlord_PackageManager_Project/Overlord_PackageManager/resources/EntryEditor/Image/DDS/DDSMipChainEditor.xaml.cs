@@ -66,7 +66,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
                     continue;
                 }
 
-                _mips.Add(new MipLevelData(width, height, format, blob.Data));
+                _mips.Add(new MipLevelData(width, height, format, blob.Value));
 
                 MipSelector.Items.Add($"Level {level}  ({width}x{height})");
 

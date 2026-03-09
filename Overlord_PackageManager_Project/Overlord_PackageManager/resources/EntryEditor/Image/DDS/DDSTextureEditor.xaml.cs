@@ -33,7 +33,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
             MetaText.Text = $"Width: {width}   Height: {height}   Format: {format}";
 
             ImageHost.Content =
-                new DDSImageViewer(width, height, format, blob.Data);
+                new DDSImageViewer(width, height, format, blob.Value);
         }
     }
 }

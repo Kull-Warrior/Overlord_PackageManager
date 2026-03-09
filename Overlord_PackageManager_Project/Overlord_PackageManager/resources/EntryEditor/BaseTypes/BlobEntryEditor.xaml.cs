@@ -52,7 +52,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
             InitializeComponent();
             _entry = entry;
 
-            HexList.ItemsSource = HexFormatter.Format(entry.Data);
+            HexList.ItemsSource = HexFormatter.Format(entry.Value);
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
 
             if (dialog.ShowDialog() == true)
             {
-                File.WriteAllBytes(dialog.FileName, _entry.Data);
+                File.WriteAllBytes(dialog.FileName, _entry.Value);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Overlord_PackageManager.resources.EntryEditor
                 byte[] newData = File.ReadAllBytes(dialog.FileName);
 
                 // Replace internal byte array
-                _entry.Data = newData;
+                _entry.Value = newData;
 
                 // Refresh viewer
                 HexList.ItemsSource = HexFormatter.Format(newData);

@@ -46,7 +46,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
                     MipIndex = i % mipCount,
                     Width = width >> (i % mipCount),
                     Height = height >> (i % mipCount),
-                    Data = blob.Data
+                    Data = blob.Value
                 };
             }).ToList();
 
