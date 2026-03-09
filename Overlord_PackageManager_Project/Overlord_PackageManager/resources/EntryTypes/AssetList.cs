@@ -22,7 +22,6 @@ namespace Overlord_PackageManager.resources.EntryTypes
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelativeOffset;
             LeadingBytes = reader.ReadBytes(3);
             Table = new ReferenceTable(reader, end);
 

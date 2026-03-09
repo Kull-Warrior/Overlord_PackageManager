@@ -1,5 +1,4 @@
-﻿using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
-using Overlord_PackageManager.resources.Generic;
+﻿using Overlord_PackageManager.resources.Generic;
 using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation

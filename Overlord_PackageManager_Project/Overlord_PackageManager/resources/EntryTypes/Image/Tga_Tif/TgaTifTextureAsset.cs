@@ -16,7 +16,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelativeOffset;
             TypeIdentifier = reader.ReadUInt32();
             Table = new ReferenceTable(reader, end, entryFactory);
 

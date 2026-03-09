@@ -1,5 +1,4 @@
-﻿using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
-using Overlord_PackageManager.resources.Generic;
+﻿using Overlord_PackageManager.resources.Generic;
 using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
@@ -16,7 +15,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            reader.BaseStream.Position = origin + RelativeOffset;
             TypeIdentifier = reader.ReadUInt32();
             Table = new ReferenceTable(reader, end, entryFactory);
 
