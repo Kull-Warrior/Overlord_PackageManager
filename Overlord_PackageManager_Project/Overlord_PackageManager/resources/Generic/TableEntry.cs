@@ -8,6 +8,9 @@ namespace Overlord_PackageManager.resources.Generic
 
         public ReferenceTable GetReferenceTable() => Table;
 
+        // Grammar definition for this table type
+        protected virtual Func<BinaryReader, uint, uint, Entry> EntryFactory => null;
+
         public override void Read(BinaryReader reader, long origin)
         {
             throw new NotImplementedException();

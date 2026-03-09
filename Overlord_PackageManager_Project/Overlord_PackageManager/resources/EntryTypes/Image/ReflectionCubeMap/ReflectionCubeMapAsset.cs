@@ -7,11 +7,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
     {
         public ReflectionCubeMapAsset(uint id, uint relOffset) : base(id, relOffset) { }
 
-        public override void Read(BinaryReader reader, long origin)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void ReplaceFromDDS(byte[] fileBytes)
         {
             DDSFile dds = DDSImageReader.Read(fileBytes);

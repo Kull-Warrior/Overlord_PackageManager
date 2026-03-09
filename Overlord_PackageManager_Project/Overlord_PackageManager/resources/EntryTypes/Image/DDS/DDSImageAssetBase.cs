@@ -6,22 +6,20 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
     public abstract class DDSImageAssetBase(uint id, uint relOffset) : AssetEntry(id, relOffset), IFileExportable
     {
-        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> factory)
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.DDSTextureAssetDictionary;
+
+        public override void Read(BinaryReader reader, long origin)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
             TypeIdentifier = reader.ReadUInt32();
-            Table = new ReferenceTable(reader, end, factory);
+            Table = new ReferenceTable(reader, end, EntryFactory);
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is StringEntry or Int32Entry)
-                    entry.Read(reader, Table.PayloadStartOffset);
-
-                if (entry is DDSTextureAssetDataContainer container)
-                    container.Read(reader, Table.PayloadStartOffset, DDSTextureAssetDataContainerDictionary);
+                entry.Read(reader, Table.PayloadStartOffset);
             }
         }
 

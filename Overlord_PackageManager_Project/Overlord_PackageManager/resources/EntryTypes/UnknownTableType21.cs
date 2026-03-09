@@ -6,31 +6,20 @@ namespace Overlord_PackageManager.resources.EntryTypes
 {
     class UnknownTableType21Entry(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> entryFactory)
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.UnknownType21Dictionary;
+
+        public override void Read(BinaryReader reader, long origin)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            Table = new ReferenceTable(reader, end, entryFactory);
-
+            Table = new ReferenceTable(reader, end, EntryFactory);
 
             foreach (var entry in Table.Entries)
             {
-                /*if (entry is DataSubTableType21SubTableType20Entry)
-                {
-                    ((DataSubTableType21SubTableType20ListEntry)entry).Read(reader, varRefTable.origin, 3, GameObjectDataSubTableType20ListDictionary);
-                }*/
-                if (entry is Int32Entry || entry is SingleByteEntry)
-                {
-                    entry.Read(reader, Table.PayloadStartOffset);
-                }
+                entry.Read(reader, Table.PayloadStartOffset);
             }
-        }
-
-        public override void Read(BinaryReader reader, long origin)
-        {
-            throw new NotImplementedException();
         }
     }
 }

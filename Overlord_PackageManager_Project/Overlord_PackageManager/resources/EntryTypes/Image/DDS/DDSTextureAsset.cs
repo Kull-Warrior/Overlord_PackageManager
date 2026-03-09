@@ -5,11 +5,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
     public sealed class DDSTextureAsset(uint id, uint relOffset) : DDSImageAssetBase(id, relOffset)
     {
-        public override void Read(BinaryReader reader, long origin)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void ReplaceFromDDS(byte[] fileBytes)
         {
             DDSFile dds = DDSImageReader.Read(fileBytes);

@@ -48,19 +48,7 @@ namespace Overlord_PackageManager.resources.RPK
 
                     foreach (var entry in Body.Data.Entries)
                     {
-                        if (entry is XMLEntry)
-                        {
-                            ((XMLEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.XMLDictionary);
-                        }
-                        else if (entry is AssetListContainer)
-                        {
-                            ((AssetListContainer)entry).Read(br, Body.Data.PayloadStartOffset, Entry.AssetListContainerDictionary);
-                        }
-                        else
-                        {
-                            entry.Read(br, Body.Data.PayloadStartOffset);
-                        }
-                        
+                        entry.Read(br, Body.Data.PayloadStartOffset);
                     }
                 }
             }

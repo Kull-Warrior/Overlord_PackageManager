@@ -5,31 +5,21 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
     class AnimationAsset(uint id, uint relOffset) : AssetEntry(id, relOffset)
     {
-        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> entryFactory)
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.AnimationAssetDictionary;
+
+        public override void Read(BinaryReader reader, long origin)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
             TypeIdentifier = reader.ReadUInt32();
-            Table = new ReferenceTable(reader, end, entryFactory);
+            Table = new ReferenceTable(reader, end, EntryFactory);
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is AnimationAssetDataContainer)
-                {
-                    ((AnimationAssetDataContainer)entry).Read(reader, Table.PayloadStartOffset, AnimationAssetDataContainerDictionary);
-                }
-                else
-                {
-                    entry.Read(reader, Table.PayloadStartOffset);
-                }
+                entry.Read(reader, Table.PayloadStartOffset);
             }
-        }
-
-        public override void Read(BinaryReader reader, long origin)
-        {
-            throw new NotImplementedException();
         }
     }
 }

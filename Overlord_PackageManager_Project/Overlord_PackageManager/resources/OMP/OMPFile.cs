@@ -51,35 +51,7 @@ namespace Overlord_PackageManager.resources.OMP
 
                     foreach (var entry in Body.Data.Entries)
                     {
-                        if (entry is TerrainDataEntry)
-                        {
-                            ((TerrainDataEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.TerrainDataDictionary);
-                        }
-
-                        if (entry is UnknownTableType21Entry)
-                        {
-                            ((UnknownTableType21Entry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.UnknownType21Dictionary);
-                        }
-
-                        if (entry is AssetListContainer)
-                        {
-                            ((AssetListContainer)entry).Read(br, Body.Data.PayloadStartOffset, Entry.AssetListContainerDictionary);
-                        }
-
-                        if (entry is LuaListEntry)
-                        {
-                            ((LuaListEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.LuaListDictionary);
-                        }
-
-                        if (entry is LuaEntry)
-                        {
-                            ((LuaEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.LuaDataDictionary);
-                        }
-                        
-                        if (entry is StringEntry || entry is Int32Entry || entry is FloatEntry || entry is Int64Entry || entry is BlobEntry)
-                        {
-                            entry.Read(br, Body.Data.PayloadStartOffset);
-                        }
+                        entry.Read(br, Body.Data.PayloadStartOffset);
                     }
                 }
             }

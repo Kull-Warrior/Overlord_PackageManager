@@ -6,31 +6,21 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
 {
     public class SFXAsset(uint id, uint relOffset) : AssetEntry(id, relOffset)
     {
-        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> entryFactory)
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.SFXAssetDictionary;
+
+        public override void Read(BinaryReader reader, long origin)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
             TypeIdentifier = reader.ReadUInt32();
-            Table = new ReferenceTable(reader, end, entryFactory);
+            Table = new ReferenceTable(reader, end, EntryFactory);
 
             foreach (var entry in Table.Entries)
             {
-                if (entry is StringEntry || entry is Int32Entry)
-                {
-                    entry.Read(reader, Table.PayloadStartOffset);
-                }
-                if (entry is SFXData)
-                {
-                    ((SFXData)entry).Read(reader, Table.PayloadStartOffset, SFXDataDictionary);
-                }
+                entry.Read(reader, Table.PayloadStartOffset);
             }
-        }
-
-        public override void Read(BinaryReader reader, long origin)
-        {
-            throw new NotImplementedException();
         }
 
         public void WriteToFile(string baseDir)
