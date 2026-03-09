@@ -8,13 +8,8 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    public class AssetList(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public class AssetList(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        public ReferenceTable Table;
-
-        public ReferenceTable GetReferenceTable() => Table;
-
-
         public override void Read(BinaryReader reader, long origin)
         {
             long start = origin + RelativeOffset;

@@ -3,12 +3,8 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Lua
 {
-    class LuaListEntry(uint id, uint relOffset) : Entry(id, relOffset)
+    class LuaListEntry(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        public ReferenceTable Table;
-
-        public ReferenceTable GetRefTable() => Table;
-
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             long start = origin + RelativeOffset;

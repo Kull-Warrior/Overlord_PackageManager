@@ -3,11 +3,8 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Audio
 {
-    public class SFXData(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    public class SFXData(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        public ReferenceTable Table;
-        public ReferenceTable GetReferenceTable() => Table;
-
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             long start = origin + RelativeOffset;

@@ -4,11 +4,8 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.XML
 {
-    class XMLEntry(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    class XMLEntry(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        public ReferenceTable Table;
-        public ReferenceTable GetReferenceTable() => Table;
-
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             long start = origin + RelativeOffset;
