@@ -32,10 +32,9 @@ namespace Overlord_PackageManager.resources.EntryEditor
         {
             _mips.Clear();
 
-            AssetList? list = ((DDSTextureAssetDataContainer)_asset.Table.Entries[3])
-                .Table.Entries
-                .OfType<AssetList>()
-                .FirstOrDefault();
+            DDSTextureAssetDataContainer? dataContainer = _asset.Table.Entries.OfType<DDSTextureAssetDataContainer>().FirstOrDefault();
+            AssetListContainer? mipContainer = dataContainer.Table.Entries.OfType<AssetListContainer>().FirstOrDefault();
+            AssetList? list = mipContainer.Table.Entries.OfType<AssetList>().FirstOrDefault();
 
             if (list == null)
                 return;

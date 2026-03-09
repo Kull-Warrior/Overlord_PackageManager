@@ -1,6 +1,7 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes;
 using Overlord_PackageManager.resources.EntryTypes.XML;
 using Overlord_PackageManager.resources.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 
@@ -51,6 +52,10 @@ namespace Overlord_PackageManager.resources.RPK
                         {
                             ((XMLEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.XMLDictionary);
                         }
+                        else if (entry is AssetListContainer)
+                        {
+                            ((AssetListContainer)entry).Read(br, Body.Data.PayloadStartOffset, Entry.AssetListContainerDictionary);
+                        }
                         else
                         {
                             entry.Read(br, Body.Data.PayloadStartOffset);
@@ -70,10 +75,11 @@ namespace Overlord_PackageManager.resources.RPK
             {
                 foreach (var entry in Body.Data.Entries)
                 {
-                    if (entry is AssetList)
+                    if (entry is AssetListContainer)
                     {
+                        AssetList? list = ((AssetListContainer)entry).Table.Entries.OfType<AssetList>().FirstOrDefault();
                         Directory.CreateDirectory(baseDir);
-                        ((AssetList)entry).WriteToFiles(baseDir);
+                        list.WriteToFiles(baseDir);
                     }
                     else if (entry is XMLEntry)
                     {

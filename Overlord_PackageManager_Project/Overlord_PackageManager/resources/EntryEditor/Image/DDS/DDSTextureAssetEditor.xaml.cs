@@ -26,7 +26,8 @@ namespace Overlord_PackageManager.resources.EntryEditor
             List<Generic.Entry> entries = _asset.Table.Entries;
 
             List<StringEntry> stringEntries = entries.OfType<StringEntry>().ToList();
-            DDSTextureAssetDataContainer? mipContainer = entries.OfType<DDSTextureAssetDataContainer>().FirstOrDefault();
+            DDSTextureAssetDataContainer? dataContainer = entries.OfType<DDSTextureAssetDataContainer>().FirstOrDefault();
+            AssetListContainer? mipContainer = dataContainer.Table.Entries.OfType<AssetListContainer>().FirstOrDefault();
 
             if (stringEntries.Count >= 2)
             {

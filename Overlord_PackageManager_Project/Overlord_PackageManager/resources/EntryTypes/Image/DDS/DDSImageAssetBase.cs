@@ -37,8 +37,10 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 
         protected AssetList GetTextureList()
         {
-            DDSTextureAssetDataContainer container = (DDSTextureAssetDataContainer)Table.Entries[3];
-            return (AssetList)container.Table.Entries[0];
+            DDSTextureAssetDataContainer? dataContainer = Table.Entries.OfType<DDSTextureAssetDataContainer>().FirstOrDefault();
+            AssetListContainer? mipContainer = dataContainer.Table.Entries.OfType<AssetListContainer>().FirstOrDefault();
+            AssetList? list = mipContainer.Table.Entries.OfType<AssetList>().FirstOrDefault();
+            return list;
         }
 
         public void WriteToFile(string directory)

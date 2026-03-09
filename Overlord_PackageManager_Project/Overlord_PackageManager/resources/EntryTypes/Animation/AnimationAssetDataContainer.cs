@@ -18,7 +18,14 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
 
             foreach (var entry in Table.Entries)
             {
-                entry.Read(reader, Table.PayloadStartOffset);
+                if (entry is AssetListContainer)
+                {
+                    ((AssetListContainer)entry).Read(reader, Table.PayloadStartOffset, Entry.AssetListContainerDictionary);
+                }
+                else
+                {
+                    entry.Read(reader, Table.PayloadStartOffset);
+                }
             }
         }
 

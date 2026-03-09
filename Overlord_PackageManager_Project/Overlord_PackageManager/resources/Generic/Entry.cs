@@ -68,7 +68,7 @@ namespace Overlord_PackageManager.resources.Generic
                 29 => new SingleByteEntry(id, relOffset),
                 30 => new BlobEntry(id, relOffset),   // Unknown entry
                 31 => new BlobEntry(id, relOffset),
-                32 => new ResourcePackLinkEntry(id, relOffset),
+                32 => new AssetListContainer(id, relOffset),
                 33 => new LuaEntry(id, relOffset),
                 34 => new StringEntry(id, relOffset),
                 35 => new BlobEntry(id, relOffset),   // Unknown entry
@@ -236,15 +236,6 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry RPKListDictionary(uint id, uint relOffset)
-        {
-            return id switch
-            {
-                // Add more IDs here
-                //_ => new ResourcePackRootEntry(id, relOffset) //Any ID is of this type
-            };
-        }
-
         public static Entry ResourcePackLinkDictionary(uint id, uint relOffset)
         {
             return id switch
@@ -270,7 +261,7 @@ namespace Overlord_PackageManager.resources.Generic
                 23 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains Effects and Light Data of some sort
                 24 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains "TS", Texture related Data
                 25 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains "0" Type Data Unknown use, Map editor friendly apperently
-                26 => new AssetList(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
+                26 => new AssetListContainer(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
                 27 => new StringListEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
                 28 => new XMLEntry(id, relOffset),          // Contains XML Data
                 29 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
@@ -330,6 +321,16 @@ namespace Overlord_PackageManager.resources.Generic
                 20 => new StringEntry(id, relOffset),
                 21 => new BlobEntry(id, relOffset),   // Unknown entry
                 30 => new BlobEntry(id, relOffset),   // Unknown entry
+                // Add more IDs here
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
+            };
+        }
+
+        public static Entry AssetListContainerDictionary(uint id, uint relOffset)
+        {
+            return id switch
+            {
+                1 => new AssetList(id, relOffset),
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
@@ -413,7 +414,7 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
-                10 => new AssetList(id, relOffset),     // List of all bone animations making up the entire animation, meaning each bone and its corresponding animation data
+                10 => new AssetListContainer(id, relOffset),     // List of all bone animations making up the entire animation, meaning each bone and its corresponding animation data
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),      // Unknown entry
             };
@@ -519,7 +520,7 @@ namespace Overlord_PackageManager.resources.Generic
         {
             return id switch
             {
-                20 => new AssetList(id, relOffset),     // List of all dds images making up the entire dds file, meaning the main image and each mipmap
+                20 => new AssetListContainer(id, relOffset),     // List of all dds images making up the entire dds file, meaning the main image and each mipmap
                 21 => new Int32Entry(id, relOffset),     // Unkown
                 23 => new Int32Entry(id, relOffset),     // Unkown
                 24 => new BlobEntry(id, relOffset),   // Unknown entry

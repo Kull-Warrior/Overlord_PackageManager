@@ -10,7 +10,6 @@ namespace Overlord_PackageManager.resources.EntryTypes
 {
     public class AssetList(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
     {
-        public byte[] LeadingBytes;
         public ReferenceTable Table;
 
         public ReferenceTable GetReferenceTable() => Table;
@@ -22,7 +21,6 @@ namespace Overlord_PackageManager.resources.EntryTypes
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            LeadingBytes = reader.ReadBytes(3);
             Table = new ReferenceTable(reader, end);
 
             foreach (var entry in Table.Entries)

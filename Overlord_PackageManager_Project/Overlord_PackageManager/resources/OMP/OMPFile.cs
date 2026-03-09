@@ -58,12 +58,12 @@ namespace Overlord_PackageManager.resources.OMP
 
                         if (entry is UnknownTableType21Entry)
                         {
-                            ((UnknownTableType21Entry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.RPKListDictionary);
+                            ((UnknownTableType21Entry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.UnknownType21Dictionary);
                         }
 
-                        if (entry is ResourcePackLinkEntry)
+                        if (entry is AssetListContainer)
                         {
-                            ((ResourcePackLinkEntry)entry).Read(br, Body.Data.PayloadStartOffset, Entry.RPKListDictionary);
+                            ((AssetListContainer)entry).Read(br, Body.Data.PayloadStartOffset, Entry.AssetListContainerDictionary);
                         }
 
                         if (entry is LuaListEntry)
