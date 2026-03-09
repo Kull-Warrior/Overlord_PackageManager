@@ -20,49 +20,17 @@ namespace Overlord_PackageManager.resources.Generic
         {
 
         }
-        public ReferenceTable(BinaryReader reader, long tableEnd, Func<uint, uint, Entry> entryFactory)
+        public ReferenceTable(BinaryReader reader, long tableEnd, Func<BinaryReader, uint, uint, Entry> entryFactory)
         {
             TableEndOffset = tableEnd;
             byte temp = reader.ReadByte();
             HasLargeEntries = Convert.ToBoolean(temp >> 7);
             SmallEntryCount = (uint)(temp & 0x7F);
 
-            if (HasLargeEntries == true)
-            {
-                LargeEntryCount = reader.ReadUInt32();
-            }
+            List<uint> ids = new();
+            List<uint> relativeOffsets = new();
 
-            for (int i = 0; i < SmallEntryCount; i++)
-            {
-                uint id = reader.ReadByte();
-                uint offset = reader.ReadByte();
-
-                Entries.Add(entryFactory(id,offset));
-            }
-
-            for (int i = 0; i < LargeEntryCount; i++)
-            {
-                uint id = reader.ReadUInt32();
-                uint offset = reader.ReadUInt32();
-
-                Entries.Add(entryFactory(id, offset));
-            }
-
-            PayloadStartOffset = reader.BaseStream.Position;
-            ComputeEntryLengths();
-        }
-
-        public ReferenceTable(BinaryReader reader, long tableEnd)
-        {
-            TableEndOffset = tableEnd;
-            byte temp = reader.ReadByte();
-            HasLargeEntries = Convert.ToBoolean(temp >> 7);
-            SmallEntryCount = (uint)(temp & 0x7F);
-
-            List<uint> ids = new List<uint>();
-            List<uint> relativeOffsets = new List<uint>();
-
-            if (HasLargeEntries == true)
+            if (HasLargeEntries)
             {
                 LargeEntryCount = reader.ReadUInt32();
             }
@@ -83,44 +51,9 @@ namespace Overlord_PackageManager.resources.Generic
 
             for (int i = 0; i < ids.Count; i++)
             {
-                reader.BaseStream.Position = PayloadStartOffset + relativeOffsets[i];
-
-                uint typeIdentifier = reader.ReadUInt32();
-
-                switch (typeIdentifier)
-                {
-                    /*case 4259915:   // Object -> Meshes & used materials by these meshs assignment block.  Skeleton Data as well
-                        break;
-                    case 4261412:   // Material -> Used textures assignment block. So Skin, ReflectionCubeMap, etc etc
-                        break;*/
-                    case 4259993:
-                        Entries.Add(new ReflectionCubeMapAsset(ids[i], relativeOffsets[i]));
-                        break;
-                    case 4259992:   // Tif Image, tga32 Image
-                        Entries.Add(new TgaTifTextureAsset(ids[i], relativeOffsets[i]));
-                        break;
-                    case 4259901:   // DDS Texture Asset
-                        Entries.Add(new DDSTextureAsset(ids[i], relativeOffsets[i]));
-                        break;
-                    case 4259876:   // Raw DDS Texture Data
-                        Entries.Add(new DDSTextures(ids[i], relativeOffsets[i]));
-                        break;
-                    case 4259845:   // Animation Asset
-                        Entries.Add(new AnimationAsset(ids[i], relativeOffsets[i]));
-                        break;
-                    case 4259847:   // Bone Animation Data
-                        Entries.Add(new BoneAnimationData(ids[i], relativeOffsets[i]));
-                        break;
-                    /*case 4259893:   // Mesh Asset
-                        break;*/
-                    case 10551296:  // SFX Asset
-                        Entries.Add(new SFXAsset(ids[i], relativeOffsets[i]));
-                        break;
-                    default:
-                        Entries.Add(new BlobEntry(ids[i], relativeOffsets[i]));
-                        break;
-                }
+                Entries.Add(entryFactory(reader, ids[i], relativeOffsets[i]));
             }
+
             ComputeEntryLengths();
         }
 

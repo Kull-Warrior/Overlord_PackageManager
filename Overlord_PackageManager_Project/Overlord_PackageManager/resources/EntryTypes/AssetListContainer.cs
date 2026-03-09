@@ -5,7 +5,7 @@ namespace Overlord_PackageManager.resources.EntryTypes
 {
     class AssetListContainer(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
+        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> entryFactory)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
@@ -16,7 +16,7 @@ namespace Overlord_PackageManager.resources.EntryTypes
 
             foreach (var entry in Table.Entries)
             {
-                entry.Read(reader, Table.PayloadStartOffset);
+                ((AssetList)entry).Read(reader, Table.PayloadStartOffset, Entry.AssetListDictionary);
             }
         }
 

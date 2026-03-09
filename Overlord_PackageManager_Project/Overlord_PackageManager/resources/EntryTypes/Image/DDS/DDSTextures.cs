@@ -21,7 +21,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
         }
 
 
-        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
+        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> entryFactory)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;

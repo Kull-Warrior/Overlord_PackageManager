@@ -10,13 +10,13 @@ namespace Overlord_PackageManager.resources.EntryTypes
 {
     public class AssetList(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        public override void Read(BinaryReader reader, long origin)
+        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> entryFactory)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start;
-            Table = new ReferenceTable(reader, end);
+            Table = new ReferenceTable(reader, end, entryFactory);
 
             foreach (var entry in Table.Entries)
             {

@@ -6,7 +6,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
     public abstract class DDSImageAssetBase(uint id, uint relOffset) : AssetEntry(id, relOffset), IFileExportable
     {
-        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> factory)
+        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> factory)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;

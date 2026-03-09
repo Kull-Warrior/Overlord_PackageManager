@@ -31,7 +31,7 @@ namespace Overlord_PackageManager.resources.Generic
         // Each entry knows how to read itself
         public abstract void Read(BinaryReader reader, long origin);
 
-        public static Entry InfoTableDictionary(uint id, uint relOffset)
+        public static Entry InfoTableDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -52,7 +52,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry OMPDataRootTableDictionary(uint id, uint relOffset)
+        public static Entry OMPDataRootTableDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -123,7 +123,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry TerrainDataDictionary(uint id, uint relOffset)
+        public static Entry TerrainDataDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -142,7 +142,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry UnknownType21Dictionary(uint id, uint relOffset)
+        public static Entry UnknownType21Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -154,7 +154,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry UnknownType21SubTableType20Dictionary(uint id, uint relOffset)
+        public static Entry UnknownType21SubTableType20Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -168,7 +168,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry GameObjectDataSubTableType20SubTableType32Dictionary(uint id, uint relOffset)
+        public static Entry GameObjectDataSubTableType20SubTableType32Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -191,7 +191,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry DataSubTableType21SubTableType20SubTableType34Dictionary(uint id, uint relOffset)
+        public static Entry DataSubTableType21SubTableType20SubTableType34Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -202,7 +202,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry LuaDataDictionary(uint id, uint relOffset)
+        public static Entry LuaDataDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -215,7 +215,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry LuaListDictionary(uint id, uint relOffset)
+        public static Entry LuaListDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -224,7 +224,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry XMLDictionary(uint id, uint relOffset)
+        public static Entry XMLDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -236,7 +236,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry ResourcePackLinkDictionary(uint id, uint relOffset)
+        public static Entry ResourcePackLinkDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -249,7 +249,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry ResourcePackRootTableDictionary(uint id, uint relOffset)
+        public static Entry ResourcePackRootTableDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -314,7 +314,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry RPKDataRootGenericSubTableDictionary(uint id, uint relOffset)
+        public static Entry RPKDataRootGenericSubTableDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -326,7 +326,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry AssetListContainerDictionary(uint id, uint relOffset)
+        public static Entry AssetListContainerDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -338,7 +338,7 @@ namespace Overlord_PackageManager.resources.Generic
 
         #region AnimationDictionaries
 
-        public static Entry BoneAnimationSubTableType22Dictionary(uint id, uint relOffset)
+        public static Entry BoneAnimationSubTableType22Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -348,7 +348,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry BoneAnimationSubTableType23Dictionary(uint id, uint relOffset)
+        public static Entry BoneAnimationSubTableType23Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -358,7 +358,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry BoneAnimationSubTableType24Dictionary(uint id, uint relOffset)
+        public static Entry BoneAnimationSubTableType24Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -370,7 +370,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry BoneAnimationSubTableType25SubTableType21Dictionary(uint id, uint relOffset)
+        public static Entry BoneAnimationSubTableType25SubTableType21Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -384,7 +384,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry BoneAnimationSubTableType25Dictionary(uint id, uint relOffset)
+        public static Entry BoneAnimationSubTableType25Dictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -395,7 +395,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry BoneAnimationDataDictionary(uint id, uint relOffset)
+        public static Entry BoneAnimationDataDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -410,7 +410,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry AnimationAssetDataContainerDictionary(uint id, uint relOffset)
+        public static Entry AnimationAssetDataContainerDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -420,7 +420,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry AnimationAssetDictionary(uint id, uint relOffset)
+        public static Entry AnimationAssetDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -440,7 +440,7 @@ namespace Overlord_PackageManager.resources.Generic
 
         #region SFXDictionaries
 
-        public static Entry SFXDataDictionary(uint id, uint relOffset)
+        public static Entry SFXDataDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -451,7 +451,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry SFXAssetDictionary(uint id, uint relOffset)
+        public static Entry SFXAssetDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -474,7 +474,7 @@ namespace Overlord_PackageManager.resources.Generic
 
         #region ImageDictionaries
         #region TifTgaImageDictionaries
-        public static Entry RawTgaTifTextureDataDictionary(uint id, uint relOffset)
+        public static Entry RawTgaTifTextureDataDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -484,7 +484,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry TgaTifTextureAssetDictionary(uint id, uint relOffset)
+        public static Entry TgaTifTextureAssetDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -503,7 +503,7 @@ namespace Overlord_PackageManager.resources.Generic
 
         #region DDSImageDictionaries
 
-        public static Entry DDSTextureDictionary(uint id, uint relOffset)
+        public static Entry DDSTextureDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -516,7 +516,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry DDSTextureAssetDataContainerDictionary(uint id, uint relOffset)
+        public static Entry DDSTextureAssetDataContainerDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -529,7 +529,7 @@ namespace Overlord_PackageManager.resources.Generic
             };
         }
 
-        public static Entry DDSTextureAssetDictionary(uint id, uint relOffset)
+        public static Entry DDSTextureAssetDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -544,7 +544,7 @@ namespace Overlord_PackageManager.resources.Generic
         #endregion DDSImageDictionaries
 
         #region ReflectionCubeMapDictionaries
-        public static Entry ReflectionCubeMapAssetDictionary(uint id, uint relOffset)
+        public static Entry ReflectionCubeMapAssetDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -559,5 +559,29 @@ namespace Overlord_PackageManager.resources.Generic
         #endregion ReflectionCubeMapDictionaries
 
         #endregion ImageDictionaries
+        public static Entry AssetListDictionary(BinaryReader reader, uint id, uint relOffset)
+        {
+            long payloadStart = reader.BaseStream.Position; // reference table start already positioned
+            long pos = payloadStart + relOffset;
+
+            long saved = reader.BaseStream.Position;
+            reader.BaseStream.Position = pos;
+
+            uint typeIdentifier = reader.ReadUInt32();
+
+            reader.BaseStream.Position = saved;
+
+            return typeIdentifier switch
+            {
+                4259993 => new ReflectionCubeMapAsset(id, relOffset),
+                4259992 => new TgaTifTextureAsset(id, relOffset),
+                4259901 => new DDSTextureAsset(id, relOffset),
+                4259876 => new DDSTextures(id, relOffset),
+                4259845 => new AnimationAsset(id, relOffset),
+                4259847 => new BoneAnimationData(id, relOffset),
+                10551296 => new SFXAsset(id, relOffset),
+                _ => new BlobEntry(id, relOffset)
+            };
+        }
     }
 }

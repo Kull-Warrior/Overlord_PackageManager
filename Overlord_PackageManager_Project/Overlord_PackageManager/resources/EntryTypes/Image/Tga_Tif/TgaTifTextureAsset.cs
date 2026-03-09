@@ -6,7 +6,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
 {
     class TgaTifTextureAsset(uint id, uint relOffset) : AssetEntry(id, relOffset)
     {
-        public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
+        public void Read(BinaryReader reader, long origin, Func<BinaryReader, uint, uint, Entry> entryFactory)
         {
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
