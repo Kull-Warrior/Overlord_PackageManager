@@ -3,12 +3,8 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class BoneAnimationData(uint id, uint relOffset) : Entry(id, relOffset), IHasReferenceTable
+    class BoneAnimationData(uint id, uint relOffset) : AssetEntry(id, relOffset)
     {
-        public uint TypeIdentifier;
-        public ReferenceTable Table;
-        public ReferenceTable GetReferenceTable() => Table;
-
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> entryFactory)
         {
             long start = origin + RelativeOffset;

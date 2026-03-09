@@ -18,10 +18,14 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
             AssetList list = GetTextureList();
             list.Table.Entries.Clear();
 
-            foreach (DDSMipFace face in dds.Faces)
+            uint currentOffset = 0;
+            for (int i = 0; i < dds.Faces.Count; i++)
             {
-                DDSTextures tex = new DDSTextures(face.Width, face.Height, dds.Format, face.Data);
+                DDSMipFace face = dds.Faces[i];
+                DDSTextures tex = new DDSTextures((uint)i, currentOffset, face.Width, face.Height, dds.Format, face.Data);
                 list.Table.Entries.Add(tex);
+
+                currentOffset += 21 + (uint)face.Data.Length;
             }
         }
 

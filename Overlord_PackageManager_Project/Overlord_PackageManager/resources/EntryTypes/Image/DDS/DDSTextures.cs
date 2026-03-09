@@ -4,18 +4,14 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    public class DDSTextures : Entry, IHasReferenceTable
+    public class DDSTextures : AssetEntry
     {
-        public uint TypeIdentifier;
-        public ReferenceTable Table;
-        public ReferenceTable GetReferenceTable() => Table;
-
         public DDSTextures(uint id, uint relOffset) : base(id, relOffset)
         {
-
         }
 
-        public DDSTextures (uint width, uint height, DDSFormat format, byte[] data)
+        public DDSTextures(uint id, uint relOffset, uint width, uint height, DDSFormat format, byte[] data)
+            : base(id, relOffset)
         {
             Table = new ReferenceTable();
             Table.Entries.Add(new Int32Entry(20, 0) { Value = width });

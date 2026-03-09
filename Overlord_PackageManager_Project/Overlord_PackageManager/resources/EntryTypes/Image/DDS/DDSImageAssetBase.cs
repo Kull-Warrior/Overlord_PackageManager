@@ -4,15 +4,8 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    public abstract class DDSImageAssetBase : Entry, IHasReferenceTable, IFileExportable
+    public abstract class DDSImageAssetBase(uint id, uint relOffset) : AssetEntry(id, relOffset), IFileExportable
     {
-        protected DDSImageAssetBase(uint id, uint relOffset) : base(id, relOffset) { }
-
-        public uint TypeIdentifier;
-        public ReferenceTable Table;
-
-        public ReferenceTable GetReferenceTable() => Table;
-
         public void Read(BinaryReader reader, long origin, Func<uint, uint, Entry> factory)
         {
             long start = origin + RelativeOffset;
