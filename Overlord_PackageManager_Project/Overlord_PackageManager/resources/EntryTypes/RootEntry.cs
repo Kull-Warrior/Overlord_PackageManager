@@ -7,7 +7,6 @@ namespace Overlord_PackageManager.resources.EntryTypes
     {
         public RootEntry() : base(0, 0) { }
 
-        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory
-            => Entry.ResourcePackRootTableDictionary;
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.ResourcePackRootTableDictionary;
     }
 }
