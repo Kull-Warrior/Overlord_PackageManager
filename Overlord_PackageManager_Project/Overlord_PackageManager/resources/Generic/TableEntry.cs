@@ -11,9 +11,20 @@ namespace Overlord_PackageManager.resources.Generic
         // Grammar definition for this table type
         protected virtual Func<BinaryReader, uint, uint, Entry> EntryFactory => null;
 
+        protected virtual int PayloadOffset => 0;
+
         public override void Read(BinaryReader reader, long origin)
         {
-            throw new NotImplementedException();
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
+
+            reader.BaseStream.Position = start + PayloadOffset;
+            Table = new ReferenceTable(reader, end, EntryFactory);
+
+            foreach (var entry in Table.Entries)
+            {
+                entry.Read(reader, Table.PayloadStartOffset);
+            }
         }
     }
 }

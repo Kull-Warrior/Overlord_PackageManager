@@ -8,20 +8,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.Audio
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.SFXAssetDictionary;
 
-        public override void Read(BinaryReader reader, long origin)
-        {
-            long start = origin + RelativeOffset;
-            long end = start + PayloadLength;
-
-            reader.BaseStream.Position = start + 4;
-            Table = new ReferenceTable(reader, end, EntryFactory);
-
-            foreach (var entry in Table.Entries)
-            {
-                entry.Read(reader, Table.PayloadStartOffset);
-            }
-        }
-
         public void WriteToFile(string baseDir)
         {
             List<StringEntry> sfxAssetStrings = Table.Entries.OfType<StringEntry>().ToList();

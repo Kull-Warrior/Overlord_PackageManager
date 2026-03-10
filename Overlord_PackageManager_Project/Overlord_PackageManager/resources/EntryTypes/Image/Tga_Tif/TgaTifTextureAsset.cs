@@ -8,21 +8,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.TgaTifTextureAssetDictionary;
 
-        public override void Read(BinaryReader reader, long origin)
-        {
-            long start = origin + RelativeOffset;
-            long end = start + PayloadLength;
-
-            reader.BaseStream.Position = start + 4;
-            Table = new ReferenceTable(reader, end, EntryFactory);
-
-
-            foreach (var entry in Table.Entries)
-            {
-                entry.Read(reader, Table.PayloadStartOffset);
-            }
-        }
-
         public byte[] CreateTifHeader(uint width, uint height)
         {
             using MemoryStream ms = new MemoryStream();

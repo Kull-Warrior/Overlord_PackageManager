@@ -1,9 +1,4 @@
-﻿using Overlord_PackageManager.resources.EntryTypes.Image.Tga_Tif;
-using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
-using System.IO;
-using Overlord_PackageManager.resources.EntryTypes.Audio;
-using Overlord_PackageManager.resources.EntryTypes.Animation;
-using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
+﻿using System.IO;
 
 namespace Overlord_PackageManager.resources.Generic
 {

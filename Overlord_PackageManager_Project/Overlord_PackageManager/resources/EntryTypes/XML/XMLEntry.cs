@@ -8,20 +8,6 @@ namespace Overlord_PackageManager.resources.EntryTypes.XML
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.XMLDictionary;
 
-        public override void Read(BinaryReader reader, long origin)
-        {
-            long start = origin + RelativeOffset;
-            long end = start + PayloadLength;
-
-            reader.BaseStream.Position = start;
-            Table = new ReferenceTable(reader, end, EntryFactory);
-
-            foreach (var entry in Table.Entries)
-            {
-                entry.Read(reader, Table.PayloadStartOffset);
-            }
-        }
-
         public void WriteToFile(string baseDir)
         {
             if (Table.SmallEntryCount > 0 || Table.LargeEntryCount > 0)
