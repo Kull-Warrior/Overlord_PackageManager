@@ -27,7 +27,7 @@ namespace Overlord_PackageManager.resources.RPK
     }
     public class ResourcePackBody
     {
-        public RootEntry Data;
+        public ResourcePackRootEntry Data;
     }
 
     public class ResourcePackFile
@@ -46,7 +46,7 @@ namespace Overlord_PackageManager.resources.RPK
 
                     long origin = br.BaseStream.Position;
 
-                    Body.Data = new RootEntry();
+                    Body.Data = new ResourcePackRootEntry();
                     Body.Data.PayloadLength = br.BaseStream.Length - origin;
 
                     Body.Data.Read(br, origin);

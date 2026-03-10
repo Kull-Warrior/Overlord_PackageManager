@@ -3,9 +3,9 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes
 {
-    public class RootEntry : TableEntry
+    public class ResourcePackRootEntry : TableEntry
     {
-        public RootEntry() : base(0, 0) { }
+        public ResourcePackRootEntry() : base(0, 0) { }
 
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.ResourcePackRootTableDictionary;
     }

@@ -53,7 +53,7 @@ namespace Overlord_PackageManager
                 mapFile = new OMPFile();
                 mapFile.Parse(filePath);
                 treeView.Items.Clear();
-                treeView.Items.Add(RefTableTreeBuilder.Build(mapFile.Body.Data, "Root"));
+                treeView.Items.Add(RefTableTreeBuilder.Build(mapFile.Body.Data.Table, "Root"));
             }
             else
             {

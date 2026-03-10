@@ -1,7 +1,4 @@
 ﻿using Overlord_PackageManager.resources.EntryTypes;
-using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
-using Overlord_PackageManager.resources.EntryTypes.Lua;
-using Overlord_PackageManager.resources.Generic;
 using System.IO;
 using System.Text;
 
@@ -21,8 +18,8 @@ namespace Overlord_PackageManager.resources.OMP
     }
     public class OMPBody
     {
-        public ReferenceTable Info;
-        public ReferenceTable Data;
+        public MapInfoEntry Info;
+        public MapRootEntry Data;
     }
 
     public class OMPFile
@@ -40,19 +37,15 @@ namespace Overlord_PackageManager.resources.OMP
                     Header = new OMPHeader(br);
                     Body = new OMPBody();
 
-                    Body.Info = new ReferenceTable(br, br.BaseStream.Length, Entry.InfoTableDictionary);
+                    long origin = br.BaseStream.Position;
+                    Body.Data = new MapRootEntry();
+                    Body.Data.PayloadLength = br.BaseStream.Length - origin;
+                    Body.Info.Read(br, origin);
 
-                    foreach (var entry in Body.Info.Entries)
-                    {
-                        entry.Read(br, Body.Info.PayloadStartOffset);
-                    }
-
-                    Body.Data = new ReferenceTable(br, br.BaseStream.Length,Entry.OMPDataRootTableDictionary);
-
-                    foreach (var entry in Body.Data.Entries)
-                    {
-                        entry.Read(br, Body.Data.PayloadStartOffset);
-                    }
+                    origin = br.BaseStream.Position;
+                    Body.Data = new MapRootEntry();
+                    Body.Data.PayloadLength = br.BaseStream.Length - origin;
+                    Body.Data.Read(br, origin);
                 }
             }
             catch (Exception e)
