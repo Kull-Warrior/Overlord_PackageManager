@@ -27,7 +27,7 @@ namespace Overlord_PackageManager.resources.RPK
     }
     public class ResourcePackBody
     {
-        public ReferenceTable Data;
+        public RootEntry Data;
     }
 
     public class ResourcePackFile
@@ -44,12 +44,12 @@ namespace Overlord_PackageManager.resources.RPK
                     Header = new ResourcePackHeader(br);
                     Body = new ResourcePackBody();
 
-                    Body.Data = new ReferenceTable(br, br.BaseStream.Length, Entry.ResourcePackRootTableDictionary);
+                    long origin = br.BaseStream.Position;
 
-                    foreach (var entry in Body.Data.Entries)
-                    {
-                        entry.Read(br, Body.Data.PayloadStartOffset);
-                    }
+                    Body.Data = new RootEntry();
+                    Body.Data.PayloadLength = br.BaseStream.Length - origin;
+
+                    Body.Data.Read(br, origin);
                 }
             }
             catch (Exception e)
@@ -57,11 +57,12 @@ namespace Overlord_PackageManager.resources.RPK
                 Console.WriteLine("Error reading RPK file: " + e.Message);
             }
         }
+
         public void WriteAllAssetsToFile(string baseDir)
         {
             try
             {
-                foreach (var entry in Body.Data.Entries)
+                foreach (var entry in Body.Data.Table.Entries)
                 {
                     if (entry is AssetListContainer)
                     {

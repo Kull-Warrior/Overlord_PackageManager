@@ -60,7 +60,7 @@ namespace Overlord_PackageManager
                 resourceFile = new ResourcePackFile();
                 resourceFile.Read(filePath);
                 treeView.Items.Clear();
-                treeView.Items.Add(RefTableTreeBuilder.Build(resourceFile.Body.Data, "Root"));
+                treeView.Items.Add(RefTableTreeBuilder.Build(resourceFile.Body.Data.Table, "Root"));
             }
         }
 
