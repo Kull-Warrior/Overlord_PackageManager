@@ -573,13 +573,13 @@ namespace Overlord_PackageManager.resources.Generic
 
             return typeIdentifier switch
             {
-                4259993 => new ReflectionCubeMapAsset(id, relOffset),
-                4259992 => new TgaTifTextureAsset(id, relOffset),
-                4259901 => new DDSTextureAsset(id, relOffset),
-                4259876 => new DDSTextures(id, relOffset),
-                4259845 => new AnimationAsset(id, relOffset),
-                4259847 => new BoneAnimationData(id, relOffset),
-                10551296 => new SFXAsset(id, relOffset),
+                4259993 => new ReflectionCubeMapAsset(id, relOffset, typeIdentifier),
+                4259992 => new TgaTifTextureAsset(id, relOffset, typeIdentifier),
+                4259901 => new DDSTextureAsset(id, relOffset, typeIdentifier),
+                4259876 => new DDSTextures(id, relOffset, typeIdentifier),
+                4259845 => new AnimationAsset(id, relOffset, typeIdentifier),
+                4259847 => new BoneAnimationData(id, relOffset, typeIdentifier),
+                10551296 => new SFXAsset(id, relOffset, typeIdentifier),
                 _ => new BlobEntry(id, relOffset)
             };
         }

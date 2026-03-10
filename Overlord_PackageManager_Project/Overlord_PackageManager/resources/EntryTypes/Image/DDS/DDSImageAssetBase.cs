@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
 {
-    public abstract class DDSImageAssetBase(uint id, uint relOffset) : AssetEntry(id, relOffset), IFileExportable
+    public abstract class DDSImageAssetBase(uint id, uint relOffset, uint typeIdentifier) : AssetEntry(id, relOffset, typeIdentifier), IFileExportable
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.DDSTextureAssetDictionary;
 
@@ -13,8 +13,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Image.DDS
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
 
-            reader.BaseStream.Position = start;
-            TypeIdentifier = reader.ReadUInt32();
+            reader.BaseStream.Position = start + 4;
             Table = new ReferenceTable(reader, end, EntryFactory);
 
             foreach (var entry in Table.Entries)

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class AnimationAsset(uint id, uint relOffset) : AssetEntry(id, relOffset)
+    class AnimationAsset(uint id, uint relOffset, uint typeIdentifier) : AssetEntry(id, relOffset, typeIdentifier)
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.AnimationAssetDictionary;
 
@@ -12,8 +12,7 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
             long start = origin + RelativeOffset;
             long end = start + PayloadLength;
 
-            reader.BaseStream.Position = start;
-            TypeIdentifier = reader.ReadUInt32();
+            reader.BaseStream.Position = start + 4;
             Table = new ReferenceTable(reader, end, EntryFactory);
 
             foreach (var entry in Table.Entries)
