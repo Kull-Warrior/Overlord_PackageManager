@@ -19,7 +19,10 @@ namespace Overlord_PackageManager.resources.Generic
             long end = start + PayloadLength;
 
             reader.BaseStream.Position = start + PayloadOffset;
-            Table = new ReferenceTable(reader, end, EntryFactory);
+            Table = new ReferenceTable();
+            Table.TableEndOffset = end;
+            Table.ReadHeader(reader);
+            Table.ReadEntryStructure(reader, EntryFactory);
 
             foreach (var entry in Table.Entries)
             {

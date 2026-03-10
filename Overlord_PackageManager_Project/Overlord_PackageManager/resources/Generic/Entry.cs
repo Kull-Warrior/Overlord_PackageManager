@@ -559,9 +559,8 @@ namespace Overlord_PackageManager.resources.Generic
         #endregion ReflectionCubeMapDictionaries
 
         #endregion ImageDictionaries
-        public static Entry AssetListDictionary(BinaryReader reader, uint id, uint relOffset)
+        public static Entry AssetListDictionary(BinaryReader reader, uint id, uint relOffset, long payloadStart)
         {
-            long payloadStart = reader.BaseStream.Position; // reference table start already positioned
             long pos = payloadStart + relOffset;
 
             long saved = reader.BaseStream.Position;

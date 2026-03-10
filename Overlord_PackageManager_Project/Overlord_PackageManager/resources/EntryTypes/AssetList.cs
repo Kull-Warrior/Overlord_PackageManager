@@ -9,7 +9,24 @@ namespace Overlord_PackageManager.resources.EntryTypes
 {
     public class AssetList(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.AssetListDictionary;
+        protected static Func<BinaryReader, uint, uint, long, Entry> Factory => Entry.AssetListDictionary;
+
+        public override void Read(BinaryReader reader, long origin)
+        {
+            long start = origin + RelativeOffset;
+            long end = start + PayloadLength;
+
+            reader.BaseStream.Position = start + PayloadOffset;
+            Table = new ReferenceTable();
+            Table.TableEndOffset = end;
+            Table.ReadHeader(reader);
+            Table.ReadAssetListEntryStructure(reader, Factory);
+
+            foreach (var entry in Table.Entries)
+            {
+                entry.Read(reader, Table.PayloadStartOffset);
+            }
+        }
 
         public void WriteToFiles(string baseDir)
         {
