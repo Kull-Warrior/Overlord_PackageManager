@@ -38,8 +38,8 @@ namespace Overlord_PackageManager.resources.OMP
                     Body = new OMPBody();
 
                     long origin = br.BaseStream.Position;
-                    Body.Data = new MapRootEntry();
-                    Body.Data.PayloadLength = br.BaseStream.Length - origin;
+                    Body.Info = new MapInfoEntry();
+                    Body.Info.PayloadLength = br.BaseStream.Length - origin;
                     Body.Info.Read(br, origin);
 
                     origin = br.BaseStream.Position;
