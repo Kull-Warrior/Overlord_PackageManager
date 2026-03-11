@@ -50,7 +50,7 @@ namespace Overlord_PackageManager.resources.OMP
             }
             catch (Exception e)
             {
-                //throw;
+                Console.WriteLine("Error reading overlord map file: " + e.Message);
             }
 
         }
