@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.Generic;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources
@@ -13,15 +14,15 @@ namespace Overlord_PackageManager.resources
                 Tag = table
             };
 
-            foreach (Entry entry in table.Entries)
-            {
-                node.Items.Add(BuildEntryNode(entry));
-            }
+            node.Expanded += OnNodeExpanded;
+            node.Collapsed += OnNodeCollapsed;
+
+            AddPlaceholder(node);
 
             return node;
         }
 
-        private static TreeViewItem BuildEntryNode(Entry entry)
+        private static TreeViewItem CreateEntryNode(Entry entry)
         {
             TreeViewItem node = new TreeViewItem
             {
@@ -29,18 +30,68 @@ namespace Overlord_PackageManager.resources
                 Tag = entry
             };
 
-            if (entry is IHasReferenceTable hasTable)
+            if (entry is IHasReferenceTable hasTable && hasTable.GetReferenceTable() != null)
             {
-                ReferenceTable childTable = hasTable.GetReferenceTable();
+                node.Expanded += OnNodeExpanded;
+                node.Collapsed += OnNodeCollapsed;
 
-                if (childTable != null)
-                {
-                    foreach (var child in childTable.Entries)
-                        node.Items.Add(BuildEntryNode(child));
-                }
+                AddPlaceholder(node);
             }
 
             return node;
+        }
+
+        private static void OnNodeExpanded(object sender, RoutedEventArgs e)
+        {
+            if (!ReferenceEquals(sender, e.OriginalSource))
+                return;
+
+            if (sender is not TreeViewItem node)
+                return;
+
+            if (!IsPlaceholder(node))
+                return;
+
+            node.Items.Clear();
+
+            ReferenceTable table = null;
+
+            if (node.Tag is ReferenceTable t)
+                table = t;
+            else if (node.Tag is IHasReferenceTable hasTable)
+                table = hasTable.GetReferenceTable();
+
+            if (table != null)
+            {
+                foreach (Entry entry in table.Entries)
+                    node.Items.Add(CreateEntryNode(entry));
+            }
+        }
+
+        private static void OnNodeCollapsed(object sender, RoutedEventArgs e)
+        {
+            if (!ReferenceEquals(sender, e.OriginalSource))
+                return;
+
+            if (sender is not TreeViewItem node)
+                return;
+
+            node.Items.Clear();
+            AddPlaceholder(node);
+        }
+
+        private static void AddPlaceholder(TreeViewItem node)
+        {
+            node.Items.Add(new TreeViewItem { Header = "Loading..." });
+        }
+
+        private static bool IsPlaceholder(TreeViewItem node)
+        {
+            if (node.Items.Count != 1)
+                return false;
+
+            return node.Items[0] is TreeViewItem placeholder &&
+                   (string)placeholder.Header == "Loading...";
         }
 
         private static string Describe(Entry e)
