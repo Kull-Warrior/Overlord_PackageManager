@@ -258,24 +258,24 @@ namespace Overlord_PackageManager.resources.Generic
                 19 => new Int32Entry(id, relOffset),
                 20 => new Int32Entry(id, relOffset),
                 22 => new StringEntry(id, relOffset),       // Character/Rescource Name
-                23 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains Effects and Light Data of some sort
-                24 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains "TS", Texture related Data
-                25 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains "0" Type Data Unknown use, Map editor friendly apperently
+                23 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains Effects and Light Data of some sort
+                24 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "TS", Texture related Data
+                25 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "0" Type Data Unknown use, Map editor friendly apperently
                 26 => new AssetListContainer(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
                 27 => new StringListEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
                 28 => new XMLEntry(id, relOffset),          // Contains XML Data
                 29 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
-                30 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains "2" Type Data Unknown use, contains lua scripts
-                31 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains Animation Data
-                32 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
-                33 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains Object, Mesh Data //MapEditor Objects apperently
-                34 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains Object Data, Animation Data
-                35 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
-                36 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
-                37 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains SFX Data
-                38 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains FXE Data ( Raw file)
-                39 => new BlobEntry(id, relOffset),   // Unknown entry     // 
-                40 => new BlobEntry(id, relOffset),   // Unknown entry
+                30 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "2" Type Data Unknown use, contains lua scripts
+                31 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains Animation Data
+                32 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Unknown
+                33 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains Object, Mesh Data //MapEditor Objects apperently
+                34 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains Object Data, Animation Data
+                35 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Unknown
+                36 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Unknown
+                37 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains SFX Data
+                38 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains FXE Data ( Raw file)
+                39 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // 
+                40 => new NamedAssetContainer(id, relOffset),   // Unknown entry
                 41 => new BlobEntry(id, relOffset),   // Unknown entry
                 42 => new BlobEntry(id, relOffset),   // Unknown entry
                 43 => new BlobEntry(id, relOffset),   // Unknown entry
@@ -591,6 +591,18 @@ namespace Overlord_PackageManager.resources.Generic
                 //21 => new BlobEntry(id, relOffset),    // FXE Data, Header + Raw Data, full FXE file
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
+            };
+        }
+
+        public static Entry NamedAssetContainerDictionary(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                20 => new StringEntry(id, relOffset),     // Name of the group
+                //21 => new AssetList(id, relOffset),       // Asset list
+                21 => new AssetListContainer(id, relOffset),       // Asset list
+                30 => new BlobEntry(id, relOffset),       // Unknown table
+                _ => new BlobEntry(id, relOffset)
             };
         }
     }
