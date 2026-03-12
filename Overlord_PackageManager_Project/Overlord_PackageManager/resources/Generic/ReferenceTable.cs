@@ -88,5 +88,99 @@ namespace Overlord_PackageManager.resources.Generic
                 Entries[i].PayloadLength = Math.Max(0, end - start);
             }
         }
+
+        private void UpdateEntryStructure()
+        {
+            bool requiresLarge = false;
+            uint smallCount = 0;
+            uint largeCount = 0;
+
+            foreach (var e in Entries)
+            {
+                if (e.Id > 0xFF || e.RelativeOffset > 0xFF)
+                {
+                    requiresLarge = true;
+                    largeCount++;
+                }
+                else
+                {
+                    smallCount++;
+                }
+            }
+
+            HasLargeEntries = requiresLarge;
+            SmallEntryCount = smallCount;
+            LargeEntryCount = largeCount;
+        }
+
+        private long GetTotalSize(long payloadSize)
+        {
+            long headerSize = 1 + (HasLargeEntries ? 4 : 0);
+
+            long structureSize = SmallEntryCount * 2L + LargeEntryCount * 8L;
+
+            PayloadStartOffset = headerSize + structureSize;
+
+            return headerSize + structureSize + payloadSize;
+        }
+
+        public long ComputeLayout()
+        {
+            long currentOffset = 0;
+
+            foreach (var entry in Entries)
+            {
+                long size = entry.GetPayloadSize();
+
+                entry.PayloadLength = size;
+                entry.RelativeOffset = (uint)currentOffset;
+
+                currentOffset += size;
+            }
+
+            UpdateEntryStructure();
+
+            return GetTotalSize(currentOffset);
+        }
+
+        public void Write(BinaryWriter writer, long tableStart)
+        {
+            writer.BaseStream.Position = tableStart;
+
+            byte header = (byte)(SmallEntryCount & 0x7F);
+
+            if (HasLargeEntries)
+            {
+                header |= 0x80;
+            }
+
+            writer.Write(header);
+
+            if (HasLargeEntries)
+            {
+                writer.Write(LargeEntryCount);
+            }
+
+            foreach (var entry in Entries)
+            {
+                if (entry.Id <= 0xFF && entry.RelativeOffset <= 0xFF)
+                {
+                    writer.Write((byte)entry.Id);
+                    writer.Write((byte)entry.RelativeOffset);
+                }
+                if (entry.Id > 0xFF || entry.RelativeOffset > 0xFF)
+                {
+                    writer.Write(entry.Id);
+                    writer.Write(entry.RelativeOffset);
+                }
+            }
+
+            long payloadOrigin = tableStart + PayloadStartOffset;
+
+            foreach (var entry in Entries)
+            {
+                entry.Write(writer, payloadOrigin);
+            }
+        }
     }
 }

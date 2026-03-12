@@ -3,6 +3,7 @@ using Overlord_PackageManager.resources.EntryTypes.XML;
 using Overlord_PackageManager.resources.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Text;
 
 namespace Overlord_PackageManager.resources.RPK
@@ -23,6 +24,21 @@ namespace Overlord_PackageManager.resources.RPK
             TotalDataSize = br.ReadUInt32();
             byte[] nameBytes = br.ReadBytes(160);
             Name = Encoding.ASCII.GetString(nameBytes).TrimEnd('\0');
+        }
+
+        public void Write(BinaryWriter bw)
+        {
+            bw.Write(Encoding.ASCII.GetBytes(Magic));
+            bw.Write(Version);
+            bw.Write(FileId);
+            bw.Write(TotalDataSize);
+
+            byte[] nameBytes = new byte[160];
+
+            byte[] encoded = Encoding.ASCII.GetBytes(Name);
+            Array.Copy(encoded, nameBytes, Math.Min(encoded.Length, 160));
+
+            bw.Write(nameBytes);
         }
     }
     public class ResourcePackBody
@@ -55,6 +71,33 @@ namespace Overlord_PackageManager.resources.RPK
             catch (Exception e)
             {
                 Console.WriteLine("Error reading RPK file: " + e.Message);
+            }
+        }
+
+        public void Write(string path)
+        {
+            try
+            {
+                using FileStream fs = File.Create(path);
+                using BinaryWriter bw = new BinaryWriter(fs);
+                {
+                    // --- Layout pass ---
+                    long dataSize = Body.Data.GetPayloadSize();
+                    Body.Data.PayloadLength = dataSize;
+
+                    Header.TotalDataSize = (uint)dataSize;
+
+                    // --- Write header ---
+                    Header.Write(bw);
+
+                    // --- Write body ---
+                    Body.Data.RelativeOffset = 0;
+                    Body.Data.Write(bw, 176);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error writing RPK file: " + e.Message);
             }
         }
 

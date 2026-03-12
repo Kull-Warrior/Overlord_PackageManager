@@ -18,5 +18,30 @@ namespace Overlord_PackageManager.resources.EntryTypes
                 Value[i] = reader.ReadUInt32();
             }
         }
+
+        public override long GetPayloadSize()
+        {
+            long totalSize = sizeof(uint);
+
+            if (Value != null)
+            {
+                totalSize += sizeof(uint) * Value.Length;
+            }
+
+            return totalSize;
+        }
+
+
+        public override void Write(BinaryWriter writer, long origin)
+        {
+            writer.BaseStream.Position = origin + RelativeOffset;
+
+            writer.Write((uint)Value.Length);
+
+            foreach (var number in Value)
+            {
+                writer.Write(number);
+            }
+        }
     }
 }

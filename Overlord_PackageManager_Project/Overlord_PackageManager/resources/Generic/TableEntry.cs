@@ -29,5 +29,18 @@ namespace Overlord_PackageManager.resources.Generic
                 entry.Read(reader, Table.PayloadStartOffset);
             }
         }
+
+        public override long GetPayloadSize()
+        {
+            return PayloadOffset + Table.ComputeLayout();
+        }
+
+        public override void Write(BinaryWriter writer, long origin)
+        {
+            long start = origin + RelativeOffset;
+            long tableStart = start + PayloadOffset;
+            writer.BaseStream.Position = tableStart;
+            Table.Write(writer, tableStart);
+        }
     }
 }

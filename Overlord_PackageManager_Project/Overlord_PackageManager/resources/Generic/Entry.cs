@@ -31,6 +31,12 @@ namespace Overlord_PackageManager.resources.Generic
         // Each entry knows how to read itself
         public abstract void Read(BinaryReader reader, long origin);
 
+        // Each entry knows how to compute its own length based on its content, this is used when writing the entry back to a file
+        public abstract long GetPayloadSize();
+
+        // Each entry knows how to write itself
+        public abstract void Write(BinaryWriter writer, long origin);
+
         public static Entry InfoTableDictionary(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
@@ -364,7 +370,7 @@ namespace Overlord_PackageManager.resources.Generic
             {
                 20 => new Int32Entry(id, relOffset),                // Unkown u32
                 21 => new Int32Entry(id, relOffset),                // Number of Bone positions, if the bone does not move in the animation only a single entry can be found here
-                22 => new BonePositionDataArray(id, relOffset),     // Array of Bone positions
+                //22 => new BonePositionDataArray(id, relOffset),     // Array of Bone positions
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
@@ -375,10 +381,10 @@ namespace Overlord_PackageManager.resources.Generic
             return id switch
             {
                 22 => new Int32Entry(id, relOffset),                // Number of Bone rotations
-                23 => new BoneRotationDataArray(id, relOffset),     // Array of Bone rotations
+                //23 => new BoneRotationDataArray(id, relOffset),     // Array of Bone rotations
                 24 => new BlobEntry(id, relOffset),               // Unkown 12 Bytes
                 30 => new Int32Entry(id, relOffset),                // Number of Bone scales
-                31 => new BoneScaleDataArray(id, relOffset),        // Number of Bone scales
+                //31 => new BoneScaleDataArray(id, relOffset),        // Number of Bone scales
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
             };

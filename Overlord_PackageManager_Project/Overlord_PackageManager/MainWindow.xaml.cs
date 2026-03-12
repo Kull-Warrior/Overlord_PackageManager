@@ -143,7 +143,60 @@ namespace Overlord_PackageManager
 
         private void Save(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                MessageBox.Show("No file loaded.");
+                return;
+            }
 
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = Path.GetFileName(filePath);
+            saveFileDialog.InitialDirectory = Path.GetDirectoryName(filePath);
+
+            saveFileDialog.Filter =
+                "RPK Files (*.rpk)|*.rpk|" +
+                "PRP Files (*.prp)|*.prp|" +
+                "PSP Files (*.psp)|*.psp|" +
+                "PVP Files (*.pvp)|*.pvp|" +
+                "OMP Files (*.omp)|*.omp|" +
+                "All files (*.*)|*.*";
+
+            if (saveFileDialog.ShowDialog() != true)
+            {
+                return;
+            }
+
+            string savePath = saveFileDialog.FileName;
+
+            try
+            {
+                if (savePath.EndsWith(".omp", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (mapFile == null)
+                    {
+                        MessageBox.Show("No OMP file loaded.");
+                        return;
+                    }
+
+                    //mapFile.Write(savePath);
+                }
+                else
+                {
+                    if (resourceFile == null)
+                    {
+                        MessageBox.Show("No resource file loaded.");
+                        return;
+                    }
+
+                    resourceFile.Write(savePath);
+                }
+
+                MessageBox.Show("File saved successfully.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving file: " + ex.Message);
+            }
         }
 
         private void Exit(object sender, RoutedEventArgs e)

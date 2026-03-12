@@ -17,5 +17,22 @@ namespace Overlord_PackageManager.resources.EntryTypes.Animation
                 Value.Add(new BoneRotationData((float)reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()));
             }
         }
+
+        public override long GetPayloadSize()
+        {
+            return 12;
+        }
+
+        public override void Write(BinaryWriter writer, long origin)
+        {
+            writer.BaseStream.Position = origin + RelativeOffset;
+
+            foreach (var scaleData in Value)
+            {
+                writer.Write(scaleData.Pitch);
+                writer.Write(scaleData.Yaw);
+                writer.Write(scaleData.Roll);
+            }
+        }
     }
 }
