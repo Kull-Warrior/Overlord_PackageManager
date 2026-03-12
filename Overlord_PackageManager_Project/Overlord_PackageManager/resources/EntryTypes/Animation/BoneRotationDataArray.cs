@@ -3,19 +3,18 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.EntryTypes.Animation
 {
-    class BonePositionDataArray(uint id, uint relOffset) : Entry(id, relOffset)
-    {
-        public BonePositionData[] bonePositions;
+    public record BoneRotationData(float Pitch, float Yaw, float Roll);
 
+    class BoneRotationDataArray(uint id, uint relOffset) : ValueEntry<List<BoneRotationData>>(id, relOffset)
+    {
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            bonePositions = new BonePositionData[PayloadLength / 16];
+            Value = new List<BoneRotationData>((int)(PayloadLength / 12));
 
-            for (int i = 0; i < (PayloadLength / 16); i++)
+            for (int i = 0; i < (PayloadLength / 12); i++)
             {
-                bonePositions[i] = new BonePositionData();
-                bonePositions[i].Read(reader);
+                Value.Add(new BoneRotationData((float)reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()));
             }
         }
     }
