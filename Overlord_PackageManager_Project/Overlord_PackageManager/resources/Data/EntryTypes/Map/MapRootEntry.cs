@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.Generic;
+﻿using Overlord_PackageManager.resources.Data.Factories;
+using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Map
@@ -7,6 +8,6 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Map
     {
         public MapRootEntry() : base(0, 0) { }
 
-        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => OMPDataRootTableDictionary;
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => MapFactory.CreateRootTable;
     }
 }

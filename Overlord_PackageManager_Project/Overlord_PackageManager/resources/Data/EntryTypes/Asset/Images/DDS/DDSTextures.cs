@@ -2,12 +2,13 @@
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using Overlord_PackageManager.resources.Data.Files.DDS;
 using System.IO;
+using Overlord_PackageManager.resources.Data.Factories;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
 {
     public class DDSTextures : AssetEntry
     {
-        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => DDSTextureDictionary;
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => DDSTextureFactory.CreateDDSTexture;
 
         public DDSTextures(uint id, uint relOffset, uint typeIdentifier) : base(id, relOffset, typeIdentifier)
         {

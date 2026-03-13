@@ -1,12 +1,13 @@
 ﻿using Overlord_PackageManager.resources.Data.Generic;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using System.IO;
+using Overlord_PackageManager.resources.Data.Factories;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif
 {
     class TgaTifTextureAsset(uint id, uint relOffset, uint typeIdentifier) : AssetEntry(id, relOffset, typeIdentifier)
     {
-        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => TgaTifTextureAssetDictionary;
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => TifTgaImageFactory.CreateTgaTifTextureAsset;
 
         public byte[] CreateTifHeader(uint width, uint height)
         {

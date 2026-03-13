@@ -1,16 +1,17 @@
-﻿using Overlord_PackageManager.resources.Data.Generic;
-using System.IO;
+﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
-using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif;
+using Overlord_PackageManager.resources.Data.Factories;
+using Overlord_PackageManager.resources.Data.Generic;
+using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset
 {
     public class AssetList(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        protected static Func<BinaryReader, uint, uint, long, Entry> Factory => AssetListDictionary;
+        protected static Func<BinaryReader, uint, uint, long, Entry> Factory => AssetListFactory.CreateAssetList;
 
         public override void Read(BinaryReader reader, long origin)
         {

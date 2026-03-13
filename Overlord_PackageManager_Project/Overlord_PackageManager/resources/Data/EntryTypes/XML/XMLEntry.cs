@@ -1,12 +1,13 @@
 ﻿using Overlord_PackageManager.resources.Data.Generic;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using System.IO;
+using Overlord_PackageManager.resources.Data.Factories;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.XML
 {
     class XMLEntry(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => Entry.XMLDictionary;
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => XMLFactory.CreateXML;
 
         public void WriteToFile(string baseDir)
         {
