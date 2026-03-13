@@ -99,7 +99,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 22 => new BlobEntry(id, relOffset),
                 23 => new BlobEntry(id, relOffset),
                 24 => new BlobEntry(id, relOffset),
-                25 => new LuaListEntry(id, relOffset),
+                25 => new AssetListContainer(id, relOffset),
                 26 => new BlobEntry(id, relOffset),   // Unknown entry
                 27 => new BlobEntry(id, relOffset),   // Unknown entry
                 28 => new BlobEntry(id, relOffset),   // Unknown entry

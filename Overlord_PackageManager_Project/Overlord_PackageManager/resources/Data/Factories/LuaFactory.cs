@@ -28,5 +28,17 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 _ => new LuaEntry(id, relOffset) //Any ID is of this type
             };
         }
+
+        public static Entry CreateLuaAsset(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                10 => new Int32Entry(id, relOffset),
+                11 => new Int32Entry(id, relOffset),
+                30 => new LuaEntry(id, relOffset),
+                // Add more IDs here
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
+            };
+        }
     }
 }

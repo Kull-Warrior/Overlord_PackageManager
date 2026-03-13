@@ -12,6 +12,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
         private readonly StringListEntry _entry;
         private bool _isInternalUpdate;
 
+        public event Action? TextChangedExternally;
+
         public StringListEntryEditor(StringListEntry entry)
         {
             InitializeComponent();
@@ -36,6 +38,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
                 return;
 
             RebuildEntry();
+
+            TextChangedExternally?.Invoke();
         }
 
         private void RebuildEntry()
@@ -52,6 +56,17 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 
             _entry.Value = newLines;
             _entry.NumberOfLines = (uint)newLines.Count;
+        }
+
+        public void SetText(string text)
+        {
+            _isInternalUpdate = true;
+
+            LinesBox.Text = text;
+
+            _isInternalUpdate = false;
+
+            RebuildEntry();
         }
 
         private void Import_Click(object sender, RoutedEventArgs e)

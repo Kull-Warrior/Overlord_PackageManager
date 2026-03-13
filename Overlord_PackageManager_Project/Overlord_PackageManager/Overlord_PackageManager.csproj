@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\Tools\lua50.dll" />
+    <None Remove="resources\Tools\luac50.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="resources\Tools\lua50.dll" />
+    <EmbeddedResource Include="resources\Tools\luac50.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="resources\GUI\EntryEditor\Leaf\FloatEntryEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

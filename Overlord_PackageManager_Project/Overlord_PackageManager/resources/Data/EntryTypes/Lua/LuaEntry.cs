@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Lua
 {
-    class LuaEntry(uint id, uint relOffset) : TableEntry(id, relOffset)
+    public class LuaEntry(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => LuaFactory.CreateLuaData;
     }

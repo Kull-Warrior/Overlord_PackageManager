@@ -5,6 +5,7 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 
@@ -42,6 +43,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 4259845 => new AnimationAsset(id, relOffset, typeIdentifier),
                 4259847 => new BoneAnimationData(id, relOffset, typeIdentifier),
                 10551296 => new SFXAsset(id, relOffset, typeIdentifier),
+                67109013 => new LuaAsset(id, relOffset, typeIdentifier),
                 _ => new BlobEntry(id, relOffset)
             };
         }

@@ -15,6 +15,8 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
 using Overlord_PackageManager.resources.GUI.EntryEditor.XML;
+using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua;
 
 namespace Overlord_PackageManager
 {
@@ -138,6 +140,9 @@ namespace Overlord_PackageManager
                     break;
                 case StringListEntry stringListEntry:
                     EditorHost.Content = new StringListEntryEditor(stringListEntry);
+                    break;
+                case LuaEntry luaEntry:
+                    EditorHost.Content = new LuaEntryEditor(luaEntry);
                     break;
                 default:
                     EditorHost.Content = new TextBlock
