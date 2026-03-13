@@ -3,6 +3,7 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using Overlord_PackageManager.resources.GUI;
 using Overlord_PackageManager.resources.Data.Files.OMP;
 using Overlord_PackageManager.resources.Data.Files.RPK;
+using Overlord_PackageManager.resources.Data.EntryTypes.XML;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +14,7 @@ using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
+using Overlord_PackageManager.resources.GUI.EntryEditor.XML;
 
 namespace Overlord_PackageManager
 {
@@ -130,6 +132,9 @@ namespace Overlord_PackageManager
                     break;
                 case SFXAsset sfxAsset:
                     EditorHost.Content = new SFXAssetEditor(sfxAsset);
+                    break;
+                case XMLEntry xmlEntry:
+                    EditorHost.Content = new XMLAssetEditor(xmlEntry);
                     break;
                 default:
                     EditorHost.Content = new TextBlock

@@ -5,7 +5,7 @@ using Overlord_PackageManager.resources.Data.Factories;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.XML
 {
-    class XMLEntry(uint id, uint relOffset) : TableEntry(id, relOffset)
+    public class XMLEntry(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => XMLFactory.CreateXML;
 
