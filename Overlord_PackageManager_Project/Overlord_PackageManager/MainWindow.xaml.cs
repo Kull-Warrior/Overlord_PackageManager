@@ -195,7 +195,7 @@ namespace Overlord_PackageManager
                         return;
                     }
 
-                    //mapFile.Write(savePath);
+                    mapFile.Write(savePath);
                 }
                 else
                 {
