@@ -1,14 +1,18 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources;
-using Overlord_PackageManager.resources.EntryEditor;
-using Overlord_PackageManager.resources.EntryTypes.Audio;
-using Overlord_PackageManager.resources.EntryTypes.BaseTypes;
-using Overlord_PackageManager.resources.EntryTypes.Image.DDS;
-using Overlord_PackageManager.resources.OMP;
-using Overlord_PackageManager.resources.RPK;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+using Overlord_PackageManager.resources.GUI;
+using Overlord_PackageManager.resources.Data.Files.OMP;
+using Overlord_PackageManager.resources.Data.Files.RPK;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.ReflectionCubeMap;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
 
 namespace Overlord_PackageManager
 {

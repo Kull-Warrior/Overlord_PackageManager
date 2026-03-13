@@ -9,13 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="resources\EntryEditor\BaseTypes\FloatEntryEditor.xaml.cs">
+    <Compile Update="resources\GUI\EntryEditor\Leaf\FloatEntryEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="resources\EntryEditor\BaseTypes\Int64EntryEditor.xaml.cs">
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Int64EntryEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="resources\EntryEditor\BaseTypes\StringEntryEditor.xaml.cs">
+    <Compile Update="resources\GUI\EntryEditor\Leaf\StringEntryEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
