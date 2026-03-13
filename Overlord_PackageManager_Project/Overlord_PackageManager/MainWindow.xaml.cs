@@ -136,6 +136,9 @@ namespace Overlord_PackageManager
                 case XMLEntry xmlEntry:
                     EditorHost.Content = new XMLAssetEditor(xmlEntry);
                     break;
+                case StringListEntry stringListEntry:
+                    EditorHost.Content = new StringListEntryEditor(stringListEntry);
+                    break;
                 default:
                     EditorHost.Content = new TextBlock
                     {
