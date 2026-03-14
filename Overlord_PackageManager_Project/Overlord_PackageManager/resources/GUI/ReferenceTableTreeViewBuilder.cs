@@ -2,6 +2,7 @@
 using Overlord_PackageManager.resources.Data.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Overlord_PackageManager.resources.GUI
 {
@@ -23,6 +24,84 @@ namespace Overlord_PackageManager.resources.GUI
             return node;
         }
 
+        private static void OnTreeViewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Delete)
+                return;
+
+            if (sender is not TreeView tree)
+                return;
+
+            if (tree.SelectedItem is not TreeViewItem node)
+                return;
+
+            DeleteEntry(node);
+
+            e.Handled = true;
+        }
+
+        public static void AttachDeleteKeyHandler(TreeView tree)
+        {
+            tree.PreviewKeyDown += OnTreeViewKeyDown;
+        }
+
+        private static void DeleteEntry(TreeViewItem node)
+        {
+            if (node.Tag is not Entry entry)
+                return;
+
+            ItemsControl parentControl = ItemsControl.ItemsControlFromItemContainer(node);
+
+            if (parentControl is not TreeViewItem parentNode)
+                return;
+
+            ReferenceTable table = parentNode.Tag switch
+            {
+                ReferenceTable t => t,
+                IHasReferenceTable h => h.GetReferenceTable(),
+                _ => null
+            };
+
+            if (table == null)
+                return;
+
+            int index = parentNode.Items.IndexOf(node);
+
+            TreeViewItem nextSelection = null;
+
+            if (index + 1 < parentNode.Items.Count)
+                nextSelection = parentNode.Items[index + 1] as TreeViewItem;
+            else if (index - 1 >= 0)
+                nextSelection = parentNode.Items[index - 1] as TreeViewItem;
+            else
+                nextSelection = parentNode;
+
+            table.Entries.Remove(entry);
+            parentNode.Items.Remove(node);
+
+            if (nextSelection != null)
+            {
+                nextSelection.IsSelected = true;
+                nextSelection.Focus();
+            }
+        }
+
+        private static ContextMenu BuildEntryContextMenu(TreeViewItem node)
+        {
+            ContextMenu menu = new ContextMenu();
+
+            MenuItem deleteItem = new MenuItem
+            {
+                Header = "Delete"
+            };
+
+            deleteItem.Click += (s, e) => DeleteEntry(node);
+
+            menu.Items.Add(deleteItem);
+
+            return menu;
+        }
+
         private static TreeViewItem CreateEntryNode(Entry entry)
         {
             TreeViewItem node = new TreeViewItem
@@ -30,6 +109,8 @@ namespace Overlord_PackageManager.resources.GUI
                 Header = Describe(entry),
                 Tag = entry
             };
+
+            node.ContextMenu = BuildEntryContextMenu(node);
 
             if (entry is IHasReferenceTable hasTable && hasTable.GetReferenceTable() != null)
             {

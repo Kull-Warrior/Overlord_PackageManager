@@ -62,6 +62,7 @@ namespace Overlord_PackageManager
                 mapFile.Parse(filePath);
                 treeView.Items.Clear();
                 treeView.Items.Add(RefTableTreeBuilder.Build(mapFile.Body.Data.Table, "Root"));
+                RefTableTreeBuilder.AttachDeleteKeyHandler(treeView);
             }
             else
             {
@@ -69,6 +70,7 @@ namespace Overlord_PackageManager
                 resourceFile.Read(filePath);
                 treeView.Items.Clear();
                 treeView.Items.Add(RefTableTreeBuilder.Build(resourceFile.Body.Data.Table, "Root"));
+                RefTableTreeBuilder.AttachDeleteKeyHandler(treeView);
             }
         }
 
