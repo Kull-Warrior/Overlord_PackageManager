@@ -56,7 +56,7 @@ namespace Overlord_PackageManager
                 return;
             }
 
-            if (filePath.EndsWith(".omp"))
+            if (filePath.ToString().ToLower().EndsWith(".omp"))
             {
                 mapFile = new OMPFile();
                 mapFile.Parse(filePath);

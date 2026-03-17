@@ -69,13 +69,26 @@ namespace Overlord_PackageManager.resources.Data.Factories
             };
         }
 
+        public static Entry CreateMapBuildInformation(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                20 => new Int32Entry(id, relOffset),
+                22 => new Int32Entry(id, relOffset),
+                23 => new StringEntry(id, relOffset),
+                24 => new Int64Entry(id, relOffset),
+                // Add more IDs here
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
+            };
+        }
+
         public static Entry CreateInfoTable(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
                 20 => new Int32Entry(id, relOffset),
                 21 => new Int32Entry(id, relOffset),
-                22 => new BlobEntry(id, relOffset),   // Unknown entry
+                22 => new MapBuildInformation(id, relOffset),   // Unknown entry
                 30 => new StringEntry(id, relOffset),
                 31 => new Int32Entry(id, relOffset),
                 32 => new BlobEntry(id, relOffset),
