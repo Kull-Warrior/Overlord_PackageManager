@@ -61,7 +61,7 @@ namespace Overlord_PackageManager
                 mapFile = new OMPFile();
                 mapFile.Parse(filePath);
                 treeView.Items.Clear();
-                treeView.Items.Add(RefTableTreeBuilder.Build(mapFile.Body.Data.Table, "Root"));
+                treeView.Items.Add(RefTableTreeBuilder.BuildFileRoot(openFileDialog.SafeFileName, (mapFile.Body.Info.Table, "Map Info Root"), (mapFile.Body.Data.Table, "Map Data Root")));
                 RefTableTreeBuilder.AttachDeleteKeyHandler(treeView);
             }
             else
@@ -69,7 +69,7 @@ namespace Overlord_PackageManager
                 resourceFile = new ResourcePackFile();
                 resourceFile.Read(filePath);
                 treeView.Items.Clear();
-                treeView.Items.Add(RefTableTreeBuilder.Build(resourceFile.Body.Data.Table, "Root"));
+                treeView.Items.Add(RefTableTreeBuilder.BuildFileRoot(openFileDialog.SafeFileName, (resourceFile.Body.Data.Table, "Resourcepack Data Root")));
                 RefTableTreeBuilder.AttachDeleteKeyHandler(treeView);
             }
         }

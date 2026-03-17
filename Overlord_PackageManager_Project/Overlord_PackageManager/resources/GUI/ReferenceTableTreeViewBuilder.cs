@@ -8,6 +8,22 @@ namespace Overlord_PackageManager.resources.GUI
 {
     public static class RefTableTreeBuilder
     {
+        public static TreeViewItem BuildFileRoot(string fileName, params (ReferenceTable table, string name)[] tables)
+        {
+            TreeViewItem root = new TreeViewItem
+            {
+                Header = fileName,
+                Tag = null // container only
+            };
+
+            foreach (var (table, name) in tables)
+            {
+                root.Items.Add(Build(table, name));
+            }
+
+            return root;
+        }
+
         public static TreeViewItem Build(ReferenceTable table, string name = "Table")
         {
             TreeViewItem node = new TreeViewItem
