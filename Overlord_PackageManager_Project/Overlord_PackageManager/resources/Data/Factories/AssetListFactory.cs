@@ -5,6 +5,7 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Material;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -48,6 +49,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 4261412 => new MaskedPBRMaterial(id, relOffset, typeIdentifier),
                 4261386 => new BumpedDiffuseMaterial(id, relOffset, typeIdentifier),
                 4261426 => new DiffuseMaterial(id, relOffset, typeIdentifier),
+                4259893 => new MeshAsset(id, relOffset, typeIdentifier),
 
                 _ => new BlobEntry(id, relOffset)
             };
