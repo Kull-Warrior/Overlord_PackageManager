@@ -146,6 +146,9 @@ namespace Overlord_PackageManager
                 case LuaEntry luaEntry:
                     EditorHost.Content = new LuaEntryEditor(luaEntry);
                     break;
+                case FloatArrayEntry floatArrayEntry:
+                    EditorHost.Content = new FloatArrayEntryEditor(floatArrayEntry);
+                    break;
                 default:
                     EditorHost.Content = new TextBlock
                     {
