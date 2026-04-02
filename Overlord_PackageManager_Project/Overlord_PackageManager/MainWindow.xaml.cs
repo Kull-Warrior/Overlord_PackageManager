@@ -149,6 +149,9 @@ namespace Overlord_PackageManager
                 case FloatArrayEntry floatArrayEntry:
                     EditorHost.Content = new FloatArrayEntryEditor(floatArrayEntry);
                     break;
+                case UInt16ArrayEntry uint16ArrayEntry:
+                    EditorHost.Content = new UInt16ArrayEntryEditor(uint16ArrayEntry);
+                    break;
                 default:
                     EditorHost.Content = new TextBlock
                     {
