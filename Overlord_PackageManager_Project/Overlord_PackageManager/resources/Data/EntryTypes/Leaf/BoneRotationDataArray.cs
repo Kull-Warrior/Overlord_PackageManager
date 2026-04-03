@@ -27,7 +27,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
         {
             writer.BaseStream.Position = origin + RelativeOffset;
 
-            foreach (var scaleData in Value)
+            foreach (BoneRotationData scaleData in Value)
             {
                 writer.Write(scaleData.Pitch);
                 writer.Write(scaleData.Yaw);

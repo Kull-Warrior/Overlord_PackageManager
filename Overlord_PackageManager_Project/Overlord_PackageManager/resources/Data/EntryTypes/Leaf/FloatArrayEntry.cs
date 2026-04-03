@@ -17,7 +17,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
 
         public override long GetPayloadSize()
         {
-            return sizeof(float);
+            return (long)Value.Length * sizeof(float);
         }
 
         public override void Write(BinaryWriter writer, long origin)
