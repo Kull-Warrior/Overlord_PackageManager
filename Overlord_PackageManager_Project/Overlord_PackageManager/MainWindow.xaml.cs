@@ -17,6 +17,8 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionC
 using Overlord_PackageManager.resources.GUI.EntryEditor.XML;
 using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh;
 
 namespace Overlord_PackageManager
 {
@@ -151,6 +153,9 @@ namespace Overlord_PackageManager
                     break;
                 case UInt16ArrayEntry uint16ArrayEntry:
                     EditorHost.Content = new UInt16ArrayEntryEditor(uint16ArrayEntry);
+                    break;
+                case MeshData meshData:
+                    EditorHost.Content = new MeshDataEditor(meshData);
                     break;
                 default:
                     EditorHost.Content = new TextBlock

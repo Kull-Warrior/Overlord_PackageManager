@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\Tools\CommunityToolkit.Diagnostics.dll" />
+    <None Remove="resources\Tools\CommunityToolkit.Diagnostics.xml" />
     <None Remove="resources\Tools\HelixToolkit.dll" />
     <None Remove="resources\Tools\HelixToolkit.Geometry.dll" />
     <None Remove="resources\Tools\HelixToolkit.Geometry.xml" />
@@ -22,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="resources\Tools\CommunityToolkit.Diagnostics.dll" />
+    <EmbeddedResource Include="resources\Tools\CommunityToolkit.Diagnostics.xml" />
     <EmbeddedResource Include="resources\Tools\HelixToolkit.dll" />
     <EmbeddedResource Include="resources\Tools\HelixToolkit.Geometry.dll" />
     <EmbeddedResource Include="resources\Tools\HelixToolkit.Geometry.xml" />

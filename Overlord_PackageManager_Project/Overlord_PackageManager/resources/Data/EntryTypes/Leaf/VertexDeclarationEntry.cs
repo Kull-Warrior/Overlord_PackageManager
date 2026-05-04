@@ -34,6 +34,16 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
             0x09 => VertexAttributeSemantic.TangentSign,
             _ => VertexAttributeSemantic.Unknown
         };
+        public int ByteSize => Flags switch // How many bytes this attribute takes up in the vertex buffer
+        {
+            1 => 8,
+            2 => 12,
+            3 => 16,
+            4 => 1,
+            7 => 1,
+            15 => 4,
+            _ => throw new NotSupportedException($"Unknown flag: {Flags}")
+        };
     }
 
     class VertexDeclarationEntry(uint id, uint relOffset): ValueEntry<List<VertexAttribute>>(id, relOffset)
