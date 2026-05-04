@@ -8,7 +8,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TabControl Grid.Row="0" Margin="8">
+        <TabControl x:Name="MainTabControl" Grid.Row="0" Margin="8" SelectionChanged="MainTabControl_SelectionChanged">
             <TabItem Header="3D Preview">
                 <helix:HelixViewport3D x:Name="Viewport"
                                        ZoomExtentsWhenLoaded="True"
@@ -37,15 +37,8 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Content="Export UV PNG"
-                    Grid.Column="0"
-                    Margin="0,0,5,0"
-                    Click="ExportUv_Click"/>
-
-            <Button Content="Rebuild"
-                    Grid.Column="1"
-                    Margin="5,0,0,0"
-                    Click="Rebuild_Click"/>
+            <Button x:Name="ImportButton" Content="Import" Grid.Column="0" Margin="0,0,5,0" Click="Import_Click"/>
+            <Button x:Name="ExportButton" Content="Export" Grid.Column="1" Margin="5,0,0,0" Click="Export_Click"/>
         </Grid>
     </Grid>
 </UserControl>

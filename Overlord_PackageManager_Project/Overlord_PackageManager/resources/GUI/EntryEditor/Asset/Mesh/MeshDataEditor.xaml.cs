@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -33,10 +34,46 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
             VertexBuffer? vertexBuffer = _meshData.Table.Entries.OfType<VertexBuffer>().FirstOrDefault();
             IndiceData? indiceData = _meshData.Table.Entries.OfType<IndiceData>().FirstOrDefault();
 
-            RootPanel.Children.Add(new TextBlock { Text = $"VertexBuffer: {vertexBuffer != null}" });
-            RootPanel.Children.Add(new TextBlock { Text = $"IndiceData: {indiceData != null}" });
+            // Show detailed info on the Info tab
+            BuildInfoPanel(vertexBuffer, indiceData);
 
             Rebuild();
+        }
+
+        private void BuildInfoPanel(VertexBuffer? vertexBuffer, IndiceData? indiceData)
+        {
+            RootPanel.Children.Clear();
+
+            if (vertexBuffer == null)
+                RootPanel.Children.Add(new TextBlock { Text = "VertexBuffer: NOT FOUND", Foreground = Brushes.Red });
+            else
+                RootPanel.Children.Add(new TextBlock { Text = "VertexBuffer: FOUND", Foreground = Brushes.Green });
+
+            if (indiceData == null)
+                RootPanel.Children.Add(new TextBlock { Text = "IndiceData: NOT FOUND", Foreground = Brushes.Red });
+            else
+                RootPanel.Children.Add(new TextBlock { Text = "IndiceData: FOUND", Foreground = Brushes.Green });
+
+            // If we have a built mesh, show actual stats
+            if (_mesh != null)
+            {
+                RootPanel.Children.Add(new Separator { Margin = new Thickness(0, 10, 0, 10) });
+                RootPanel.Children.Add(new TextBlock { Text = $"Vertex count: {_mesh.Positions.Count}", FontWeight = FontWeights.Bold });
+                RootPanel.Children.Add(new TextBlock { Text = $"Triangle count: {_mesh.TriangleIndices.Count / 3}" });
+                RootPanel.Children.Add(new TextBlock { Text = $"Index count: {_mesh.TriangleIndices.Count}" });
+                RootPanel.Children.Add(new TextBlock { Text = $"Texture coordinate count: {_mesh.TextureCoordinates.Count}" });
+
+                // Optional: bounding box info
+                if (_mesh.Positions.Count > 0)
+                {
+                    Rect3D bounds = new Rect3D(_mesh.Positions[0], new Size3D(0, 0, 0));
+                    foreach (Point3D p in _mesh.Positions)
+                    {
+                        bounds.Union(p);
+                    }
+                    RootPanel.Children.Add(new TextBlock { Text = $"Bounding box: {bounds.SizeX:F2} x {bounds.SizeY:F2} x {bounds.SizeZ:F2}" });
+                }
+            }
         }
 
         private void Rebuild()
@@ -44,6 +81,10 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
             _mesh = BuildMesh();
             BuildViewport();
             BuildUvPreview();
+            // Refresh info tab in case the mesh changed
+            VertexBuffer? vertexBuffer = _meshData.Table.Entries.OfType<VertexBuffer>().FirstOrDefault();
+            IndiceData? indiceData = _meshData.Table.Entries.OfType<IndiceData>().FirstOrDefault();
+            BuildInfoPanel(vertexBuffer, indiceData);
         }
 
         private MeshGeometry3D? BuildMesh()
@@ -306,10 +347,108 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
             return new Point(x, 1.0 - y); // flip V from bottom‑left origin to image top‑left origin
         }
 
-        private void ExportUv_Click(object sender, RoutedEventArgs e)
+        private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Update the Export button text based on selected tab
+            if (MainTabControl.SelectedItem is TabItem selectedTab)
+            {
+                string header = selectedTab.Header.ToString();
+                if (header == "3D Preview")
+                    ExportButton.Content = "Export Mesh as OBJ";
+                else if (header == "UV Preview")
+                    ExportButton.Content = "Export UV as PNG";
+                else
+                    ExportButton.Content = "Export";
+            }
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainTabControl.SelectedItem is TabItem selectedTab)
+            {
+                string header = selectedTab.Header.ToString();
+                if (header == "3D Preview")
+                    ExportMeshAsObj();
+                else if (header == "UV Preview")
+                    ExportUvAsPng();
+                else
+                    MessageBox.Show("No export available for the Info tab.", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void Import_Click(object sender, RoutedEventArgs e)
+        {
+            // Placeholder – as requested, not fully implemented yet
+            if (MainTabControl.SelectedItem is TabItem selectedTab)
+            {
+                string header = selectedTab.Header.ToString();
+                if (header == "3D Preview")
+                    MessageBox.Show("Import from OBJ is not implemented yet.\n(Needs full vertex buffer layout first.)", "Import Mesh", MessageBoxButton.OK, MessageBoxImage.Information);
+                else if (header == "UV Preview")
+                    MessageBox.Show("Import UV from PNG is not implemented yet.\n(Would require reverse mapping to original vertex data.)", "Import UV", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Import is not available for the Info tab.", "Import", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void ExportMeshAsObj()
+        {
+            if (_mesh == null || _mesh.Positions.Count == 0)
+            {
+                MessageBox.Show("No mesh data to export.", "Export Mesh", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                Filter = "OBJ Files (*.obj)|*.obj",
+                FileName = "mesh.obj"
+            };
+
+            if (dialog.ShowDialog() != true)
+                return;
+
+            using (StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.ASCII))
+            {
+                writer.WriteLine("# Exported from Overlord Package Manager");
+                writer.WriteLine($"# Vertices: {_mesh.Positions.Count}");
+                writer.WriteLine($"# Triangles: {_mesh.TriangleIndices.Count / 3}");
+
+                // Write vertices (v) – using InvariantCulture to force '.' as decimal separator
+                foreach (Point3D p in _mesh.Positions)
+                {
+                    string x = p.X.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    string y = p.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    string z = p.Z.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    writer.WriteLine($"v {x} {y} {z}");
+                }
+
+                // Write texture coordinates (vt)
+                foreach (Point uv in _mesh.TextureCoordinates)
+                {
+                    string u = uv.X.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    string v = uv.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    writer.WriteLine($"vt {u} {v}");
+                }
+
+                // Write faces (f) with vertex and texture indices (1-based)
+                for (int i = 0; i < _mesh.TriangleIndices.Count; i += 3)
+                {
+                    int i1 = _mesh.TriangleIndices[i] + 1;
+                    int i2 = _mesh.TriangleIndices[i + 1] + 1;
+                    int i3 = _mesh.TriangleIndices[i + 2] + 1;
+                    writer.WriteLine($"f {i1}/{i1} {i2}/{i2} {i3}/{i3}");
+                }
+            }
+
+            MessageBox.Show($"Mesh exported to {dialog.FileName}", "Export Mesh", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ExportUvAsPng()
         {
             if (_uvPreview == null)
             {
+                MessageBox.Show("No UV preview to export.", "Export UV", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -329,11 +468,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
 
             using FileStream fileStream = File.Create(dialog.FileName);
             encoder.Save(fileStream);
-        }
 
-        private void Rebuild_Click(object sender, RoutedEventArgs e)
-        {
-            Rebuild();
+            MessageBox.Show($"UV map exported to {dialog.FileName}", "Export UV", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
