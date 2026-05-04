@@ -9,13 +9,47 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\Tools\HelixToolkit.dll" />
+    <None Remove="resources\Tools\HelixToolkit.Geometry.dll" />
+    <None Remove="resources\Tools\HelixToolkit.Geometry.xml" />
+    <None Remove="resources\Tools\HelixToolkit.Maths.dll" />
+    <None Remove="resources\Tools\HelixToolkit.Maths.xml" />
+    <None Remove="resources\Tools\HelixToolkit.Wpf.dll" />
+    <None Remove="resources\Tools\HelixToolkit.Wpf.xml" />
+    <None Remove="resources\Tools\HelixToolkit.xml" />
     <None Remove="resources\Tools\lua50.dll" />
     <None Remove="resources\Tools\luac50.exe" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.dll" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.Geometry.dll" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.Geometry.xml" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.Maths.dll" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.Maths.xml" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.Wpf.dll" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.Wpf.xml" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.xml" />
     <EmbeddedResource Include="resources\Tools\lua50.dll" />
     <EmbeddedResource Include="resources\Tools\luac50.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CommunityToolkit.Diagnostics">
+      <HintPath>resources\Tools\CommunityToolkit.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit">
+      <HintPath>resources\Tools\HelixToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Geometry">
+      <HintPath>resources\Tools\HelixToolkit.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Maths">
+      <HintPath>resources\Tools\HelixToolkit.Maths.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf">
+      <HintPath>resources\Tools\HelixToolkit.Wpf.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
