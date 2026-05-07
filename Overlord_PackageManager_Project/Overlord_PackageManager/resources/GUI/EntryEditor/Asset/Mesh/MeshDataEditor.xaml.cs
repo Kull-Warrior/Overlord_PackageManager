@@ -63,7 +63,6 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                 RootPanel.Children.Add(new TextBlock { Text = $"Index count: {_mesh.TriangleIndices.Count}" });
                 RootPanel.Children.Add(new TextBlock { Text = $"Texture coordinate count: {_mesh.TextureCoordinates.Count}" });
 
-                // Optional: bounding box info
                 if (_mesh.Positions.Count > 0)
                 {
                     Rect3D bounds = new Rect3D(_mesh.Positions[0], new Size3D(0, 0, 0));
@@ -81,7 +80,11 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
             _mesh = BuildMesh();
             BuildViewport();
             BuildUvPreview();
-            // Refresh info tab in case the mesh changed
+            RefreshInfo();
+        }
+
+        private void RefreshInfo()
+        {
             VertexBuffer? vertexBuffer = _meshData.Table.Entries.OfType<VertexBuffer>().FirstOrDefault();
             IndiceData? indiceData = _meshData.Table.Entries.OfType<IndiceData>().FirstOrDefault();
             BuildInfoPanel(vertexBuffer, indiceData);
@@ -130,6 +133,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
 
                 Point3D? pos = null;
                 Point? uv = null;
+                Vector3D normal = new Vector3D(0, 0, 1);   // default
 
                 foreach (VertexAttribute attr in decl.Value)
                 {
@@ -138,11 +142,12 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                         case VertexAttributeSemantic.Position:
                             pos = ReadFloat3(data, ref offset);
                             break;
-
+                        case VertexAttributeSemantic.Normal:
+                            normal = ReadVector3(data, ref offset);
+                            break;
                         case VertexAttributeSemantic.TexCoord:
                             uv = ReadFloat2(data, ref offset);
                             break;
-
                         default:
                             offset += attr.ByteSize;
                             break;
@@ -153,9 +158,11 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                 {
                     mesh.Positions.Add(pos.Value);
                     mesh.TextureCoordinates.Add(uv ?? new Point());
+                    mesh.Normals.Add(normal);
                 }
             }
 
+            // Build index list
             foreach (ushort idx in indicesEntry.Value)
             {
                 if (idx < mesh.Positions.Count)
@@ -337,14 +344,19 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
             return new Point3D(x, y, z);
         }
 
+        private static Vector3D ReadVector3(byte[] data, ref int offset)
+        {
+            float x = BitConverter.ToSingle(data, offset); offset += 4;
+            float y = BitConverter.ToSingle(data, offset); offset += 4;
+            float z = BitConverter.ToSingle(data, offset); offset += 4;
+            return new Vector3D(x, y, z);
+        }
+
         private static Point ReadFloat2(byte[] data, ref int offset)
         {
-            float x = BitConverter.ToSingle(data, offset);
-            offset += 4;
-            float y = BitConverter.ToSingle(data, offset);
-            offset += 4;
-
-            return new Point(x, 1.0 - y); // flip V from bottom‑left origin to image top‑left origin
+            float u = BitConverter.ToSingle(data, offset); offset += 4;
+            float v = BitConverter.ToSingle(data, offset); offset += 4;
+            return new Point(u, 1.0 - v); // flip V for standard top‑left image origin
         }
 
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -378,7 +390,6 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {
-            // Placeholder – as requested, not fully implemented yet
             if (MainTabControl.SelectedItem is TabItem selectedTab)
             {
                 string header = selectedTab.Header.ToString();
@@ -406,7 +417,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
             };
 
             if (dialog.ShowDialog() != true)
+            {
                 return;
+            }
 
             using (StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.ASCII))
             {
@@ -415,23 +428,16 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                 writer.WriteLine($"# Triangles: {_mesh.TriangleIndices.Count / 3}");
 
                 // Write vertices (v) – using InvariantCulture to force '.' as decimal separator
+                System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.InvariantCulture;
                 foreach (Point3D p in _mesh.Positions)
-                {
-                    string x = p.X.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                    string y = p.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                    string z = p.Z.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                    writer.WriteLine($"v {x} {y} {z}");
-                }
+                    writer.WriteLine($"v {p.X.ToString(cult)} {p.Y.ToString(cult)} {p.Z.ToString(cult)}");
 
                 // Write texture coordinates (vt)
                 foreach (Point uv in _mesh.TextureCoordinates)
                 {
-                    string u = uv.X.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                    string v = uv.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                    writer.WriteLine($"vt {u} {v}");
+                    writer.WriteLine($"vt {uv.X.ToString(cult)} {uv.Y.ToString(cult)}");
                 }
 
-                // Write faces (f) with vertex and texture indices (1-based)
                 for (int i = 0; i < _mesh.TriangleIndices.Count; i += 3)
                 {
                     int i1 = _mesh.TriangleIndices[i] + 1;

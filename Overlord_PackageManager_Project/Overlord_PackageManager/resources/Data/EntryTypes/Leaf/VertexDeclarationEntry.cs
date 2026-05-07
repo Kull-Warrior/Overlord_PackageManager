@@ -14,6 +14,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
         Tangent,
         Binormal,
         TangentSign,
+        TangentQuat,
         Unknown
     }
 
@@ -29,24 +30,25 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
             0x01 => VertexAttributeSemantic.Position,
             0x04 => VertexAttributeSemantic.Normal,
             0x05 => VertexAttributeSemantic.TexCoord,
-            0x0B => VertexAttributeSemantic.Color,
-            0x0A => VertexAttributeSemantic.Tangent,
-            0x09 => VertexAttributeSemantic.TangentSign,
+            0x0B => VertexAttributeSemantic.BlendIndices,
+            0x0A => VertexAttributeSemantic.BlendWeights,
+            0x09 => VertexAttributeSemantic.TangentQuat,
             _ => VertexAttributeSemantic.Unknown
         };
-        public int ByteSize => Flags switch // How many bytes this attribute takes up in the vertex buffer
+
+        public int ByteSize => Flags switch
         {
-            1 => 8,
-            2 => 12,
-            3 => 16,
-            4 => 1,
-            7 => 1,
-            15 => 4,
-            _ => throw new NotSupportedException($"Unknown flag: {Flags}")
+            1 => 8,     // FLOAT2
+            2 => 12,    // FLOAT3
+            3 => 16,    // FLOAT4
+            4 => 1,     // UBYTE
+            7 => 1,     // UBYTE (or normalised UBYTE)
+            15 => 4,    // 4 bytes (unclear format, maybe UBYTE4)
+            _ => throw new NotSupportedException($"Unknown format flag: {Flags}")
         };
     }
 
-    class VertexDeclarationEntry(uint id, uint relOffset): ValueEntry<List<VertexAttribute>>(id, relOffset)
+    class VertexDeclarationEntry(uint id, uint relOffset) : ValueEntry<List<VertexAttribute>>(id, relOffset)
     {
         public override void Read(BinaryReader reader, long origin)
         {
@@ -69,11 +71,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
                 return 0;
             }
 
-            int attributeCount = Value.Count;
-            int sizePerAttribute = sizeof(uint);
-            long totalSize = attributeCount * sizePerAttribute;
-
-            return totalSize;
+            return Value.Count * sizeof(uint);
         }
 
         public override void Write(BinaryWriter writer, long origin)
