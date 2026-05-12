@@ -157,6 +157,9 @@ namespace Overlord_PackageManager
                 case MeshData meshData:
                     EditorHost.Content = new MeshDataEditor(meshData);
                     break;
+                case VertexDeclarationEntry vertexDeclaration:
+                    EditorHost.Content = new VertexDeclarationEditor(vertexDeclaration);
+                    break;
                 default:
                     EditorHost.Content = new TextBlock
                     {

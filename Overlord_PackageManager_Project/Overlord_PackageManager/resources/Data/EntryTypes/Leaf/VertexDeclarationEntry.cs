@@ -48,7 +48,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
         };
     }
 
-    class VertexDeclarationEntry(uint id, uint relOffset) : ValueEntry<List<VertexAttribute>>(id, relOffset)
+    public class VertexDeclarationEntry(uint id, uint relOffset) : ValueEntry<List<VertexAttribute>>(id, relOffset)
     {
         public override void Read(BinaryReader reader, long origin)
         {
