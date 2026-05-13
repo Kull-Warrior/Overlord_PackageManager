@@ -9,38 +9,65 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\Tools\CommunityToolkit.Common.dll" />
     <None Remove="resources\Tools\CommunityToolkit.Diagnostics.dll" />
-    <None Remove="resources\Tools\CommunityToolkit.Diagnostics.xml" />
+    <None Remove="resources\Tools\CommunityToolkit.Mvvm.dll" />
+    <None Remove="resources\Tools\Cyotek.Drawing.BitmapFont.dll" />
     <None Remove="resources\Tools\HelixToolkit.dll" />
     <None Remove="resources\Tools\HelixToolkit.Geometry.dll" />
-    <None Remove="resources\Tools\HelixToolkit.Geometry.xml" />
     <None Remove="resources\Tools\HelixToolkit.Maths.dll" />
-    <None Remove="resources\Tools\HelixToolkit.Maths.xml" />
-    <None Remove="resources\Tools\HelixToolkit.Wpf.dll" />
-    <None Remove="resources\Tools\HelixToolkit.Wpf.xml" />
+    <None Remove="resources\Tools\HelixToolkit.SharpDX.dll" />
+    <None Remove="resources\Tools\HelixToolkit.Wpf.SharpDX.dll" />
+    <None Remove="resources\Tools\HelixToolkit.Wpf.SharpDX.xml" />
     <None Remove="resources\Tools\HelixToolkit.xml" />
     <None Remove="resources\Tools\lua50.dll" />
     <None Remove="resources\Tools\luac50.exe" />
+    <None Remove="resources\Tools\Microsoft.Extensions.Logging.Abstractions.dll" />
+    <None Remove="resources\Tools\Microsoft.Extensions.Logging.Abstractions.xml" />
+    <None Remove="resources\Tools\SharpDX.D3DCompiler.dll" />
+    <None Remove="resources\Tools\SharpDX.Direct2D1.dll" />
+    <None Remove="resources\Tools\SharpDX.Direct3D11.dll" />
+    <None Remove="resources\Tools\SharpDX.Direct3D9.dll" />
+    <None Remove="resources\Tools\SharpDX.dll" />
+    <None Remove="resources\Tools\SharpDX.DXGI.dll" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="resources\Tools\CommunityToolkit.Common.dll" />
     <EmbeddedResource Include="resources\Tools\CommunityToolkit.Diagnostics.dll" />
-    <EmbeddedResource Include="resources\Tools\CommunityToolkit.Diagnostics.xml" />
+    <EmbeddedResource Include="resources\Tools\CommunityToolkit.Mvvm.dll" />
+    <EmbeddedResource Include="resources\Tools\Cyotek.Drawing.BitmapFont.dll" />
     <EmbeddedResource Include="resources\Tools\HelixToolkit.dll" />
     <EmbeddedResource Include="resources\Tools\HelixToolkit.Geometry.dll" />
-    <EmbeddedResource Include="resources\Tools\HelixToolkit.Geometry.xml" />
     <EmbeddedResource Include="resources\Tools\HelixToolkit.Maths.dll" />
-    <EmbeddedResource Include="resources\Tools\HelixToolkit.Maths.xml" />
-    <EmbeddedResource Include="resources\Tools\HelixToolkit.Wpf.dll" />
-    <EmbeddedResource Include="resources\Tools\HelixToolkit.Wpf.xml" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.SharpDX.dll" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.Wpf.SharpDX.dll" />
+    <EmbeddedResource Include="resources\Tools\HelixToolkit.Wpf.SharpDX.xml" />
     <EmbeddedResource Include="resources\Tools\HelixToolkit.xml" />
     <EmbeddedResource Include="resources\Tools\lua50.dll" />
     <EmbeddedResource Include="resources\Tools\luac50.exe" />
+    <EmbeddedResource Include="resources\Tools\Microsoft.Extensions.Logging.Abstractions.dll" />
+    <EmbeddedResource Include="resources\Tools\Microsoft.Extensions.Logging.Abstractions.xml" />
+    <EmbeddedResource Include="resources\Tools\SharpDX.D3DCompiler.dll" />
+    <EmbeddedResource Include="resources\Tools\SharpDX.Direct2D1.dll" />
+    <EmbeddedResource Include="resources\Tools\SharpDX.Direct3D11.dll" />
+    <EmbeddedResource Include="resources\Tools\SharpDX.Direct3D9.dll" />
+    <EmbeddedResource Include="resources\Tools\SharpDX.dll" />
+    <EmbeddedResource Include="resources\Tools\SharpDX.DXGI.dll" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="CommunityToolkit.Common">
+      <HintPath>resources\Tools\CommunityToolkit.Common.dll</HintPath>
+    </Reference>
     <Reference Include="CommunityToolkit.Diagnostics">
       <HintPath>resources\Tools\CommunityToolkit.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="CommunityToolkit.Mvvm">
+      <HintPath>resources\Tools\CommunityToolkit.Mvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="Cyotek.Drawing.BitmapFont">
+      <HintPath>resources\Tools\Cyotek.Drawing.BitmapFont.dll</HintPath>
     </Reference>
     <Reference Include="HelixToolkit">
       <HintPath>resources\Tools\HelixToolkit.dll</HintPath>
@@ -51,8 +78,32 @@
     <Reference Include="HelixToolkit.Maths">
       <HintPath>resources\Tools\HelixToolkit.Maths.dll</HintPath>
     </Reference>
-    <Reference Include="HelixToolkit.Wpf">
-      <HintPath>resources\Tools\HelixToolkit.Wpf.dll</HintPath>
+    <Reference Include="HelixToolkit.SharpDX">
+      <HintPath>resources\Tools\HelixToolkit.SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf.SharpDX">
+      <HintPath>resources\Tools\HelixToolkit.Wpf.SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+      <HintPath>resources\Tools\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>resources\Tools\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler">
+      <HintPath>resources\Tools\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1">
+      <HintPath>resources\Tools\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>resources\Tools\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9">
+      <HintPath>resources\Tools\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>resources\Tools\SharpDX.DXGI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

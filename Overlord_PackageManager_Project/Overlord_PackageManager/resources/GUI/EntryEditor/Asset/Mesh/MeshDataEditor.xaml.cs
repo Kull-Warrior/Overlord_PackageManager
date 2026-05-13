@@ -1,14 +1,26 @@
-﻿using HelixToolkit.Wpf;
+﻿using HelixToolkit;
+using HelixToolkit.Maths;
+using HelixToolkit.SharpDX;
+using HelixToolkit.Wpf.SharpDX;
 using Microsoft.Win32;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using System.IO;
+using System.Numerics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
+using Brush = System.Windows.Media.Brush;
+using Brushes = System.Windows.Media.Brushes;
+using MediaColor = System.Windows.Media.Color;
+using MediaVector3D = System.Windows.Media.Media3D.Vector3D;
+using MeshGeometry3D = HelixToolkit.SharpDX.MeshGeometry3D;
+using Pen = System.Windows.Media.Pen;
+using PerspectiveCamera = HelixToolkit.Wpf.SharpDX.PerspectiveCamera;
+using Point = System.Windows.Point;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
 {
@@ -19,85 +31,59 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
         private MeshGeometry3D? _mesh;
         private BitmapSource? _uvPreview;
 
+        private bool _disposed;
+
+        public EffectsManager EffectsManager { get; } = new DefaultEffectsManager();
+
         public MeshDataEditor(MeshData meshData)
         {
             InitializeComponent();
+
+            DataContext = this;
+
+            EffectsManager = new DefaultEffectsManager();
+
             _meshData = meshData;
 
             Loaded += (_, __) => Build();
+            Unloaded += (_, __) => Cleanup();
+        }
+
+        private void Cleanup()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            _disposed = true;
+
+            Viewport.Items.Clear();
+
+            if (Viewport.EffectsManager is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+
+            Viewport.EffectsManager = null;
         }
 
         private void Build()
         {
-            RootPanel.Children.Clear();
-
-            VertexBuffer? vertexBuffer = _meshData.Table.Entries.OfType<VertexBuffer>().FirstOrDefault();
-            IndiceData? indiceData = _meshData.Table.Entries.OfType<IndiceData>().FirstOrDefault();
-
-            // Show detailed info on the Info tab
-            BuildInfoPanel(vertexBuffer, indiceData);
-
-            Rebuild();
-        }
-
-        private void BuildInfoPanel(VertexBuffer? vertexBuffer, IndiceData? indiceData)
-        {
-            RootPanel.Children.Clear();
-
-            if (vertexBuffer == null)
-                RootPanel.Children.Add(new TextBlock { Text = "VertexBuffer: NOT FOUND", Foreground = Brushes.Red });
-            else
-                RootPanel.Children.Add(new TextBlock { Text = "VertexBuffer: FOUND", Foreground = Brushes.Green });
-
-            if (indiceData == null)
-                RootPanel.Children.Add(new TextBlock { Text = "IndiceData: NOT FOUND", Foreground = Brushes.Red });
-            else
-                RootPanel.Children.Add(new TextBlock { Text = "IndiceData: FOUND", Foreground = Brushes.Green });
-
-            // If we have a built mesh, show actual stats
-            if (_mesh != null)
-            {
-                RootPanel.Children.Add(new Separator { Margin = new Thickness(0, 10, 0, 10) });
-                RootPanel.Children.Add(new TextBlock { Text = $"Vertex count: {_mesh.Positions.Count}", FontWeight = FontWeights.Bold });
-                RootPanel.Children.Add(new TextBlock { Text = $"Triangle count: {_mesh.TriangleIndices.Count / 3}" });
-                RootPanel.Children.Add(new TextBlock { Text = $"Index count: {_mesh.TriangleIndices.Count}" });
-                RootPanel.Children.Add(new TextBlock { Text = $"Texture coordinate count: {_mesh.TextureCoordinates.Count}" });
-
-                if (_mesh.Positions.Count > 0)
-                {
-                    Rect3D bounds = new Rect3D(_mesh.Positions[0], new Size3D(0, 0, 0));
-                    foreach (Point3D p in _mesh.Positions)
-                    {
-                        bounds.Union(p);
-                    }
-                    RootPanel.Children.Add(new TextBlock { Text = $"Bounding box: {bounds.SizeX:F2} x {bounds.SizeY:F2} x {bounds.SizeZ:F2}" });
-                }
-            }
-        }
-
-        private void Rebuild()
-        {
-            _mesh = BuildMesh();
+            BuildMesh();
             BuildViewport();
             BuildUvPreview();
-            RefreshInfo();
+            BuildInfoPanel();
         }
 
-        private void RefreshInfo()
+        private void BuildMesh()
         {
             VertexBuffer? vertexBuffer = _meshData.Table.Entries.OfType<VertexBuffer>().FirstOrDefault();
-            IndiceData? indiceData = _meshData.Table.Entries.OfType<IndiceData>().FirstOrDefault();
-            BuildInfoPanel(vertexBuffer, indiceData);
-        }
 
-        private MeshGeometry3D? BuildMesh()
-        {
-            VertexBuffer? vertexBuffer = _meshData.Table.Entries.OfType<VertexBuffer>().FirstOrDefault();
             IndiceData? indiceData = _meshData.Table.Entries.OfType<IndiceData>().FirstOrDefault();
 
             if (vertexBuffer == null || indiceData == null)
             {
-                return null;
+                return;
             }
 
             BlobEntry? blob = vertexBuffer.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
@@ -111,42 +97,51 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
 
             if (blob?.Value == null || vertexCountEntry == null || strideEntry == null || decl == null || indicesEntry == null)
             {
-                return null;
+                return;
             }
 
             int stride = (int)strideEntry.Value;
             int vertexCount = (int)vertexCountEntry.Value;
 
-            MeshGeometry3D mesh = new MeshGeometry3D();
-
             byte[] data = blob.Value;
+
+            Vector3Collection positions = new();
+            Vector3Collection normals = new();
+            Vector2Collection uvs = new();
+            Vector3Collection tangents = new();
+            Vector3Collection bitangents = new();
+            IntCollection indices = new();
 
             for (int i = 0; i < vertexCount; i++)
             {
                 int baseOffset = i * stride;
-                if (baseOffset + stride > data.Length)
-                {
-                    break;
-                }
+                if (baseOffset + stride > data.Length) break;
 
                 int offset = baseOffset;
 
-                Point3D? pos = null;
-                Point? uv = null;
-                Vector3D normal = new Vector3D(0, 0, 1);   // default
+                Vector3 position = Vector3.Zero;
+                Vector3 normal = Vector3.UnitZ;
+                Vector2 uv = Vector2.Zero;
+                Vector3 tangent = new Vector3(1, 0, 0);
+                float handedness = 1.0f; // Default handedness
 
                 foreach (VertexAttribute attr in decl.Value)
                 {
                     switch (attr.Semantic)
                     {
                         case VertexAttributeSemantic.Position:
-                            pos = ReadFloat3(data, ref offset);
+                            position = ReadVector3(data, ref offset);
                             break;
                         case VertexAttributeSemantic.Normal:
                             normal = ReadVector3(data, ref offset);
                             break;
                         case VertexAttributeSemantic.TexCoord:
-                            uv = ReadFloat2(data, ref offset);
+                            uv = ReadVector2(data, ref offset);
+                            break;
+                        case VertexAttributeSemantic.TangentQuat:
+                            Vector4 tangentQuat = ReadVector4(data, ref offset);
+                            tangent = new Vector3(tangentQuat.X, tangentQuat.Y, tangentQuat.Z);
+                            handedness = tangentQuat.W;
                             break;
                         default:
                             offset += attr.ByteSize;
@@ -154,52 +149,259 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                     }
                 }
 
-                if (pos.HasValue)
-                {
-                    mesh.Positions.Add(pos.Value);
-                    mesh.TextureCoordinates.Add(uv ?? new Point());
-                    mesh.Normals.Add(normal);
-                }
+                positions.Add(position);
+                normals.Add(normal);
+                uvs.Add(uv);
+                tangents.Add(tangent);
+
+                // --- CALCULATE BITANGENT HERE ---
+                // Formula: B = (N x T) * Handedness
+                Vector3 cross = Vector3.Cross(Vector3.Normalize(normal), Vector3.Normalize(tangent));
+                Vector3 bitangent = cross * handedness;
+                bitangents.Add(bitangent);
             }
 
-            // Build index list
             foreach (ushort idx in indicesEntry.Value)
             {
-                if (idx < mesh.Positions.Count)
-                {
-                    mesh.TriangleIndices.Add(idx);
-                }
+                if (idx < positions.Count) indices.Add(idx);
             }
 
-            return mesh;
+            _mesh = new MeshGeometry3D
+            {
+                Positions = positions,
+                Normals = normals,
+                TextureCoordinates = uvs,
+                Tangents = tangents,
+                BiTangents = bitangents,
+                Indices = indices
+            };
+        }
+
+        private Element3D CreateGrid(int halfSize = 20, float spacing = 1.0f)
+        {
+            LineBuilder builder = new LineBuilder();
+
+            for (int i = -halfSize; i <= halfSize; i++)
+            {
+                bool major = (i % 5) == 0;
+
+                // Lines parallel to Z
+                builder.AddLine(new Vector3(i * spacing, 0, -halfSize * spacing), new Vector3(i * spacing, 0, halfSize * spacing));
+
+                // Lines parallel to X
+                builder.AddLine(new Vector3(-halfSize * spacing, 0, i * spacing), new Vector3(halfSize * spacing, 0, i * spacing));
+            }
+
+            LineGeometry3D geometry = builder.ToLineGeometry3D();
+
+            return new LineGeometryModel3D
+            {
+                Geometry = geometry,
+                Color = MediaColor.FromArgb(90, 90, 90, 90),
+                Thickness = 1.0
+            };
+        }
+
+        private IEnumerable<Element3D> CreateAxes(int halfSize = 20, float spacing = 1.0f)
+        {
+            float extent = halfSize * spacing;
+
+            // ---------- X AXIS (RED) ----------
+            LineBuilder xBuilder = new LineBuilder();
+
+            xBuilder.AddLine(new Vector3(-extent, 0.002f, 0), new Vector3(extent, 0.002f, 0));
+
+            LineGeometryModel3D xAxis = new LineGeometryModel3D
+            {
+                Geometry = xBuilder.ToLineGeometry3D(),
+                Color = Colors.Red,
+                Thickness = 2.0
+            };
+
+            // ---------- Z AXIS (BLUE) ----------
+            LineBuilder zBuilder = new LineBuilder();
+
+            zBuilder.AddLine(new Vector3(0, 0.002f, -extent), new Vector3(0, 0.002f, extent));
+
+            LineGeometryModel3D zAxis = new LineGeometryModel3D
+            {
+                Geometry = zBuilder.ToLineGeometry3D(),
+                Color = Colors.Blue,
+                Thickness = 2.0
+            };
+
+            return new Element3D[]
+            {
+                xAxis,
+                zAxis
+            };
         }
 
         private void BuildViewport()
         {
-            Viewport.Children.Clear();
-            Viewport.Children.Add(new DefaultLights());
+            Viewport.Items.Clear();
 
+            // Ambient light
+            Viewport.Items.Add(new AmbientLight3D
+            {
+                Color = MediaColor.FromRgb(90, 90, 90)
+            });
+
+            // Main directional light
+            Viewport.Items.Add(new DirectionalLight3D
+            {
+                Color = Colors.White,
+                Direction = new MediaVector3D(-1, -1, -1)
+            });
+
+            // Fill light
+            Viewport.Items.Add(new DirectionalLight3D
+            {
+                Color = MediaColor.FromRgb(160, 160, 160),
+                Direction = new MediaVector3D(1, -0.5f, 0.5f)
+            });
+
+            // Debug axis
+            Viewport.Items.Add(new CoordinateSystemModel3D());
+            Viewport.Items.Add(CreateGrid());
+            foreach (Element3D axis in CreateAxes())
+            {
+                Viewport.Items.Add(axis);
+            }
+
+            if (_mesh == null)
+            {
+                return;
+            }
+
+            PhongMaterial material = new PhongMaterial
+            {
+                DiffuseColor = new Color4(0.85f, 0.85f, 0.85f, 1.0f),
+                AmbientColor = new Color4(0.4f, 0.4f, 0.4f, 1.0f),
+                SpecularColor = new Color4(1f, 1f, 1f, 1f),
+                SpecularShininess = 16f
+            };
+
+            MeshGeometryModel3D model = new MeshGeometryModel3D
+            {
+                Geometry = _mesh,
+                Material = material,
+                CullMode = SharpDX.Direct3D11.CullMode.None
+            };
+
+            Viewport.Items.Add(model);
+
+            CenterCameraOnMesh();
+        }
+
+        private void CenterCameraOnMesh()
+        {
             if (_mesh == null || _mesh.Positions.Count == 0)
             {
                 return;
             }
 
-            Material material = MaterialHelper.CreateMaterial(Brushes.LightGray);
+            Vector3 min = new Vector3(
+                _mesh.Positions.Min(p => p.X),
+                _mesh.Positions.Min(p => p.Y),
+                _mesh.Positions.Min(p => p.Z));
 
-            GeometryModel3D model = new GeometryModel3D
+            Vector3 max = new Vector3(
+                _mesh.Positions.Max(p => p.X),
+                _mesh.Positions.Max(p => p.Y),
+                _mesh.Positions.Max(p => p.Z));
+
+            Vector3 center = (min + max) * 0.5f;
+            Vector3 size = max - min;
+
+            float radius = Math.Max(size.X, Math.Max(size.Y, size.Z));
+
+            float distance = radius * 2.5f;
+
+            PerspectiveCamera camera = new PerspectiveCamera
             {
-                Geometry = _mesh,
-                Material = material,
-                BackMaterial = material
+                Position = new Point3D(
+                    center.X + distance,
+                    center.Y + distance,
+                    center.Z + distance),
+
+                LookDirection = new Vector3D(
+                    -distance,
+                    -distance,
+                    -distance),
+
+                UpDirection = new Vector3D(0, 1, 0),
+
+                FarPlaneDistance = 100000
             };
 
-            Viewport.Children.Add(new ModelVisual3D { Content = model });
-            Viewport.ZoomExtents();
+            Viewport.Camera = camera;
+        }
+
+        private void BuildInfoPanel()
+        {
+            RootPanel.Children.Clear();
+
+            if (_mesh == null)
+            {
+                RootPanel.Children.Add(new TextBlock
+                {
+                    Text = "Mesh not available",
+                    Foreground = Brushes.Red
+                });
+
+                return;
+            }
+
+            RootPanel.Children.Add(new TextBlock
+            {
+                Text = $"Vertices: {_mesh.Positions.Count}",
+                FontWeight = FontWeights.Bold
+            });
+
+            RootPanel.Children.Add(new TextBlock
+            {
+                Text = $"Triangles: {_mesh.Indices.Count / 3}"
+            });
+
+            RootPanel.Children.Add(new TextBlock
+            {
+                Text = $"UVs: {_mesh.TextureCoordinates.Count}"
+            });
+
+            RootPanel.Children.Add(new TextBlock
+            {
+                Text = $"Tangents: {_mesh.Tangents?.Count ?? 0}"
+            });
+
+            RootPanel.Children.Add(new TextBlock
+            {
+                Text = $"Bitangents: {_mesh.BiTangents?.Count ?? 0}"
+            });
+
+            if (_mesh.Tangents != null && _mesh.Tangents.Count > 0)
+            {
+                Vector3 t = _mesh.Tangents[0];
+
+                RootPanel.Children.Add(new TextBlock
+                {
+                    Text = $"First Tangent: ({t.X:F3}, {t.Y:F3}, {t.Z:F3})"
+                });
+            }
+
+            if (_mesh.BiTangents != null && _mesh.BiTangents.Count > 0)
+            {
+                Vector3 b = _mesh.BiTangents[0];
+                RootPanel.Children.Add(new TextBlock
+                {
+                    Text = $"First Bitangent: ({b.X:F3}, {b.Y:F3}, {b.Z:F3})"
+                });
+            }
         }
 
         private void BuildUvPreview()
         {
-            if (_mesh == null || _mesh.TextureCoordinates.Count == 0 || _mesh.TriangleIndices.Count == 0)
+            if (_mesh == null || _mesh.TextureCoordinates == null || _mesh.TextureCoordinates.Count == 0 || _mesh.Indices == null || _mesh.Indices.Count == 0)
             {
                 ShowPlaceholder("No UV data");
                 return;
@@ -207,10 +409,13 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
 
             const int size = 1024;
 
-            double minU = double.MaxValue, minV = double.MaxValue;
-            double maxU = double.MinValue, maxV = double.MinValue;
+            float minU = float.MaxValue;
+            float minV = float.MaxValue;
 
-            foreach (Point uv in _mesh.TextureCoordinates)
+            float maxU = float.MinValue;
+            float maxV = float.MinValue;
+
+            foreach (Vector2 uv in _mesh.TextureCoordinates)
             {
                 minU = Math.Min(minU, uv.X);
                 minV = Math.Min(minV, uv.Y);
@@ -218,48 +423,57 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                 maxV = Math.Max(maxV, uv.Y);
             }
 
-            double rangeU = maxU - minU;
-            double rangeV = maxV - minV;
+            float rangeU = maxU - minU;
+            float rangeV = maxV - minV;
 
-            if (rangeU < 1e-6)
+            if (Math.Abs(rangeU) < 1e-6f)
             {
-                rangeU = 1.0;
-            }
-            if (rangeV < 1e-6)
-            {
-                rangeV = 1.0;
+                rangeU = 1.0f;
             }
 
-            double margin = 0.1;
+            if (Math.Abs(rangeV) < 1e-6f)
+            {
+                rangeV = 1.0f;
+            }
+
+            float margin = 0.1f;
+
             minU -= rangeU * margin;
             maxU += rangeU * margin;
             minV -= rangeV * margin;
             maxV += rangeV * margin;
 
-            Point ToPixel(Point uv)
+            Point ToPixel(Vector2 uv)
             {
                 double nx = (uv.X - minU) / (maxU - minU);
-                double ny = 1.0 - (uv.Y - minV) / (maxV - minV); // flip V for image
-                return new Point(nx * (size - 1), ny * (size - 1));
+                double ny = 1.0 - ((uv.Y - minV) / (maxV - minV));
+
+                return new Point(
+                    nx * (size - 1),
+                    ny * (size - 1));
             }
 
             DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisual.RenderOpen();
-            try
+
+            using (DrawingContext dc = drawingVisual.RenderOpen())
             {
-                DrawCheckerboard(drawingContext, size);
+                DrawCheckerboard(dc, size);
 
-                // Triangles filled with bright yellow (semi‑transparent) and solid white outline
-                SolidColorBrush fillBrush = new SolidColorBrush(Color.FromArgb(120, 255, 255, 0)); // bright yellow
-                Pen outlinePen = new Pen(Brushes.White, 3.0);
+                Pen pen = new Pen(Brushes.White, 2.0);
 
-                for (int i = 0; i < _mesh.TriangleIndices.Count; i += 3)
+                SolidColorBrush fill =
+                    new SolidColorBrush(
+                        MediaColor.FromArgb(120, 255, 255, 0));
+
+                for (int i = 0; i < _mesh.Indices.Count; i += 3)
                 {
-                    int i0 = _mesh.TriangleIndices[i];
-                    int i1 = _mesh.TriangleIndices[i + 1];
-                    int i2 = _mesh.TriangleIndices[i + 2];
+                    int i0 = _mesh.Indices[i];
+                    int i1 = _mesh.Indices[i + 1];
+                    int i2 = _mesh.Indices[i + 2];
 
-                    if (i0 >= _mesh.TextureCoordinates.Count || i1 >= _mesh.TextureCoordinates.Count || i2 >= _mesh.TextureCoordinates.Count)
+                    if (i0 >= _mesh.TextureCoordinates.Count ||
+                        i1 >= _mesh.TextureCoordinates.Count ||
+                        i2 >= _mesh.TextureCoordinates.Count)
                     {
                         continue;
                     }
@@ -269,144 +483,184 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                     Point p2 = ToPixel(_mesh.TextureCoordinates[i2]);
 
                     // Skip degenerate triangles
-                    if (Math.Abs(p0.X - p1.X) < 0.5 && Math.Abs(p0.Y - p1.Y) < 0.5 && Math.Abs(p0.X - p2.X) < 0.5 && Math.Abs(p0.Y - p2.Y) < 0.5)
+                    if (Math.Abs(p0.X - p1.X) < 0.5 &&
+                        Math.Abs(p0.Y - p1.Y) < 0.5 &&
+                        Math.Abs(p0.X - p2.X) < 0.5 &&
+                        Math.Abs(p0.Y - p2.Y) < 0.5)
                     {
                         continue;
                     }
 
-                    StreamGeometry geometry = new StreamGeometry();
-                    using (StreamGeometryContext geometryContext = geometry.Open())
+                    StreamGeometry geo = new StreamGeometry();
+
+                    using (StreamGeometryContext ctx = geo.Open())
                     {
-                        geometryContext.BeginFigure(p0, true, true);
-                        geometryContext.LineTo(p1, true, false);
-                        geometryContext.LineTo(p2, true, false);
+                        ctx.BeginFigure(p0, true, true);
+                        ctx.LineTo(p1, true, false);
+                        ctx.LineTo(p2, true, false);
                     }
 
-                    drawingContext.DrawGeometry(fillBrush, outlinePen, geometry);
+                    geo.Freeze();
+
+                    dc.DrawGeometry(fill, pen, geo);
                 }
             }
-            finally
-            {
-                drawingContext.Close();
-            }
 
-            RenderTargetBitmap bitmap = new RenderTargetBitmap(size, size, 96, 96, PixelFormats.Pbgra32);
-            bitmap.Render(drawingVisual);
-            bitmap.Freeze();
+            RenderTargetBitmap bmp =
+                new RenderTargetBitmap(
+                    size,
+                    size,
+                    96,
+                    96,
+                    PixelFormats.Pbgra32);
 
-            _uvPreview = bitmap;
-            UvImage.Source = _uvPreview;
+            bmp.Render(drawingVisual);
+            bmp.Freeze();
+
+            _uvPreview = bmp;
+            UvImage.Source = bmp;
         }
 
-        private void ShowPlaceholder(string message)
-        {
-            DrawingVisual drawingVisual = new DrawingVisual();
-            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
-            {
-                drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, 512, 256));
-                FormattedText text = new FormattedText(message, System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Segoe UI"), 14, Brushes.White, 96);
-                drawingContext.DrawText(text, new Point(20, 100));
-            }
-            RenderTargetBitmap bitmap = new RenderTargetBitmap(512, 256, 96, 96, PixelFormats.Pbgra32);
-            bitmap.Render(drawingVisual);
-            bitmap.Freeze();
-            _uvPreview = bitmap;
-            UvImage.Source = _uvPreview;
-        }
-
-        // Draws an opaque 8x8 checkerboard using fully opaque colours
         private static void DrawCheckerboard(DrawingContext dc, int size)
         {
             int tiles = 8;
             double tileSize = (double)size / tiles;
-            SolidColorBrush darkBrush = new SolidColorBrush(Color.FromRgb(30, 30, 30));
-            SolidColorBrush lightBrush = new SolidColorBrush(Color.FromRgb(80, 80, 80));
 
-            for (int row = 0; row < tiles; row++)
+            Brush dark = new SolidColorBrush(MediaColor.FromRgb(30, 30, 30));
+            Brush light = new SolidColorBrush(MediaColor.FromRgb(70, 70, 70));
+
+            for (int y = 0; y < tiles; y++)
             {
-                for (int col = 0; col < tiles; col++)
+                for (int x = 0; x < tiles; x++)
                 {
-                    Rect rect = new Rect(col * tileSize, row * tileSize, tileSize, tileSize);
-                    dc.DrawRectangle(((row + col) % 2 == 0) ? darkBrush : lightBrush, null, rect);
+                    Brush tileColor;
+
+                    if ((x + y) % 2 == 0)
+                    {
+                        tileColor = dark;
+                    }
+                    else
+                    {
+                        tileColor = light;
+                    }
+
+                    Rect rectangleBounds = new Rect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    dc.DrawRectangle(tileColor, null, rectangleBounds);
                 }
             }
         }
 
-        private static Point3D ReadFloat3(byte[] data, ref int offset)
+        private static void ShowMessage(string text)
         {
-            float x = BitConverter.ToSingle(data, offset);
-            offset += 4;
-            float y = BitConverter.ToSingle(data, offset);
-            offset += 4;
-            float z = BitConverter.ToSingle(data, offset);
-            offset += 4;
-
-            return new Point3D(x, y, z);
+            MessageBox.Show(text, "Mesh Editor", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private static Vector3D ReadVector3(byte[] data, ref int offset)
+        private void ShowPlaceholder(string message)
+        {
+            DrawingVisual visual = new DrawingVisual();
+
+            using DrawingContext dc = visual.RenderOpen();
+
+            dc.DrawRectangle(Brushes.Black, null, new Rect(0, 0, 512, 256));
+
+            FormattedText text = new FormattedText(
+                message,
+                System.Globalization.CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                new Typeface("Segoe UI"),
+                16,
+                Brushes.White,
+                96);
+
+            dc.DrawText(text, new Point(20, 100));
+
+            RenderTargetBitmap bmp = new RenderTargetBitmap(512, 256, 96, 96, PixelFormats.Pbgra32);
+
+            bmp.Render(visual);
+            bmp.Freeze();
+
+            _uvPreview = bmp;
+            UvImage.Source = bmp;
+        }
+
+        private static Vector3 ReadVector3(byte[] data, ref int offset)
         {
             float x = BitConverter.ToSingle(data, offset); offset += 4;
             float y = BitConverter.ToSingle(data, offset); offset += 4;
             float z = BitConverter.ToSingle(data, offset); offset += 4;
-            return new Vector3D(x, y, z);
+
+            return new Vector3(x, y, z);
         }
 
-        private static Point ReadFloat2(byte[] data, ref int offset)
+        private static Vector2 ReadVector2(byte[] data, ref int offset)
         {
-            float u = BitConverter.ToSingle(data, offset); offset += 4;
-            float v = BitConverter.ToSingle(data, offset); offset += 4;
-            return new Point(u, 1.0 - v); // flip V for standard top‑left image origin
+            float x = BitConverter.ToSingle(data, offset); offset += 4;
+            float y = BitConverter.ToSingle(data, offset); offset += 4;
+
+            return new Vector2(x, y);
+        }
+
+        private static Vector4 ReadVector4(byte[] data, ref int offset)
+        {
+            float x = BitConverter.ToSingle(data, offset); offset += 4;
+            float y = BitConverter.ToSingle(data, offset); offset += 4;
+            float z = BitConverter.ToSingle(data, offset); offset += 4;
+            float w = BitConverter.ToSingle(data, offset); offset += 4;
+
+            return new Vector4(x, y, z, w);
         }
 
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Update the Export button text based on selected tab
-            if (MainTabControl.SelectedItem is TabItem selectedTab)
+            if (MainTabControl.SelectedItem is not TabItem tab)
             {
-                string header = selectedTab.Header.ToString();
-                if (header == "3D Preview")
-                    ExportButton.Content = "Export Mesh as OBJ";
-                else if (header == "UV Preview")
-                    ExportButton.Content = "Export UV as PNG";
-                else
-                    ExportButton.Content = "Export";
+                return;
             }
+
+            string header = tab.Header.ToString() ?? string.Empty;
+
+            ExportButton.Content = header switch
+            {
+                "3D Preview" => "Export Mesh as OBJ",
+                "UV Preview" => "Export UV as PNG",
+                _ => "Export"
+            };
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            if (MainTabControl.SelectedItem is TabItem selectedTab)
+            if (MainTabControl.SelectedItem is not TabItem tab)
             {
-                string header = selectedTab.Header.ToString();
-                if (header == "3D Preview")
+                return;
+            }
+
+            string header = tab.Header.ToString() ?? string.Empty;
+
+            switch (header)
+            {
+                case "3D Preview":
                     ExportMeshAsObj();
-                else if (header == "UV Preview")
+                    break;
+
+                case "UV Preview":
                     ExportUvAsPng();
-                else
-                    MessageBox.Show("No export available for the Info tab.", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
+
+                default:
+                    ShowMessage("No export available.");
+                    break;
             }
         }
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {
-            if (MainTabControl.SelectedItem is TabItem selectedTab)
-            {
-                string header = selectedTab.Header.ToString();
-                if (header == "3D Preview")
-                    MessageBox.Show("Import from OBJ is not implemented yet.\n(Needs full vertex buffer layout first.)", "Import Mesh", MessageBoxButton.OK, MessageBoxImage.Information);
-                else if (header == "UV Preview")
-                    MessageBox.Show("Import UV from PNG is not implemented yet.\n(Would require reverse mapping to original vertex data.)", "Import UV", MessageBoxButton.OK, MessageBoxImage.Information);
-                else
-                    MessageBox.Show("Import is not available for the Info tab.", "Import", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            ShowMessage("Import not implemented yet.");
         }
 
         private void ExportMeshAsObj()
         {
-            if (_mesh == null || _mesh.Positions.Count == 0)
+            if (_mesh == null)
             {
-                MessageBox.Show("No mesh data to export.", "Export Mesh", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -424,30 +678,33 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
             using (StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.ASCII))
             {
                 writer.WriteLine("# Exported from Overlord Package Manager");
-                writer.WriteLine($"# Vertices: {_mesh.Positions.Count}");
-                writer.WriteLine($"# Triangles: {_mesh.TriangleIndices.Count / 3}");
 
-                // Write vertices (v) – using InvariantCulture to force '.' as decimal separator
                 System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.InvariantCulture;
-                foreach (Point3D p in _mesh.Positions)
-                    writer.WriteLine($"v {p.X.ToString(cult)} {p.Y.ToString(cult)} {p.Z.ToString(cult)}");
 
-                // Write texture coordinates (vt)
-                foreach (Point uv in _mesh.TextureCoordinates)
+                foreach (Vector3 p in _mesh.Positions)
+                {
+                    writer.WriteLine($"v {p.X.ToString(cult)} {p.Y.ToString(cult)} {p.Z.ToString(cult)}");
+                }
+
+                foreach (Vector2 uv in _mesh.TextureCoordinates)
                 {
                     writer.WriteLine($"vt {uv.X.ToString(cult)} {uv.Y.ToString(cult)}");
                 }
 
-                for (int i = 0; i < _mesh.TriangleIndices.Count; i += 3)
+                foreach (Vector3 n in _mesh.Normals)
                 {
-                    int i1 = _mesh.TriangleIndices[i] + 1;
-                    int i2 = _mesh.TriangleIndices[i + 1] + 1;
-                    int i3 = _mesh.TriangleIndices[i + 2] + 1;
-                    writer.WriteLine($"f {i1}/{i1} {i2}/{i2} {i3}/{i3}");
+                    writer.WriteLine($"vn {n.X.ToString(cult)} {n.Y.ToString(cult)} {n.Z.ToString(cult)}");
+                }
+
+                for (int i = 0; i < _mesh.Indices.Count; i += 3)
+                {
+                    int i1 = _mesh.Indices[i] + 1;
+                    int i2 = _mesh.Indices[i + 1] + 1;
+                    int i3 = _mesh.Indices[i + 2] + 1;
+
+                    writer.WriteLine($"f {i1}/{i1}/{i1} {i2}/{i2}/{i2} {i3}/{i3}/{i3}");
                 }
             }
-
-            MessageBox.Show($"Mesh exported to {dialog.FileName}", "Export Mesh", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void ExportUvAsPng()
