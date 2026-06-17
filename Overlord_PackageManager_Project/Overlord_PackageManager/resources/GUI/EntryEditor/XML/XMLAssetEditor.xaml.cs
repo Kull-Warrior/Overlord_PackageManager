@@ -13,16 +13,25 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
     {
         private readonly XMLEntry _entry;
         private XMLTextEditor _xmlEditor;
+        private bool HasValidEntries => _entry?.Table?.Entries != null && _entry.Table.Entries.Count >= 3;
 
         public XMLAssetEditor(XMLEntry entry)
         {
             InitializeComponent();
             _entry = entry;
             BuildUI();
+            UpdateButtonStates();
         }
 
         private void BuildUI()
         {
+            if (!HasValidEntries)
+            {
+                EditorHost.Content = null;
+                HeaderPanel.Content = null;
+                return;
+            }
+
             List<Entry> entries = _entry.Table.Entries;
 
             StringEntry fileNameEntry = (StringEntry)entries[0];
@@ -43,7 +52,26 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
             _xmlEditor.XmlChanged += OnXmlChanged;
 
             EditorHost.Content = _xmlEditor;
-        }   
+        }
+
+        private void UpdateButtonStates()
+        {
+            ExportButton.IsEnabled = HasValidEntries;
+
+            // Import should always remain enabled
+            ImportButton.IsEnabled = true;
+        }
+
+        private void CreateEntries(string fileName, string xmlText)
+        {
+            byte[] data = EncodeXML(xmlText);
+
+            _entry.Table.Entries.Clear();
+            
+            _entry.Table.Entries.Add(new StringEntry(10, 0) { Value = fileName });
+            _entry.Table.Entries.Add(new Int32Entry(11, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = (uint)data.Length });
+            _entry.Table.Entries.Add(new BlobEntry(12, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = data });
+        }
 
         private string DecodeXML(byte[] data)
         {
@@ -67,6 +95,11 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
         private void OnXmlChanged(string newText)
         {
+            if (!HasValidEntries)
+            {
+                return;
+            }
+
             BlobEntry blobEntry = (BlobEntry)_entry.Table.Entries[2];
 
             byte[] newBytes = EncodeXML(newText);
@@ -89,16 +122,40 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             string xmlText = File.ReadAllText(dialog.FileName);
 
+            string fileName = Path.GetFileName(dialog.FileName);
+
+            // Create entries if missing
+            if (!HasValidEntries)
+            {
+                CreateEntries(fileName, xmlText);
+
+                BuildUI();
+            }
+            else
+            {
+                ((StringEntry)_entry.Table.Entries[0]).Value = fileName;
+            }
+
             _xmlEditor.SetText(xmlText);
 
-            StringEntry fileNameEntry = (StringEntry)_entry.Table.Entries[0];
-            fileNameEntry.Value = Path.GetFileName(dialog.FileName);
-
             OnXmlChanged(xmlText);
+
+            UpdateButtonStates();
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
+            if (!HasValidEntries)
+            {
+                MessageBox.Show(
+                    "Nothing to export.",
+                    "Export XML",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                return;
+            }
+
             SaveFileDialog dialog = new();
 
             string fileName = ((StringEntry)_entry.Table.Entries[0]).Value;

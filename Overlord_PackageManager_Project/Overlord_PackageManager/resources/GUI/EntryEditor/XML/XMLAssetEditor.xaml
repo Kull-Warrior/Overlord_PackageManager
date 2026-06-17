@@ -27,12 +27,12 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Export XML"
+            <Button Name="ExportButton" Content="Export XML"
                     Grid.Column="0"
                     Margin="0,0,5,0"
                     Click="Export_Click"/>
 
-            <Button Content="Import XML"
+            <Button Name="ImportButton" Content="Import XML"
                     Grid.Column="1"
                     Margin="5,0,0,0"
                     Click="Import_Click"/>
