@@ -44,15 +44,49 @@ namespace Overlord_PackageManager.resources.Data.Factories
             };
         }
 
+        public static Entry CreateMeshBonebindPoseData(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                21 => new Int32Entry(id, relOffset),            // Item count
+                22 => new MatricesArrayEntry(id, relOffset),    // Array of 4x4 bind pose matrices (16 floats each)
+                _ => new BlobEntry(id, relOffset),              // Unknown entry 
+            };
+        }
+
+        public static Entry CreateMeshBoneShapeData(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                21 => new Int32Entry(id, relOffset),                // Item count
+                22 => new MeshBoneShapeArrayEntry(id, relOffset),   // Item count
+                _ => new BlobEntry(id, relOffset),                  // Unkown entry
+            };
+        }
+
+        public static Entry CreateMeshBoneData(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                20 => new Int32Entry(id, relOffset),            // Unkown uint
+                21 => new Int32Entry(id, relOffset),            // Bone data stride
+                22 => new BlobEntry(id, relOffset),             // Raw Bone Data
+                23 => new Int32Entry(id, relOffset),            // Unkown uint
+                24 => new MeshBoneBindPoseData(id, relOffset),  // Bind pose data for every bone, contains an array of 4x4 bind pose matrices (16 floats each)
+                25 => new MeshBoneShapeData(id, relOffset),     // Bone shape data
+                _ => new BlobEntry(id, relOffset),              // Unknown entry
+            };
+        }
+
         public static Entry CreateMeshData(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
                 10 => new IndiceData(id, relOffset),        // Indice data
                 11 => new VertexBuffer(id, relOffset),      // Vertice data
-                13 => new BlobEntry(id, relOffset),         // Unkown entry
+                13 => new MeshBoneData(id, relOffset),         // Unkown entry
                 14 => new FloatArrayEntry(id, relOffset),   // Unkown float array entry likely a form of matrix data
-                15 => new BlobEntry(id, relOffset),         // Unkown entry
+                15 => new TableEntry(id, relOffset),         // Unkown entry
                 16 => new FloatArrayEntry(id, relOffset),   // Unkown float array entry likely a form of matrix data
                 17 => new BlobEntry(id, relOffset),         // Unkown entry
                 18 => new BlobEntry(id, relOffset),         // Unkown entry
