@@ -163,6 +163,9 @@ namespace Overlord_PackageManager
                 case MatricesArrayEntry matricesArrayEntry:
                     EditorHost.Content = new MatricesArrayEntryEditor(matricesArrayEntry);
                     break;
+                case MeshBoneShapeArrayEntry meshBoneShapeArray:
+                    EditorHost.Content = new MeshBoneShapeArrayEntryEditor(meshBoneShapeArray);
+                    break;
                 default:
                     EditorHost.Content = new TextBlock
                     {
