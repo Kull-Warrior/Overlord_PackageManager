@@ -160,6 +160,9 @@ namespace Overlord_PackageManager
                 case VertexDeclarationEntry vertexDeclaration:
                     EditorHost.Content = new VertexDeclarationEditor(vertexDeclaration);
                     break;
+                case MatricesArrayEntry matricesArrayEntry:
+                    EditorHost.Content = new MatricesArrayEntryEditor(matricesArrayEntry);
+                    break;
                 default:
                     EditorHost.Content = new TextBlock
                     {
