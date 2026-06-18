@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.Interfaces;
+﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+using Overlord_PackageManager.resources.Data.Interfaces;
 using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.Generic
@@ -10,7 +11,16 @@ namespace Overlord_PackageManager.resources.Data.Generic
         public ReferenceTable GetReferenceTable() => Table;
 
         // Grammar definition for this table type
-        protected virtual Func<BinaryReader, uint, uint, Entry> EntryFactory => null;
+        protected virtual Func<BinaryReader, uint, uint, Entry> EntryFactory => CreateMeshData;
+
+        public static Entry CreateMeshData(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                // Add more IDs here
+                _ => new BlobEntry(id, relOffset),          // Unknown entry
+            };
+        }
 
         protected virtual int PayloadOffset => 0;
 
