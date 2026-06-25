@@ -11,9 +11,9 @@ namespace Overlord_PackageManager.resources.Data.Generic
         public ReferenceTable GetReferenceTable() => Table;
 
         // Grammar definition for this table type
-        protected virtual Func<BinaryReader, uint, uint, Entry> EntryFactory => CreateMeshData;
+        protected virtual Func<BinaryReader, uint, uint, Entry> EntryFactory => CreateTableEntry;
 
-        public static Entry CreateMeshData(BinaryReader reader, uint id, uint relOffset)
+        public static Entry CreateTableEntry(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
