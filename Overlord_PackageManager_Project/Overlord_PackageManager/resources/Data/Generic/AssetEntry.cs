@@ -20,6 +20,7 @@ namespace Overlord_PackageManager.resources.Data.Generic
         {
             return id switch
             {
+                1 => new TableEntry(id, relOffset),     // Data
                 19 => new Int32Entry(id, relOffset),    // FFFF Block
                 20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),   // Asset Name
