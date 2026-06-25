@@ -166,6 +166,9 @@ namespace Overlord_PackageManager
                 case MeshBoneShapeArrayEntry meshBoneShapeArray:
                     EditorHost.Content = new MeshBoneShapeArrayEntryEditor(meshBoneShapeArray);
                     break;
+                case RawMeshClusterDataArrayEntry rawMeshClusterDataArray:
+                    EditorHost.Content = new RawMeshClusterDataArrayEntryEditor(rawMeshClusterDataArray);
+                    break;
                 default:
                     EditorHost.Content = new TextBlock
                     {

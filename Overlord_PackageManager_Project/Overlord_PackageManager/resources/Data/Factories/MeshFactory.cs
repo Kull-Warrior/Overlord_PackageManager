@@ -78,6 +78,28 @@ namespace Overlord_PackageManager.resources.Data.Factories
             };
         }
 
+        public static Entry CreateMeshClusterIndexBuffer(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                22 => new Int32Entry(id, relOffset),        // Cluster index count
+                23 => new UInt16ArrayEntry(id, relOffset),  // Raw cluster index data
+                // Add more IDs here
+                _ => new BlobEntry(id, relOffset),          // Unknown entry
+            };
+        }
+
+        public static Entry CreateMeshClusterData(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                20 => new Int32Entry(id, relOffset),                // Count of Clusters
+                21 => new RawMeshClusterDataArrayEntry(id, relOffset),   // Cluster data
+                22 => new MeshClusterIndexBuffer(id, relOffset),    // Cluster index buffer
+                _ => new BlobEntry(id, relOffset),                  // Unknown entry
+            };
+        }
+
         public static Entry CreateMeshData(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
@@ -86,7 +108,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 11 => new VertexBuffer(id, relOffset),      // Vertice data
                 13 => new MeshBoneData(id, relOffset),         // Unkown entry
                 14 => new FloatArrayEntry(id, relOffset),   // Unkown float array entry likely a form of matrix data
-                15 => new TableEntry(id, relOffset),         // Unkown entry
+                15 => new MeshClusterData(id, relOffset),   // Cluster data containing cluster index buffer and some unknown data blob
                 16 => new FloatArrayEntry(id, relOffset),   // Unkown float array entry likely a form of matrix data
                 17 => new BlobEntry(id, relOffset),         // Unkown entry
                 18 => new BlobEntry(id, relOffset),         // Unkown entry
