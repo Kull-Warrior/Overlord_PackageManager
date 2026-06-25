@@ -16,7 +16,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 20 => new StringEntry(id, relOffset),     // Name of the group
                 //21 => new AssetList(id, relOffset),       // Asset list
                 21 => new AssetListContainer(id, relOffset),       // Asset list
-                30 => new BlobEntry(id, relOffset),       // Unknown table
+                30 => new TableEntry(id, relOffset),        // Unknown table
                 _ => new BlobEntry(id, relOffset)
             };
         }
