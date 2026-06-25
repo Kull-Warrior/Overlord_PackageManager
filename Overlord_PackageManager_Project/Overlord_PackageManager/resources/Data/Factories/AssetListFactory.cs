@@ -51,7 +51,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 4261426 => new DiffuseMaterial(id, relOffset, typeIdentifier),
                 4259893 => new MeshAsset(id, relOffset, typeIdentifier),
 
-                _ => new BlobEntry(id, relOffset)
+                _ => new AssetEntry(id, relOffset, typeIdentifier)
             };
         }
     }

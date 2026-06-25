@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.Generic
 {
@@ -8,9 +9,20 @@ namespace Overlord_PackageManager.resources.Data.Generic
 
         protected override int PayloadOffset => 4;
 
-        protected AssetEntry(uint id, uint relOffset, uint typeIdentifier) : base(id, relOffset)
+        public AssetEntry(uint id, uint relOffset, uint typeIdentifier) : base(id, relOffset)
         {
             TypeIdentifier = typeIdentifier;
+        }
+
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => CreateUnkownAsset;
+
+        public static Entry CreateUnkownAsset(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                // Add more IDs here
+                _ => new BlobEntry(id, relOffset),   // Unknown entry
+            };
         }
 
         public override void Write(BinaryWriter writer, long origin)
