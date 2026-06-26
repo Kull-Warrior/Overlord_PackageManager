@@ -13,7 +13,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new BlobEntry(id, relOffset),   // Unknown entry
+                20 => new TableEntry(id, relOffset),   // Unknown entry
                 21 => new Int32Entry(id, relOffset),
                 22 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
@@ -109,20 +109,20 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 20 => new TerrainDataEntry(id, relOffset),
                 21 => new UnknownTableType21Entry(id, relOffset),
-                22 => new BlobEntry(id, relOffset),
-                23 => new BlobEntry(id, relOffset),
-                24 => new BlobEntry(id, relOffset),
+                22 => new FloatArrayEntry(id, relOffset),           // Player/Camera Start Location
+                23 => new FloatArrayEntry(id, relOffset),           // Player/Camera rotation
+                24 => new FloatArrayEntry(id, relOffset),           // Player/Camera rotation
                 25 => new AssetListContainer(id, relOffset),
-                26 => new BlobEntry(id, relOffset),   // Unknown entry
-                27 => new BlobEntry(id, relOffset),   // Unknown entry
-                28 => new BlobEntry(id, relOffset),   // Unknown entry
+                26 => new TableEntry(id, relOffset),   // Unknown entry
+                27 => new TableEntry(id, relOffset),   // Unknown entry
+                28 => new TableEntry(id, relOffset),   // Unknown entry
                 29 => new SingleByteEntry(id, relOffset),
-                30 => new BlobEntry(id, relOffset),   // Unknown entry
-                31 => new BlobEntry(id, relOffset),
+                30 => new TableEntry(id, relOffset),   // Unknown entry
+                31 => new TableEntry(id, relOffset),
                 32 => new AssetListContainer(id, relOffset),
                 33 => new LuaEntry(id, relOffset),
                 34 => new StringEntry(id, relOffset),
-                35 => new BlobEntry(id, relOffset),   // Unknown entry
+                35 => new TableEntry(id, relOffset),   // Unknown entry
                 36 => new LuaEntry(id, relOffset),
                 37 => new FloatEntry(id, relOffset),
                 38 => new FloatEntry(id, relOffset),
@@ -134,15 +134,15 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 45 => new LuaEntry(id, relOffset),
                 46 => new StringListEntry(id, relOffset),
                 47 => new BlobEntry(id, relOffset),   // Unknown entry
-                48 => new BlobEntry(id, relOffset),   // Unknown entry
+                48 => new TableEntry(id, relOffset),   // Unknown entry
                 49 => new Int32Entry(id, relOffset),
                 51 => new Int32Entry(id, relOffset),
-                52 => new BlobEntry(id, relOffset),   // Unknown entry
-                53 => new BlobEntry(id, relOffset),   // Unknown entry
-                100 => new BlobEntry(id, relOffset),   // Unknown entry
-                101 => new BlobEntry(id, relOffset),   // Unknown entry
-                102 => new BlobEntry(id, relOffset),   // Unknown entry
-                103 => new BlobEntry(id, relOffset),   // Unknown entry
+                52 => new TableEntry(id, relOffset),   // Unknown entry
+                53 => new TableEntry(id, relOffset),   // Unknown entry
+                100 => new TableEntry(id, relOffset),   // Unknown entry
+                101 => new TableEntry(id, relOffset),   // Unknown entry
+                102 => new TableEntry(id, relOffset),   // Unknown entry
+                103 => new TableEntry(id, relOffset),   // Unknown entry
                 104 => new Int32Entry(id, relOffset),
                 106 => new SingleByteEntry(id, relOffset),
                 108 => new SingleByteEntry(id, relOffset),
@@ -154,20 +154,20 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 115 => new Int32Entry(id, relOffset),
                 116 => new SingleByteEntry(id, relOffset),
                 117 => new SingleByteEntry(id, relOffset),
-                120 => new BlobEntry(id, relOffset),   // Unknown entry
+                120 => new TableEntry(id, relOffset),   // Unknown entry
                 121 => new Int32Entry(id, relOffset),
                 122 => new LuaEntry(id, relOffset),
                 123 => new LuaEntry(id, relOffset),
-                124 => new BlobEntry(id, relOffset),   // Unknown entry
+                124 => new TableEntry(id, relOffset),   // Unknown entry
                 125 => new Int32Entry(id, relOffset),
                 126 => new Int32Entry(id, relOffset),
                 127 => new LuaEntry(id, relOffset),
                 128 => new Int32Entry(id, relOffset),
                 129 => new Int32Entry(id, relOffset),
-                130 => new BlobEntry(id, relOffset),   // Unknown entry
-                131 => new BlobEntry(id, relOffset),   // Unknown entry
-                132 => new BlobEntry(id, relOffset),
-                133 => new BlobEntry(id, relOffset),   // Unknown entry
+                130 => new TableEntry(id, relOffset),   // Unknown entry
+                131 => new TableEntry(id, relOffset),   // Unknown entry
+                132 => new TableEntry(id, relOffset),
+                133 => new LuaEntry(id, relOffset),   // Unknown entry
                 134 => new StringEntry(id, relOffset),
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
