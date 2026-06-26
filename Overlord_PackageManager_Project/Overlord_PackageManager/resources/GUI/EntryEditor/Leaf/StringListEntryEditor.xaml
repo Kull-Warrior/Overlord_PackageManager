@@ -19,7 +19,7 @@
              FontFamily="Consolas"
              TextChanged="LinesBox_TextChanged"/>
 
-        <Grid Grid.Row="1" Margin="5">
+        <Grid x:Name="FileButtons" Grid.Row="1" Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

@@ -9,25 +9,33 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     public partial class StringListEntryEditor : UserControl
     {
-        private readonly StringListEntry _entry;
+        private StringListEntry _entry;
         private bool _isInternalUpdate;
 
         public event Action? TextChangedExternally;
 
+        public void HideFileButtons()
+        {
+            FileButtons.Visibility = Visibility.Collapsed;
+        }
+
         public StringListEntryEditor(StringListEntry entry)
         {
             InitializeComponent();
-            _entry = entry;
+            AttachEntry(entry);
+        }
 
+        public void AttachEntry(StringListEntry entry)
+        {
+            _entry = entry;
             LoadText();
         }
 
         private void LoadText()
         {
             _isInternalUpdate = true;
-
-            LinesBox.Text = string.Join(Environment.NewLine,
-                _entry.Value.Select(l => l.Text));
+                
+            LinesBox.Text = _entry.Value == null ? string.Empty : string.Join(Environment.NewLine, _entry.Value.Select(l => l.Text));
 
             _isInternalUpdate = false;
         }
@@ -67,6 +75,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
             _isInternalUpdate = false;
 
             RebuildEntry();
+
+            TextChangedExternally?.Invoke();
         }
 
         private void Import_Click(object sender, RoutedEventArgs e)

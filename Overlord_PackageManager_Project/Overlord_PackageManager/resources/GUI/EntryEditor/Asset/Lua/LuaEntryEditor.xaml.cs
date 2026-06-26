@@ -20,6 +20,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
         private Int32Entry _bytecodeLengthEntry;
         private BlobEntry _bytecodeEntry;
 
+        private StringListEntry _currentTextEntry;
+
         private StringListEntryEditor _textEditor;
         private string _lastCompiledText = "";
 
@@ -69,30 +71,108 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
             CompileLua();
         }
 
+        private void UpdateExportState()
+        {
+            ExportButton.IsEnabled = !string.IsNullOrWhiteSpace(GetLuaText());
+        }
+
+        private StringListEntry CreateTemporaryEntry()
+        {
+            return new StringListEntry(21, 0)
+            {
+                Value = new List<StringLine>(),
+                NumberOfLines = 0
+            };
+        }
+
+        private void CreateLuaEntries()
+        {
+            _luaTextEntry = new StringListEntry(21, 0);
+            _bytecodeLengthEntry = new Int32Entry(22, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
+            _bytecodeEntry = new BlobEntry(23, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
+
+            _entry.Table.Entries.Add(_luaTextEntry);
+            _entry.Table.Entries.Add(_bytecodeLengthEntry);
+            _entry.Table.Entries.Add(_bytecodeEntry);
+        }
+
+        private void RemoveLuaEntries()
+        {
+            if (_luaTextEntry == null)
+            {
+                return;
+            }
+
+            _entry.Table.Entries.Remove(_luaTextEntry);
+            _entry.Table.Entries.Remove(_bytecodeLengthEntry);
+            _entry.Table.Entries.Remove(_bytecodeEntry);
+
+            _luaTextEntry = null;
+            _bytecodeLengthEntry = null;
+            _bytecodeEntry = null;
+
+            _currentTextEntry = CreateTemporaryEntry();
+            _textEditor.AttachEntry(_currentTextEntry);
+        }
+
+        private void TextChanged()
+        {
+            if (string.IsNullOrWhiteSpace(GetLuaText()))
+            {
+                RemoveLuaEntries();
+                UpdateExportState();
+                return;
+            }
+
+
+            if (_luaTextEntry == null)
+            {
+                CreateLuaEntries();
+                _textEditor.AttachEntry(_luaTextEntry);
+                _currentTextEntry = _luaTextEntry;
+            }
+
+            UpdateExportState();
+        }
+
         private void BuildUI()
         {
             RootPanel.Children.Clear();
 
             if (_nameEntry != null)
             {
-                var nameEditor = new StringEntryEditor(_nameEntry)
+                RootPanel.Children.Add(new StringEntryEditor(_nameEntry)
                 {
                     Label = "File Name"
-                };
-
-                RootPanel.Children.Add(nameEditor);
+                });
             }
 
-            _textEditor = new StringListEntryEditor(_luaTextEntry);
+            if (_luaTextEntry != null)
+            {
+                _currentTextEntry = _luaTextEntry;
+            }
+            else
+            {
+                _currentTextEntry = CreateTemporaryEntry();
+            }
 
+            _textEditor = new StringListEntryEditor(_currentTextEntry);
+            _textEditor.HideFileButtons();
+            _textEditor.TextChangedExternally += TextChanged;
             _textEditor.LostFocus += TextEditor_LostFocus;
 
             RootPanel.Children.Add(_textEditor);
+            UpdateExportState();
         }
 
         private string GetLuaText()
         {
-            return string.Join("\n", _luaTextEntry.Value.Select(x => x.Text));
+            if (_currentTextEntry?.Value == null)
+            {
+                return string.Empty;
+            }
+
+            return string.Join("\n", _currentTextEntry.Value.Select(x => x.Text));
         }
 
         private void CompileLua()
