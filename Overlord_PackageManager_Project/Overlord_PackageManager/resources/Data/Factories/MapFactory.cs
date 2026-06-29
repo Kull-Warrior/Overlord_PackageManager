@@ -13,7 +13,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new TableEntry(id, relOffset),   // Unknown entry
+                20 => new UnknownType21SubTableType20(id, relOffset),   // Unknown entry
                 21 => new Int32Entry(id, relOffset),
                 22 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
@@ -25,34 +25,12 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
+                1 => new AssetList(id, relOffset),     // Data
                 30 => new Int32Entry(id, relOffset),
                 31 => new StringEntry(id, relOffset),
                 32 => new BlobEntry(id, relOffset),   // Unknown entry
                 34 => new BlobEntry(id, relOffset),   // Unknown entry
                 35 => new Int32Entry(id, relOffset),
-                // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
-            };
-        }
-
-        public static Entry CreateGameObjectDataSubTableType20SubTableType32(BinaryReader reader, uint id, uint relOffset)
-        {
-            return id switch
-            {
-                10 => new Int32Entry(id, relOffset),
-                11 => new Int32Entry(id, relOffset),
-                12 => new StringEntry(id, relOffset),
-                20 => new BlobEntry(id, relOffset),
-                21 => new BlobEntry(id, relOffset),
-                22 => new Int32Entry(id, relOffset),
-                23 => new Int32Entry(id, relOffset),
-                24 => new Int32Entry(id, relOffset),
-                40 => new SingleByteEntry(id, relOffset),
-                42 => new SingleByteEntry(id, relOffset),
-                60 => new StringEntry(id, relOffset),
-                61 => new BlobEntry(id, relOffset),   // Unknown entry
-                62 => new BlobEntry(id, relOffset),   // Unknown entry
-                63 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
             };

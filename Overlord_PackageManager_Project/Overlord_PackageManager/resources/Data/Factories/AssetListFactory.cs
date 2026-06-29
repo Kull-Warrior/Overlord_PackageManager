@@ -50,6 +50,14 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 4261386 => new BumpedDiffuseMaterial(id, relOffset, typeIdentifier),
                 4261426 => new DiffuseMaterial(id, relOffset, typeIdentifier),
                 4259893 => new MeshAsset(id, relOffset, typeIdentifier),
+                4587529 => new UnkownAssetType09004600(id, relOffset, typeIdentifier),
+                4587541 => new UnkownAssetType15004600(id, relOffset, typeIdentifier),
+                4587551 => new UnkownAssetType1F004600(id, relOffset, typeIdentifier),
+                4605448 => new UnkownAssetType08464600(id, relOffset, typeIdentifier),
+                4587539 => new UnkownAssetType13004600(id, relOffset, typeIdentifier),
+                4599829 => new UnkownAssetType15304600(id, relOffset, typeIdentifier),
+                4605460 => new UnkownAssetType14464600(id, relOffset, typeIdentifier),
+                4605472 => new UnkownAssetType20464600(id, relOffset, typeIdentifier),
 
                 _ => new AssetEntry(id, relOffset, typeIdentifier)
             };
