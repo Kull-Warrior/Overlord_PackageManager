@@ -4,6 +4,8 @@ using System.Buffers.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace Overlord_PackageManager.resources.GUI
 {
@@ -13,7 +15,8 @@ namespace Overlord_PackageManager.resources.GUI
         {
             TreeViewItem root = new TreeViewItem
             {
-                Header = fileName,
+                Header = new TextBlock { Text = fileName, FontFamily = new FontFamily("Consolas") },
+
                 Tag = null // container only
             };
 
@@ -29,7 +32,7 @@ namespace Overlord_PackageManager.resources.GUI
         {
             TreeViewItem node = new TreeViewItem
             {
-                Header = name,
+                Header = new TextBlock { Text = name, FontFamily = new FontFamily("Consolas") },
                 Tag = table
             };
 
@@ -123,7 +126,7 @@ namespace Overlord_PackageManager.resources.GUI
         {
             TreeViewItem node = new TreeViewItem
             {
-                Header = Describe(entry),
+                Header = new TextBlock { Text = Describe(entry), FontFamily = new FontFamily("Consolas") },
                 Tag = entry
             };
 
