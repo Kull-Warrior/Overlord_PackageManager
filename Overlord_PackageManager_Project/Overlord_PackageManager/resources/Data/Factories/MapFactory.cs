@@ -9,11 +9,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
 {
     public abstract class MapFactory
     {
-        public static Entry CreateUnknownType21(BinaryReader reader, uint id, uint relOffset)
+        public static Entry CreateWorldEntityPackage(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
-                20 => new UnknownType21SubTableType20(id, relOffset),   // Unknown entry
+                20 => new EntityAllocationTable(id, relOffset),   // Unknown entry
                 21 => new Int32Entry(id, relOffset),
                 22 => new SingleByteEntry(id, relOffset),
                 // Add more IDs here
@@ -21,7 +21,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             };
         }
 
-        public static Entry CreateUnknownType21SubTableType20(BinaryReader reader, uint id, uint relOffset)
+        public static Entry CreateEntityAllocationTable(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -86,7 +86,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 20 => new TerrainDataEntry(id, relOffset),
-                21 => new UnknownTableType21Entry(id, relOffset),
+                21 => new WorldEntityPackage(id, relOffset),
                 22 => new FloatArrayEntry(id, relOffset),           // Player/Camera Start Location
                 23 => new FloatArrayEntry(id, relOffset),           // Player/Camera rotation
                 24 => new FloatArrayEntry(id, relOffset),           // Player/Camera rotation

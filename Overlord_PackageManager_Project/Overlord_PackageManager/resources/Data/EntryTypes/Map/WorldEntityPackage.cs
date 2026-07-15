@@ -4,8 +4,8 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Map
 {
-    class UnknownTableType21Entry(uint id, uint relOffset) : TableEntry(id, relOffset)
+    class WorldEntityPackage(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
-        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => MapFactory.CreateUnknownType21;
+        protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => MapFactory.CreateWorldEntityPackage;
     }
 }
