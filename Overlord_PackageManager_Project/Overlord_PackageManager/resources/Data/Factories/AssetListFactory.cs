@@ -6,6 +6,7 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionC
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Material;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Oject;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -58,6 +59,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 4599829 => new UnkownAssetType15304600(id, relOffset, typeIdentifier),
                 4605460 => new UnkownAssetType14464600(id, relOffset, typeIdentifier),
                 4605472 => new UnkownAssetType20464600(id, relOffset, typeIdentifier),
+                4259915 => new ObjectAsset(id, relOffset, typeIdentifier),
 
                 _ => new AssetEntry(id, relOffset, typeIdentifier)
             };
