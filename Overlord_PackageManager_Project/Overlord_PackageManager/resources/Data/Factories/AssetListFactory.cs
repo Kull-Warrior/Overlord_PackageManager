@@ -6,7 +6,7 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionC
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Material;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
-using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Oject;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Object;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.Data.Generic;

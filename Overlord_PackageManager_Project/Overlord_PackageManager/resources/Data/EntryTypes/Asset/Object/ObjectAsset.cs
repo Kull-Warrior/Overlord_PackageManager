@@ -2,7 +2,7 @@
 using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 
-namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Oject
+namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Object
 {
     class ObjectAsset(uint id, uint relOffset, uint typeIdentifier) : AssetEntry(id, relOffset, typeIdentifier)
     {
