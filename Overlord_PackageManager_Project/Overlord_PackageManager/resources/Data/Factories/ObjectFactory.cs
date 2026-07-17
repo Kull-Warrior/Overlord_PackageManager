@@ -1,4 +1,4 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Object;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Object;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
@@ -18,6 +18,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
             };
         }
+
         public static Entry CreateObjectAsset(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
@@ -31,7 +32,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 33 => new ObjectBoneContainer(id, relOffset),
                 34 => new FloatArrayEntry(id, relOffset),
                 35 => new TableEntry(id, relOffset),
-                36 => new BlobEntry(id, relOffset),
+                36 => new TableEntry(id, relOffset),
 
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
