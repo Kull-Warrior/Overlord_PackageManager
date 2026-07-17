@@ -88,7 +88,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif
             List<StringEntry> tgaTifAssetStrings = Table.Entries.OfType<StringEntry>().ToList();
             string fileName = tgaTifAssetStrings[1].Value;
 
-            List<Int32Entry> ints = Table.Entries.OfType<Int32Entry>().ToList();
+            List<UInt32Entry> ints = Table.Entries.OfType<UInt32Entry>().ToList();
             uint width = ints[0].Value;
             uint height = ints[1].Value;
 

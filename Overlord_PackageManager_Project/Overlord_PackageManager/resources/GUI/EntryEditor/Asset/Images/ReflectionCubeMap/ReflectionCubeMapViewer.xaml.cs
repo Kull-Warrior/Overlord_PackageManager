@@ -69,7 +69,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.Reflect
             int index = faceIndex * mipCount + mipIndex;
             DDSTextures tex = textures[index];
 
-            List<Int32Entry> intEntries = tex.Table.Entries.OfType<Int32Entry>().Take(3).ToList();
+            List<UInt32Entry> intEntries = tex.Table.Entries.OfType<UInt32Entry>().Take(3).ToList();
 
             uint width = intEntries[0].Value;
             uint height = intEntries[1].Value;

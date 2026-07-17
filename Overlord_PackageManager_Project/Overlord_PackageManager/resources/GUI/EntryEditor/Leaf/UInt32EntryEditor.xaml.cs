@@ -4,13 +4,13 @@ using System.Windows.Controls;
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     /// <summary>
-    /// Interaktionslogik für Int32EntryEditor.xaml
+    /// Interaktionslogik für UInt32EntryEditor.xaml
     /// </summary>
-    public partial class Int32EntryEditor : UserControl
+    public partial class UInt32EntryEditor : UserControl
     {
-        private readonly Int32Entry _entry;
+        private readonly UInt32Entry _entry;
 
-        public Int32EntryEditor(Int32Entry entry)
+        public UInt32EntryEditor(UInt32Entry entry)
         {
             InitializeComponent();
 

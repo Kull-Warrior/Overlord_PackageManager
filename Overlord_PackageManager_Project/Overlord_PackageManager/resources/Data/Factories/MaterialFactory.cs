@@ -22,7 +22,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                19 => new Int32Entry(id, relOffset),            // Unkown FFFFFF value
+                19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
                 20 => new StringEntry(id, relOffset),           // Material Tag
                 21 => new StringEntry(id, relOffset),           // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
@@ -45,7 +45,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                19 => new Int32Entry(id, relOffset),            // Unkown FFFFFF value
+                19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
                 20 => new StringEntry(id, relOffset),           // Material Tag
                 21 => new StringEntry(id, relOffset),           // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
@@ -59,7 +59,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                19 => new Int32Entry(id, relOffset),            // Unkown FFFFFF value
+                19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
                 20 => new StringEntry(id, relOffset),           // Material Tag
                 21 => new StringEntry(id, relOffset),           // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture

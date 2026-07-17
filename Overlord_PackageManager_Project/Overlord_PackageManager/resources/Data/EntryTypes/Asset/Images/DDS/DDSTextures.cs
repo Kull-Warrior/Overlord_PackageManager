@@ -23,9 +23,9 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
             PayloadLength = 12 + (uint)data.Length;
             Table = new ReferenceTable();
             Table.Entries = new List<Entry>(4);
-            Table.Entries.Add(new Int32Entry(20, 0) { Value = width });
-            Table.Entries.Add(new Int32Entry(21, 4) { Value = height });
-            Table.Entries.Add(new Int32Entry(23, 8) { Value = (uint)format });
+            Table.Entries.Add(new UInt32Entry(20, 0) { Value = width });
+            Table.Entries.Add(new UInt32Entry(21, 4) { Value = height });
+            Table.Entries.Add(new UInt32Entry(23, 8) { Value = (uint)format });
             Table.Entries.Add(new BlobEntry(22, 12) { Value = data });
         }
     }

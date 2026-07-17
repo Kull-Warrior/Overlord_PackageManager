@@ -112,11 +112,11 @@ namespace Overlord_PackageManager
 
             switch (obj)
             {
-                case Int32Entry int32Entry:
-                    EditorHost.Content = new Int32EntryEditor(int32Entry);
+                case UInt32Entry int32Entry:
+                    EditorHost.Content = new UInt32EntryEditor(int32Entry);
                     break;
-                case Int64Entry int64Entry:
-                    EditorHost.Content = new Int64EntryEditor(int64Entry);
+                case UInt64Entry int64Entry:
+                    EditorHost.Content = new UInt64EntryEditor(int64Entry);
                     break;
                 case FloatEntry floatEntry:
                     EditorHost.Content = new FloatEntryEditor(floatEntry);

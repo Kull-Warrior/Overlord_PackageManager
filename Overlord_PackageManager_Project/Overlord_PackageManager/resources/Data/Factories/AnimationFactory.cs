@@ -23,11 +23,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 01 => new AnimationAssetDataContainer(id, relOffset),   // Sub reference table containing a list of Bone Animation Data
-                19 => new Int32Entry(id, relOffset),                    // FFFF Block unkown use
+                19 => new UInt32Entry(id, relOffset),                    // FFFF Block unkown use
                 20 => new StringEntry(id, relOffset),                   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),                   // Animation name
                 30 => new FloatEntry(id, relOffset),                    // Unkown float and unknown use
-                31 => new Int64Entry(id, relOffset),                    // unkown u64 and unknown use
+                31 => new UInt64Entry(id, relOffset),                    // unkown u64 and unknown use
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
             };

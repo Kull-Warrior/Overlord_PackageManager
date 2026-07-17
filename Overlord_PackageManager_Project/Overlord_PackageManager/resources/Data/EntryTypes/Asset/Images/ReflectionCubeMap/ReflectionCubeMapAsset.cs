@@ -32,9 +32,9 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Reflect
             List<DDSTextures> textures = GetTextureList().Table.Entries.OfType<DDSTextures>().ToList();
             DDSTextures first = textures.First();
 
-            uint width = ((Int32Entry)first.Table.Entries[0]).Value;
-            uint height = ((Int32Entry)first.Table.Entries[1]).Value;
-            DDSFormat format = (DDSFormat)((Int32Entry)first.Table.Entries[2]).Value;
+            uint width = ((UInt32Entry)first.Table.Entries[0]).Value;
+            uint height = ((UInt32Entry)first.Table.Entries[1]).Value;
+            DDSFormat format = (DDSFormat)((UInt32Entry)first.Table.Entries[2]).Value;
 
             int mipCount = textures.Count / 6;
 

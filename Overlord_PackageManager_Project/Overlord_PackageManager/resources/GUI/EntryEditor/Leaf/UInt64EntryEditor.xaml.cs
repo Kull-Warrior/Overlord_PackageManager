@@ -4,13 +4,13 @@ using System.Windows.Controls;
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     /// <summary>
-    /// Interaktionslogik für Int64EntryEditor.xaml
+    /// Interaktionslogik für UInt64EntryEditor.xaml
     /// </summary>
-    public partial class Int64EntryEditor : UserControl
+    public partial class UInt64EntryEditor : UserControl
     {
-        private readonly Int64Entry _entry;
+        private readonly UInt64Entry _entry;
 
-        public Int64EntryEditor(Int64Entry entry)
+        public UInt64EntryEditor(UInt64Entry entry)
         {
             InitializeComponent();
 

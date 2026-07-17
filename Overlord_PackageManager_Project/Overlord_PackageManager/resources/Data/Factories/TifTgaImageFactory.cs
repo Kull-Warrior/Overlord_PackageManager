@@ -22,11 +22,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 1 => new TgaTifTextureData(id, relOffset),
-                19 => new Int32Entry(id, relOffset),
+                19 => new UInt32Entry(id, relOffset),
                 20 => new StringEntry(id, relOffset),
                 21 => new StringEntry(id, relOffset),
-                32 => new Int32Entry(id, relOffset),
-                33 => new Int32Entry(id, relOffset),
+                32 => new UInt32Entry(id, relOffset),
+                33 => new UInt32Entry(id, relOffset),
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
             };

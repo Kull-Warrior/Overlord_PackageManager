@@ -10,8 +10,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                30 => new Int32Entry(id, relOffset),
-                31 => new Int32Entry(id, relOffset),
+                30 => new UInt32Entry(id, relOffset),
+                31 => new UInt32Entry(id, relOffset),
                 33 => new BlobEntry(id, relOffset),
                 34 => new StringEntry(id, relOffset),
                 35 => new StringEntry(id, relOffset),

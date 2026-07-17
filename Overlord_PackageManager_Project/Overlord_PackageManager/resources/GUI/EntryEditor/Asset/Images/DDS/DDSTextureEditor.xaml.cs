@@ -11,14 +11,14 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS
         {
             InitializeComponent();
 
-            List<Int32Entry> intEntries = dds.Table.Entries.OfType<Int32Entry>().ToList();
+            List<UInt32Entry> intEntries = dds.Table.Entries.OfType<UInt32Entry>().ToList();
 
             if (intEntries.Count < 3)
             {
                 return;
             }
 
-            List<Int32Entry> lastThree = intEntries.TakeLast(3).ToList();
+            List<UInt32Entry> lastThree = intEntries.TakeLast(3).ToList();
 
             uint width = lastThree[0].Value;
             uint height = lastThree[1].Value;

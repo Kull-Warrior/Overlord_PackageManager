@@ -13,7 +13,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 20 => new StringEntry(id, relOffset),
                 21 => new StringListEntry(id, relOffset),
-                22 => new Int32Entry(id, relOffset),
+                22 => new UInt32Entry(id, relOffset),
                 23 => new BlobEntry(id, relOffset),
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
@@ -33,8 +33,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                10 => new Int32Entry(id, relOffset),
-                11 => new Int32Entry(id, relOffset),
+                10 => new UInt32Entry(id, relOffset),
+                11 => new UInt32Entry(id, relOffset),
                 30 => new LuaEntry(id, relOffset),
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry

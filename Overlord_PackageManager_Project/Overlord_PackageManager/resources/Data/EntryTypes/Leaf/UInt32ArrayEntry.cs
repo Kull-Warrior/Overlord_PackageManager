@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
 {
-    public class Int32ArrayEntry(uint id, uint relOffset) : ValueEntry<uint[]>(id, relOffset)
+    public class UInt32ArrayEntry(uint id, uint relOffset) : ValueEntry<uint[]>(id, relOffset)
     {
         public uint NumberOfValues;
 

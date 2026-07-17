@@ -27,8 +27,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 16 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
                 17 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
-                19 => new Int32Entry(id, relOffset),
-                20 => new Int32Entry(id, relOffset),
+                19 => new UInt32Entry(id, relOffset),
+                20 => new UInt32Entry(id, relOffset),
                 22 => new StringEntry(id, relOffset),       // Character/Rescource Name
                 23 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains Effects and Light Data of some sort
                 24 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "TS", Texture related Data

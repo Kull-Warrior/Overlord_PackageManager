@@ -21,12 +21,12 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                30 => new Int32Entry(id, relOffset),    // Index?
+                30 => new UInt32Entry(id, relOffset),    // Index?
                 31 => new StringEntry(id, relOffset),
                 32 => new AssetListContainer(id, relOffset),
-                33 => new Int32Entry(id, relOffset),
+                33 => new UInt32Entry(id, relOffset),
                 34 => new TableEntry(id, relOffset),
-                35 => new Int32Entry(id, relOffset),    // Parent Index?
+                35 => new UInt32Entry(id, relOffset),    // Parent Index?
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
             };

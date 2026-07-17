@@ -69,7 +69,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
             _entry.Table.Entries.Clear();
             
             _entry.Table.Entries.Add(new StringEntry(10, 0) { Value = fileName });
-            _entry.Table.Entries.Add(new Int32Entry(11, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = (uint)data.Length });
+            _entry.Table.Entries.Add(new UInt32Entry(11, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = (uint)data.Length });
             _entry.Table.Entries.Add(new BlobEntry(12, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = data });
         }
 
@@ -106,7 +106,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             blobEntry.Value = newBytes;
 
-            if (_entry.Table.Entries[1] is Int32Entry lengthEntry)
+            if (_entry.Table.Entries[1] is UInt32Entry lengthEntry)
             {
                 lengthEntry.Value = (uint)newBytes.Length;
             }

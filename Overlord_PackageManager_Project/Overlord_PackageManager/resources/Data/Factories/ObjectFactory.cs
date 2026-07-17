@@ -11,8 +11,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new Int32Entry(id, relOffset),
-                21 => new Int32Entry(id, relOffset),
+                20 => new UInt32Entry(id, relOffset),
+                21 => new UInt32Entry(id, relOffset),
                 22 => new ObjectBoneArrayEntry(id, relOffset),
                 // Add more IDs here
                 _ => new BlobEntry(id, relOffset),   // Unknown entry
@@ -24,7 +24,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 01 => new BlobEntry(id, relOffset),
-                19 => new Int32Entry(id, relOffset),
+                19 => new UInt32Entry(id, relOffset),
                 20 => new StringEntry(id, relOffset),
                 21 => new StringEntry(id, relOffset),
                 30 => new TableEntry(id, relOffset),

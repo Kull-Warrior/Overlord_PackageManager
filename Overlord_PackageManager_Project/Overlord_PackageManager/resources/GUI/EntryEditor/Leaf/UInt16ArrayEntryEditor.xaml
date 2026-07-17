@@ -10,7 +10,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Mesh Index Array (UInt16)" 
+        <TextBlock Text="Index Array (UInt16)" 
                    FontWeight="Bold" 
                    Margin="0,0,0,5"
                    Grid.Row="0"/>

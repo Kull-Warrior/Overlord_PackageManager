@@ -87,10 +87,10 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
             }
 
             BlobEntry? blob = vertexBuffer.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
-            Int32Entry? vertexCountEntry = vertexBuffer.Table.Entries.OfType<Int32Entry>().FirstOrDefault(e => e.Id == 21);
+            UInt32Entry? vertexCountEntry = vertexBuffer.Table.Entries.OfType<UInt32Entry>().FirstOrDefault(e => e.Id == 21);
 
             VertexBufferInfo? info = vertexBuffer.Table.Entries.OfType<VertexBufferInfo>().FirstOrDefault();
-            Int32Entry? strideEntry = info?.Table.Entries.OfType<Int32Entry>().FirstOrDefault(e => e.Id == 21);
+            UInt32Entry? strideEntry = info?.Table.Entries.OfType<UInt32Entry>().FirstOrDefault(e => e.Id == 21);
             VertexDeclarationEntry? decl = info?.Table.Entries.OfType<VertexDeclarationEntry>().FirstOrDefault();
 
             UInt16ArrayEntry? indicesEntry = indiceData.Table.Entries.OfType<UInt16ArrayEntry>().FirstOrDefault();

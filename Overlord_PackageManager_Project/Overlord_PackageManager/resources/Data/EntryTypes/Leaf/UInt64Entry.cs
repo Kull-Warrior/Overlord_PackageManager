@@ -3,17 +3,17 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
 {
-    public class Int32Entry(uint id, uint relOffset) : ValueEntry<uint>(id, relOffset)
+    public class UInt64Entry(uint id, uint relOffset) : ValueEntry<ulong>(id, relOffset)
     {
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            Value = reader.ReadUInt32();
+            Value = reader.ReadUInt64();
         }
 
         public override long GetPayloadSize()
         {
-            return sizeof(uint);
+            return sizeof(ulong);
         }
 
         public override void Write(BinaryWriter writer, long origin)
