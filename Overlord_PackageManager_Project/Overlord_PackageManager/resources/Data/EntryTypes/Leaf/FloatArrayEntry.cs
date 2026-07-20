@@ -8,7 +8,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            Value = new float[PayloadLength / 4];
+            Value = new float[PayloadLength / sizeof(float)];
             for (int i = 0; i < Value.Length; i++)
             {
                 Value[i] = reader.ReadSingle();

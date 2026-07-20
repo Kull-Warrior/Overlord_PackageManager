@@ -3,34 +3,23 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf
 {
-    public class UInt16ArrayEntry(uint id, uint relOffset) : ValueEntry<ushort[]>(id, relOffset)
+    public class DoubleEntry(uint id, uint relOffset) : ValueEntry<double>(id, relOffset)
     {
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            Value = new ushort[PayloadLength / sizeof(ushort)];
-
-            for (int i = 0; i < Value.Length; i++)
-            {
-                Value[i] = reader.ReadUInt16();
-            }
+            Value = reader.ReadDouble();
         }
 
         public override long GetPayloadSize()
         {
-            long totalSize = sizeof(ushort) * Value.Length;
-
-            return totalSize;
+            return sizeof(double);
         }
 
         public override void Write(BinaryWriter writer, long origin)
         {
             writer.BaseStream.Position = origin + RelativeOffset;
-
-            foreach (ushort number in Value)
-            {
-                writer.Write(number);
-            }
+            writer.Write(Value);
         }
     }
 }
