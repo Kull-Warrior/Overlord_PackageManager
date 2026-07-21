@@ -1,25 +1,13 @@
-﻿using Overlord_PackageManager.resources.Data.Generic;
-using System.IO;
+﻿using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
 {
-    public class Int64Entry(uint id, uint relOffset) : ValueEntry<long>(id, relOffset)
+    public class Int64Entry(uint id, uint relOffset) : ScalarEntry<long>(id, relOffset)
     {
-        public override void Read(BinaryReader reader, long origin)
-        {
-            reader.BaseStream.Position = origin + RelativeOffset;
-            Value = reader.ReadInt64();
-        }
+        protected override int ElementSize => sizeof(long);
 
-        public override long GetPayloadSize()
-        {
-            return sizeof(long);
-        }
+        protected override long ReadValue(BinaryReader reader) => reader.ReadInt64();
 
-        public override void Write(BinaryWriter writer, long origin)
-        {
-            writer.BaseStream.Position = origin + RelativeOffset;
-            writer.Write(Value);
-        }
+        protected override void WriteValue(BinaryWriter writer, long value) => writer.Write(value);
     }
 }

@@ -1,25 +1,13 @@
-﻿using Overlord_PackageManager.resources.Data.Generic;
-using System.IO;
+﻿using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
 {
-    public class DoubleEntry(uint id, uint relOffset) : ValueEntry<double>(id, relOffset)
+    public class DoubleEntry(uint id, uint relOffset) : ScalarEntry<double>(id, relOffset)
     {
-        public override void Read(BinaryReader reader, long origin)
-        {
-            reader.BaseStream.Position = origin + RelativeOffset;
-            Value = reader.ReadDouble();
-        }
+        protected override int ElementSize => sizeof(double);
 
-        public override long GetPayloadSize()
-        {
-            return sizeof(double);
-        }
+        protected override double ReadValue(BinaryReader reader) => reader.ReadDouble();
 
-        public override void Write(BinaryWriter writer, long origin)
-        {
-            writer.BaseStream.Position = origin + RelativeOffset;
-            writer.Write(Value);
-        }
+        protected override void WriteValue(BinaryWriter writer, double value) => writer.Write(value);
     }
 }

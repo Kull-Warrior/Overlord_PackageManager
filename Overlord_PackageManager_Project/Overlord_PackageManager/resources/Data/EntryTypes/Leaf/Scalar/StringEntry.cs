@@ -1,18 +1,16 @@
-﻿using Overlord_PackageManager.resources.Data.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
 {
-    public class StringEntry(uint id, uint relOffset) : ValueEntry<string>(id, relOffset)
+    public class StringEntry(uint id, uint relOffset) : ScalarEntry<string>(id, relOffset)
     {
-        uint Length;
+        protected override int ElementSize => sizeof(uint);
 
-        public override void Read(BinaryReader reader, long origin)
+        protected override string ReadValue(BinaryReader reader)
         {
-            reader.BaseStream.Position = origin + RelativeOffset;
-            Length = reader.ReadUInt32();
-            Value = Encoding.ASCII.GetString(reader.ReadBytes((int)Length));
+            uint Length = reader.ReadUInt32();
+            return Encoding.ASCII.GetString(reader.ReadBytes((int)Length));
         }
 
         public override long GetPayloadSize()
@@ -28,12 +26,10 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
             return totalSize;
         }
 
-        public override void Write(BinaryWriter writer, long origin)
+        protected override void WriteValue(BinaryWriter writer, string value)
         {
-            writer.BaseStream.Position = origin + RelativeOffset;
-
-            writer.Write((uint)Value.Length);
-            writer.Write(Encoding.ASCII.GetBytes(Value));
+            writer.Write((uint)value.Length);
+            writer.Write(Encoding.ASCII.GetBytes(value));
         }
     }
 }
