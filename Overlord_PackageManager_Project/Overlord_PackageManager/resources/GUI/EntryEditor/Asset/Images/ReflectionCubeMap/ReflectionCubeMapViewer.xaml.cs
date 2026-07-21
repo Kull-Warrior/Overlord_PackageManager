@@ -76,7 +76,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.Reflect
             uint height = intEntries[1].Value;
             DDSFormat format = (DDSFormat)intEntries[2].Value;
 
-            BlobEntry blob = tex.Table.Entries.OfType<BlobEntry>().First();
+            ByteArrayEntry blob = tex.Table.Entries.OfType<ByteArrayEntry>().First();
 
             return new MipLevelData(width, height, format, blob.Value);
         }

@@ -19,7 +19,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 //21 => new AssetList(id, relOffset),       // Asset list
                 21 => new AssetListContainer(id, relOffset),       // Asset list
                 30 => new TableEntry(id, relOffset),        // Unknown table
-                _ => new BlobEntry(id, relOffset)
+                _ => new ByteArrayEntry(id, relOffset)
             };
         }
 
@@ -27,8 +27,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                16 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
-                17 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
+                16 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // Unknown
+                17 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // Unknown
                 19 => new UInt32Entry(id, relOffset),
                 20 => new UInt32Entry(id, relOffset),
                 22 => new StringEntry(id, relOffset),       // Character/Rescource Name
@@ -38,7 +38,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 26 => new AssetListContainer(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
                 27 => new StringListEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
                 28 => new XMLEntry(id, relOffset),          // Contains XML Data
-                29 => new BlobEntry(id, relOffset),   // Unknown entry     // Unknown
+                29 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // Unknown
                 30 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "2" Type Data Unknown use, contains lua scripts
                 31 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains Animation Data
                 32 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Unknown
@@ -50,41 +50,41 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 38 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains FXE Data ( Raw file)
                 39 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // 
                 40 => new NamedAssetContainer(id, relOffset),   // Unknown entry
-                41 => new BlobEntry(id, relOffset),   // Unknown entry
-                42 => new BlobEntry(id, relOffset),   // Unknown entry
-                43 => new BlobEntry(id, relOffset),   // Unknown entry
-                60 => new BlobEntry(id, relOffset),   // Unknown entry
-                61 => new BlobEntry(id, relOffset),   // Unknown entry
-                62 => new BlobEntry(id, relOffset),   // Unknown entry
-                63 => new BlobEntry(id, relOffset),   // Unknown entry
-                64 => new BlobEntry(id, relOffset),   // Unknown entry
-                65 => new BlobEntry(id, relOffset),   // Unknown entry
-                66 => new BlobEntry(id, relOffset),   // Unknown entry
-                67 => new BlobEntry(id, relOffset),   // Unknown entry
-                68 => new BlobEntry(id, relOffset),   // Unknown entry
-                69 => new BlobEntry(id, relOffset),   // Unknown entry
-                70 => new BlobEntry(id, relOffset),   // Unknown entry
-                71 => new BlobEntry(id, relOffset),   // Unknown entry
-                72 => new BlobEntry(id, relOffset),   // Unknown entry
-                73 => new BlobEntry(id, relOffset),   // Unknown entry
-                74 => new BlobEntry(id, relOffset),   // Unknown entry
-                75 => new BlobEntry(id, relOffset),   // Unknown entry
-                77 => new BlobEntry(id, relOffset),   // Unknown entry
-                78 => new BlobEntry(id, relOffset),   // Unknown entry
-                80 => new BlobEntry(id, relOffset),   // Unknown entry
-                81 => new BlobEntry(id, relOffset),   // Unknown entry
+                41 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                42 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                43 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                60 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                61 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                62 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                63 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                64 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                65 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                66 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                67 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                68 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                69 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                70 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                71 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                72 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                73 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                74 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                75 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                77 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                78 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                80 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                81 => new ByteArrayEntry(id, relOffset),   // Unknown entry
                 82 => new XMLEntry(id, relOffset),          // Contains XML Data (System_Quests)
                 83 => new XMLEntry(id, relOffset),          // Contains XML Data (Tower_GeneralMessages)
                 84 => new XMLEntry(id, relOffset),          // Contains XML Data (TutorialMessages_Mouse)
                 85 => new XMLEntry(id, relOffset),          // Contains XML Data (TutorialMessages_Gamepad)
-                86 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains CPT_ Data
-                87 => new BlobEntry(id, relOffset),   // Unknown entry     // Contains CPTX Data
-                88 => new BlobEntry(id, relOffset),   // Unknown entry     // "Contains a string. with : 0D = Carriage Return(CR) 0A = Line Feed(LF) to break lines. Referencing here the multiplayer maps"
-                89 => new BlobEntry(id, relOffset),   // Unknown entry
+                86 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // Contains CPT_ Data
+                87 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // Contains CPTX Data
+                88 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // "Contains a string. with : 0D = Carriage Return(CR) 0A = Line Feed(LF) to break lines. Referencing here the multiplayer maps"
+                89 => new ByteArrayEntry(id, relOffset),   // Unknown entry
                 90 => new XMLEntry(id, relOffset),          // Contains XML Data (Credits)
-                91 => new BlobEntry(id, relOffset),   // Unknown entry
+                91 => new ByteArrayEntry(id, relOffset),   // Unknown entry
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
     }

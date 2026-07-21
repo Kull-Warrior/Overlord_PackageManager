@@ -41,7 +41,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Reflect
 
             List<DDSMipFace> faces = textures.Select((t, i) =>
             {
-                BlobEntry blob = t.Table.Entries.OfType<BlobEntry>().First();
+                ByteArrayEntry blob = t.Table.Entries.OfType<ByteArrayEntry>().First();
 
                 return new DDSMipFace
                 {

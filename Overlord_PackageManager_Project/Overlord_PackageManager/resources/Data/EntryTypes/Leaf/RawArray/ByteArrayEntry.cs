@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray
 {
-    public class BlobEntry(uint id, uint relOffset) : ValueEntry<byte[]>(id, relOffset)
+    public class ByteArrayEntry(uint id, uint relOffset) : ValueEntry<byte[]>(id, relOffset)
     {
         public override void Read(BinaryReader reader, long origin)
         {

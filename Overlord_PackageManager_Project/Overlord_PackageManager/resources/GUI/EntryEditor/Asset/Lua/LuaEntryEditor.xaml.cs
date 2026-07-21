@@ -21,7 +21,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
         private StringEntry? _nameEntry;
         private StringListEntry _luaTextEntry;
         private UInt32Entry _bytecodeLengthEntry;
-        private BlobEntry _bytecodeEntry;
+        private ByteArrayEntry _bytecodeEntry;
 
         private StringListEntry _currentTextEntry;
 
@@ -62,7 +62,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
                         _bytecodeLengthEntry = i;
                         break;
 
-                    case BlobEntry b:
+                    case ByteArrayEntry b:
                         _bytecodeEntry = b;
                         break;
                 }
@@ -92,7 +92,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
         {
             _luaTextEntry = new StringListEntry(21, 0);
             _bytecodeLengthEntry = new UInt32Entry(22, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
-            _bytecodeEntry = new BlobEntry(23, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
+            _bytecodeEntry = new ByteArrayEntry(23, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
 
             _entry.Table.Entries.Add(_luaTextEntry);
             _entry.Table.Entries.Add(_bytecodeLengthEntry);

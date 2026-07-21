@@ -17,7 +17,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.XML
                 string resourcePath = ((StringEntry)Table.Entries[0]).Value;
                 string fileName = Path.GetFileName(resourcePath);
 
-                byte[] data = ((BlobEntry)Table.Entries[2]).Value;
+                byte[] data = ((ByteArrayEntry)Table.Entries[2]).Value;
 
                 using FileStream fileHeaderStream = File.Open(baseDir + "\\" + fileName, FileMode.Create);
                 using BinaryWriter fileHeaderBinaryWriter = new BinaryWriter(fileHeaderStream);

@@ -22,7 +22,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 1 => new AssetList(id, relOffset),
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
 

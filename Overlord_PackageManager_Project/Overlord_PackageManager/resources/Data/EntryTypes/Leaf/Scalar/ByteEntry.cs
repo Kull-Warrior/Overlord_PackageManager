@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
 {
-    public class SingleByteEntry(uint id, uint relOffset) : ValueEntry<byte>(id, relOffset)
+    public class ByteEntry(uint id, uint relOffset) : ValueEntry<byte>(id, relOffset)
     {
         public override void Read(BinaryReader reader, long origin)
         {

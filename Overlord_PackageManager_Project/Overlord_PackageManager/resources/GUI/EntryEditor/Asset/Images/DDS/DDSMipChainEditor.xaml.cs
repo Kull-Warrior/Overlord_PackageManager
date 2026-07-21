@@ -61,7 +61,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS
                 uint height = lastThree[1].Value;
                 DDSFormat format = (DDSFormat)lastThree[2].Value;
 
-                BlobEntry? blob = dds.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
+                ByteArrayEntry? blob = dds.Table.Entries.OfType<ByteArrayEntry>().FirstOrDefault();
 
                 if (blob == null)
                 {

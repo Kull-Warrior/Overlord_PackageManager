@@ -15,7 +15,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 10 => new AssetListContainer(id, relOffset),     // List of all bone animations making up the entire animation, meaning each bone and its corresponding animation data
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),      // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),      // Unknown entry
             };
         }
 
@@ -30,7 +30,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 30 => new FloatEntry(id, relOffset),                    // Unkown float and unknown use
                 31 => new UInt64Entry(id, relOffset),                    // unkown u64 and unknown use
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
     }

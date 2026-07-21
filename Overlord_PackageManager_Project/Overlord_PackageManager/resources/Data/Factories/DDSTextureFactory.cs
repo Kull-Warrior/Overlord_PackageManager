@@ -15,10 +15,10 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 20 => new UInt32Entry(id, relOffset),    // Image width
                 21 => new UInt32Entry(id, relOffset),    // Image height
-                22 => new BlobEntry(id, relOffset),   // Raw image data
+                22 => new ByteArrayEntry(id, relOffset),   // Raw image data
                 23 => new UInt32Entry(id, relOffset),    // DDS Format
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -29,9 +29,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 20 => new AssetListContainer(id, relOffset),     // List of all dds images making up the entire dds file, meaning the main image and each mipmap
                 21 => new UInt32Entry(id, relOffset),     // Unkown
                 23 => new UInt32Entry(id, relOffset),     // Unkown
-                24 => new BlobEntry(id, relOffset),   // Unknown entry
+                24 => new ByteArrayEntry(id, relOffset),   // Unknown entry
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -44,7 +44,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),   // File name
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -57,7 +57,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
                 21 => new StringEntry(id, relOffset),   // File name
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
     }

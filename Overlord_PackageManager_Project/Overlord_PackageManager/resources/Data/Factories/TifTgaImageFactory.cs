@@ -12,9 +12,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                30 => new BlobEntry(id, relOffset),
+                30 => new ByteArrayEntry(id, relOffset),
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
 
@@ -29,7 +29,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 32 => new UInt32Entry(id, relOffset),
                 33 => new UInt32Entry(id, relOffset),
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
     }

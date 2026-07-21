@@ -13,16 +13,16 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 30 => new UInt32Entry(id, relOffset),
                 31 => new UInt32Entry(id, relOffset),
-                33 => new BlobEntry(id, relOffset),
+                33 => new ByteArrayEntry(id, relOffset),
                 34 => new StringEntry(id, relOffset),
                 35 => new StringEntry(id, relOffset),
                 36 => new FloatEntry(id, relOffset),
-                37 => new BlobEntry(id, relOffset),
-                38 => new SingleByteEntry(id, relOffset),
-                39 => new BlobEntry(id, relOffset),
-                40 => new SingleByteEntry(id, relOffset),
+                37 => new ByteArrayEntry(id, relOffset),
+                38 => new ByteEntry(id, relOffset),
+                39 => new ByteArrayEntry(id, relOffset),
+                40 => new ByteEntry(id, relOffset),
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
     }

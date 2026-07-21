@@ -36,7 +36,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
             List<Entry> entries = _entry.Table.Entries;
 
             StringEntry fileNameEntry = (StringEntry)entries[0];
-            BlobEntry blobEntry = (BlobEntry)entries[2];
+            ByteArrayEntry data = (ByteArrayEntry)entries[2];
 
             StringEntryEditor fileNameEditor = new(fileNameEntry)
             {
@@ -47,7 +47,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             _xmlEditor = new XMLTextEditor();
 
-            string xmlText = DecodeXML(blobEntry.Value);
+            string xmlText = DecodeXML(data.Value);
 
             _xmlEditor.SetText(xmlText);
             _xmlEditor.XmlChanged += OnXmlChanged;
@@ -71,7 +71,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
             
             _entry.Table.Entries.Add(new StringEntry(10, 0) { Value = fileName });
             _entry.Table.Entries.Add(new UInt32Entry(11, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = (uint)data.Length });
-            _entry.Table.Entries.Add(new BlobEntry(12, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = data });
+            _entry.Table.Entries.Add(new ByteArrayEntry(12, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = data });
         }
 
         private string DecodeXML(byte[] data)
@@ -101,11 +101,11 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
                 return;
             }
 
-            BlobEntry blobEntry = (BlobEntry)_entry.Table.Entries[2];
+            ByteArrayEntry data = (ByteArrayEntry)_entry.Table.Entries[2];
 
             byte[] newBytes = EncodeXML(newText);
 
-            blobEntry.Value = newBytes;
+            data.Value = newBytes;
 
             if (_entry.Table.Entries[1] is UInt32Entry lengthEntry)
             {
@@ -167,14 +167,14 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
             if (dialog.ShowDialog() != true)
                 return;
 
-            BlobEntry blobEntry = (BlobEntry)_entry.Table.Entries[2];
+            ByteArrayEntry rawData = (ByteArrayEntry)_entry.Table.Entries[2];
 
-            byte[] data = blobEntry.Value;
+            byte[] xmlData = rawData.Value;
 
-            if (data.Length > 0 && data[^1] == 0)
-                data = data[..^1];
+            if (xmlData.Length > 0 && xmlData[^1] == 0)
+                xmlData = xmlData[..^1];
 
-            File.WriteAllBytes(dialog.FileName, data);
+            File.WriteAllBytes(dialog.FileName, xmlData);
         }
     }
 }

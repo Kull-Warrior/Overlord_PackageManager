@@ -89,7 +89,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                 return;
             }
 
-            BlobEntry? blob = vertexBuffer.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
+            ByteArrayEntry? blob = vertexBuffer.Table.Entries.OfType<ByteArrayEntry>().FirstOrDefault();
             UInt32Entry? vertexCountEntry = vertexBuffer.Table.Entries.OfType<UInt32Entry>().FirstOrDefault(e => e.Id == 21);
 
             VertexBufferInfo? info = vertexBuffer.Table.Entries.OfType<VertexBufferInfo>().FirstOrDefault();

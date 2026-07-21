@@ -15,7 +15,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 20 => new StringEntry(id, relOffset),   // Texture Tag
                 21 => new StringEntry(id, relOffset),   // Texture Name
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),      // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),      // Unknown entry
             };
         }
         public static Entry CreateMaskedPBRMaterial(BinaryReader reader, uint id, uint relOffset)
@@ -38,7 +38,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 51 => new FloatEntry(id, relOffset),            // UV Scaling
                 52 => new FloatEntry(id, relOffset),            // Unkown float
 
-                _ => new BlobEntry(id, relOffset),              // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),              // Unknown entry
             };
         }
 
@@ -52,7 +52,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 50 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),              // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),              // Unknown entry
             };
         }
 
@@ -67,7 +67,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 41 => new FloatEntry(id, relOffset),            // Unkown float
                 50 => new FloatEntry(id, relOffset),            // Unkown float
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),              // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),              // Unknown entry
             };
         }
     }

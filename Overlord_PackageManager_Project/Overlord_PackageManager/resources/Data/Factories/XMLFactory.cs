@@ -13,9 +13,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 10 => new StringEntry(id, relOffset),
                 11 => new UInt32Entry(id, relOffset),
-                12 => new BlobEntry(id, relOffset),
+                12 => new ByteArrayEntry(id, relOffset),
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
     }

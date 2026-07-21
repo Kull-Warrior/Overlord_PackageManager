@@ -84,7 +84,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio
         private byte[]? GetAudioBytes()
         {
             SFXData? sfxData = _asset.Table.Entries.OfType<SFXData>().FirstOrDefault();
-            BlobEntry? blob = sfxData?.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
+            ByteArrayEntry? blob = sfxData?.Table.Entries.OfType<ByteArrayEntry>().FirstOrDefault();
             return blob?.Value;
         }
 
@@ -164,7 +164,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio
 
             // Update SFXData
             SFXData? sfxData = _asset.Table.Entries.OfType<SFXData>().FirstOrDefault();
-            BlobEntry? blob = sfxData?.Table.Entries.OfType<BlobEntry>().FirstOrDefault();
+            ByteArrayEntry? blob = sfxData?.Table.Entries.OfType<ByteArrayEntry>().FirstOrDefault();
             UInt32Entry? lengthEntry = sfxData?.Table.Entries.OfType<UInt32Entry>().LastOrDefault();
 
             if (sfxData == null || blob == null || lengthEntry == null)

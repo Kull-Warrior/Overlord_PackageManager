@@ -18,7 +18,7 @@ namespace Overlord_PackageManager.resources.Data.Generic
             return id switch
             {
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),          // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),          // Unknown entry
             };
         }
 

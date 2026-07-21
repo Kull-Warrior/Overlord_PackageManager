@@ -124,8 +124,8 @@ namespace Overlord_PackageManager
                 case FloatEntry floatEntry:
                     EditorHost.Content = new FloatEntryEditor(floatEntry);
                     break;
-                case BlobEntry blobEntry:
-                    EditorHost.Content = new BlobEntryEditor(blobEntry);
+                case ByteArrayEntry byteArrayEntry:
+                    EditorHost.Content = new ByteArrayEntryEditor(byteArrayEntry);
                     break;
                 case StringEntry stringEntry:
                     EditorHost.Content = new StringEntryEditor(stringEntry);

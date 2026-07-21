@@ -7,7 +7,7 @@ using System.Windows.Controls;
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     /// <summary>
-    /// Interaktionslogik für BlobEntryEditor.xaml
+    /// Interaktionslogik für ByteArrayEntryEditor.xaml
     /// </summary>
 
     public class HexLine
@@ -43,11 +43,11 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
         }
     }
 
-    public partial class BlobEntryEditor : UserControl
+    public partial class ByteArrayEntryEditor : UserControl
     {
-        private readonly BlobEntry _entry;
+        private readonly ByteArrayEntry _entry;
 
-        public BlobEntryEditor(BlobEntry entry)
+        public ByteArrayEntryEditor(ByteArrayEntry entry)
         {
             InitializeComponent();
             _entry = entry;

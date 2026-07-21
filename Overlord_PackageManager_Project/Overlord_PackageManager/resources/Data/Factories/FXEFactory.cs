@@ -11,9 +11,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 //20 => new Int32Entry(id, relOffset),    // Length of FXE Data
-                //21 => new BlobEntry(id, relOffset),    // FXE Data, Header + Raw Data, full FXE file
+                //21 => new ByteArrayEntry(id, relOffset),    // FXE Data, Header + Raw Data, full FXE file
                 // Add more IDs here
-                _ => new BlobEntry(id, relOffset),   // Unknown entry
+                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
         }
     }
