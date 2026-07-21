@@ -1,33 +1,13 @@
-﻿using Overlord_PackageManager.resources.Data.Generic;
-using System.IO;
+﻿using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray
 {
-    public class ByteArrayEntry(uint id, uint relOffset) : ValueEntry<byte[]>(id, relOffset)
+    public class ByteArrayEntry(uint id, uint relOffset) : RawArrayEntry<byte>(id, relOffset)
     {
-        public override void Read(BinaryReader reader, long origin)
-        {
-            reader.BaseStream.Position = origin + RelativeOffset;
-            Value = reader.ReadBytes((int)PayloadLength);
-        }
+        protected override int ElementSize => sizeof(byte);
 
-        public override long GetPayloadSize()
-        {
-            if (Value != null)
-            {
-                return Value.Length;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+        protected override byte ReadValue(BinaryReader reader) => reader.ReadByte();
 
-
-        public override void Write(BinaryWriter writer, long origin)
-        {
-            writer.BaseStream.Position = origin + RelativeOffset;
-            writer.Write(Value);
-        }
+        protected override void WriteValue(BinaryWriter writer, byte value) => writer.Write(value);
     }
 }

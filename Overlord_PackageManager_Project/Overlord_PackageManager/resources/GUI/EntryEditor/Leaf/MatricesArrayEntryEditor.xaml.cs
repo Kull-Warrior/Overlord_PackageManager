@@ -10,9 +10,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     public partial class MatricesArrayEntryEditor : UserControl
     {
-        private readonly MatricesArrayEntry _entry;
+        private readonly Matrix4x4ArrayEntry _entry;
 
-        public MatricesArrayEntryEditor(MatricesArrayEntry entry)
+        public MatricesArrayEntryEditor(Matrix4x4ArrayEntry entry)
         {
             InitializeComponent();
 

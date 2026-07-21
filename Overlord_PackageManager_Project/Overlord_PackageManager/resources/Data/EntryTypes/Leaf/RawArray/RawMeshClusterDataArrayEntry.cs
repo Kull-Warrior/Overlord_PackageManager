@@ -1,76 +1,58 @@
 ﻿using Overlord_PackageManager.resources.Data.DataTypes;
-using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 using System.Numerics;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray
 {
-    public class RawMeshClusterDataArrayEntry(uint id, uint relOffset) : ValueEntry<RawMeshClusterData[]>(id, relOffset)
+    public class RawMeshClusterDataArrayEntry(uint id, uint relOffset) : RawArrayEntry<RawMeshClusterData>(id, relOffset)
     {
-        private const int RawMeshClusterDataSizeInBytes = (9 + 3 + 3) * sizeof(float) + sizeof(ushort) + sizeof(ushort); // 64 bytes
+        protected override int ElementSize => (9 + 3 + 3) * sizeof(float) + sizeof(ushort) + sizeof(ushort);
 
-        public override void Read(BinaryReader reader, long origin)
+        protected override RawMeshClusterData ReadValue(BinaryReader reader)
         {
-            reader.BaseStream.Position = origin + RelativeOffset;
-
-            Value = new RawMeshClusterData[PayloadLength / RawMeshClusterDataSizeInBytes];
-
-            for (int i = 0; i < Value.Length; i++)
-            {
-                Matrix3x3 matrix = new(
-                    reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                    reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                    reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()
+            return new RawMeshClusterData(
+                    new Matrix3x3(
+                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
+                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
+                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()
+                    ),
+                    new Vector3(
+                        reader.ReadSingle(),
+                        reader.ReadSingle(),
+                        reader.ReadSingle()
+                    ),
+                    new Vector3(
+                        reader.ReadSingle(),
+                        reader.ReadSingle(),
+                        reader.ReadSingle()
+                    ),
+                    reader.ReadUInt16(),
+                    reader.ReadUInt16()
                 );
-
-                Vector3 center = new(
-                    reader.ReadSingle(),
-                    reader.ReadSingle(),
-                    reader.ReadSingle()
-                );
-
-                Vector3 extents = new(
-                    reader.ReadSingle(),
-                    reader.ReadSingle(),
-                    reader.ReadSingle()
-                );
-
-                Value[i] = new RawMeshClusterData(matrix, center, extents, reader.ReadUInt16(), reader.ReadUInt16());
-            }
         }
 
-        public override long GetPayloadSize()
+        protected override void WriteValue(BinaryWriter writer, RawMeshClusterData value)
         {
-            return (long)Value.Length * RawMeshClusterDataSizeInBytes;
-        }
+            Matrix3x3 matrix = value.Matrix;
 
-        public override void Write(BinaryWriter writer, long origin)
-        {
-            writer.BaseStream.Position = origin + RelativeOffset;
+            // Matrix
+            writer.Write(matrix.M11); writer.Write(matrix.M12); writer.Write(matrix.M13);
+            writer.Write(matrix.M21); writer.Write(matrix.M22); writer.Write(matrix.M23);
+            writer.Write(matrix.M31); writer.Write(matrix.M32); writer.Write(matrix.M33);
 
-            foreach (RawMeshClusterData clusterData in Value)
-            {
-                Matrix3x3 matrix = clusterData.Matrix;
+            // Head
+            writer.Write(value.Center.X);
+            writer.Write(value.Center.Y);
+            writer.Write(value.Center.Z);
 
-                // Matrix
-                writer.Write(matrix.M11); writer.Write(matrix.M12); writer.Write(matrix.M13);
-                writer.Write(matrix.M21); writer.Write(matrix.M22); writer.Write(matrix.M23);
-                writer.Write(matrix.M31); writer.Write(matrix.M32); writer.Write(matrix.M33);
+            // Tail
+            writer.Write(value.Extents.X);
+            writer.Write(value.Extents.Y);
+            writer.Write(value.Extents.Z);
 
-                // Head
-                writer.Write(clusterData.Center.X);
-                writer.Write(clusterData.Center.Y);
-                writer.Write(clusterData.Center.Z);
-
-                // Tail
-                writer.Write(clusterData.Extents.X);
-                writer.Write(clusterData.Extents.Y);
-                writer.Write(clusterData.Extents.Z);
-
-                // Patch Index and Triangle Count
-                writer.Write(clusterData.patchIndex);
-                writer.Write(clusterData.triangleCount);
-            }
+            // Patch Index and Triangle Count
+            writer.Write(value.patchIndex);
+            writer.Write(value.triangleCount);
         }
     }
 }

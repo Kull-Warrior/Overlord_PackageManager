@@ -51,7 +51,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 21 => new UInt32Entry(id, relOffset),            // Item count
-                22 => new MatricesArrayEntry(id, relOffset),    // Array of 4x4 bind pose matrices (16 floats each)
+                22 => new Matrix4x4ArrayEntry(id, relOffset),    // Array of 4x4 bind pose matrices (16 floats each)
                 _ => new ByteArrayEntry(id, relOffset),              // Unknown entry 
             };
         }

@@ -1,36 +1,13 @@
-﻿using Overlord_PackageManager.resources.Data.Generic;
-using System.IO;
+﻿using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray
 {
-    public class Int16ArrayEntry(uint id, uint relOffset) : ValueEntry<short[]>(id, relOffset)
+    public class Int16ArrayEntry(uint id, uint relOffset) : RawArrayEntry<short>(id, relOffset)
     {
-        public override void Read(BinaryReader reader, long origin)
-        {
-            reader.BaseStream.Position = origin + RelativeOffset;
-            Value = new short[PayloadLength / sizeof(short)];
+        protected override short ReadValue(BinaryReader reader) => reader.ReadInt16();
 
-            for (int i = 0; i < Value.Length; i++)
-            {
-                Value[i] = reader.ReadInt16();
-            }
-        }
+        protected override void WriteValue(BinaryWriter writer, short value) => writer.Write(value);
 
-        public override long GetPayloadSize()
-        {
-            long totalSize = sizeof(short) * Value.Length;
-
-            return totalSize;
-        }
-
-        public override void Write(BinaryWriter writer, long origin)
-        {
-            writer.BaseStream.Position = origin + RelativeOffset;
-
-            foreach (short number in Value)
-            {
-                writer.Write(number);
-            }
-        }
+        protected override int ElementSize => sizeof(short);
     }
 }
