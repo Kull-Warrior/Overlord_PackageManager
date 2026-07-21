@@ -1,4 +1,4 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.Interfaces;
 using System.IO;
 

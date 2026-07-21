@@ -1,5 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
-using Overlord_PackageManager.resources.Data.Generic;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using System.Numerics;
 using System.Windows.Controls;
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using Overlord_PackageManager.resources.GUI;
 using Overlord_PackageManager.resources.Data.Files.OMP;
 using Overlord_PackageManager.resources.Data.Files.RPK;
@@ -19,6 +18,10 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
 
 namespace Overlord_PackageManager
 {

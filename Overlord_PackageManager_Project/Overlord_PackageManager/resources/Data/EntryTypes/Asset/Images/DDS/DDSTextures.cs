@@ -1,8 +1,9 @@
 ﻿using Overlord_PackageManager.resources.Data.Generic;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
 using Overlord_PackageManager.resources.Data.Files.DDS;
 using System.IO;
 using Overlord_PackageManager.resources.Data.Factories;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
 {

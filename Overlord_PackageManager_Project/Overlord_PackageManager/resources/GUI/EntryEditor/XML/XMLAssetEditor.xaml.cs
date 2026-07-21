@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.EntryTypes.XML;
 using Overlord_PackageManager.resources.Data.Generic;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;

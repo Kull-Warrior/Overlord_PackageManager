@@ -1,5 +1,8 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.Data.EntryTypes.Map;
 using Overlord_PackageManager.resources.Data.Generic;

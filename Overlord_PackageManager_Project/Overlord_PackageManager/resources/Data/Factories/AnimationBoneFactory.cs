@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 

@@ -1,4 +1,4 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.GUI.Leaf;
 using System.Windows.Controls;
 

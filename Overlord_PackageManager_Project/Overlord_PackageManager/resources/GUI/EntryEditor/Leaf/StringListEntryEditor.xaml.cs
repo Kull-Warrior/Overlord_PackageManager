@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
 using System.IO;
 using System.Text;
 using System.Windows;

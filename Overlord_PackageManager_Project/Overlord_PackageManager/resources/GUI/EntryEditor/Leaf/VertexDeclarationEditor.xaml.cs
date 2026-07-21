@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 using System.Windows;
 using System.Windows.Controls;
 
