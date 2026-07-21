@@ -4,34 +4,39 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList
 {
-    class BonePositionDataArray(uint id, uint relOffset) : ValueEntry<List<BonePositionData>>(id, relOffset)
+    public class VertexAttributeListEntry(uint id, uint relOffset) : ValueEntry<List<VertexAttribute>>(id, relOffset)
     {
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            Value = new List<BonePositionData>((int)(PayloadLength / 16));
 
-            for (int i = 0; i < (PayloadLength / 16); i++)
+            int count = (int)(PayloadLength / 4);
+            Value = new List<VertexAttribute>(count);
+
+            for (int i = 0; i < count; i++)
             {
-                Value.Add(new BonePositionData(reader.ReadUInt32(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()));
+                uint descriptor = reader.ReadUInt32();
+                Value.Add(new VertexAttribute(descriptor));
             }
         }
 
         public override long GetPayloadSize()
         {
-            return 16;
+            if (Value == null)
+            {
+                return 0;
+            }
+
+            return Value.Count * sizeof(uint);
         }
 
         public override void Write(BinaryWriter writer, long origin)
         {
             writer.BaseStream.Position = origin + RelativeOffset;
 
-            foreach (var positionData in Value)
+            foreach (VertexAttribute attribute in Value)
             {
-                writer.Write(positionData.Timestamp);
-                writer.Write(positionData.X);
-                writer.Write(positionData.Y);
-                writer.Write(positionData.Z);
+                writer.Write(attribute.RawDescriptor);
             }
         }
     }

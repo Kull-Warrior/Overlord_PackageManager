@@ -16,7 +16,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 20 => new ByteArrayEntry(id, relOffset),                 // Unkown single byte entry, maybe an ID of some sort
                 21 => new UInt32Entry(id, relOffset),                // Single Data blob Stride
                 22 => new UInt32Entry(id, relOffset),                // Uint number of attribute descriptors
-                23 => new VertexDeclarationEntry(id, relOffset),    // Attribute descriptor table,  (uint)
+                23 => new VertexAttributeListEntry(id, relOffset),    // Attribute descriptor table,  (uint)
                 // Add more IDs here
                 _ => new ByteArrayEntry(id, relOffset),                  // Unknown entry
             };

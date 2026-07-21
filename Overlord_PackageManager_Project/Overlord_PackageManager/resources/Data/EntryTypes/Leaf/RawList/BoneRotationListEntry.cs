@@ -4,16 +4,16 @@ using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList
 {
-    class BoneRotationDataArray(uint id, uint relOffset) : ValueEntry<List<BoneRotationData>>(id, relOffset)
+    class BoneRotationListEntry(uint id, uint relOffset) : ValueEntry<List<BoneRotation>>(id, relOffset)
     {
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            Value = new List<BoneRotationData>((int)(PayloadLength / 12));
+            Value = new List<BoneRotation>((int)(PayloadLength / 12));
 
             for (int i = 0; i < (PayloadLength / 12); i++)
             {
-                Value.Add(new BoneRotationData((float)reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()));
+                Value.Add(new BoneRotation((float)reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()));
             }
         }
 
@@ -26,7 +26,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList
         {
             writer.BaseStream.Position = origin + RelativeOffset;
 
-            foreach (BoneRotationData scaleData in Value)
+            foreach (BoneRotation scaleData in Value)
             {
                 writer.Write(scaleData.Pitch);
                 writer.Write(scaleData.Yaw);

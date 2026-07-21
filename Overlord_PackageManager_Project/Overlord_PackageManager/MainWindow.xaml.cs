@@ -160,7 +160,7 @@ namespace Overlord_PackageManager
                 case MeshData meshData:
                     EditorHost.Content = new MeshDataEditor(meshData);
                     break;
-                case VertexDeclarationEntry vertexDeclaration:
+                case VertexAttributeListEntry vertexDeclaration:
                     EditorHost.Content = new VertexDeclarationEditor(vertexDeclaration);
                     break;
                 case Matrix4x4ArrayEntry matricesArrayEntry:
