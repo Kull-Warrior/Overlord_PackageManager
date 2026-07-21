@@ -3,6 +3,7 @@ using System.IO;
 using Overlord_PackageManager.resources.Data.Factories;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio
 {

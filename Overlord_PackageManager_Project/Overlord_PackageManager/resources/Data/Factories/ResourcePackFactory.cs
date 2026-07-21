@@ -36,7 +36,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 24 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "TS", Texture related Data
                 25 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "0" Type Data Unknown use, Map editor friendly apperently
                 26 => new AssetListContainer(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
-                27 => new StringListEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
+                27 => new StringCountedListEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
                 28 => new XMLEntry(id, relOffset),          // Contains XML Data
                 29 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // Unknown
                 30 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "2" Type Data Unknown use, contains lua scripts

@@ -1,43 +1,18 @@
 ﻿using Overlord_PackageManager.resources.Data.DataTypes;
-using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList
 {
-    public class VertexAttributeListEntry(uint id, uint relOffset) : ValueEntry<List<VertexAttribute>>(id, relOffset)
+    public class VertexAttributeListEntry(uint id, uint relOffset) : RawListEntry<VertexAttribute>(id, relOffset)
     {
-        public override void Read(BinaryReader reader, long origin)
+        protected override int ElementSize => sizeof(uint);
+
+        protected override VertexAttribute ReadValue(BinaryReader reader)
         {
-            reader.BaseStream.Position = origin + RelativeOffset;
-
-            int count = (int)(PayloadLength / 4);
-            Value = new List<VertexAttribute>(count);
-
-            for (int i = 0; i < count; i++)
-            {
-                uint descriptor = reader.ReadUInt32();
-                Value.Add(new VertexAttribute(descriptor));
-            }
+            uint descriptor = reader.ReadUInt32();
+            return new VertexAttribute(descriptor);
         }
 
-        public override long GetPayloadSize()
-        {
-            if (Value == null)
-            {
-                return 0;
-            }
-
-            return Value.Count * sizeof(uint);
-        }
-
-        public override void Write(BinaryWriter writer, long origin)
-        {
-            writer.BaseStream.Position = origin + RelativeOffset;
-
-            foreach (VertexAttribute attribute in Value)
-            {
-                writer.Write(attribute.RawDescriptor);
-            }
-        }
+        protected override void WriteValue(BinaryWriter writer, VertexAttribute value) => writer.Write(value.RawDescriptor);
     }
 }

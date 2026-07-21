@@ -8,9 +8,9 @@ using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
-    public partial class StringListEntryEditor : UserControl
+    public partial class StringCountedListEntryEditor : UserControl
     {
-        private StringListEntry _entry;
+        private StringCountedListEntry _entry;
         private bool _isInternalUpdate;
 
         public event Action? TextChangedExternally;
@@ -20,13 +20,13 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
             FileButtons.Visibility = Visibility.Collapsed;
         }
 
-        public StringListEntryEditor(StringListEntry entry)
+        public StringCountedListEntryEditor(StringCountedListEntry entry)
         {
             InitializeComponent();
             AttachEntry(entry);
         }
 
-        public void AttachEntry(StringListEntry entry)
+        public void AttachEntry(StringCountedListEntry entry)
         {
             _entry = entry;
             LoadText();

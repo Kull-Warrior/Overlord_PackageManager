@@ -113,7 +113,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 42 => new UInt32Entry(id, relOffset),
                 43 => new UInt32Entry(id, relOffset),
                 45 => new LuaEntry(id, relOffset),
-                46 => new StringListEntry(id, relOffset),
+                46 => new StringCountedListEntry(id, relOffset),
                 47 => new ByteArrayEntry(id, relOffset),   // Unknown entry
                 48 => new TableEntry(id, relOffset),   // Unknown entry
                 49 => new UInt32Entry(id, relOffset),

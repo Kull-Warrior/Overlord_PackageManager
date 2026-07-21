@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;

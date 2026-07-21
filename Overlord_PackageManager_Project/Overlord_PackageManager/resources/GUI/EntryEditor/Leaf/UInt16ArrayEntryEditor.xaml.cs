@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf

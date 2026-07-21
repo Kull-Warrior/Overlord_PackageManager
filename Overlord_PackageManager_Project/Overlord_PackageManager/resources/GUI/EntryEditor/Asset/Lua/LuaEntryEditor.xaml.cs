@@ -19,13 +19,13 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
         private readonly TableEntry _entry;
 
         private StringEntry? _nameEntry;
-        private StringListEntry _luaTextEntry;
+        private StringCountedListEntry _luaTextEntry;
         private UInt32Entry _bytecodeLengthEntry;
         private ByteArrayEntry _bytecodeEntry;
 
-        private StringListEntry _currentTextEntry;
+        private StringCountedListEntry _currentTextEntry;
 
-        private StringListEntryEditor _textEditor;
+        private StringCountedListEntryEditor _textEditor;
         private string _lastCompiledText = "";
 
         public LuaEntryEditor(TableEntry entry)
@@ -54,7 +54,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
                         _nameEntry = s;
                         break;
 
-                    case StringListEntry sl:
+                    case StringCountedListEntry sl:
                         _luaTextEntry = sl;
                         break;
 
@@ -79,9 +79,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
             ExportButton.IsEnabled = !string.IsNullOrWhiteSpace(GetLuaText());
         }
 
-        private StringListEntry CreateTemporaryEntry()
+        private StringCountedListEntry CreateTemporaryEntry()
         {
-            return new StringListEntry(21, 0)
+            return new StringCountedListEntry(21, 0)
             {
                 Value = new List<StringLine>(),
                 NumberOfLines = 0
@@ -90,7 +90,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
 
         private void CreateLuaEntries()
         {
-            _luaTextEntry = new StringListEntry(21, 0);
+            _luaTextEntry = new StringCountedListEntry(21, 0);
             _bytecodeLengthEntry = new UInt32Entry(22, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
             _bytecodeEntry = new ByteArrayEntry(23, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
 
@@ -159,7 +159,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
                 _currentTextEntry = CreateTemporaryEntry();
             }
 
-            _textEditor = new StringListEntryEditor(_currentTextEntry);
+            _textEditor = new StringCountedListEntryEditor(_currentTextEntry);
             _textEditor.HideFileButtons();
             _textEditor.TextChangedExternally += TextChanged;
             _textEditor.LostFocus += TextEditor_LostFocus;

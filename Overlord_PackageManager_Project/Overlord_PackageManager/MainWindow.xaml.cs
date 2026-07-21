@@ -145,8 +145,8 @@ namespace Overlord_PackageManager
                 case XMLEntry xmlEntry:
                     EditorHost.Content = new XMLAssetEditor(xmlEntry);
                     break;
-                case StringListEntry stringListEntry:
-                    EditorHost.Content = new StringListEntryEditor(stringListEntry);
+                case StringCountedListEntry stringCountedListEntry:
+                    EditorHost.Content = new StringCountedListEntryEditor(stringCountedListEntry);
                     break;
                 case LuaEntry luaEntry:
                     EditorHost.Content = new LuaEntryEditor(luaEntry);

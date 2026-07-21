@@ -14,7 +14,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 20 => new StringEntry(id, relOffset),
-                21 => new StringListEntry(id, relOffset),
+                21 => new StringCountedListEntry(id, relOffset),
                 22 => new UInt32Entry(id, relOffset),
                 23 => new ByteArrayEntry(id, relOffset),
                 // Add more IDs here

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList
 {
-    public class StringListEntry(uint id, uint relOffset) : ValueEntry<List<StringLine>>(id, relOffset)
+    public class StringCountedListEntry(uint id, uint relOffset) : ValueEntry<List<StringLine>>(id, relOffset)
     {
         public uint NumberOfLines { get; set; }
         public List<uint> LineLengths { get; set; } = new List<uint>();
