@@ -53,7 +53,7 @@ namespace Overlord_PackageManager.resources.Data.Files.RPK
             try
             {
                 using FileStream fs = File.OpenRead(path);
-                using BinaryReader br = new BinaryReader(fs);
+                using BinaryReader br = new BinaryReader(fs, Encoding.ASCII);
                 {
                     Header = new ResourcePackHeader(br);
                     Body = new ResourcePackBody();

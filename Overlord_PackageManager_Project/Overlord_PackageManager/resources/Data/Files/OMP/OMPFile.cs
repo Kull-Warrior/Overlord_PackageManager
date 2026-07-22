@@ -43,7 +43,7 @@ namespace Overlord_PackageManager.resources.Data.Files.OMP
             try
             {
                 using FileStream fs = File.OpenRead(path);
-                using BinaryReader br = new BinaryReader(fs);
+                using BinaryReader br = new BinaryReader(fs, Encoding.ASCII);
                 {
                     Header = new OMPHeader(br);
                     Body = new OMPBody();
