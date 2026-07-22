@@ -64,7 +64,6 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
             }
 
             _entry.Value = newLines;
-            _entry.NumberOfLines = (uint)newLines.Count;
         }
 
         public void SetText(string text)

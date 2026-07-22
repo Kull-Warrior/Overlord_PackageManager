@@ -83,8 +83,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
         {
             return new StringCountedListEntry(21, 0)
             {
-                Value = new List<StringLine>(),
-                NumberOfLines = 0
+                Value = new List<StringLine>()
             };
         }
 
