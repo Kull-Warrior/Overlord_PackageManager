@@ -36,7 +36,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
         {
             _isInternalUpdate = true;
                 
-            LinesBox.Text = _entry.Value == null ? string.Empty : string.Join(Environment.NewLine, _entry.Value.Select(l => l.Text));
+            LinesBox.Text = _entry.Value == null ? string.Empty : string.Join(Environment.NewLine, _entry.Value);
 
             _isInternalUpdate = false;
         }
@@ -55,13 +55,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
         {
             string[] lines = LinesBox.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            List<StringLine> newLines = new();
-
-            foreach (string line in lines)
-            {
-                byte[] bytes = Encoding.ASCII.GetBytes(line);
-                newLines.Add(new StringLine((uint)bytes.Length, line));
-            }
+            List<string> newLines = [.. lines];
 
             _entry.Value = newLines;
         }

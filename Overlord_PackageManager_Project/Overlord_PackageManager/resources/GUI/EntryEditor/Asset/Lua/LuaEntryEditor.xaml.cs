@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -83,7 +82,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
         {
             return new StringCountedListEntry(21, 0)
             {
-                Value = new List<StringLine>()
+                Value = new List<string>()
             };
         }
 
@@ -174,7 +173,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
                 return string.Empty;
             }
 
-            return string.Join("\n", _currentTextEntry.Value.Select(x => x.Text));
+            return string.Join("\n", _currentTextEntry.Value);
         }
 
         private void CompileLua()
