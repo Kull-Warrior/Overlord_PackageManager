@@ -1,9 +1,7 @@
 ﻿using Overlord_PackageManager.resources.Data.Files.DDS;
 using System.IO;
-using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
 {
@@ -31,13 +29,13 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
             List<DDSTextures> textures = GetTextureList().Table.Entries.OfType<DDSTextures>().ToList();
 
             DDSTextures first = textures.First();
-            uint width = ((UInt32Entry)first.Table.Entries[0]).Value;
-            uint height = ((UInt32Entry)first.Table.Entries[1]).Value;
-            DDSFormat format = (DDSFormat)((UInt32Entry)first.Table.Entries[2]).Value;
+            uint width = ((ScalarEntry<uint>)first.Table.Entries[0]).Value;
+            uint height = ((ScalarEntry<uint>)first.Table.Entries[1]).Value;
+            DDSFormat format = (DDSFormat)((ScalarEntry<uint>)first.Table.Entries[2]).Value;
 
             List<DDSMipFace> faces = textures.Select((t, i) =>
             {
-                ByteArrayEntry blob = t.Table.Entries.OfType<ByteArrayEntry>().First();
+                RawArrayEntry<byte> blob = t.Table.Entries.OfType<RawArrayEntry<byte>>().First();
                 return new DDSMipFace
                 {
                     FaceIndex = 0,

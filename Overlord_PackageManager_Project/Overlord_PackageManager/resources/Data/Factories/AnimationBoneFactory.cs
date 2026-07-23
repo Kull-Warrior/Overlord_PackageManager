@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -13,9 +14,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new UInt32Entry(id, relOffset),    // Unkown u32
+                20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // Unkown u32
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -23,9 +24,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new UInt32Entry(id, relOffset),    // Unkown u32
+                20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // Unkown u32
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -33,11 +34,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new UInt32Entry(id, relOffset),                // Unkown u32
-                21 => new UInt32Entry(id, relOffset),                // Number of Bone positions, if the bone does not move in the animation only a single entry can be found here
+                20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Unkown u32
+                21 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Number of Bone positions, if the bone does not move in the animation only a single entry can be found here
                 //22 => new BonePositionDataArray(id, relOffset),     // Array of Bone positions
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -45,13 +46,13 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                22 => new UInt32Entry(id, relOffset),                // Number of Bone rotations
+                22 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Number of Bone rotations
                 //23 => new BoneRotationDataArray(id, relOffset),     // Array of Bone rotations
-                24 => new ByteArrayEntry(id, relOffset),               // Unkown 12 Bytes
-                30 => new UInt32Entry(id, relOffset),                // Number of Bone scales
+                24 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),               // Unkown 12 Bytes
+                30 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Number of Bone scales
                 //31 => new BoneScaleDataArray(id, relOffset),        // Number of Bone scales
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -59,10 +60,10 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new UInt32Entry(id, relOffset),                                    // Unkown u32
+                20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                                    // Unkown u32
                 21 => new BoneAnimationSubTableType25SubTableType21(id, relOffset),     // Contains Bone Rotation and Scale data
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -70,14 +71,14 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new CharCountedArrayEntry(id, relOffset),                   // Bone Name
-                21 => new UInt64Entry(id, relOffset),                    // Unkown u64
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),                   // Bone Name
+                21 => new ScalarEntry<ulong>(id, relOffset, BinaryTypes.UInt64),                    // Unkown u64
                 22 => new BoneAnimationSubTableType22(id, relOffset),   // Unkown use
                 23 => new BoneAnimationSubTableType23(id, relOffset),   // Unkown use
                 24 => new BoneAnimationSubTableType24(id, relOffset),   // Contains Bone Position data at deeper levels
                 25 => new BoneAnimationSubTableType25(id, relOffset),   // Contains Bone Rotation and Scale data at deeper levels
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
     }

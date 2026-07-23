@@ -8,9 +8,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
     /// </summary>
     public partial class UInt32EntryEditor : UserControl
     {
-        private readonly UInt32Entry _entry;
+        private readonly ScalarEntry<uint> _entry;
 
-        public UInt32EntryEditor(UInt32Entry entry)
+        public UInt32EntryEditor(ScalarEntry<uint> entry)
         {
             InitializeComponent();
 

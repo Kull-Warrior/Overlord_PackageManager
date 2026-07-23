@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -13,9 +14,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                30 => new ByteArrayEntry(id, relOffset),
+                30 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -24,13 +25,13 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 1 => new TgaTifTextureData(id, relOffset),
-                19 => new UInt32Entry(id, relOffset),
-                20 => new CharCountedArrayEntry(id, relOffset),
-                21 => new CharCountedArrayEntry(id, relOffset),
-                32 => new UInt32Entry(id, relOffset),
-                33 => new UInt32Entry(id, relOffset),
+                19 => new ScalarEntry<int>(id, relOffset, BinaryTypes.Int32),
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
+                32 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                33 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
     }

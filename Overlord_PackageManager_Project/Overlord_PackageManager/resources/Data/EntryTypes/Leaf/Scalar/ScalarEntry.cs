@@ -1,29 +1,33 @@
-﻿using System.IO;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.Data.Generic;
+using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
 {
-    public abstract class ScalarEntry<T>(uint id, uint relOffset) : ValueEntry<T>(id, relOffset)
+    public class ScalarEntry<T> : ValueEntry<T>
     {
-        protected abstract T ReadValue(BinaryReader reader);
-        protected abstract void WriteValue(BinaryWriter writer, T value);
-        protected abstract int ElementSize { get; }
+        private readonly BinaryType<T> _binaryType;
+
+        public ScalarEntry(uint id, uint relOffset, BinaryType<T> binaryType) : base(id, relOffset)
+        {
+            _binaryType = binaryType;
+        }
 
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;
-            Value = ReadValue(reader);
+            Value = _binaryType.Read(reader);
         }
 
         public override long GetPayloadSize()
         {
-            return ElementSize;
+            return _binaryType.Size;
         }
 
         public override void Write(BinaryWriter writer, long origin)
         {
             writer.BaseStream.Position = origin + RelativeOffset;
-            WriteValue(writer, Value);
+            _binaryType.Write(writer, Value);
         }
     }
 }

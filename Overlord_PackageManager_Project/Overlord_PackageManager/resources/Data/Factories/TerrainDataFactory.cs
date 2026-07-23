@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -12,18 +13,18 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                30 => new UInt32Entry(id, relOffset),
-                31 => new UInt32Entry(id, relOffset),
-                33 => new ByteArrayEntry(id, relOffset),
-                34 => new CharCountedArrayEntry(id, relOffset),
-                35 => new CharCountedArrayEntry(id, relOffset),
-                36 => new FloatEntry(id, relOffset),
-                37 => new ByteArrayEntry(id, relOffset),
-                38 => new ByteEntry(id, relOffset),
-                39 => new ByteArrayEntry(id, relOffset),
-                40 => new ByteEntry(id, relOffset),
+                30 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                31 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                33 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),
+                34 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
+                35 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
+                36 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),
+                37 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),
+                38 => new ScalarEntry<byte>(id, relOffset, BinaryTypes.Byte),
+                39 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),
+                40 => new ScalarEntry<byte>(id, relOffset, BinaryTypes.Byte),
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
     }

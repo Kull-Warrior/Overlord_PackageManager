@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.Generic
@@ -21,7 +22,7 @@ namespace Overlord_PackageManager.resources.Data.Generic
             return id switch
             {
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 

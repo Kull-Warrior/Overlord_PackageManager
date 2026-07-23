@@ -28,7 +28,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 
     public partial class UInt16ArrayEntryEditor : UserControl
     {
-        public UInt16ArrayEntryEditor(UInt16ArrayEntry entry)
+        public UInt16ArrayEntryEditor(RawArrayEntry<ushort> entry)
         {
             InitializeComponent();
 

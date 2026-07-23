@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
@@ -14,12 +15,12 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new UInt32Entry(id, relOffset),    // Image width
-                21 => new UInt32Entry(id, relOffset),    // Image height
-                22 => new ByteArrayEntry(id, relOffset),   // Raw image data
-                23 => new UInt32Entry(id, relOffset),    // DDS Format
+                20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // Image width
+                21 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // Image height
+                22 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Raw image data
+                23 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // DDS Format
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -28,11 +29,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 20 => new AssetListContainer(id, relOffset),     // List of all dds images making up the entire dds file, meaning the main image and each mipmap
-                21 => new UInt32Entry(id, relOffset),     // Unkown
-                23 => new UInt32Entry(id, relOffset),     // Unkown
-                24 => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                21 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),     // Unkown
+                23 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),     // Unkown
+                24 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -41,11 +42,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 1 => new DDSTextureAssetDataContainer(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
-                19 => new UInt32Entry(id, relOffset),    // FFFF Block unkown use
-                20 => new CharCountedArrayEntry(id, relOffset),   // Chunk or In-Game Object Name
-                21 => new CharCountedArrayEntry(id, relOffset),   // File name
+                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // FFFF Block unkown use
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),   // Chunk or In-Game Object Name
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),   // File name
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -54,11 +55,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 1 => new DDSTextureAssetDataContainer(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
-                19 => new UInt32Entry(id, relOffset),    // FFFF Block unkown use
-                20 => new CharCountedArrayEntry(id, relOffset),   // Chunk or In-Game Object Name
-                21 => new CharCountedArrayEntry(id, relOffset),   // File name
+                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // FFFF Block unkown use
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),   // Chunk or In-Game Object Name
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),   // File name
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
     }

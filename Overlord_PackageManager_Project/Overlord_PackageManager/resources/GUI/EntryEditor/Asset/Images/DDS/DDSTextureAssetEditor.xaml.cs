@@ -28,7 +28,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS
 
             List<Entry> entries = _asset.Table.Entries;
 
-            List<CharCountedArrayEntry> stringEntries = entries.OfType<CharCountedArrayEntry>().ToList();
+            List<CountedArrayEntry<char>> stringEntries = entries.OfType<CountedArrayEntry<char>>().ToList();
             DDSTextureAssetDataContainer? dataContainer = entries.OfType<DDSTextureAssetDataContainer>().FirstOrDefault();
             AssetListContainer? mipContainer = dataContainer.Table.Entries.OfType<AssetListContainer>().FirstOrDefault();
 
@@ -75,8 +75,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS
             _asset.ReplaceFromDDS(fileBytes);
 
             // Update filename entry
-            StringEntry fileNameEntry = (StringEntry)_asset.Table.Entries[1];
-            fileNameEntry.Value = Path.GetFileName(dialog.FileName);
+            CountedArrayEntry<char> fileNameEntry = (CountedArrayEntry<char>)_asset.Table.Entries[1];
+            fileNameEntry.Value = Path.GetFileName(dialog.FileName).ToCharArray();
 
             BuildUI();
         }
@@ -88,7 +88,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS
             if (dialog.ShowDialog() != true)
                 return;
 
-            string fileName = ((StringEntry)_asset.Table.Entries[1]).Value;
+            string fileName = new string(((CountedArrayEntry<char>)_asset.Table.Entries[1]).Value);
 
             if (!fileName.EndsWith(".dds", StringComparison.OrdinalIgnoreCase))
                 fileName += ".dds";

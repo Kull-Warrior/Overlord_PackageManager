@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -15,7 +16,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 1 => new AssetList(id, relOffset),
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -23,14 +24,14 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                30 => new UInt32Entry(id, relOffset),    // Index?
-                31 => new CharCountedArrayEntry(id, relOffset),
+                30 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // Index?
+                31 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
                 32 => new AssetListContainer(id, relOffset),
-                33 => new UInt32Entry(id, relOffset),
+                33 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 34 => new TableEntry(id, relOffset),
-                35 => new UInt32Entry(id, relOffset),    // Parent Index?
+                35 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // Parent Index?
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -39,7 +40,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -48,7 +49,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -57,7 +58,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -66,7 +67,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -75,7 +76,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -84,7 +85,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -93,7 +94,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
     }

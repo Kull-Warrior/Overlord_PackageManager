@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
@@ -14,12 +15,12 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new CharCountedArrayEntry(id, relOffset),
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
                 21 => new CharListCountedArrayEntry(id, relOffset),
-                22 => new UInt32Entry(id, relOffset),
-                23 => new ByteArrayEntry(id, relOffset),
+                22 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                23 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -36,11 +37,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                10 => new UInt32Entry(id, relOffset),
-                11 => new UInt32Entry(id, relOffset),
+                10 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                11 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 30 => new LuaEntry(id, relOffset),
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
     }

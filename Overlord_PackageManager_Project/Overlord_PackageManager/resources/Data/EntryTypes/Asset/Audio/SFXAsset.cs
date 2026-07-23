@@ -12,11 +12,11 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio
 
         public void WriteToFile(string baseDir)
         {
-            List<CharCountedArrayEntry> sfxAssetStrings = Table.Entries.OfType<CharCountedArrayEntry>().ToList();
+            List<CountedArrayEntry<char>> sfxAssetStrings = Table.Entries.OfType<CountedArrayEntry<char>>().ToList();
             string rawName = new string(sfxAssetStrings[2].Value);
             string fileName = Path.GetFileName(rawName);
             List<SFXData> sfxData = Table.Entries.OfType<SFXData>().ToList();
-            byte[] audioData = ((ByteArrayEntry)sfxData[0].Table.Entries[1]).Value;
+            byte[] audioData = ((RawArrayEntry<byte>)sfxData[0].Table.Entries[1]).Value;
 
             using FileStream fs = File.Open(baseDir + fileName, FileMode.Create);
             using BinaryWriter br = new BinaryWriter(fs);

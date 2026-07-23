@@ -1,40 +1,40 @@
-﻿using System.IO;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.Data.Generic;
+using System.IO;
 
-public abstract class RawArrayEntry<T>(uint id, uint relOffset) : ValueEntry<T[]>(id, relOffset)
+namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray
 {
-    protected abstract T ReadValue(BinaryReader reader);
-
-    protected abstract void WriteValue(BinaryWriter writer, T value);
-
-    protected abstract int ElementSize { get; }
-
-    public override void Read(BinaryReader reader, long origin)
+    public class RawArrayEntry<T>(uint id, uint relOffset, BinaryType<T> binaryType) : ValueEntry<T[]>(id, relOffset)
     {
-        reader.BaseStream.Position = origin + RelativeOffset;
+        protected BinaryType<T> BinaryType { get; } = binaryType;
 
-        int count = (int)(PayloadLength / ElementSize);
-
-        Value = new T[count];
-
-        for (int i = 0; i < count; i++)
+        public override void Read(BinaryReader reader, long origin)
         {
-            Value[i] = ReadValue(reader);
+            reader.BaseStream.Position = origin + RelativeOffset;
+
+            int count = (int)(PayloadLength / BinaryType.Size);
+
+            Value = new T[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                Value[i] = BinaryType.Read(reader);
+            }
         }
-    }
 
-    public override long GetPayloadSize()
-    {
-        return (Value?.Length ?? 0) * (long)ElementSize;
-    }
-
-    public override void Write(BinaryWriter writer, long origin)
-    {
-        writer.BaseStream.Position = origin + RelativeOffset;
-
-        foreach (var value in Value)
+        public override long GetPayloadSize()
         {
-            WriteValue(writer, value);
+            return (Value?.Length ?? 0) * (long)BinaryType.Size;
+        }
+
+        public override void Write(BinaryWriter writer, long origin)
+        {
+            writer.BaseStream.Position = origin + RelativeOffset;
+
+            foreach (var value in Value)
+            {
+                BinaryType.Write(writer, value);
+            }
         }
     }
 }

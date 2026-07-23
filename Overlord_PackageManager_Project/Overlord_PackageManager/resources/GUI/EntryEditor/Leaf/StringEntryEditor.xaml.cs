@@ -8,9 +8,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
     /// </summary>
     public partial class StringEntryEditor : UserControl
     {
-        private readonly CharCountedArrayEntry _entry;
+        private readonly CountedArrayEntry<char> _entry;
 
-        public StringEntryEditor(CharCountedArrayEntry entry)
+        public StringEntryEditor(CountedArrayEntry<char> entry)
         {
             InitializeComponent();
 

@@ -12,9 +12,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     public partial class MeshBoneShapeArrayEntryEditor : UserControl
     {
-        private readonly MeshBoneShapeArrayEntry _entry;
+        private readonly RawArrayEntry<MeshBoneShape> _entry;
 
-        public MeshBoneShapeArrayEntryEditor(MeshBoneShapeArrayEntry entry)
+        public MeshBoneShapeArrayEntryEditor(RawArrayEntry<MeshBoneShape> entry)
         {
             InitializeComponent();
 

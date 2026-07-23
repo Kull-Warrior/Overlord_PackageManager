@@ -4,6 +4,7 @@ using System.IO;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.Factories;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
 {
@@ -27,8 +28,8 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
 
-            StringEntry fileNameEntry = (StringEntry)Table.Entries[1];
-            string fileName = fileNameEntry.Value;
+            CountedArrayEntry<char> fileNameEntry = (CountedArrayEntry<char>)Table.Entries[1];
+            string fileName = new string(fileNameEntry.Value);
 
             if (!fileName.EndsWith(".dds", StringComparison.OrdinalIgnoreCase))
                 fileName += ".dds";

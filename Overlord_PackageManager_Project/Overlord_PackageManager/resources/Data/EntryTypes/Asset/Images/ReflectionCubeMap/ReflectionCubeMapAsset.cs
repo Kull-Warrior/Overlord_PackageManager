@@ -34,15 +34,15 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Reflect
             List<DDSTextures> textures = GetTextureList().Table.Entries.OfType<DDSTextures>().ToList();
             DDSTextures first = textures.First();
 
-            uint width = ((UInt32Entry)first.Table.Entries[0]).Value;
-            uint height = ((UInt32Entry)first.Table.Entries[1]).Value;
-            DDSFormat format = (DDSFormat)((UInt32Entry)first.Table.Entries[2]).Value;
+            uint width = ((ScalarEntry<uint>)first.Table.Entries[0]).Value;
+            uint height = ((ScalarEntry<uint>)first.Table.Entries[1]).Value;
+            DDSFormat format = (DDSFormat)((ScalarEntry<uint>)first.Table.Entries[2]).Value;
 
             int mipCount = textures.Count / 6;
 
             List<DDSMipFace> faces = textures.Select((t, i) =>
             {
-                ByteArrayEntry blob = t.Table.Entries.OfType<ByteArrayEntry>().First();
+                RawArrayEntry<byte> blob = t.Table.Entries.OfType<RawArrayEntry<byte>>().First();
 
                 return new DDSMipFace
                 {

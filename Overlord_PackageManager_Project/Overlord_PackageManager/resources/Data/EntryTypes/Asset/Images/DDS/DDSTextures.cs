@@ -4,6 +4,7 @@ using System.IO;
 using Overlord_PackageManager.resources.Data.Factories;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.Data.DataTypes;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
 {
@@ -24,10 +25,10 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS
             PayloadLength = 12 + (uint)data.Length;
             Table = new ReferenceTable();
             Table.Entries = new List<Entry>(4);
-            Table.Entries.Add(new UInt32Entry(20, 0) { Value = width });
-            Table.Entries.Add(new UInt32Entry(21, 4) { Value = height });
-            Table.Entries.Add(new UInt32Entry(23, 8) { Value = (uint)format });
-            Table.Entries.Add(new ByteArrayEntry(22, 12) { Value = data });
+            Table.Entries.Add(new ScalarEntry<uint>(20, 0, BinaryTypes.UInt32) { Value = width });
+            Table.Entries.Add(new ScalarEntry<uint>(21, 4, BinaryTypes.UInt32) { Value = height });
+            Table.Entries.Add(new ScalarEntry<uint>(23, 8, BinaryTypes.UInt32) { Value = (uint)format });
+            Table.Entries.Add(new RawArrayEntry<byte>(22, 12, BinaryTypes.Byte) { Value = data });
         }
     }
 }

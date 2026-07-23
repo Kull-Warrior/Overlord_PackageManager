@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
@@ -22,6 +23,7 @@ using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
 using Overlord_PackageManager.resources.GUI.EntryEditor.XML;
 using System.IO;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -117,19 +119,19 @@ namespace Overlord_PackageManager
 
             switch (obj)
             {
-                case UInt32Entry int32Entry:
-                    EditorHost.Content = new UInt32EntryEditor(int32Entry);
+                case ScalarEntry<uint> uint32Entry:
+                    EditorHost.Content = new UInt32EntryEditor(uint32Entry);
                     break;
-                case UInt64Entry int64Entry:
-                    EditorHost.Content = new UInt64EntryEditor(int64Entry);
+                case ScalarEntry<ulong> uint64Entry:
+                    EditorHost.Content = new UInt64EntryEditor(uint64Entry);
                     break;
-                case FloatEntry floatEntry:
+                case ScalarEntry<float> floatEntry:
                     EditorHost.Content = new FloatEntryEditor(floatEntry);
                     break;
-                case ByteArrayEntry byteArrayEntry:
+                case RawArrayEntry<byte> byteArrayEntry:
                     EditorHost.Content = new ByteArrayEntryEditor(byteArrayEntry);
                     break;
-                case CharCountedArrayEntry charCountedArray:
+                case CountedArrayEntry<char> charCountedArray:
                     EditorHost.Content = new StringEntryEditor(charCountedArray);
                     break;
                 case DDSTextures ddsTextures:
@@ -153,25 +155,25 @@ namespace Overlord_PackageManager
                 case LuaEntry luaEntry:
                     EditorHost.Content = new LuaEntryEditor(luaEntry);
                     break;
-                case FloatArrayEntry floatArrayEntry:
+                case RawArrayEntry<float> floatArrayEntry:
                     EditorHost.Content = new FloatArrayEntryEditor(floatArrayEntry);
                     break;
-                case UInt16ArrayEntry uint16ArrayEntry:
+                case RawArrayEntry<ushort> uint16ArrayEntry:
                     EditorHost.Content = new UInt16ArrayEntryEditor(uint16ArrayEntry);
                     break;
                 case MeshData meshData:
                     EditorHost.Content = new MeshDataEditor(meshData);
                     break;
-                case VertexAttributeListEntry vertexDeclaration:
+                case RawListEntry<VertexAttribute> vertexDeclaration:
                     EditorHost.Content = new VertexDeclarationEditor(vertexDeclaration);
                     break;
-                case Matrix4x4ArrayEntry matricesArrayEntry:
+                case RawArrayEntry<Matrix4x4> matricesArrayEntry:
                     EditorHost.Content = new MatricesArrayEntryEditor(matricesArrayEntry);
                     break;
-                case MeshBoneShapeArrayEntry meshBoneShapeArray:
+                case RawArrayEntry<MeshBoneShape> meshBoneShapeArray:
                     EditorHost.Content = new MeshBoneShapeArrayEntryEditor(meshBoneShapeArray);
                     break;
-                case RawMeshClusterDataArrayEntry rawMeshClusterDataArray:
+                case RawArrayEntry<RawMeshClusterData> rawMeshClusterDataArray:
                     EditorHost.Content = new RawMeshClusterDataArrayEntryEditor(rawMeshClusterDataArray);
                     break;
                 default:

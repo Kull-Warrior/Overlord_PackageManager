@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -18,10 +19,10 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
     {
         private readonly TableEntry _entry;
 
-        private CharCountedArrayEntry? _nameEntry;
+        private CountedArrayEntry<char>? _nameEntry;
         private CharListCountedArrayEntry _luaTextEntry;
-        private UInt32Entry _bytecodeLengthEntry;
-        private ByteArrayEntry _bytecodeEntry;
+        private ScalarEntry<uint> _bytecodeLengthEntry;
+        private RawArrayEntry<byte> _bytecodeEntry;
 
         private CharListCountedArrayEntry _currentTextEntry;
 
@@ -50,7 +51,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
             {
                 switch (e)
                 {
-                    case CharCountedArrayEntry c:
+                    case CountedArrayEntry<char> c:
                         _nameEntry = c;
                         break;
 
@@ -58,11 +59,11 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
                         _luaTextEntry = cl;
                         break;
 
-                    case UInt32Entry i:
-                        _bytecodeLengthEntry = i;
+                    case ScalarEntry<uint> s:
+                        _bytecodeLengthEntry = s;
                         break;
 
-                    case ByteArrayEntry b:
+                    case RawArrayEntry<byte> b:
                         _bytecodeEntry = b;
                         break;
                 }
@@ -90,8 +91,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
         private void CreateLuaEntries()
         {
             _luaTextEntry = new CharListCountedArrayEntry(21, 0);
-            _bytecodeLengthEntry = new UInt32Entry(22, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
-            _bytecodeEntry = new ByteArrayEntry(23, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
+            _bytecodeLengthEntry = new ScalarEntry<uint>(22, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength), BinaryTypes.UInt32);
+            _bytecodeEntry = new RawArrayEntry<byte>(23, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength), BinaryTypes.Byte);
 
             _entry.Table.Entries.Add(_luaTextEntry);
             _entry.Table.Entries.Add(_bytecodeLengthEntry);

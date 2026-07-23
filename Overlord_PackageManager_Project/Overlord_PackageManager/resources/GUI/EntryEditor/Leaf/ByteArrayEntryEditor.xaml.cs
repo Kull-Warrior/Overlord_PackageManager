@@ -46,9 +46,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 
     public partial class ByteArrayEntryEditor : UserControl
     {
-        private readonly ByteArrayEntry _entry;
+        private readonly RawArrayEntry<byte> _entry;
 
-        public ByteArrayEntryEditor(ByteArrayEntry entry)
+        public ByteArrayEntryEditor(RawArrayEntry<byte> entry)
         {
             InitializeComponent();
             _entry = entry;

@@ -1,4 +1,5 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Material;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Material;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -13,10 +14,10 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new CharCountedArrayEntry(id, relOffset),   // Texture Tag
-                21 => new CharCountedArrayEntry(id, relOffset),   // Texture Name
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),   // Texture Tag
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),   // Texture Name
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),      // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),      // Unknown entry
             };
         }
         public static Entry CreateMaskedPBRMaterial(BinaryReader reader, uint id, uint relOffset)
@@ -24,22 +25,22 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
-                20 => new CharCountedArrayEntry(id, relOffset), // Material Tag
-                21 => new CharCountedArrayEntry(id, relOffset), // Material Name
+                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Unkown FFFFFF value
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Tag
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 42 => new MaterialTextureLink(id, relOffset),   // Normal Texture
                 43 => new MaterialTextureLink(id, relOffset),   // Reflection CubeMap Texture
                 44 => new MaterialTextureLink(id, relOffset),   // Mask Texture
-                45 => new FloatEntry(id, relOffset),            // Could be the color intensity or the opacity of the mask.
-                46 => new FloatEntry(id, relOffset),            // Normal map strength or a smoothness/roughness value. Possibly threshold for masks (alpha clipping).
-                47 => new FloatEntry(id, relOffset),            // Control specular power (shininess) or, if the material reflects metal, the intensity of the cubemap reflection.
+                45 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),            // Could be the color intensity or the opacity of the mask.
+                46 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),            // Normal map strength or a smoothness/roughness value. Possibly threshold for masks (alpha clipping).
+                47 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),            // Control specular power (shininess) or, if the material reflects metal, the intensity of the cubemap reflection.
                 49 => new MaterialTextureLink(id, relOffset),   // Color Texture
-                50 => new FloatEntry(id, relOffset),            // UV Scaling
-                51 => new FloatEntry(id, relOffset),            // UV Scaling
-                52 => new FloatEntry(id, relOffset),            // Unkown float
+                50 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),            // UV Scaling
+                51 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),            // UV Scaling
+                52 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),            // Unkown float
 
-                _ => new ByteArrayEntry(id, relOffset),              // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),              // Unknown entry
             };
         }
 
@@ -47,13 +48,13 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
-                20 => new CharCountedArrayEntry(id, relOffset), // Material Tag
-                21 => new CharCountedArrayEntry(id, relOffset), // Material Name
+                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Unkown FFFFFF value
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Tag
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 50 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),              // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),              // Unknown entry
             };
         }
 
@@ -61,14 +62,14 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
-                20 => new CharCountedArrayEntry(id, relOffset), // Material Tag
-                21 => new CharCountedArrayEntry(id, relOffset), // Material Name
+                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Unkown FFFFFF value
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Tag
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
-                41 => new FloatEntry(id, relOffset),            // Unkown float
-                50 => new FloatEntry(id, relOffset),            // Unkown float
+                41 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),            // Unkown float
+                50 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),            // Unkown float
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),              // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),              // Unknown entry
             };
         }
     }

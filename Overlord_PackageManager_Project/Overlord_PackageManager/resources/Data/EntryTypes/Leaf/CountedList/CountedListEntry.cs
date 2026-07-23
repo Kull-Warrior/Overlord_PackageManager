@@ -1,13 +1,12 @@
-﻿using Overlord_PackageManager.resources.Data.Generic;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList
 {
-    public abstract class CountedListEntry<T>(uint id, uint relOffset) : ValueEntry<List<T>>(id, relOffset)
+    public class CountedListEntry<T>(uint id, uint relOffset, BinaryType<T> binaryType) : ValueEntry<List<T>>(id, relOffset)
     {
-        protected abstract T ReadValue(BinaryReader reader);
-        protected abstract void WriteValue(BinaryWriter writer, T value);
-        protected abstract int ElementSize { get; }
+        protected BinaryType<T> BinaryType { get; } = binaryType;
 
         public int Count => Value?.Count ?? 0;
 
@@ -21,8 +20,13 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList
 
             for (int i = 0; i < count; i++)
             {
-                Value.Add(ReadValue(reader));
+                Value.Add(BinaryType.Read(reader));
             }
+        }
+
+        public override long GetPayloadSize()
+        {
+            return sizeof(uint) + Count * (long)BinaryType.Size;
         }
 
         public override void Write(BinaryWriter writer, long origin)
@@ -33,13 +37,8 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList
 
             foreach (var value in Value)
             {
-                WriteValue(writer, value);
+                BinaryType.Write(writer, value);
             }
-        }
-
-        public override long GetPayloadSize()
-        {
-            return sizeof(uint) + Count * (long)ElementSize;
         }
     }
 }

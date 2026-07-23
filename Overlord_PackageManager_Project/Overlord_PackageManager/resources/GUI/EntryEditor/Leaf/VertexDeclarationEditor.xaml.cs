@@ -7,9 +7,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     public partial class VertexDeclarationEditor : UserControl
     {
-        private readonly VertexAttributeListEntry _entry;
+        private readonly RawListEntry<VertexAttribute> _entry;
 
-        public VertexDeclarationEditor(VertexAttributeListEntry entry)
+        public VertexDeclarationEditor(RawListEntry<VertexAttribute> entry)
         {
             InitializeComponent();
 

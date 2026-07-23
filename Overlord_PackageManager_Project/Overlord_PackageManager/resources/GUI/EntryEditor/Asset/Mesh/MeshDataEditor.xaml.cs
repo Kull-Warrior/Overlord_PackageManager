@@ -89,14 +89,14 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
                 return;
             }
 
-            ByteArrayEntry? blob = vertexBuffer.Table.Entries.OfType<ByteArrayEntry>().FirstOrDefault();
-            UInt32Entry? vertexCountEntry = vertexBuffer.Table.Entries.OfType<UInt32Entry>().FirstOrDefault(e => e.Id == 21);
+            RawArrayEntry<byte>? blob = vertexBuffer.Table.Entries.OfType<RawArrayEntry<byte>>().FirstOrDefault();
+            ScalarEntry<uint>? vertexCountEntry = vertexBuffer.Table.Entries.OfType<ScalarEntry<uint>>().FirstOrDefault(e => e.Id == 21);
 
             VertexBufferInfo? info = vertexBuffer.Table.Entries.OfType<VertexBufferInfo>().FirstOrDefault();
-            UInt32Entry? strideEntry = info?.Table.Entries.OfType<UInt32Entry>().FirstOrDefault(e => e.Id == 21);
-            VertexAttributeListEntry? decl = info?.Table.Entries.OfType<VertexAttributeListEntry>().FirstOrDefault();
+            ScalarEntry<uint>? strideEntry = info?.Table.Entries.OfType<ScalarEntry<uint>>().FirstOrDefault(e => e.Id == 21);
+            RawArrayEntry<VertexAttribute>? decl = info?.Table.Entries.OfType<RawArrayEntry<VertexAttribute>>().FirstOrDefault();
 
-            UInt16ArrayEntry? indicesEntry = indiceData.Table.Entries.OfType<UInt16ArrayEntry>().FirstOrDefault();
+            RawArrayEntry<ushort>? indicesEntry = indiceData.Table.Entries.OfType<RawArrayEntry<ushort>>().FirstOrDefault();
 
             if (blob?.Value == null || vertexCountEntry == null || strideEntry == null || decl == null || indicesEntry == null)
             {

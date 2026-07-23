@@ -1,7 +1,6 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Files.DDS;
 using System.Windows;
@@ -51,18 +50,18 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS
 
             foreach (DDSTextures dds in ddsEntries)
             {
-                List<UInt32Entry> intEntries = dds.Table.Entries.OfType<UInt32Entry>().ToList();
+                List<ScalarEntry<uint>> intEntries = dds.Table.Entries.OfType<ScalarEntry<uint>>().ToList();
 
                 if (intEntries.Count < 3)
                     continue;
 
-                List<UInt32Entry> lastThree = intEntries.TakeLast(3).ToList();
+                List<ScalarEntry<uint>> lastThree = intEntries.TakeLast(3).ToList();
 
                 uint width = lastThree[0].Value;
                 uint height = lastThree[1].Value;
                 DDSFormat format = (DDSFormat)lastThree[2].Value;
 
-                ByteArrayEntry? blob = dds.Table.Entries.OfType<ByteArrayEntry>().FirstOrDefault();
+                RawArrayEntry<byte>? blob = dds.Table.Entries.OfType<RawArrayEntry<byte>>().FirstOrDefault();
 
                 if (blob == null)
                 {

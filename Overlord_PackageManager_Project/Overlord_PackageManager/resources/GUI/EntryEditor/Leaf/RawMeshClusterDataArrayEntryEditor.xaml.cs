@@ -12,11 +12,11 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     public partial class RawMeshClusterDataArrayEntryEditor : UserControl
     {
-        private readonly RawMeshClusterDataArrayEntry _entry;
+        private readonly RawArrayEntry<RawMeshClusterData> _entry;
 
         private const int ClusterSize = 64;
 
-        public RawMeshClusterDataArrayEntryEditor(RawMeshClusterDataArrayEntry entry)
+        public RawMeshClusterDataArrayEntryEditor(RawArrayEntry<RawMeshClusterData> entry)
         {
             InitializeComponent();
 

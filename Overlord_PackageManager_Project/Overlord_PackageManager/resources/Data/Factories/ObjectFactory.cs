@@ -1,3 +1,4 @@
+using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Object;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
@@ -13,11 +14,11 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new UInt32Entry(id, relOffset),
-                21 => new UInt32Entry(id, relOffset),
-                22 => new ObjectBoneArrayEntry(id, relOffset),
+                20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                21 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                22 => new RawArrayEntry<ObjectBone>(id, relOffset, BinaryTypes.ObjectBone),
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
@@ -25,19 +26,19 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                01 => new ByteArrayEntry(id, relOffset),
-                19 => new UInt32Entry(id, relOffset),
-                20 => new CharCountedArrayEntry(id, relOffset),
-                21 => new CharCountedArrayEntry(id, relOffset),
+                01 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),
+                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
                 30 => new TableEntry(id, relOffset),
-                32 => new FloatArrayEntry(id, relOffset),
+                32 => new RawArrayEntry<float>(id, relOffset, BinaryTypes.Float),
                 33 => new ObjectBoneContainer(id, relOffset),
-                34 => new FloatArrayEntry(id, relOffset),
+                34 => new RawArrayEntry<float>(id, relOffset, BinaryTypes.Float),
                 35 => new TableEntry(id, relOffset),
                 36 => new TableEntry(id, relOffset),
 
                 // Add more IDs here
-                _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
     }

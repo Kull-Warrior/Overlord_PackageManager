@@ -2,7 +2,6 @@
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
 using System.IO;
@@ -36,7 +35,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio
         {
             RootPanel.Children.Clear();
 
-            List<CharCountedArrayEntry> charCountedArrayEntries = _asset.Table.Entries.OfType<CharCountedArrayEntry>().ToList();
+            List<CountedArrayEntry<char>> charCountedArrayEntries = _asset.Table.Entries.OfType<CountedArrayEntry<char>>().ToList();
             if (charCountedArrayEntries.Count >= 3)
             {
                 _tagEditor = new StringEntryEditor(charCountedArrayEntries[0]) { Label = "Tag" };
@@ -86,7 +85,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio
         private byte[]? GetAudioBytes()
         {
             SFXData? sfxData = _asset.Table.Entries.OfType<SFXData>().FirstOrDefault();
-            ByteArrayEntry? blob = sfxData?.Table.Entries.OfType<ByteArrayEntry>().FirstOrDefault();
+            RawArrayEntry<byte>? blob = sfxData?.Table.Entries.OfType<RawArrayEntry<byte>>().FirstOrDefault();
             return blob?.Value;
         }
 
@@ -166,8 +165,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio
 
             // Update SFXData
             SFXData? sfxData = _asset.Table.Entries.OfType<SFXData>().FirstOrDefault();
-            ByteArrayEntry? blob = sfxData?.Table.Entries.OfType<ByteArrayEntry>().FirstOrDefault();
-            UInt32Entry? lengthEntry = sfxData?.Table.Entries.OfType<UInt32Entry>().LastOrDefault();
+            RawArrayEntry<byte>? blob = sfxData?.Table.Entries.OfType<RawArrayEntry<byte>>().FirstOrDefault();
+            ScalarEntry<uint>? lengthEntry = sfxData?.Table.Entries.OfType<ScalarEntry<uint>>().LastOrDefault();
 
             if (sfxData == null || blob == null || lengthEntry == null)
             {

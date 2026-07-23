@@ -87,15 +87,15 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif
         {
             byte[] header;
             string filePath = "";
-            List<CharCountedArrayEntry> tgaTifAssetStrings = Table.Entries.OfType<CharCountedArrayEntry>().ToList();
+            List<CountedArrayEntry<char>> tgaTifAssetStrings = Table.Entries.OfType<CountedArrayEntry<char>>().ToList();
             string fileName = new string(tgaTifAssetStrings[1].Value);
 
-            List<UInt32Entry> ints = Table.Entries.OfType<UInt32Entry>().ToList();
+            List<ScalarEntry<uint>> ints = Table.Entries.OfType<ScalarEntry<uint>>().ToList();
             uint width = ints[0].Value;
             uint height = ints[1].Value;
 
             TgaTifTextureData dataContainer = (TgaTifTextureData)Table.Entries[5];
-            byte[] rawRGBA = ((ByteArrayEntry)dataContainer.Table.Entries[0]).Value;
+            byte[] rawRGBA = ((RawArrayEntry<byte>)dataContainer.Table.Entries[0]).Value;
 
             if (fileName.ToLower().EndsWith(".tif"))
             {

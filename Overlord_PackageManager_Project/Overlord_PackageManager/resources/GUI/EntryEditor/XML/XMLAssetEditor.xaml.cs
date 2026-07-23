@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -36,8 +37,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             List<Entry> entries = _entry.Table.Entries;
 
-            CharCountedArrayEntry fileNameEntry = (CharCountedArrayEntry)entries[0];
-            ByteArrayEntry data = (ByteArrayEntry)entries[2];
+            CountedArrayEntry<char> fileNameEntry = (CountedArrayEntry<char>)entries[0];
+            RawArrayEntry<byte> data = (RawArrayEntry<byte>)entries[2];
 
             StringEntryEditor fileNameEditor = new(fileNameEntry)
             {
@@ -70,9 +71,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             _entry.Table.Entries.Clear();
             
-            _entry.Table.Entries.Add(new CharCountedArrayEntry(10, 0) { Value = fileName.ToCharArray() });
-            _entry.Table.Entries.Add(new UInt32Entry(11, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = (uint)data.Length });
-            _entry.Table.Entries.Add(new ByteArrayEntry(12, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = data });
+            _entry.Table.Entries.Add(new CountedArrayEntry<char>(10, 0, BinaryTypes.Char) { Value = fileName.ToCharArray() });
+            _entry.Table.Entries.Add(new ScalarEntry<uint>(11, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength), BinaryTypes.UInt32) { Value = (uint)data.Length });
+            _entry.Table.Entries.Add(new RawArrayEntry<byte>(12, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength), BinaryTypes.Byte) { Value = data });
         }
 
         private string DecodeXML(byte[] data)
@@ -102,13 +103,13 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
                 return;
             }
 
-            ByteArrayEntry data = (ByteArrayEntry)_entry.Table.Entries[2];
+            RawArrayEntry<byte> data = (RawArrayEntry<byte>)_entry.Table.Entries[2];
 
             byte[] newBytes = EncodeXML(newText);
 
             data.Value = newBytes;
 
-            if (_entry.Table.Entries[1] is UInt32Entry lengthEntry)
+            if (_entry.Table.Entries[1] is ScalarEntry<uint> lengthEntry)
             {
                 lengthEntry.Value = (uint)newBytes.Length;
             }
@@ -135,7 +136,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
             }
             else
             {
-                ((CharCountedArrayEntry)_entry.Table.Entries[0]).Value = fileName.ToCharArray();
+                ((CountedArrayEntry<char>)_entry.Table.Entries[0]).Value = fileName.ToCharArray();
             }
 
             _xmlEditor.SetText(xmlText);
@@ -160,7 +161,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             SaveFileDialog dialog = new();
 
-            char[] fileNameChars = ((CharCountedArrayEntry)_entry.Table.Entries[0]).Value;
+            char[] fileNameChars = ((CountedArrayEntry<char>)_entry.Table.Entries[0]).Value;
             string fileName = new string(fileNameChars);
 
             dialog.FileName = fileName;
@@ -169,7 +170,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
             if (dialog.ShowDialog() != true)
                 return;
 
-            ByteArrayEntry rawData = (ByteArrayEntry)_entry.Table.Entries[2];
+            RawArrayEntry<byte> rawData = (RawArrayEntry<byte>)_entry.Table.Entries[2];
 
             byte[] xmlData = rawData.Value;
 

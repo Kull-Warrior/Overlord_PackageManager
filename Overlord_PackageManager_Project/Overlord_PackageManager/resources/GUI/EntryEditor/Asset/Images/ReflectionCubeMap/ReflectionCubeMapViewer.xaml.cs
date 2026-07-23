@@ -8,7 +8,6 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.ReflectionCubeMap
 {
@@ -71,13 +70,13 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.Reflect
             int index = faceIndex * mipCount + mipIndex;
             DDSTextures tex = textures[index];
 
-            List<UInt32Entry> intEntries = tex.Table.Entries.OfType<UInt32Entry>().Take(3).ToList();
+            List<ScalarEntry<uint>> intEntries = tex.Table.Entries.OfType<ScalarEntry<uint>>().Take(3).ToList();
 
             uint width = intEntries[0].Value;
             uint height = intEntries[1].Value;
             DDSFormat format = (DDSFormat)intEntries[2].Value;
 
-            ByteArrayEntry blob = tex.Table.Entries.OfType<ByteArrayEntry>().First();
+            RawArrayEntry<byte>? blob = tex.Table.Entries.OfType<RawArrayEntry<byte>>().FirstOrDefault();
 
             return new MipLevelData(width, height, format, blob.Value);
         }

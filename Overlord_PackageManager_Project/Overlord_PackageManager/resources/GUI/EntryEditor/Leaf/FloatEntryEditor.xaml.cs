@@ -8,9 +8,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
     /// </summary>
     public partial class FloatEntryEditor : UserControl
     {
-        private readonly FloatEntry _entry;
+        private readonly ScalarEntry<float> _entry;
 
-        public FloatEntryEditor(FloatEntry entry)
+        public FloatEntryEditor(ScalarEntry<float> entry)
         {
             InitializeComponent();
 

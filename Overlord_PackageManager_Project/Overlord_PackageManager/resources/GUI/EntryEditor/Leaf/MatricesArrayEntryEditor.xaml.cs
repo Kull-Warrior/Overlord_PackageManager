@@ -11,9 +11,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     public partial class MatricesArrayEntryEditor : UserControl
     {
-        private readonly Matrix4x4ArrayEntry _entry;
+        private readonly RawArrayEntry<Matrix4x4> _entry;
 
-        public MatricesArrayEntryEditor(Matrix4x4ArrayEntry entry)
+        public MatricesArrayEntryEditor(RawArrayEntry<Matrix4x4> entry)
         {
             InitializeComponent();
 
