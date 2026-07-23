@@ -8,6 +8,12 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList
     {
         protected BinaryType<T> BinaryType { get; } = binaryType;
 
+        protected virtual bool IsCounted => false;
+
+        protected virtual string CollectionSuffix => " List";
+
+        public override string DisplayName => $"{(IsCounted ? "counted " : "")}{BinaryType.DisplayName}{CollectionSuffix}";
+
         public override void Read(BinaryReader reader, long origin)
         {
             reader.BaseStream.Position = origin + RelativeOffset;

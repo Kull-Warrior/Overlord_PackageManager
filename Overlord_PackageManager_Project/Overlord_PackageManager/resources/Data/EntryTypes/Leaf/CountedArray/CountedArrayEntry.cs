@@ -8,6 +8,12 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray
     {
         protected BinaryType<T> BinaryType { get; } = binaryType;
 
+        protected virtual bool IsCounted => true;
+
+        protected virtual string CollectionSuffix => "[]";
+
+        public override string DisplayName => $"{(IsCounted ? "counted " : "")}{BinaryType.DisplayName}{CollectionSuffix}";
+
         public int Count => Value?.Length ?? 0;
 
         public override void Read(BinaryReader reader, long origin)

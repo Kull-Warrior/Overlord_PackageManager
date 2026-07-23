@@ -8,6 +8,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 1,
+            DisplayName = "byte",
             Read = r => r.ReadByte(),
             Write = (w, v) => w.Write(v)
         };
@@ -16,6 +17,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 1,
+            DisplayName = "bool",
             Read = r => r.ReadBoolean(),
             Write = (w, v) => w.Write(v)
         };
@@ -24,6 +26,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 1,
+            DisplayName = "char",
             Read = r => r.ReadChar(),
             Write = (w, v) => w.Write(v)
         };
@@ -32,6 +35,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 2,
+            DisplayName = "int16",
             Read = r => r.ReadInt16(),
             Write = (w, v) => w.Write(v)
         };
@@ -40,6 +44,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 2,
+            DisplayName = "uint16",
             Read = r => r.ReadUInt16(),
             Write = (w, v) => w.Write(v)
         };
@@ -48,6 +53,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 4,
+            DisplayName = "int32",
             Read = r => r.ReadInt32(),
             Write = (w, v) => w.Write(v)
         };
@@ -56,6 +62,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 4,
+            DisplayName = "uint32",
             Read = r => r.ReadUInt32(),
             Write = (w, v) => w.Write(v)
         };
@@ -64,6 +71,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 8,
+            DisplayName = "int64",
             Read = r => r.ReadInt64(),
             Write = (w, v) => w.Write(v)
         };
@@ -72,6 +80,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 8,
+            DisplayName = "uint64",
             Read = r => r.ReadUInt64(),
             Write = (w, v) => w.Write(v)
         };
@@ -80,6 +89,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 4,
+            DisplayName = "float",
             Read = r => r.ReadSingle(),
             Write = (w, v) => w.Write(v)
         };
@@ -88,6 +98,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 8,
+            DisplayName = "double",
             Read = r => r.ReadDouble(),
             Write = (w, v) => w.Write(v)
         };
@@ -96,6 +107,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 36, // 3x3 matrix of floats
+            DisplayName = "Matrix3x3",
             Read = r =>
             {
                 return new Matrix3x3(
@@ -116,6 +128,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 64, // 4x4 matrix of floats
+            DisplayName = "Matrix4x4",
             Read = r =>
             {
                 return new Matrix4x4(
@@ -138,6 +151,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 12, // 3 floats
+            DisplayName = "Vector3",
             Read = r =>
             {
                 return new Vector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
@@ -154,6 +168,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 16, // 4 floats
+            DisplayName = "Vector4",
             Read = r =>
             {
                 return new Vector4(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
@@ -171,6 +186,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 16, // 4 floats
+            DisplayName = "Quaternion",
             Read = r =>
             {
                 return new Quaternion(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
@@ -188,6 +204,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size =  16, //Timestamp (uint) + float X, float Y, float Z
+            DisplayName = "Position",
             Read = r =>
             {
                 return new BonePosition(r.ReadUInt32(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
@@ -205,6 +222,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 12, //float Pitch, float Yaw, float Roll
+            DisplayName = "Rotation",
             Read = r =>
             {
                 return new BoneRotation(r.ReadUInt32(), r.ReadSingle(), r.ReadSingle());
@@ -221,6 +239,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 6, //half ScaleX, half ScaleY, half ScaleZ
+            DisplayName = "Scale",
             Read = r =>
             {
                 return new BoneScale(r.ReadHalf(), r.ReadHalf(), r.ReadHalf());
@@ -237,6 +256,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 60, //Matrix3x3 Matrix, Vector3 Head, Vector3 Tail);
+            DisplayName = "MeshBoneShape",
             Read = r =>
             {
                 return new MeshBoneShape(
@@ -284,6 +304,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 68, //Matrix3x3 Matrix, Vector3 Center, Vector3 Extents, ushort PatchIndex, ushort TriangleCount);
+            DisplayName = "MeshClusterData",
             Read = r =>
             {
                 return new RawMeshClusterData(
@@ -335,6 +356,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 144, //The size of an ObjectBone is 32 bytes for the name, 24 floats for the transform, and 4 integers for the indices.
+            DisplayName = "ObjectBone",
             Read = r =>
             {
                 return new ObjectBone(
@@ -382,6 +404,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         new()
         {
             Size = 4, //Takes one and converts it to a VertexAttributeType
+            DisplayName = "VertexAttribute",
             Read = r =>
             {
                 uint descriptor = r.ReadUInt32();

@@ -20,6 +20,9 @@ namespace Overlord_PackageManager.resources.Data.Generic
             RelativeOffset = relOffset;
         }
 
+        // Each entry has a display name, which is the class name by default, but can be overridden by derived classes
+        public virtual string DisplayName => GetType().Name;
+
         // Each entry knows how to read itself
         public abstract void Read(BinaryReader reader, long origin);
 

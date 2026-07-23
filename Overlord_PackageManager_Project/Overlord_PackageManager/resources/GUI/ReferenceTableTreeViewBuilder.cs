@@ -198,13 +198,13 @@ namespace Overlord_PackageManager.resources.GUI
 
         private static string Describe(Entry e)
         {
-            if ( e is AssetEntry assetEntry)
+            if (e is AssetEntry assetEntry)
             {
                 uint leTypeIdentifier = BinaryPrimitives.ReverseEndianness(assetEntry.TypeIdentifier);
-                return $"Id={assetEntry.Id:X4} {assetEntry.GetType().Name} Type: {leTypeIdentifier:X8}";
+                return $"Id={assetEntry.Id:X4} {e.DisplayName} Type: {leTypeIdentifier:X8}";
             }
 
-            return $"Id={e.Id:X4} {e.GetType().Name}";
+            return $"Id={e.Id:X4} {e.DisplayName}";
         }
     }
 }

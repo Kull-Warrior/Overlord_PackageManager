@@ -8,6 +8,8 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
     {
         private readonly BinaryType<T> _binaryType;
 
+        public override string DisplayName => _binaryType.DisplayName;
+
         public ScalarEntry(uint id, uint relOffset, BinaryType<T> binaryType) : base(id, relOffset)
         {
             _binaryType = binaryType;
