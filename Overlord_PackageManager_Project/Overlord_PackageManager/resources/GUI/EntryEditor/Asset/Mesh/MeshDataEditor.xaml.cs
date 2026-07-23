@@ -94,7 +94,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh
 
             VertexBufferInfo? info = vertexBuffer.Table.Entries.OfType<VertexBufferInfo>().FirstOrDefault();
             ScalarEntry<uint>? strideEntry = info?.Table.Entries.OfType<ScalarEntry<uint>>().FirstOrDefault(e => e.Id == 21);
-            RawArrayEntry<VertexAttribute>? decl = info?.Table.Entries.OfType<RawArrayEntry<VertexAttribute>>().FirstOrDefault();
+            RawListEntry<VertexAttribute>? decl = info?.Table.Entries.OfType<RawListEntry<VertexAttribute>>().FirstOrDefault();
 
             RawArrayEntry<ushort>? indicesEntry = indiceData.Table.Entries.OfType<RawArrayEntry<ushort>>().FirstOrDefault();
 
