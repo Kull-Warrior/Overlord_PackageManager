@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -125,8 +126,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 1 => new MeshData(id, relOffset),      // Sub reference table containing all mesh data
                 19 => new UInt32Entry(id, relOffset),    // FFFF Block unkown use
-                20 => new StringEntry(id, relOffset),    // Chunk or In-Game Object Name
-                21 => new StringEntry(id, relOffset),    // Mesh Name
+                20 => new CharCountedArrayEntry(id, relOffset),    // Chunk or In-Game Object Name
+                21 => new CharCountedArrayEntry(id, relOffset),    // Mesh Name
                 50 => new ByteArrayEntry(id, relOffset),     // Unknown entry
                 51 => new ByteArrayEntry(id, relOffset),     // Unknown entry
                 // Add more IDs here

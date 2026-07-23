@@ -1,8 +1,8 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
 using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.Data.EntryTypes.Map;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -30,7 +30,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 1 => new AssetList(id, relOffset),     // Data
                 30 => new UInt32Entry(id, relOffset),
-                31 => new StringEntry(id, relOffset),
+                31 => new CharCountedArrayEntry(id, relOffset),
                 32 => new ByteArrayEntry(id, relOffset),   // Unknown entry
                 34 => new ByteArrayEntry(id, relOffset),   // Unknown entry
                 35 => new UInt32Entry(id, relOffset),
@@ -56,7 +56,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 20 => new UInt32Entry(id, relOffset),
                 22 => new UInt32Entry(id, relOffset),
-                23 => new StringEntry(id, relOffset),
+                23 => new CharCountedArrayEntry(id, relOffset),
                 24 => new UInt64Entry(id, relOffset),
                 // Add more IDs here
                 _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
@@ -70,7 +70,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 20 => new UInt32Entry(id, relOffset),
                 21 => new UInt32Entry(id, relOffset),
                 22 => new MapBuildInformation(id, relOffset),   // Unknown entry
-                30 => new StringEntry(id, relOffset),
+                30 => new CharCountedArrayEntry(id, relOffset),
                 31 => new UInt32Entry(id, relOffset),
                 32 => new ByteArrayEntry(id, relOffset),
                 33 => new ByteArrayEntry(id, relOffset),
@@ -78,7 +78,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 37 => new UInt32Entry(id, relOffset),
                 38 => new UInt32Entry(id, relOffset),
                 39 => new UInt32Entry(id, relOffset),
-                40 => new StringEntry(id, relOffset),
+                40 => new CharCountedArrayEntry(id, relOffset),
                 // Add more IDs here
                 _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
@@ -102,7 +102,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 31 => new TableEntry(id, relOffset),
                 32 => new AssetListContainer(id, relOffset),
                 33 => new LuaEntry(id, relOffset),
-                34 => new StringEntry(id, relOffset),
+                34 => new CharCountedArrayEntry(id, relOffset),
                 35 => new TableEntry(id, relOffset),   // Unknown entry
                 36 => new LuaEntry(id, relOffset),
                 37 => new FloatEntry(id, relOffset),
@@ -113,7 +113,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 42 => new UInt32Entry(id, relOffset),
                 43 => new UInt32Entry(id, relOffset),
                 45 => new LuaEntry(id, relOffset),
-                46 => new StringCountedListEntry(id, relOffset),
+                46 => new CharListCountedArrayEntry(id, relOffset),
                 47 => new ByteArrayEntry(id, relOffset),   // Unknown entry
                 48 => new TableEntry(id, relOffset),   // Unknown entry
                 49 => new UInt32Entry(id, relOffset),
@@ -131,7 +131,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 111 => new UInt32Entry(id, relOffset),
                 112 => new UInt32Entry(id, relOffset),
                 113 => new UInt32Entry(id, relOffset),
-                114 => new StringEntry(id, relOffset),
+                114 => new CharCountedArrayEntry(id, relOffset),
                 115 => new UInt32Entry(id, relOffset),
                 116 => new ByteEntry(id, relOffset),
                 117 => new ByteEntry(id, relOffset),
@@ -149,7 +149,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 131 => new TableEntry(id, relOffset),   // Unknown entry
                 132 => new TableEntry(id, relOffset),
                 133 => new LuaEntry(id, relOffset),   // Unknown entry
-                134 => new StringEntry(id, relOffset),
+                134 => new CharCountedArrayEntry(id, relOffset),
                 // Add more IDs here
                 _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };

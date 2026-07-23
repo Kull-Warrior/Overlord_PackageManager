@@ -1,7 +1,8 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
 using Overlord_PackageManager.resources.Data.Generic;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
 using System.Diagnostics;
@@ -17,12 +18,12 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
     {
         private readonly TableEntry _entry;
 
-        private StringEntry? _nameEntry;
-        private StringCountedListEntry _luaTextEntry;
+        private CharCountedArrayEntry? _nameEntry;
+        private CharListCountedArrayEntry _luaTextEntry;
         private UInt32Entry _bytecodeLengthEntry;
         private ByteArrayEntry _bytecodeEntry;
 
-        private StringCountedListEntry _currentTextEntry;
+        private CharListCountedArrayEntry _currentTextEntry;
 
         private StringCountedListEntryEditor _textEditor;
         private string _lastCompiledText = "";
@@ -49,12 +50,12 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
             {
                 switch (e)
                 {
-                    case StringEntry s:
-                        _nameEntry = s;
+                    case CharCountedArrayEntry c:
+                        _nameEntry = c;
                         break;
 
-                    case StringCountedListEntry sl:
-                        _luaTextEntry = sl;
+                    case CharListCountedArrayEntry cl:
+                        _luaTextEntry = cl;
                         break;
 
                     case UInt32Entry i:
@@ -78,17 +79,17 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
             ExportButton.IsEnabled = !string.IsNullOrWhiteSpace(GetLuaText());
         }
 
-        private StringCountedListEntry CreateTemporaryEntry()
+        private CharListCountedArrayEntry CreateTemporaryEntry()
         {
-            return new StringCountedListEntry(21, 0)
+            return new CharListCountedArrayEntry(21, 0)
             {
-                Value = new List<string>()
+                Value = new List<char[]>()
             };
         }
 
         private void CreateLuaEntries()
         {
-            _luaTextEntry = new StringCountedListEntry(21, 0);
+            _luaTextEntry = new CharListCountedArrayEntry(21, 0);
             _bytecodeLengthEntry = new UInt32Entry(22, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
             _bytecodeEntry = new ByteArrayEntry(23, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength));
 
@@ -173,7 +174,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
                 return string.Empty;
             }
 
-            return string.Join("\n", _currentTextEntry.Value);
+            return string.Join("\n", _currentTextEntry.Value.Select(line => new string(line)));
         }
 
         private void CompileLua()
@@ -262,7 +263,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
             _textEditor.SetText(text);
 
             if (_nameEntry != null)
-                _nameEntry.Value = Path.GetFileName(dialog.FileName);
+                _nameEntry.Value = Path.GetFileName(dialog.FileName).ToCharArray();
 
             CompileLua();
         }
@@ -274,7 +275,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua
             dialog.Filter = "Lua Files (*.lua)|*.lua";
 
             if (_nameEntry != null)
-                dialog.FileName = _nameEntry.Value;
+                dialog.FileName = new string(_nameEntry.Value);
 
             if (dialog.ShowDialog() != true)
                 return;

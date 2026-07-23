@@ -1,6 +1,7 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
+﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
 using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
 using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
@@ -13,8 +14,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new StringEntry(id, relOffset),
-                21 => new StringCountedListEntry(id, relOffset),
+                20 => new CharCountedArrayEntry(id, relOffset),
+                21 => new CharListCountedArrayEntry(id, relOffset),
                 22 => new UInt32Entry(id, relOffset),
                 23 => new ByteArrayEntry(id, relOffset),
                 // Add more IDs here

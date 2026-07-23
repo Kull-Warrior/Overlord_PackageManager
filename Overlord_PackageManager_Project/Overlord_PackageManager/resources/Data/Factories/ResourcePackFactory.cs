@@ -1,7 +1,8 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
 using Overlord_PackageManager.resources.Data.EntryTypes.Resource;
 using Overlord_PackageManager.resources.Data.EntryTypes.XML;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -15,7 +16,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new StringEntry(id, relOffset),     // Name of the group
+                20 => new CharCountedArrayEntry(id, relOffset),     // Name of the group
                 //21 => new AssetList(id, relOffset),       // Asset list
                 21 => new AssetListContainer(id, relOffset),       // Asset list
                 30 => new TableEntry(id, relOffset),        // Unknown table
@@ -31,12 +32,12 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 17 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // Unknown
                 19 => new UInt32Entry(id, relOffset),
                 20 => new UInt32Entry(id, relOffset),
-                22 => new StringEntry(id, relOffset),       // Character/Rescource Name
+                22 => new CharCountedArrayEntry(id, relOffset),       // Character/Rescource Name
                 23 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains Effects and Light Data of some sort
                 24 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "TS", Texture related Data
                 25 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "0" Type Data Unknown use, Map editor friendly apperently
                 26 => new AssetListContainer(id, relOffset),         // Contains Object, Mesh, Material, Texture, SFX, Animation and Shader Data
-                27 => new StringCountedListEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
+                27 => new CharListCountedArrayEntry(id, relOffset),  // Contains a list of strings. Reference to one or more .CLB files.
                 28 => new XMLEntry(id, relOffset),          // Contains XML Data
                 29 => new ByteArrayEntry(id, relOffset),   // Unknown entry     // Unknown
                 30 => new NamedAssetContainer(id, relOffset),   // Unknown entry     // Contains "2" Type Data Unknown use, contains lua scripts

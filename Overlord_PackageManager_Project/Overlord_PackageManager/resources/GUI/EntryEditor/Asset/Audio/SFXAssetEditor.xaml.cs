@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
@@ -35,12 +36,12 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio
         {
             RootPanel.Children.Clear();
 
-            List<StringEntry> stringEntries = _asset.Table.Entries.OfType<StringEntry>().ToList();
-            if (stringEntries.Count >= 3)
+            List<CharCountedArrayEntry> charCountedArrayEntries = _asset.Table.Entries.OfType<CharCountedArrayEntry>().ToList();
+            if (charCountedArrayEntries.Count >= 3)
             {
-                _tagEditor = new StringEntryEditor(stringEntries[0]) { Label = "Tag" };
-                _audioNameEditor = new StringEntryEditor(stringEntries[1]) { Label = "Audio Name" };
-                _fileNameEditor = new StringEntryEditor(stringEntries[2]) { Label = "File Name" };
+                _tagEditor = new StringEntryEditor(charCountedArrayEntries[0]) { Label = "Tag" };
+                _audioNameEditor = new StringEntryEditor(charCountedArrayEntries[1]) { Label = "Audio Name" };
+                _fileNameEditor = new StringEntryEditor(charCountedArrayEntries[2]) { Label = "File Name" };
 
                 RootPanel.Children.Add(_tagEditor);
                 RootPanel.Children.Add(_audioNameEditor);

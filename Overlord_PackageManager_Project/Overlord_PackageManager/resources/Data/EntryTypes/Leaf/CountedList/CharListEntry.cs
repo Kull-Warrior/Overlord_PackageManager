@@ -4,7 +4,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList
 {
     public class CharCountedListEntry(uint id, uint relOffset) : CountedListEntry<char>(id, relOffset)
     {
-        protected override int ElementSize => sizeof(char);
+        protected override int ElementSize => 1;
 
         protected override char ReadValue(BinaryReader reader) => reader.ReadChar();
 

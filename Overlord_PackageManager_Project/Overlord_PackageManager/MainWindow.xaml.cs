@@ -1,27 +1,29 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources.GUI;
-using Overlord_PackageManager.resources.Data.Files.OMP;
-using Overlord_PackageManager.resources.Data.Files.RPK;
-using Overlord_PackageManager.resources.Data.EntryTypes.XML;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
-using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS;
-using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.ReflectionCubeMap;
-using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
-using Overlord_PackageManager.resources.GUI.EntryEditor.XML;
-using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
-using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
-using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
+using Overlord_PackageManager.resources.Data.EntryTypes.Lua;
+using Overlord_PackageManager.resources.Data.EntryTypes.XML;
+using Overlord_PackageManager.resources.Data.Files.OMP;
+using Overlord_PackageManager.resources.Data.Files.RPK;
+using Overlord_PackageManager.resources.GUI;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Audio;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.ReflectionCubeMap;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Lua;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Mesh;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
+using Overlord_PackageManager.resources.GUI.EntryEditor.XML;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Overlord_PackageManager
 {
@@ -127,8 +129,8 @@ namespace Overlord_PackageManager
                 case ByteArrayEntry byteArrayEntry:
                     EditorHost.Content = new ByteArrayEntryEditor(byteArrayEntry);
                     break;
-                case StringEntry stringEntry:
-                    EditorHost.Content = new StringEntryEditor(stringEntry);
+                case CharCountedArrayEntry charCountedArray:
+                    EditorHost.Content = new StringEntryEditor(charCountedArray);
                     break;
                 case DDSTextures ddsTextures:
                     EditorHost.Content = new DDSTextureEditor(ddsTextures);
@@ -145,8 +147,8 @@ namespace Overlord_PackageManager
                 case XMLEntry xmlEntry:
                     EditorHost.Content = new XMLAssetEditor(xmlEntry);
                     break;
-                case StringCountedListEntry stringCountedListEntry:
-                    EditorHost.Content = new StringCountedListEntryEditor(stringCountedListEntry);
+                case CharListCountedArrayEntry charListCountedArrayEntry:
+                    EditorHost.Content = new StringCountedListEntryEditor(charListCountedArrayEntry);
                     break;
                 case LuaEntry luaEntry:
                     EditorHost.Content = new LuaEntryEditor(luaEntry);

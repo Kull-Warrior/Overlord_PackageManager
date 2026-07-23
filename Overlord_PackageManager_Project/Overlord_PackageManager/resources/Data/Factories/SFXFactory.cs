@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -25,9 +26,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 1 => new SFXData(id, relOffset),        // Sub reference table containing a int32 and a full wav style file
                 19 => new UInt32Entry(id, relOffset),    // FFFF Block unkown use
-                20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
-                21 => new StringEntry(id, relOffset),   // Sound name
-                100 => new StringEntry(id, relOffset),  // File name
+                20 => new CharCountedArrayEntry(id, relOffset),   // Chunk or In-Game Object Name
+                21 => new CharCountedArrayEntry(id, relOffset),   // Sound name
+                100 => new CharCountedArrayEntry(id, relOffset),  // File name
                 101 => new UInt32Entry(id, relOffset),   // FFFF Block unkown use
                 104 => new UInt32Entry(id, relOffset),    // Unkown int32
                 105 => new ByteEntry(id, relOffset),    // Unkown single byte

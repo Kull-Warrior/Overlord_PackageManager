@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Material;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -12,8 +13,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new StringEntry(id, relOffset),   // Texture Tag
-                21 => new StringEntry(id, relOffset),   // Texture Name
+                20 => new CharCountedArrayEntry(id, relOffset),   // Texture Tag
+                21 => new CharCountedArrayEntry(id, relOffset),   // Texture Name
                 // Add more IDs here
                 _ => new ByteArrayEntry(id, relOffset),      // Unknown entry
             };
@@ -24,8 +25,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 // Add more IDs here
                 19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
-                20 => new StringEntry(id, relOffset),           // Material Tag
-                21 => new StringEntry(id, relOffset),           // Material Name
+                20 => new CharCountedArrayEntry(id, relOffset), // Material Tag
+                21 => new CharCountedArrayEntry(id, relOffset), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 42 => new MaterialTextureLink(id, relOffset),   // Normal Texture
                 43 => new MaterialTextureLink(id, relOffset),   // Reflection CubeMap Texture
@@ -47,8 +48,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
-                20 => new StringEntry(id, relOffset),           // Material Tag
-                21 => new StringEntry(id, relOffset),           // Material Name
+                20 => new CharCountedArrayEntry(id, relOffset), // Material Tag
+                21 => new CharCountedArrayEntry(id, relOffset), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 50 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 // Add more IDs here
@@ -61,8 +62,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 19 => new UInt32Entry(id, relOffset),            // Unkown FFFFFF value
-                20 => new StringEntry(id, relOffset),           // Material Tag
-                21 => new StringEntry(id, relOffset),           // Material Name
+                20 => new CharCountedArrayEntry(id, relOffset), // Material Tag
+                21 => new CharCountedArrayEntry(id, relOffset), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
                 41 => new FloatEntry(id, relOffset),            // Unkown float
                 50 => new FloatEntry(id, relOffset),            // Unkown float

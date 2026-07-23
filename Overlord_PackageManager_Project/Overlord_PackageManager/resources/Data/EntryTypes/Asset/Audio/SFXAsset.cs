@@ -2,8 +2,7 @@
 using System.IO;
 using Overlord_PackageManager.resources.Data.Factories;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio
 {
@@ -13,8 +12,8 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio
 
         public void WriteToFile(string baseDir)
         {
-            List<StringEntry> sfxAssetStrings = Table.Entries.OfType<StringEntry>().ToList();
-            string rawName = sfxAssetStrings[2].Value;
+            List<CharCountedArrayEntry> sfxAssetStrings = Table.Entries.OfType<CharCountedArrayEntry>().ToList();
+            string rawName = new string(sfxAssetStrings[2].Value);
             string fileName = Path.GetFileName(rawName);
             List<SFXData> sfxData = Table.Entries.OfType<SFXData>().ToList();
             byte[] audioData = ((ByteArrayEntry)sfxData[0].Table.Entries[1]).Value;

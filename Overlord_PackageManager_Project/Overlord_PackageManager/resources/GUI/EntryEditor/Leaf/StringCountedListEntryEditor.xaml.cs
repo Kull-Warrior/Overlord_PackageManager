@@ -1,8 +1,6 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources.Data.DataTypes;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
 using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,7 +8,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 {
     public partial class StringCountedListEntryEditor : UserControl
     {
-        private StringCountedListEntry _entry;
+        private CharListCountedArrayEntry _entry;
         private bool _isInternalUpdate;
 
         public event Action? TextChangedExternally;
@@ -20,13 +18,13 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
             FileButtons.Visibility = Visibility.Collapsed;
         }
 
-        public StringCountedListEntryEditor(StringCountedListEntry entry)
+        public StringCountedListEntryEditor(CharListCountedArrayEntry entry)
         {
             InitializeComponent();
             AttachEntry(entry);
         }
 
-        public void AttachEntry(StringCountedListEntry entry)
+        public void AttachEntry(CharListCountedArrayEntry entry)
         {
             _entry = entry;
             LoadText();
@@ -35,8 +33,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
         private void LoadText()
         {
             _isInternalUpdate = true;
-                
-            LinesBox.Text = _entry.Value == null ? string.Empty : string.Join(Environment.NewLine, _entry.Value);
+
+            LinesBox.Text = _entry.Value == null ? string.Empty : string.Join(Environment.NewLine, _entry.Value.Select(chars => new string(chars)));
 
             _isInternalUpdate = false;
         }
@@ -53,11 +51,16 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf
 
         private void RebuildEntry()
         {
-            string[] lines = LinesBox.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            if (LinesBox.Text.Length == 0)
+            {
+                _entry.Value = new List<char[]>();
+                return;
+            }
 
-            List<string> newLines = [.. lines];
-
-            _entry.Value = newLines;
+            _entry.Value = LinesBox.Text
+                .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                .Select(line => line.ToCharArray())
+                .ToList();
         }
 
         public void SetText(string text)

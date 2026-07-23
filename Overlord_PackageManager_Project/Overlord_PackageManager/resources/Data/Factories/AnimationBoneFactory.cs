@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -69,7 +70,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                20 => new StringEntry(id, relOffset),                   // Bone Name
+                20 => new CharCountedArrayEntry(id, relOffset),                   // Bone Name
                 21 => new UInt64Entry(id, relOffset),                    // Unkown u64
                 22 => new BoneAnimationSubTableType22(id, relOffset),   // Unkown use
                 23 => new BoneAnimationSubTableType23(id, relOffset),   // Unkown use

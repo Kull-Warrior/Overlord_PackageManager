@@ -3,7 +3,7 @@ using System.IO;
 using Overlord_PackageManager.resources.Data.Factories;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif
 {
@@ -87,8 +87,8 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif
         {
             byte[] header;
             string filePath = "";
-            List<StringEntry> tgaTifAssetStrings = Table.Entries.OfType<StringEntry>().ToList();
-            string fileName = tgaTifAssetStrings[1].Value;
+            List<CharCountedArrayEntry> tgaTifAssetStrings = Table.Entries.OfType<CharCountedArrayEntry>().ToList();
+            string fileName = new string(tgaTifAssetStrings[1].Value);
 
             List<UInt32Entry> ints = Table.Entries.OfType<UInt32Entry>().ToList();
             uint width = ints[0].Value;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
@@ -26,7 +27,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.Reflect
             RootPanel.Children.Clear();
 
             List<Entry> entries = _asset.Table.Entries;
-            List<StringEntry> stringEntries = entries.OfType<StringEntry>().ToList();
+            List<CharCountedArrayEntry> stringEntries = entries.OfType<CharCountedArrayEntry>().ToList();
 
             if (stringEntries.Count >= 2)
             {

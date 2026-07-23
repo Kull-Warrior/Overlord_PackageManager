@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -23,7 +24,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 30 => new UInt32Entry(id, relOffset),    // Index?
-                31 => new StringEntry(id, relOffset),
+                31 => new CharCountedArrayEntry(id, relOffset),
                 32 => new AssetListContainer(id, relOffset),
                 33 => new UInt32Entry(id, relOffset),
                 34 => new TableEntry(id, relOffset),

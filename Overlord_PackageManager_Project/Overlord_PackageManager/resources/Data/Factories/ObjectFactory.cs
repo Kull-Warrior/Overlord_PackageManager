@@ -1,4 +1,5 @@
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Object;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -26,8 +27,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 01 => new ByteArrayEntry(id, relOffset),
                 19 => new UInt32Entry(id, relOffset),
-                20 => new StringEntry(id, relOffset),
-                21 => new StringEntry(id, relOffset),
+                20 => new CharCountedArrayEntry(id, relOffset),
+                21 => new CharCountedArrayEntry(id, relOffset),
                 30 => new TableEntry(id, relOffset),
                 32 => new FloatArrayEntry(id, relOffset),
                 33 => new ObjectBoneContainer(id, relOffset),

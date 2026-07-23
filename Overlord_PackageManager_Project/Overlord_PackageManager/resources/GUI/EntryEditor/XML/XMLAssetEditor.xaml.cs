@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.EntryTypes.XML;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -36,7 +36,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             List<Entry> entries = _entry.Table.Entries;
 
-            StringEntry fileNameEntry = (StringEntry)entries[0];
+            CharCountedArrayEntry fileNameEntry = (CharCountedArrayEntry)entries[0];
             ByteArrayEntry data = (ByteArrayEntry)entries[2];
 
             StringEntryEditor fileNameEditor = new(fileNameEntry)
@@ -70,7 +70,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             _entry.Table.Entries.Clear();
             
-            _entry.Table.Entries.Add(new StringEntry(10, 0) { Value = fileName });
+            _entry.Table.Entries.Add(new CharCountedArrayEntry(10, 0) { Value = fileName.ToCharArray() });
             _entry.Table.Entries.Add(new UInt32Entry(11, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = (uint)data.Length });
             _entry.Table.Entries.Add(new ByteArrayEntry(12, (uint)_entry.Table.Entries.Sum(e => e.PayloadLength)) { Value = data });
         }
@@ -135,7 +135,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
             }
             else
             {
-                ((StringEntry)_entry.Table.Entries[0]).Value = fileName;
+                ((CharCountedArrayEntry)_entry.Table.Entries[0]).Value = fileName.ToCharArray();
             }
 
             _xmlEditor.SetText(xmlText);
@@ -160,7 +160,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.XML
 
             SaveFileDialog dialog = new();
 
-            string fileName = ((StringEntry)_entry.Table.Entries[0]).Value;
+            char[] fileNameChars = ((CharCountedArrayEntry)_entry.Table.Entries[0]).Value;
+            string fileName = new string(fileNameChars);
 
             dialog.FileName = fileName;
             dialog.Filter = "XML Files (*.xml)|*.xml";

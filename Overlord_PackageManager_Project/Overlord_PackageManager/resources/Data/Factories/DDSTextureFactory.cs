@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -41,8 +42,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 1 => new DDSTextureAssetDataContainer(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
                 19 => new UInt32Entry(id, relOffset),    // FFFF Block unkown use
-                20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
-                21 => new StringEntry(id, relOffset),   // File name
+                20 => new CharCountedArrayEntry(id, relOffset),   // Chunk or In-Game Object Name
+                21 => new CharCountedArrayEntry(id, relOffset),   // File name
                 // Add more IDs here
                 _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };
@@ -54,8 +55,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 1 => new DDSTextureAssetDataContainer(id, relOffset),    // Sub reference table containing a int32 and list of dds textures
                 19 => new UInt32Entry(id, relOffset),    // FFFF Block unkown use
-                20 => new StringEntry(id, relOffset),   // Chunk or In-Game Object Name
-                21 => new StringEntry(id, relOffset),   // File name
+                20 => new CharCountedArrayEntry(id, relOffset),   // Chunk or In-Game Object Name
+                21 => new CharCountedArrayEntry(id, relOffset),   // File name
                 // Add more IDs here
                 _ => new ByteArrayEntry(id, relOffset),   // Unknown entry
             };

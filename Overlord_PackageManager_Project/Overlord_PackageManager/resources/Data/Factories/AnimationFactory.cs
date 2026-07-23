@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
@@ -25,8 +26,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 01 => new AnimationAssetDataContainer(id, relOffset),   // Sub reference table containing a list of Bone Animation Data
                 19 => new UInt32Entry(id, relOffset),                    // FFFF Block unkown use
-                20 => new StringEntry(id, relOffset),                   // Chunk or In-Game Object Name
-                21 => new StringEntry(id, relOffset),                   // Animation name
+                20 => new CharCountedArrayEntry(id, relOffset),                   // Chunk or In-Game Object Name
+                21 => new CharCountedArrayEntry(id, relOffset),                   // Animation name
                 30 => new FloatEntry(id, relOffset),                    // Unkown float and unknown use
                 31 => new UInt64Entry(id, relOffset),                    // unkown u64 and unknown use
                 // Add more IDs here

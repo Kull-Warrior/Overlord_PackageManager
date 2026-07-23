@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedArray;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.Generic;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
@@ -27,7 +28,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Asset.Images.DDS
 
             List<Entry> entries = _asset.Table.Entries;
 
-            List<StringEntry> stringEntries = entries.OfType<StringEntry>().ToList();
+            List<CharCountedArrayEntry> stringEntries = entries.OfType<CharCountedArrayEntry>().ToList();
             DDSTextureAssetDataContainer? dataContainer = entries.OfType<DDSTextureAssetDataContainer>().FirstOrDefault();
             AssetListContainer? mipContainer = dataContainer.Table.Entries.OfType<AssetListContainer>().FirstOrDefault();
 
