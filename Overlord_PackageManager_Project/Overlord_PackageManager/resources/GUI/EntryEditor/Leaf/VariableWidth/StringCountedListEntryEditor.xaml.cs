@@ -1,0 +1,109 @@
+﻿using Microsoft.Win32;
+using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.VariableWidth
+{
+    public partial class StringCountedListEntryEditor : UserControl
+    {
+        private CharListCountedArrayEntry _entry;
+        private bool _isInternalUpdate;
+
+        public event Action? TextChangedExternally;
+
+        public void HideFileButtons()
+        {
+            FileButtons.Visibility = Visibility.Collapsed;
+        }
+
+        public StringCountedListEntryEditor(CharListCountedArrayEntry entry)
+        {
+            InitializeComponent();
+            AttachEntry(entry);
+        }
+
+        public void AttachEntry(CharListCountedArrayEntry entry)
+        {
+            _entry = entry;
+            LoadText();
+        }
+
+        private void LoadText()
+        {
+            _isInternalUpdate = true;
+
+            LinesBox.Text = _entry.Value == null ? string.Empty : string.Join(Environment.NewLine, _entry.Value.Select(chars => new string(chars)));
+
+            _isInternalUpdate = false;
+        }
+
+        private void LinesBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_isInternalUpdate)
+                return;
+
+            RebuildEntry();
+
+            TextChangedExternally?.Invoke();
+        }
+
+        private void RebuildEntry()
+        {
+            if (LinesBox.Text.Length == 0)
+            {
+                _entry.Value = new List<char[]>();
+                return;
+            }
+
+            _entry.Value = LinesBox.Text
+                .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                .Select(line => line.ToCharArray())
+                .ToList();
+        }
+
+        public void SetText(string text)
+        {
+            _isInternalUpdate = true;
+
+            LinesBox.Text = text;
+
+            _isInternalUpdate = false;
+
+            RebuildEntry();
+
+            TextChangedExternally?.Invoke();
+        }
+
+        private void Import_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new();
+            dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+
+            if (dialog.ShowDialog() != true)
+            {
+                return;
+            }
+
+            string text = File.ReadAllText(dialog.FileName);
+
+            LinesBox.Text = text;
+
+            RebuildEntry();
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new();
+            dialog.Filter = "Text Files (*.txt)|*.txt";
+
+            if (dialog.ShowDialog() != true)
+            {
+                return;
+            }
+
+            File.WriteAllText(dialog.FileName, LinesBox.Text);
+        }
+    }
+}

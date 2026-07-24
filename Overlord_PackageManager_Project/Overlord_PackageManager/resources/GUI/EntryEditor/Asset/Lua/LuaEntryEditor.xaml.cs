@@ -6,6 +6,7 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
 using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth;
 using Overlord_PackageManager.resources.Data.Generic;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf;
+using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.VariableWidth;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
