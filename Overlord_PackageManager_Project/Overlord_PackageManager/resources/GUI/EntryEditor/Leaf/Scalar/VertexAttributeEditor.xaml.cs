@@ -13,38 +13,42 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 
         private static readonly byte[] AllowedSizes = [1, 4, 8, 12, 16];
 
-        public VertexAttributeEditor(): this(new VertexAttribute(0))
+        public string Label
         {
+            get => LabelBlock.Text;
+            set
+            {
+                LabelBlock.Text = value;
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    LabelBlock.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                else
+                {
+                    LabelBlock.Visibility = System.Windows.Visibility.Visible;
+                }
+            }
+        }
 
+        public VertexAttributeEditor()
+        {
+            InitializeComponent();
+            Value = new VertexAttribute(0);
+            SemanticBox.ItemsSource = Enum.GetValues(typeof(VertexAttributeSemantic)).Cast<VertexAttributeSemantic>();
+            SizeBox.ItemsSource = AllowedSizes;
+            UpdateDisplay();
         }
 
         public VertexAttributeEditor(VertexAttribute value)
         {
             InitializeComponent();
-
-            if (value != null)
-            {
-                Value = value;
-            }
-            else
-            {
-                Value = new VertexAttribute(0);
-            }
-
+            Value = value;
             SemanticBox.ItemsSource = Enum.GetValues(typeof(VertexAttributeSemantic)).Cast<VertexAttributeSemantic>();
-
             SizeBox.ItemsSource = AllowedSizes;
-
-            LoadFromValue();
+            UpdateDisplay();
         }
 
-        public string Label
-        {
-            get => LabelBlock.Text;
-            set => LabelBlock.Text = value;
-        }
-
-        private void LoadFromValue()
+        private void UpdateDisplay()
         {
             _updating = true;
 

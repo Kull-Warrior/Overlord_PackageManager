@@ -25,11 +25,12 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                 _entry.Value = [];
             }
 
-            RefreshEditors();
+            //RefreshEditors();
         }
-
+        
         private void RefreshEditors()
         {
+            /*
             EditorContainer.Children.Clear();
 
             for (int i = 0; i < _entry.Value.Length; i++)
@@ -92,17 +93,19 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                     Child = container
                 });
             }
+            */
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+        /*
             List<Matrix4x4> matrices = _entry.Value.ToList();
 
             matrices.Add(Matrix4x4.Identity);
 
             _entry.Value = matrices.ToArray();
 
-            RefreshEditors();
+            RefreshEditors();*/
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
@@ -127,6 +130,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {
+            /*
             OpenFileDialog dialog = new()
             {
                 Filter = "Binary Files (*.bin)|*.bin|All Files (*.*)|*.*"
@@ -161,7 +165,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             }
             _entry.Value = matrices.ToArray();
 
-            RefreshEditors();
+            RefreshEditors();*/
         }
     }
 }

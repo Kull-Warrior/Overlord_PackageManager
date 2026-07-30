@@ -1,87 +1,52 @@
-﻿using System.Numerics;
+﻿using Overlord_PackageManager.resources.GUI.Interfaces;
+using Overlord_PackageManager.resources.GUI.ObservableWrappers;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 {
-    public partial class Matrix4x4Editor : UserControl
+    /// <summary>
+    /// Interaction logic for Matrix4x4Editor.xaml
+    /// </summary>
+    public partial class Matrix4x4Editor : UserControl, IValueEditor
     {
-        private bool _updating;
-
-        public event EventHandler<Matrix4x4>? ValueChanged;
-
-        public Matrix4x4 Value { get; private set; }
-
-        public Matrix4x4Editor() : this(Matrix4x4.Identity)
-        {
-        }
-
-        public Matrix4x4Editor(Matrix4x4 value)
+        public Matrix4x4Editor()
         {
             InitializeComponent();
+        }
 
-            Value = value;
-
-            LoadFromValue();
+        public Matrix4x4Editor(ObservableMatrix4x4 value) : this()
+        {
+            BindToMatrix(value);
         }
 
         public string Label
         {
-            get => LabelBlock.Text;
-            set => LabelBlock.Text = value;
+            get => MainLabel.Content?.ToString() ?? string.Empty;
+            set => MainLabel.Content = value;
         }
 
-        private void LoadFromValue()
+        private void BindToMatrix(ObservableMatrix4x4 matrix)
         {
-            _updating = true;
+            // Bind each FloatEditor to its corresponding ObservableValue<float>
+            M11Editor.DataContext = matrix.M11;
+            M12Editor.DataContext = matrix.M12;
+            M13Editor.DataContext = matrix.M13;
+            M14Editor.DataContext = matrix.M14;
 
-            M11Box.Text = Value.M11.ToString();
-            M12Box.Text = Value.M12.ToString();
-            M13Box.Text = Value.M13.ToString();
-            M14Box.Text = Value.M14.ToString();
+            M21Editor.DataContext = matrix.M21;
+            M22Editor.DataContext = matrix.M22;
+            M23Editor.DataContext = matrix.M23;
+            M24Editor.DataContext = matrix.M24;
 
-            M21Box.Text = Value.M21.ToString();
-            M22Box.Text = Value.M22.ToString();
-            M23Box.Text = Value.M23.ToString();
-            M24Box.Text = Value.M24.ToString();
+            M31Editor.DataContext = matrix.M31;
+            M32Editor.DataContext = matrix.M32;
+            M33Editor.DataContext = matrix.M33;
+            M34Editor.DataContext = matrix.M34;
 
-            M31Box.Text = Value.M31.ToString();
-            M32Box.Text = Value.M32.ToString();
-            M33Box.Text = Value.M33.ToString();
-            M34Box.Text = Value.M34.ToString();
-
-            M41Box.Text = Value.M41.ToString();
-            M42Box.Text = Value.M42.ToString();
-            M43Box.Text = Value.M43.ToString();
-            M44Box.Text = Value.M44.ToString();
-
-            _updating = false;
-        }
-
-        private void AnyTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_updating)
-            {
-                return;
-            }
-
-            UpdateValue();
-        }
-
-        private void UpdateValue()
-        {
-            Value = new Matrix4x4(
-                ParseFloat(M11Box.Text), ParseFloat(M12Box.Text), ParseFloat(M13Box.Text), ParseFloat(M14Box.Text),
-                ParseFloat(M21Box.Text), ParseFloat(M22Box.Text), ParseFloat(M23Box.Text), ParseFloat(M24Box.Text),
-                ParseFloat(M31Box.Text), ParseFloat(M32Box.Text), ParseFloat(M33Box.Text), ParseFloat(M34Box.Text),
-                ParseFloat(M41Box.Text), ParseFloat(M42Box.Text), ParseFloat(M43Box.Text), ParseFloat(M44Box.Text)
-            );
-
-            ValueChanged?.Invoke(this, Value);
-        }
-
-        private static float ParseFloat(string text)
-        {
-            return float.TryParse(text, out float value) ? value : 0f;
+            M41Editor.DataContext = matrix.M41;
+            M42Editor.DataContext = matrix.M42;
+            M43Editor.DataContext = matrix.M43;
+            M44Editor.DataContext = matrix.M44;
         }
     }
 }

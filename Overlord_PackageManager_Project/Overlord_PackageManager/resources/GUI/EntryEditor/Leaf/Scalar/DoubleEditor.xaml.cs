@@ -4,16 +4,16 @@ using System.Windows.Controls;
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 {
     /// <summary>
-    /// Interaktionslogik für UInt64Editor.xaml
+    /// Interaktionslogik für DoubleEditor.xaml
     /// </summary>
-    public partial class UInt64Editor : UserControl
+    public partial class DoubleEditor : UserControl
     {
-        public UInt64Editor()
+        public DoubleEditor()
         {
             InitializeComponent();
         }
 
-        public UInt64Editor(ObservableValue<ulong> value) : this()
+        public DoubleEditor(ObservableValue<double> value) : this()
         {
             DataContext = value;
         }

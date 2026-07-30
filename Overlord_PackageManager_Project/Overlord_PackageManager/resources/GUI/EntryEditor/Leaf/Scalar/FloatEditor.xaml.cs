@@ -1,19 +1,20 @@
-﻿using Overlord_PackageManager.resources.GUI.ObservableWrappers;
+﻿using Overlord_PackageManager.resources.GUI.Interfaces;
+using Overlord_PackageManager.resources.GUI.ObservableWrappers;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 {
     /// <summary>
-    /// Interaktionslogik für UInt64Editor.xaml
+    /// Interaktionslogik für FloatEditor.xaml
     /// </summary>
-    public partial class UInt64Editor : UserControl
+    public partial class FloatEditor : UserControl, IValueEditor
     {
-        public UInt64Editor()
+        public FloatEditor()
         {
             InitializeComponent();
         }
 
-        public UInt64Editor(ObservableValue<ulong> value) : this()
+        public FloatEditor(ObservableValue<float> value) : this()
         {
             DataContext = value;
         }

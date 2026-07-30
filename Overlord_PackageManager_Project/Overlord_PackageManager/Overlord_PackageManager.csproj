@@ -108,7 +108,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\FloatEntryEditor.xaml.cs">
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\CharEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\DoubleEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\BoolEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\FloatEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\ByteEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\Int32Editor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\Int64Editor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\Int16Editor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\ObjectBoneEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\TransformEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\UInt64EntryEditor.xaml.cs">
@@ -121,6 +148,7 @@
 
   <ItemGroup>
     <Folder Include="resources\GUI\EntryEditor\Leaf\CountedList\" />
+    <Folder Include="resources\GUI\Factories\" />
   </ItemGroup>
 
 </Project>

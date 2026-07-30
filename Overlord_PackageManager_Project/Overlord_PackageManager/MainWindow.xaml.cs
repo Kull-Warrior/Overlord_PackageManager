@@ -26,6 +26,7 @@ using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawList;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.VariableWidth;
 using Overlord_PackageManager.resources.GUI.EntryEditor.XML;
+using Overlord_PackageManager.resources.GUI.ObservableWrappers;
 using System.IO;
 using System.Numerics;
 using System.Windows;
@@ -123,14 +124,30 @@ namespace Overlord_PackageManager
 
             switch (obj)
             {
+                case ScalarEntry<byte> byteEntry:
+                    ObservableValue<byte> wrapperByte = new ObservableValue<byte>(byteEntry.Value);
+                    wrapperByte.PropertyChanged += (s, e) => byteEntry.Value = wrapperByte.Value;
+                    EditorHost.Content = new ByteEditor(wrapperByte);
+                    break;
                 case ScalarEntry<uint> uint32Entry:
-                    EditorHost.Content = new UInt32EntryEditor(uint32Entry);
+                    ObservableValue<uint> wrapperUInt32 = new ObservableValue<uint>(uint32Entry.Value);
+                    wrapperUInt32.PropertyChanged += (s, e) => uint32Entry.Value = wrapperUInt32.Value;
+                    EditorHost.Content = new UInt32Editor(wrapperUInt32);
                     break;
                 case ScalarEntry<ulong> uint64Entry:
-                    EditorHost.Content = new UInt64EntryEditor(uint64Entry);
+                    ObservableValue<ulong> wrapperUInt64 = new ObservableValue<ulong>(uint64Entry.Value);
+                    wrapperUInt64.PropertyChanged += (s, e) => uint64Entry.Value = wrapperUInt64.Value;
+                    EditorHost.Content = new UInt64Editor(wrapperUInt64);
                     break;
                 case ScalarEntry<float> floatEntry:
-                    EditorHost.Content = new FloatEntryEditor(floatEntry);
+                    ObservableValue<float> wrapperFloat = new ObservableValue<float>(floatEntry.Value);
+                    wrapperFloat.PropertyChanged += (s, e) => floatEntry.Value = wrapperFloat.Value;
+                    EditorHost.Content = new FloatEditor(wrapperFloat);
+                    break;
+                case ScalarEntry<double> doubleEntry:
+                    ObservableValue<double> wrapperDouble = new ObservableValue<double>(doubleEntry.Value);
+                    wrapperDouble.PropertyChanged += (s, e) => doubleEntry.Value = wrapperDouble.Value;
+                    EditorHost.Content = new DoubleEditor(wrapperDouble);
                     break;
                 case RawArrayEntry<byte> byteArrayEntry:
                     EditorHost.Content = new ByteArrayEntryEditor(byteArrayEntry);

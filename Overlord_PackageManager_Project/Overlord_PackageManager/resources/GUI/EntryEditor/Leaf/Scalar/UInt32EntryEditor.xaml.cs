@@ -1,28 +1,27 @@
-﻿using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar;
+﻿using Overlord_PackageManager.resources.GUI.ObservableWrappers;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 {
     /// <summary>
-    /// Interaktionslogik für UInt32EntryEditor.xaml
+    /// Interaktionslogik für UInt32Editor.xaml
     /// </summary>
-    public partial class UInt32EntryEditor : UserControl
+    public partial class UInt32Editor : UserControl
     {
-        private readonly ScalarEntry<uint> _entry;
-
-        public UInt32EntryEditor(ScalarEntry<uint> entry)
+        public UInt32Editor()
         {
             InitializeComponent();
-
-            _entry = entry;
-            ValueBox.Text = entry.Value.ToString();
-            ValueBox.TextChanged += ValueChanged;
         }
 
-        private void ValueChanged(object sender, TextChangedEventArgs e)
+        public UInt32Editor(ObservableValue<uint> value) : this()
         {
-            if (uint.TryParse(ValueBox.Text, out uint v))
-                _entry.Value = v;
+            DataContext = value;
+        }
+
+        public string Label
+        {
+            get => LabelBlock.Text;
+            set => LabelBlock.Text = value;
         }
     }
 }

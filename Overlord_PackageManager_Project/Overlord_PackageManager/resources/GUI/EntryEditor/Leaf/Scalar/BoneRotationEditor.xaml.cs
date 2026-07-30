@@ -5,18 +5,18 @@ using System.Windows.Controls;
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 {
     /// <summary>
-    /// Interaction logic for Matrix4x4Editor.xaml
+    /// Interaction logic for Vector3Editor.xaml
     /// </summary>
-    public partial class MeshBoneShapeEditor : UserControl, IValueEditor
+    public partial class BoneRotationEditor : UserControl, IValueEditor
     {
-        public MeshBoneShapeEditor()
+        public BoneRotationEditor()
         {
             InitializeComponent();
         }
 
-        public MeshBoneShapeEditor(ObservableMeshBoneShape value) : this()
+        public BoneRotationEditor(ObservableBoneRotation value) : this()
         {
-            BindToDataContext(value);
+            BindToBoneRotation(value);
         }
 
         public string Label
@@ -25,12 +25,12 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
             set => MainLabel.Content = value;
         }
 
-        private void BindToDataContext(ObservableMeshBoneShape meshBoneShape)
+        private void BindToBoneRotation(ObservableBoneRotation boneRotation)
         {
             // Bind each FloatEditor to its corresponding ObservableValue<float>
-            MatrixEditor.DataContext = meshBoneShape.Matrix;
-            HeadEditor.DataContext = meshBoneShape.Head;
-            TailEditor.DataContext = meshBoneShape.Tail;
+            YawEditor.DataContext = boneRotation.Yaw;
+            PitchEditor.DataContext = boneRotation.Pitch;
+            RollEditor.DataContext = boneRotation.Roll;
         }
     }
 }

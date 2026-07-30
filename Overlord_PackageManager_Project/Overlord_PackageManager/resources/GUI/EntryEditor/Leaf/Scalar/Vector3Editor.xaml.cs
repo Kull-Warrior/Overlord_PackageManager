@@ -1,68 +1,36 @@
-﻿using System.Numerics;
+﻿using Overlord_PackageManager.resources.GUI.Interfaces;
+using Overlord_PackageManager.resources.GUI.ObservableWrappers;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 {
-    public partial class Vector3Editor : UserControl
+    /// <summary>
+    /// Interaction logic for Vector3Editor.xaml
+    /// </summary>
+    public partial class Vector3Editor : UserControl, IValueEditor
     {
-        private bool _updating;
-
-        public event EventHandler<Vector3>? ValueChanged;
-
-        public Vector3 Value { get; set; }
-
-        public Vector3Editor() : this(Vector3.Zero)
-        {
-        }
-
-        public Vector3Editor(Vector3 value)
+        public Vector3Editor()
         {
             InitializeComponent();
+        }
 
-            Value = value;
-
-            LoadFromValue();
+        public Vector3Editor(ObservableVector3 value) : this()
+        {
+            BindToVector3(value);
         }
 
         public string Label
         {
-            get => LabelBlock.Text;
-            set
-            {
-                LabelBlock.Text = value;
-                LabelBlock.Visibility = string.IsNullOrWhiteSpace(value) ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
-            }
+            get => MainLabel.Content?.ToString() ?? string.Empty;
+            set => MainLabel.Content = value;
         }
 
-        public void LoadFromValue()
+        private void BindToVector3(ObservableVector3 vector)
         {
-            _updating = true;
-
-            XBox.Text = Value.X.ToString();
-            YBox.Text = Value.Y.ToString();
-            ZBox.Text = Value.Z.ToString();
-
-            _updating = false;
-        }
-
-        private void AnyTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_updating)
-            {
-                return;
-            }
-
-            Value = new Vector3(
-                ParseFloat(XBox.Text),
-                ParseFloat(YBox.Text),
-                ParseFloat(ZBox.Text));
-
-            ValueChanged?.Invoke(this, Value);
-        }
-
-        private static float ParseFloat(string text)
-        {
-            return float.TryParse(text, out float value) ? value : 0f;
+            // Bind each FloatEditor to its corresponding ObservableValue<float>
+            XEditor.DataContext = vector.X;
+            YEditor.DataContext = vector.Y;
+            ZEditor.DataContext = vector.Z;
         }
     }
 }

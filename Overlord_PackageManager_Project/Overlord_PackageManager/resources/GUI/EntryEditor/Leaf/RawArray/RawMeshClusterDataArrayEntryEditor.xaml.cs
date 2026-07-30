@@ -33,7 +33,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
         private void RefreshEditors()
         {
             EditorContainer.Children.Clear();
-
+            /*
             for (int i = 0; i < _entry.Value.Length; i++)
             {
                 int index = i;
@@ -94,6 +94,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                     Child = container
                 });
             }
+            */
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

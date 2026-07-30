@@ -1,91 +1,38 @@
-﻿using Overlord_PackageManager.resources.Data.DataTypes;
+﻿using Overlord_PackageManager.resources.GUI.Interfaces;
+using Overlord_PackageManager.resources.GUI.ObservableWrappers;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 {
-    public partial class RawMeshClusterDataEditor : UserControl
+    /// <summary>
+    /// Interaction logic for RawMeshClusterDataEditor.xaml
+    /// </summary>
+    public partial class RawMeshClusterDataEditor : UserControl, IValueEditor
     {
-        private RawMeshClusterData _value;
+        public RawMeshClusterDataEditor()
+        {
+            InitializeComponent();
+        }
 
-        public event EventHandler<RawMeshClusterData>? ValueChanged;
+        public RawMeshClusterDataEditor(ObservableRawMeshClusterData value) : this()
+        {
+            BindToDataContext(value);
+        }
 
         public string Label
         {
-            get => RootGroup.Header?.ToString() ?? string.Empty;
-            set => RootGroup.Header = value;
+            get => MainLabel.Content?.ToString() ?? string.Empty;
+            set => MainLabel.Content = value;
         }
 
-        public RawMeshClusterDataEditor(RawMeshClusterData value)
+        private void BindToDataContext(ObservableRawMeshClusterData rawMeshClusterData)
         {
-            InitializeComponent();
-
-            _value = value;
-
-            Matrix3x3Editor matrixEditor = new(value.Matrix)
-            {
-                Label = "Matrix"
-            };
-
-            Vector3Editor centerEditor = new(value.Center)
-            {
-                Label = "Center"
-            };
-
-            Vector3Editor extentsEditor = new(value.Extents)
-            {
-                Label = "Extents"
-            };
-
-            UInt16Editor patchIndexEditor = new(value.patchIndex)
-            {
-                Label = "Patch Index"
-            };
-
-            UInt16Editor triangleCountEditor = new(value.triangleCount)
-            {
-                Label = "Triangle Count"
-            };
-
-            matrixEditor.ValueChanged += (_, v) =>
-            {
-                _value = _value with { Matrix = v };
-                NotifyChanged();
-            };
-
-            centerEditor.ValueChanged += (_, v) =>
-            {
-                _value = _value with { Center = v };
-                NotifyChanged();
-            };
-
-            extentsEditor.ValueChanged += (_, v) =>
-            {
-                _value = _value with { Extents = v };
-                NotifyChanged();
-            };
-
-            patchIndexEditor.ValueChanged += (_, v) =>
-            {
-                _value = _value with { patchIndex = v };
-                NotifyChanged();
-            };
-
-            triangleCountEditor.ValueChanged += (_, v) =>
-            {
-                _value = _value with { triangleCount = v };
-                NotifyChanged();
-            };
-
-            MatrixHost.Content = matrixEditor;
-            CenterHost.Content = centerEditor;
-            ExtentsHost.Content = extentsEditor;
-            PatchIndexHost.Content = patchIndexEditor;
-            TriangleCountHost.Content = triangleCountEditor;
-        }
-
-        private void NotifyChanged()
-        {
-            ValueChanged?.Invoke(this, _value);
+            // Bind each FloatEditor to its corresponding ObservableValue<float>
+            MatrixEditor.DataContext = rawMeshClusterData.Matrix;
+            HeadEditor.DataContext = rawMeshClusterData.Head;
+            TailEditor.DataContext = rawMeshClusterData.Tail;
+            PatchIndexEditor.DataContext = rawMeshClusterData.PatchIndex;
+            TriangleCountEditor.DataContext = rawMeshClusterData.TriangleCount;
         }
     }
 }
