@@ -1,213 +1,166 @@
-﻿using Overlord_PackageManager.resources.Data.DataTypes;
+﻿using System.Windows;
 using System.Windows.Controls;
+using Overlord_PackageManager.resources.Data.DataTypes;
+using Overlord_PackageManager.resources.GUI.Interfaces;
+using Overlord_PackageManager.resources.GUI.ObservableWrappers;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
 {
-    public partial class VertexAttributeEditor : UserControl
+    /// <summary>
+    /// Interaction logic for VertexAttributeEditor.xaml
+    /// </summary>
+    public partial class VertexAttributeEditor : UserControl, IValueEditor
     {
-        private bool _updating;
-
-        public event EventHandler<VertexAttribute>? ValueChanged;
-
-        public VertexAttribute Value { get; private set; }
-
-        private static readonly byte[] AllowedSizes = [1, 4, 8, 12, 16];
-
-        public string Label
-        {
-            get => LabelBlock.Text;
-            set
-            {
-                LabelBlock.Text = value;
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    LabelBlock.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else
-                {
-                    LabelBlock.Visibility = System.Windows.Visibility.Visible;
-                }
-            }
-        }
+        private ObservableVertexAttribute? _observableData;
+        private bool _isUpdating;
 
         public VertexAttributeEditor()
         {
             InitializeComponent();
-            Value = new VertexAttribute(0);
+
+            // Setup dropdown items
             SemanticBox.ItemsSource = Enum.GetValues(typeof(VertexAttributeSemantic)).Cast<VertexAttributeSemantic>();
-            SizeBox.ItemsSource = AllowedSizes;
-            UpdateDisplay();
+            SizeBox.ItemsSource = ObservableVertexAttribute.AllowedSizes;
+
+            DataContextChanged += OnDataContextChanged;
         }
 
-        public VertexAttributeEditor(VertexAttribute value)
+        public VertexAttributeEditor(ObservableVertexAttribute value) : this()
         {
-            InitializeComponent();
-            Value = value;
-            SemanticBox.ItemsSource = Enum.GetValues(typeof(VertexAttributeSemantic)).Cast<VertexAttributeSemantic>();
-            SizeBox.ItemsSource = AllowedSizes;
-            UpdateDisplay();
+            BindToData(value);
         }
 
-        private void UpdateDisplay()
+        public string Label
         {
-            _updating = true;
-
-            TypeBox.Text = Value.Type.ToString();
-            IndexBox.Text = Value.Index.ToString();
-
-            VertexAttributeSemantic semantic = SemanticFromByte(Value.SemanticByte);
-            if (semantic == VertexAttributeSemantic.Unknown)
-            {
-                SemanticBox.SelectedItem = VertexAttributeSemantic.Position;
-            }
-            else
-            {
-                SemanticBox.SelectedItem = semantic;
-            }
-
-            byte size = ByteSizeFromFlags(Value.Flags);
-            SizeBox.SelectedItem = AllowedSizes.Contains(size) ? size : (byte)12;
-
-            RawBlock.Text = $"Raw: 0x{Value.RawDescriptor:X8}";
-
-            _updating = false;
+            get => MainLabel.Content?.ToString() ?? string.Empty;
+            set => MainLabel.Content = value;
         }
 
-        private void AnyTextChanged(object sender, TextChangedEventArgs e)
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (_updating)
+            if (e.NewValue is ObservableVertexAttribute data)
             {
-                return;
+                BindToData(data);
             }
-            UpdateValue();
         }
 
-        private void AnySelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BindToData(ObservableVertexAttribute data)
         {
-            if (_updating)
-            {
-                return;
-            }
-            UpdateValue();
+            _observableData = data;
+
+            // Setup bindings
+            SetupBindings();
+
+            // Initial display update
+            UpdateRawDisplay();
+
+            // Listen for changes from external sources
+            data.PropertyChanged += OnExternalDataChanged;
         }
 
-        private void UpdateValue()
+        private void SetupBindings()
         {
-            byte type = ParseByte(TypeBox.Text, 0);
-            byte index = ParseByte(IndexBox.Text, 0);
+            if (_observableData == null) return;
 
-            VertexAttributeSemantic semantic;
-            if (SemanticBox.SelectedItem is VertexAttributeSemantic s)
+            // Type binding
+            TypeBox.Text = _observableData.Type.Value.ToString();
+            TypeBox.TextChanged += (s, e) =>
             {
-                semantic = s;
-            }
-            else
-            {
-                semantic = VertexAttributeSemantic.Position;
-            }
-
-            byte semanticByte = SemanticToByte(semantic);
-
-            byte byteSize;
-            if (SizeBox.SelectedItem is byte b)
-            {
-                byteSize = b;
-            }
-            else
-            {
-                byteSize = (byte)12;
-            }
-
-
-            byte flags = FlagsFromByteSize(byteSize);
-
-            uint raw =
-                (uint)type |
-                ((uint)index << 8) |
-                ((uint)semanticByte << 16) |
-                ((uint)flags << 24);
-
-            Value = new VertexAttribute(raw);
-
-            RawBlock.Text = $"Raw: 0x{Value.RawDescriptor:X8}";
-            ValueChanged?.Invoke(this, Value);
-        }
-
-        private static byte ParseByte(string text, byte fallback)
-        {
-            byte result;
-            if (byte.TryParse(text, out result))
-            {
-                return result;
-            }
-            else
-            {
-                return fallback;
-            }
-
-        }
-
-        private static byte SemanticToByte(VertexAttributeSemantic semantic)
-        {
-            return semantic switch
-            {
-                VertexAttributeSemantic.Position => 0x01,
-                VertexAttributeSemantic.Normal => 0x04,
-                VertexAttributeSemantic.TexCoord => 0x05,
-                VertexAttributeSemantic.Color => 0x06,
-                VertexAttributeSemantic.BlendWeights => 0x0A,
-                VertexAttributeSemantic.BlendIndices => 0x0B,
-                VertexAttributeSemantic.Tangent => 0x08,
-                VertexAttributeSemantic.Binormal => 0x07,
-                VertexAttributeSemantic.TangentSign => 0x0C,
-                VertexAttributeSemantic.TangentQuat => 0x09,
-                _ => 0x00
+                if (_isUpdating) return;
+                if (byte.TryParse(TypeBox.Text, out byte value))
+                {
+                    _isUpdating = true;
+                    _observableData.Type.Value = value;
+                    UpdateRawDisplay();
+                    _isUpdating = false;
+                }
             };
+
+            // Index binding
+            IndexBox.Text = _observableData.Index.Value.ToString();
+            IndexBox.TextChanged += (s, e) =>
+            {
+                if (_isUpdating) return;
+                if (byte.TryParse(IndexBox.Text, out byte value))
+                {
+                    _isUpdating = true;
+                    _observableData.Index.Value = value;
+                    UpdateRawDisplay();
+                    _isUpdating = false;
+                }
+            };
+
+            // Semantic binding
+            SemanticBox.SelectedItem = _observableData.Semantic.Value;
+            SemanticBox.SelectionChanged += (s, e) =>
+            {
+                if (_isUpdating) return;
+                if (SemanticBox.SelectedItem is VertexAttributeSemantic semantic)
+                {
+                    _isUpdating = true;
+                    _observableData.Semantic.Value = semantic;
+                    UpdateRawDisplay();
+                    _isUpdating = false;
+                }
+            };
+
+            // ByteSize binding
+            SizeBox.SelectedItem = _observableData.ByteSize.Value;
+            SizeBox.SelectionChanged += (s, e) =>
+            {
+                if (_isUpdating) return;
+                if (SizeBox.SelectedItem is byte size)
+                {
+                    _isUpdating = true;
+                    _observableData.ByteSize.Value = size;
+                    UpdateRawDisplay();
+                    _isUpdating = false;
+                }
+            };
+
+            // Subscribe to individual component changes
+            _observableData.Type.PropertyChanged += (s, e) => RefreshDisplay();
+            _observableData.Index.PropertyChanged += (s, e) => RefreshDisplay();
+            _observableData.Semantic.PropertyChanged += (s, e) => RefreshDisplay();
+            _observableData.ByteSize.PropertyChanged += (s, e) => RefreshDisplay();
         }
 
-        private static VertexAttributeSemantic SemanticFromByte(byte semanticByte)
+        private void OnExternalDataChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            return semanticByte switch
+            if (e.PropertyName == nameof(ObservableVertexAttribute.Value))
             {
-                0x01 => VertexAttributeSemantic.Position,
-                0x04 => VertexAttributeSemantic.Normal,
-                0x05 => VertexAttributeSemantic.TexCoord,
-                0x06 => VertexAttributeSemantic.Color,
-                0x0A => VertexAttributeSemantic.BlendWeights,
-                0x0B => VertexAttributeSemantic.BlendIndices,
-                0x08 => VertexAttributeSemantic.Tangent,
-                0x07 => VertexAttributeSemantic.Binormal,
-                0x0C => VertexAttributeSemantic.TangentSign,
-                0x09 => VertexAttributeSemantic.TangentQuat,
-                _ => VertexAttributeSemantic.Unknown
-            };
+                RefreshDisplay();
+            }
         }
 
-        private static byte FlagsFromByteSize(byte byteSize)
+        private void RefreshDisplay()
         {
-            return byteSize switch
+            if (_isUpdating || _observableData == null) return;
+
+            _isUpdating = true;
+            TypeBox.Text = _observableData.Type.Value.ToString();
+            IndexBox.Text = _observableData.Index.Value.ToString();
+
+            if (SemanticBox.SelectedItem is not VertexAttributeSemantic currentSemantic || currentSemantic != _observableData.Semantic.Value)
             {
-                8 => 1,
-                12 => 2,
-                16 => 3,
-                1 => 4,
-                4 => 15,
-                _ => 2 // default to FLOAT3 / 12 bytes
-            };
+                SemanticBox.SelectedItem = _observableData.Semantic.Value;
+            }
+
+            if (SizeBox.SelectedItem is not byte currentSize || currentSize != _observableData.ByteSize.Value)
+            {
+                SizeBox.SelectedItem = _observableData.ByteSize.Value;
+            }
+
+            UpdateRawDisplay();
+            _isUpdating = false;
         }
 
-        private static byte ByteSizeFromFlags(byte flags)
+        private void UpdateRawDisplay()
         {
-            return flags switch
+            if (_observableData != null)
             {
-                1 => 8,
-                2 => 12,
-                3 => 16,
-                4 => 1,
-                7 => 1,
-                15 => 4,
-                _ => 12 // default to FLOAT3 / 12 bytes
-            };
+                RawBlock.Text = $"Raw: 0x{_observableData.Value.RawDescriptor:X8}";
+            }
         }
     }
 }

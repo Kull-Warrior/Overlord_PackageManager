@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.GUI.Interfaces;
 using Overlord_PackageManager.resources.GUI.ObservableWrappers;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
@@ -12,17 +13,31 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         public BoolEditor()
         {
             InitializeComponent();
+            DataContextChanged += OnDataContextChanged;
         }
 
         public BoolEditor(ObservableValue<bool> value) : this()
         {
-            DataContext = value;
+            BindToBool(value);
         }
 
         public string Label
         {
             get => CheckBox.Content?.ToString() ?? "";
             set => CheckBox.Content = value;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ObservableValue<bool> value)
+            {
+                BindToBool(value);
+            }
+        }
+
+        private void BindToBool(ObservableValue<bool> value)
+        {
+            DataContext = value;
         }
     }
 }

@@ -33,7 +33,6 @@
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
         </ListBox>
 
         <!-- Buttons -->
@@ -44,14 +43,14 @@
             </Grid.ColumnDefinitions>
 
             <Button Content="Export .bin"
-            Grid.Column="0"
-            Margin="0,0,5,0"
-            Click="Export_Click"/>
+                    Grid.Column="0"
+                    Margin="0,0,5,0"
+                    Click="Export_Click"/>
 
             <Button Content="Import .bin"
-            Grid.Column="1"
-            Margin="5,0,0,0"
-            Click="Import_Click"/>
+                    Grid.Column="1"
+                    Margin="5,0,0,0"
+                    Click="Import_Click"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using Overlord_PackageManager.resources.GUI.ObservableWrappers;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
@@ -11,17 +12,31 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         public Int32Editor()
         {
             InitializeComponent();
+            DataContextChanged += OnDataContextChanged;
         }
 
         public Int32Editor(ObservableValue<int> value) : this()
         {
-            DataContext = value;
+            BindToInt(value);
         }
 
         public string Label
         {
             get => LabelBlock.Text;
             set => LabelBlock.Text = value;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ObservableValue<int> value)
+            {
+                BindToInt(value);
+            }
+        }
+
+        private void BindToInt(ObservableValue<int> value)
+        {
+            DataContext = value;
         }
     }
 }

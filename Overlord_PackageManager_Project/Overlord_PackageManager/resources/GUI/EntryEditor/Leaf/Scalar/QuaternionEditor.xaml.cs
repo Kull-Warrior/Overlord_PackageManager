@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.GUI.Interfaces;
 using Overlord_PackageManager.resources.GUI.ObservableWrappers;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
@@ -12,6 +13,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         public QuaternionEditor()
         {
             InitializeComponent();
+            DataContextChanged += OnDataContextChanged;
         }
 
         public QuaternionEditor(ObservableQuaternion value) : this()
@@ -28,6 +30,14 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         {
             get => MainLabel.Content?.ToString() ?? string.Empty;
             set => MainLabel.Content = value;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ObservableQuaternion quaternion)
+            {
+                BindToQuaternion(quaternion);
+            }
         }
 
         private void BindToQuaternion(ObservableQuaternion quaternion)

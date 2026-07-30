@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.GUI.Interfaces;
 using Overlord_PackageManager.resources.GUI.ObservableWrappers;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
@@ -12,6 +13,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         public BonePositionEditor()
         {
             InitializeComponent();
+            DataContextChanged += OnDataContextChanged;
         }
 
         public BonePositionEditor(ObservableBonePosition value) : this()
@@ -23,6 +25,14 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         {
             get => MainLabel.Content?.ToString() ?? string.Empty;
             set => MainLabel.Content = value;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ObservableBonePosition bonePosition)
+            {
+                BindToBonePosition(bonePosition);
+            }
         }
 
         private void BindToBonePosition(ObservableBonePosition bonePosition)

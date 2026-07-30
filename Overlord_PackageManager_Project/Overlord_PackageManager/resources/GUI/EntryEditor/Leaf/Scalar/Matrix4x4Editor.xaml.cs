@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.GUI.Interfaces;
 using Overlord_PackageManager.resources.GUI.ObservableWrappers;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
@@ -12,6 +13,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         public Matrix4x4Editor()
         {
             InitializeComponent();
+            DataContextChanged += OnDataContextChanged;
         }
 
         public Matrix4x4Editor(ObservableMatrix4x4 value) : this()
@@ -25,9 +27,16 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
             set => MainLabel.Content = value;
         }
 
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ObservableMatrix4x4 matrix)
+            {
+                BindToMatrix(matrix);
+            }
+        }
+
         private void BindToMatrix(ObservableMatrix4x4 matrix)
         {
-            // Bind each FloatEditor to its corresponding ObservableValue<float>
             M11Editor.DataContext = matrix.M11;
             M12Editor.DataContext = matrix.M12;
             M13Editor.DataContext = matrix.M13;

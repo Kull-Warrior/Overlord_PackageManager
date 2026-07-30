@@ -9,42 +9,41 @@ using System.Windows.Controls;
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 {
     /// <summary>
-    /// View model for a single float item in the array
+    /// View model for a single short item in the array
     /// </summary>
-    public class FloatArrayItem
+    public class Int16ArrayItem
     {
-        public string Label { get; set; } = string.Empty;
-        public FloatEditor? Editor { get; set; }
-        public ObservableValue<float> ObservableValue { get; set; } = null!;
+        public Int16Editor? Editor { get; set; }
+        public ObservableValue<short> ObservableValue { get; set; } = null!;
     }
 
     /// <summary>
-    /// Interaction logic for FloatArrayEditor.xaml
+    /// Interaction logic for Int16ArrayEditor.xaml
     /// </summary>
-    public partial class FloatArrayEditor : UserControl, IValueEditor
+    public partial class Int16ArrayEditor : UserControl, IValueEditor
     {
-        private ObservableValue<float[]>? _observableArray;
-        private ObservableCollection<FloatArrayItem> _items = new();
+        private ObservableValue<short[]>? _observableArray;
+        private ObservableCollection<Int16ArrayItem> _items = new();
         private bool _isUpdating;
 
-        public FloatArrayEditor()
+        public Int16ArrayEditor()
         {
             InitializeComponent();
             ArrayItemsControl.ItemsSource = _items;
         }
 
-        public FloatArrayEditor(ObservableValue<float[]> array) : this()
+        public Int16ArrayEditor(ObservableValue<short[]> array) : this()
         {
             BindToArray(array);
         }
 
         public string Label
         {
-            get => "Float Array";
+            get => "Int16 Array";
             set { }
         }
 
-        private void BindToArray(ObservableValue<float[]> array)
+        private void BindToArray(ObservableValue<short[]> array)
         {
             _observableArray = array;
             RebuildItems(array.Value);
@@ -53,7 +52,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
         private void OnArrayChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (!_isUpdating && e.PropertyName == nameof(ObservableValue<float[]>.Value))
+            if (!_isUpdating && e.PropertyName == nameof(ObservableValue<short[]>.Value))
             {
                 _isUpdating = true;
                 RebuildItems(_observableArray!.Value);
@@ -61,31 +60,30 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             }
         }
 
-        private void RebuildItems(float[] values)
+        private void RebuildItems(short[] values)
         {
             _items.Clear();
 
             for (int i = 0; i < values.Length; i++)
             {
-                ObservableValue<float> observableValue = new ObservableValue<float>(values[i]);
+                ObservableValue<short> observableValue = new ObservableValue<short>(values[i]);
 
                 // When this individual value changes, update the full array
                 observableValue.PropertyChanged += (s, e) =>
                 {
-                    if (e.PropertyName == nameof(ObservableValue<float>.Value))
+                    if (e.PropertyName == nameof(ObservableValue<short>.Value))
                     {
                         UpdateArrayFromItems();
                     }
                 };
 
-                FloatEditor editor = new FloatEditor(observableValue)
+                Int16Editor editor = new Int16Editor(observableValue)
                 {
                     Label = $"[{i}]"
                 };
 
-                FloatArrayItem item = new FloatArrayItem
+                Int16ArrayItem item = new Int16ArrayItem
                 {
-                    Label = $"[{i}]",
                     Editor = editor,
                     ObservableValue = observableValue
                 };
@@ -114,9 +112,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
         {
             if (_observableArray == null) return;
 
-            var newArray = new float[_observableArray.Value.Length + 1];
+            short[] newArray = new short[_observableArray.Value.Length + 1];
             Array.Copy(_observableArray.Value, newArray, _observableArray.Value.Length);
-            // newArray[^1] is already 0.0f (default)
+            // newArray[^1] is already 0 (default)
 
             _observableArray.Value = newArray;
         }
@@ -125,7 +123,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
         {
             if (_observableArray == null || _observableArray.Value.Length == 0) return;
 
-            float[] newArray = new float[_observableArray.Value.Length - 1];
+            short[] newArray = new short[_observableArray.Value.Length - 1];
             Array.Copy(_observableArray.Value, newArray, newArray.Length);
 
             _observableArray.Value = newArray;
@@ -133,7 +131,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
         private void RemoveSpecificButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.Tag is FloatArrayItem item)
+            if (sender is Button button && button.Tag is Int16ArrayItem item)
             {
                 _items.Remove(item);
                 UpdateArrayFromItems();

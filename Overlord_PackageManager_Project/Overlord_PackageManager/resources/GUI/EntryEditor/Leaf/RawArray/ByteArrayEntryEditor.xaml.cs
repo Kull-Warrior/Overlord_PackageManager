@@ -1,15 +1,13 @@
 ﻿using Microsoft.Win32;
-using Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawArray;
+using Overlord_PackageManager.resources.GUI.Interfaces;
+using Overlord_PackageManager.resources.GUI.ObservableWrappers;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 {
-    /// <summary>
-    /// Interaktionslogik für ByteArrayEntryEditor.xaml
-    /// </summary>
-
     public class HexLine
     {
         public int Offset { get; }
@@ -43,20 +41,52 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
         }
     }
 
-    public partial class ByteArrayEntryEditor : UserControl
+    public partial class ByteArrayEntryEditor : UserControl, IValueEditor
     {
-        private readonly RawArrayEntry<byte> _entry;
+        private ObservableValue<byte[]>? _observableArray;
+        private bool _isUpdating;
 
-        public ByteArrayEntryEditor(RawArrayEntry<byte> entry)
+        public ByteArrayEntryEditor()
         {
             InitializeComponent();
-            _entry = entry;
+        }
 
-            HexList.ItemsSource = HexFormatter.Format(entry.Value);
+        public ByteArrayEntryEditor(ObservableValue<byte[]> array) : this()
+        {
+            BindToArray(array);
+        }
+
+        public string Label
+        {
+            get => "Byte Array"; // Could add a Label control if needed
+            set { } // Implement if you add a Label control
+        }
+
+        private void BindToArray(ObservableValue<byte[]> array)
+        {
+            _observableArray = array;
+
+            // Display initial data
+            HexList.ItemsSource = HexFormatter.Format(array.Value);
+
+            // Listen for external changes
+            array.PropertyChanged += OnArrayChanged;
+        }
+
+        private void OnArrayChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (!_isUpdating && e.PropertyName == nameof(ObservableValue<byte[]>.Value))
+            {
+                _isUpdating = true;
+                HexList.ItemsSource = HexFormatter.Format(_observableArray!.Value);
+                _isUpdating = false;
+            }
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
+            if (_observableArray == null) return;
+
             var dialog = new SaveFileDialog
             {
                 Filter = "Binary files (*.bin)|*.bin",
@@ -66,12 +96,14 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             if (dialog.ShowDialog() == true)
             {
-                File.WriteAllBytes(dialog.FileName, _entry.Value);
+                File.WriteAllBytes(dialog.FileName, _observableArray.Value);
             }
         }
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {
+            if (_observableArray == null) return;
+
             var dialog = new OpenFileDialog
             {
                 Filter = "Binary files (*.bin)|*.bin"
@@ -81,13 +113,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             {
                 byte[] newData = File.ReadAllBytes(dialog.FileName);
 
-                // Replace internal byte array
-                _entry.Value = newData;
-
-                // Refresh viewer
-                HexList.ItemsSource = HexFormatter.Format(newData);
+                // This will trigger PropertyChanged and update the display
+                _observableArray.Value = newData;
             }
         }
-
     }
 }

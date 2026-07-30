@@ -9,42 +9,41 @@ using System.Windows.Controls;
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 {
     /// <summary>
-    /// View model for a single float item in the array
+    /// View model for a single uint item in the array
     /// </summary>
-    public class FloatArrayItem
+    public class UInt64ArrayItem
     {
-        public string Label { get; set; } = string.Empty;
-        public FloatEditor? Editor { get; set; }
-        public ObservableValue<float> ObservableValue { get; set; } = null!;
+        public UInt64Editor? Editor { get; set; }
+        public ObservableValue<ulong> ObservableValue { get; set; } = null!;
     }
 
     /// <summary>
-    /// Interaction logic for FloatArrayEditor.xaml
+    /// Interaction logic for UInt64ArrayEditor.xaml
     /// </summary>
-    public partial class FloatArrayEditor : UserControl, IValueEditor
+    public partial class UInt64ArrayEditor : UserControl, IValueEditor
     {
-        private ObservableValue<float[]>? _observableArray;
-        private ObservableCollection<FloatArrayItem> _items = new();
+        private ObservableValue<ulong[]>? _observableArray;
+        private ObservableCollection<UInt64ArrayItem> _items = new();
         private bool _isUpdating;
 
-        public FloatArrayEditor()
+        public UInt64ArrayEditor()
         {
             InitializeComponent();
             ArrayItemsControl.ItemsSource = _items;
         }
 
-        public FloatArrayEditor(ObservableValue<float[]> array) : this()
+        public UInt64ArrayEditor(ObservableValue<ulong[]> array) : this()
         {
             BindToArray(array);
         }
 
         public string Label
         {
-            get => "Float Array";
+            get => "UInt64 Array";
             set { }
         }
 
-        private void BindToArray(ObservableValue<float[]> array)
+        private void BindToArray(ObservableValue<ulong[]> array)
         {
             _observableArray = array;
             RebuildItems(array.Value);
@@ -53,7 +52,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
         private void OnArrayChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (!_isUpdating && e.PropertyName == nameof(ObservableValue<float[]>.Value))
+            if (!_isUpdating && e.PropertyName == nameof(ObservableValue<ulong[]>.Value))
             {
                 _isUpdating = true;
                 RebuildItems(_observableArray!.Value);
@@ -61,31 +60,30 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             }
         }
 
-        private void RebuildItems(float[] values)
+        private void RebuildItems(ulong[] values)
         {
             _items.Clear();
 
             for (int i = 0; i < values.Length; i++)
             {
-                ObservableValue<float> observableValue = new ObservableValue<float>(values[i]);
+                ObservableValue<ulong> observableValue = new ObservableValue<ulong>(values[i]);
 
                 // When this individual value changes, update the full array
                 observableValue.PropertyChanged += (s, e) =>
                 {
-                    if (e.PropertyName == nameof(ObservableValue<float>.Value))
+                    if (e.PropertyName == nameof(ObservableValue<ulong>.Value))
                     {
                         UpdateArrayFromItems();
                     }
                 };
 
-                FloatEditor editor = new FloatEditor(observableValue)
+                UInt64Editor editor = new UInt64Editor(observableValue)
                 {
                     Label = $"[{i}]"
                 };
 
-                FloatArrayItem item = new FloatArrayItem
+                UInt64ArrayItem item = new UInt64ArrayItem
                 {
-                    Label = $"[{i}]",
                     Editor = editor,
                     ObservableValue = observableValue
                 };
@@ -114,9 +112,9 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
         {
             if (_observableArray == null) return;
 
-            var newArray = new float[_observableArray.Value.Length + 1];
+            ulong[] newArray = new ulong[_observableArray.Value.Length + 1];
             Array.Copy(_observableArray.Value, newArray, _observableArray.Value.Length);
-            // newArray[^1] is already 0.0f (default)
+            // newArray[^1] is already 0 (default)
 
             _observableArray.Value = newArray;
         }
@@ -125,7 +123,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
         {
             if (_observableArray == null || _observableArray.Value.Length == 0) return;
 
-            float[] newArray = new float[_observableArray.Value.Length - 1];
+            ulong[] newArray = new ulong[_observableArray.Value.Length - 1];
             Array.Copy(_observableArray.Value, newArray, newArray.Length);
 
             _observableArray.Value = newArray;
@@ -133,7 +131,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
         private void RemoveSpecificButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.Tag is FloatArrayItem item)
+            if (sender is Button button && button.Tag is UInt64ArrayItem item)
             {
                 _items.Remove(item);
                 UpdateArrayFromItems();

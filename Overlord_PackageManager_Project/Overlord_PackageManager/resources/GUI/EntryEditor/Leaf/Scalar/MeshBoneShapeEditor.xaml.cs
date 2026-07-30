@@ -1,5 +1,6 @@
 ﻿using Overlord_PackageManager.resources.GUI.Interfaces;
 using Overlord_PackageManager.resources.GUI.ObservableWrappers;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
@@ -12,11 +13,12 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         public MeshBoneShapeEditor()
         {
             InitializeComponent();
+            DataContextChanged += OnDataContextChanged;
         }
 
         public MeshBoneShapeEditor(ObservableMeshBoneShape value) : this()
         {
-            BindToDataContext(value);
+            BindToMeshBoneShape(value);
         }
 
         public string Label
@@ -25,7 +27,15 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
             set => MainLabel.Content = value;
         }
 
-        private void BindToDataContext(ObservableMeshBoneShape meshBoneShape)
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ObservableMeshBoneShape meshBoneShape)
+            {
+                BindToMeshBoneShape(meshBoneShape);
+            }
+        }
+
+        private void BindToMeshBoneShape(ObservableMeshBoneShape meshBoneShape)
         {
             // Bind each FloatEditor to its corresponding ObservableValue<float>
             MatrixEditor.DataContext = meshBoneShape.Matrix;
