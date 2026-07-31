@@ -108,6 +108,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\BoneRotationArrayEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\BoneScaleArrayEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\BonePositionArrayEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\ObjectBoneArrayEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\Matrix4x4ArrayEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\Matrix3x3ArrayEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\CharEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

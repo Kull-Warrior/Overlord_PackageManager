@@ -244,6 +244,46 @@ namespace Overlord_PackageManager
                     observableVertexAttribute.PropertyChanged += (s, e) => vertexAttributeEntry.Value = observableVertexAttribute.Value;
                     EditorHost.Content = new VertexAttributeEditor(observableVertexAttribute);
                     break;
+                case RawArrayEntry<BonePosition> rawBonePositionArrayEntry:
+                    ObservableValue<BonePosition[]> observableRawBonePositionArray = new ObservableValue<BonePosition[]>(rawBonePositionArrayEntry.Value);
+                    observableRawBonePositionArray.PropertyChanged += (s, e) => rawBonePositionArrayEntry.Value = observableRawBonePositionArray.Value;
+                    EditorHost.Content = new BonePositionArrayEditor(observableRawBonePositionArray);
+                    break;
+                case CountedArrayEntry<BonePosition> countedBonePositionArrayEntry:
+                    ObservableValue<BonePosition[]> observableCountedBonePositionArray = new ObservableValue<BonePosition[]>(countedBonePositionArrayEntry.Value);
+                    observableCountedBonePositionArray.PropertyChanged += (s, e) => countedBonePositionArrayEntry.Value = observableCountedBonePositionArray.Value;
+                    EditorHost.Content = new BonePositionArrayEditor(observableCountedBonePositionArray);
+                    break;
+                case RawArrayEntry<BoneRotation> rawBoneRotationArrayEntry:
+                    ObservableValue<BoneRotation[]> observableRawBoneRotationArray = new ObservableValue<BoneRotation[]>(rawBoneRotationArrayEntry.Value);
+                    observableRawBoneRotationArray.PropertyChanged += (s, e) => rawBoneRotationArrayEntry.Value = observableRawBoneRotationArray.Value;
+                    EditorHost.Content = new BoneRotationArrayEditor(observableRawBoneRotationArray);
+                    break;
+                case CountedArrayEntry<BoneRotation> countedBoneRotationArrayEntry:
+                    ObservableValue<BoneRotation[]> observableCountedBoneRotationArray = new ObservableValue<BoneRotation[]>(countedBoneRotationArrayEntry.Value);
+                    observableCountedBoneRotationArray.PropertyChanged += (s, e) => countedBoneRotationArrayEntry.Value = observableCountedBoneRotationArray.Value;
+                    EditorHost.Content = new BoneRotationArrayEditor(observableCountedBoneRotationArray);
+                    break;
+                case RawArrayEntry<BoneScale> rawBoneScaleArrayEntry:
+                    ObservableValue<BoneScale[]> observableRawBoneScaleArray = new ObservableValue<BoneScale[]>(rawBoneScaleArrayEntry.Value);
+                    observableRawBoneScaleArray.PropertyChanged += (s, e) => rawBoneScaleArrayEntry.Value = observableRawBoneScaleArray.Value;
+                    EditorHost.Content = new BoneScaleArrayEditor(observableRawBoneScaleArray);
+                    break;
+                case CountedArrayEntry<BoneScale> countedBoneScaleArrayEntry:
+                    ObservableValue<BoneScale[]> observableCountedBoneScaleArray = new ObservableValue<BoneScale[]>(countedBoneScaleArrayEntry.Value);
+                    observableCountedBoneScaleArray.PropertyChanged += (s, e) => countedBoneScaleArrayEntry.Value = observableCountedBoneScaleArray.Value;
+                    EditorHost.Content = new BoneScaleArrayEditor(observableCountedBoneScaleArray);
+                    break;
+                case RawArrayEntry<bool> rawBooleanArrayEntry:
+                    ObservableValue<bool[]> observableRawBooleanArray = new ObservableValue<bool[]>(rawBooleanArrayEntry.Value);
+                    observableRawBooleanArray.PropertyChanged += (s, e) => rawBooleanArrayEntry.Value = observableRawBooleanArray.Value;
+                    EditorHost.Content = new BoolArrayEditor(observableRawBooleanArray);
+                    break;
+                case CountedArrayEntry<bool> countedBooleanArrayEntry:
+                    ObservableValue<bool[]> observableCountedBooleanArray = new ObservableValue<bool[]>(countedBooleanArrayEntry.Value);
+                    observableCountedBooleanArray.PropertyChanged += (s, e) => countedBooleanArrayEntry.Value = observableCountedBooleanArray.Value;
+                    EditorHost.Content = new BoolArrayEditor(observableCountedBooleanArray);
+                    break;
                 case RawArrayEntry<byte> rawByteArrayEntry:
                     ObservableValue<byte[]> observableRawByteArray = new ObservableValue<byte[]>(rawByteArrayEntry.Value);
                     observableRawByteArray.PropertyChanged += (s, e) => rawByteArrayEntry.Value = observableRawByteArray.Value;
@@ -263,6 +303,192 @@ namespace Overlord_PackageManager
                     ObservableValue<char[]> observableCountedCharArray = new ObservableValue<char[]>(charCountedArray.Value);
                     observableCountedCharArray.PropertyChanged += (s, e) => charCountedArray.Value = observableCountedCharArray.Value;
                     EditorHost.Content = new StringEditor(observableCountedCharArray);
+                    break;
+                case RawArrayEntry<double> doubleArrayEntry:
+                    ObservableValue<double[]> observableRawDoubleArray = new ObservableValue<double[]>(doubleArrayEntry.Value);
+                    observableRawDoubleArray.PropertyChanged += (s, e) => doubleArrayEntry.Value = observableRawDoubleArray.Value;
+                    EditorHost.Content = new DoubleArrayEditor(observableRawDoubleArray);
+                    break;
+                case CountedArrayEntry<double> countedDoubleArrayEntry:
+                    ObservableValue<double[]> observableCountedDoubleArray = new ObservableValue<double[]>(countedDoubleArrayEntry.Value);
+                    observableCountedDoubleArray.PropertyChanged += (s, e) => countedDoubleArrayEntry.Value = observableCountedDoubleArray.Value;
+                    EditorHost.Content = new DoubleArrayEditor(observableCountedDoubleArray);
+                    break;
+                case RawArrayEntry<float> floatArrayEntry:
+                    ObservableValue<float[]> observableRawFloatArray = new ObservableValue<float[]>(floatArrayEntry.Value);
+                    observableRawFloatArray.PropertyChanged += (s, e) => floatArrayEntry.Value = observableRawFloatArray.Value;
+                    EditorHost.Content = new FloatArrayEditor(observableRawFloatArray);
+                    break;
+                case CountedArrayEntry<float> countedFloatArrayEntry:
+                    ObservableValue<float[]> observableCountedFloatArray = new ObservableValue<float[]>(countedFloatArrayEntry.Value);
+                    observableCountedFloatArray.PropertyChanged += (s, e) => countedFloatArrayEntry.Value = observableCountedFloatArray.Value;
+                    EditorHost.Content = new FloatArrayEditor(observableCountedFloatArray);
+                    break;
+                case RawArrayEntry<short> int16ArrayEntry:
+                    ObservableValue<short[]> observableRawInt16Array = new ObservableValue<short[]>(int16ArrayEntry.Value);
+                    observableRawInt16Array.PropertyChanged += (s, e) => int16ArrayEntry.Value = observableRawInt16Array.Value;
+                    EditorHost.Content = new Int16ArrayEditor(observableRawInt16Array);
+                    break;
+                case CountedArrayEntry<short> countedInt16ArrayEntry:
+                    ObservableValue<short[]> observableCountedInt16Array = new ObservableValue<short[]>(countedInt16ArrayEntry.Value);
+                    observableCountedInt16Array.PropertyChanged += (s, e) => countedInt16ArrayEntry.Value = observableCountedInt16Array.Value;
+                    EditorHost.Content = new Int16ArrayEditor(observableCountedInt16Array);
+                    break;
+                case RawArrayEntry<int> uint32ArrayEntry:
+                    ObservableValue<int[]> observableRawInt32Array = new ObservableValue<int[]>(uint32ArrayEntry.Value);
+                    observableRawInt32Array.PropertyChanged += (s, e) => uint32ArrayEntry.Value = observableRawInt32Array.Value;
+                    EditorHost.Content = new Int32ArrayEditor(observableRawInt32Array);
+                    break;
+                case CountedArrayEntry<int> countedInt32ArrayEntry:
+                    ObservableValue<int[]> observableCountedInt32Array = new ObservableValue<int[]>(countedInt32ArrayEntry.Value);
+                    observableCountedInt32Array.PropertyChanged += (s, e) => countedInt32ArrayEntry.Value = observableCountedInt32Array.Value;
+                    EditorHost.Content = new Int32ArrayEditor(observableCountedInt32Array);
+                    break;
+                case RawArrayEntry<long> int64ArrayEntry:
+                    ObservableValue<long[]> observableRawInt64Array = new ObservableValue<long[]>(int64ArrayEntry.Value);
+                    observableRawInt64Array.PropertyChanged += (s, e) => int64ArrayEntry.Value = observableRawInt64Array.Value;
+                    EditorHost.Content = new Int64ArrayEditor(observableRawInt64Array);
+                    break;
+                case CountedArrayEntry<long> countedInt64ArrayEntry:
+                    ObservableValue<long[]> observableCountedInt64Array = new ObservableValue<long[]>(countedInt64ArrayEntry.Value);
+                    observableCountedInt64Array.PropertyChanged += (s, e) => countedInt64ArrayEntry.Value = observableCountedInt64Array.Value;
+                    EditorHost.Content = new Int64ArrayEditor(observableCountedInt64Array);
+                    break;
+                case RawArrayEntry<Matrix3x3> matrices3x3ArrayEntry:
+                    ObservableValue<Matrix3x3[]> observableMatrices3x3Array = new ObservableValue<Matrix3x3[]>(matrices3x3ArrayEntry.Value);
+                    observableMatrices3x3Array.PropertyChanged += (s, e) => matrices3x3ArrayEntry.Value = observableMatrices3x3Array.Value;
+                    EditorHost.Content = new Matrix3x3ArrayEditor(observableMatrices3x3Array);
+                    break;
+                case CountedArrayEntry<Matrix3x3> countedMatrices3x3ArrayEntry:
+                    ObservableValue<Matrix3x3[]> observableCountedMatrices3x3Array = new ObservableValue<Matrix3x3[]>(countedMatrices3x3ArrayEntry.Value);
+                    observableCountedMatrices3x3Array.PropertyChanged += (s, e) => countedMatrices3x3ArrayEntry.Value = observableCountedMatrices3x3Array.Value;
+                    EditorHost.Content = new Matrix3x3ArrayEditor(observableCountedMatrices3x3Array);
+                    break;
+                case RawArrayEntry<Matrix4x4> matrices4x4ArrayEntry:
+                    ObservableValue<Matrix4x4[]> observableMatrices4x4Array = new ObservableValue<Matrix4x4[]>(matrices4x4ArrayEntry.Value);
+                    observableMatrices4x4Array.PropertyChanged += (s, e) => matrices4x4ArrayEntry.Value = observableMatrices4x4Array.Value;
+                    EditorHost.Content = new Matrix4x4ArrayEditor(observableMatrices4x4Array);
+                    break;
+                case CountedArrayEntry<Matrix4x4> countedMatrices4x4ArrayEntry:
+                    ObservableValue<Matrix4x4[]> observableCountedMatrices4x4Array = new ObservableValue<Matrix4x4[]>(countedMatrices4x4ArrayEntry.Value);
+                    observableCountedMatrices4x4Array.PropertyChanged += (s, e) => countedMatrices4x4ArrayEntry.Value = observableCountedMatrices4x4Array.Value;
+                    EditorHost.Content = new Matrix4x4ArrayEditor(observableCountedMatrices4x4Array);
+                    break;
+                case RawArrayEntry<MeshBoneShape> meshBoneShapeArrayEntry:
+                    ObservableValue<MeshBoneShape[]> observableMeshBoneShapeArray = new ObservableValue<MeshBoneShape[]>(meshBoneShapeArrayEntry.Value);
+                    observableMeshBoneShapeArray.PropertyChanged += (s, e) => meshBoneShapeArrayEntry.Value = observableMeshBoneShapeArray.Value;
+                    EditorHost.Content = new MeshBoneShapeArrayEditor(observableMeshBoneShapeArray);
+                    break;
+                case CountedArrayEntry<MeshBoneShape> countedMeshBoneShapeArrayEntry:
+                    ObservableValue<MeshBoneShape[]> observableCountedMeshBoneShapeArray = new ObservableValue<MeshBoneShape[]>(countedMeshBoneShapeArrayEntry.Value);
+                    observableCountedMeshBoneShapeArray.PropertyChanged += (s, e) => countedMeshBoneShapeArrayEntry.Value = observableCountedMeshBoneShapeArray.Value;
+                    EditorHost.Content = new MeshBoneShapeArrayEditor(observableCountedMeshBoneShapeArray);
+                    break;
+                case RawArrayEntry<ObjectBone> objectBoneArrayEntry:
+                    ObservableValue<ObjectBone[]> observableObjectBoneArray = new ObservableValue<ObjectBone[]>(objectBoneArrayEntry.Value);
+                    observableObjectBoneArray.PropertyChanged += (s, e) => objectBoneArrayEntry.Value = observableObjectBoneArray.Value;
+                    EditorHost.Content = new ObjectBoneArrayEditor(observableObjectBoneArray);
+                    break;
+                case CountedArrayEntry<ObjectBone> countedObjectBoneArrayEntry:
+                    ObservableValue<ObjectBone[]> observableCountedObjectBoneArray = new ObservableValue<ObjectBone[]>(countedObjectBoneArrayEntry.Value);
+                    observableCountedObjectBoneArray.PropertyChanged += (s, e) => countedObjectBoneArrayEntry.Value = observableCountedObjectBoneArray.Value;
+                    EditorHost.Content = new ObjectBoneArrayEditor(observableCountedObjectBoneArray);
+                    break;
+                case RawArrayEntry<Quaternion> quaternionArrayEntry:
+                    ObservableValue<Quaternion[]> observableQuaternionArray = new ObservableValue<Quaternion[]>(quaternionArrayEntry.Value);
+                    observableQuaternionArray.PropertyChanged += (s, e) => quaternionArrayEntry.Value = observableQuaternionArray.Value;
+                    EditorHost.Content = new QuaternionArrayEditor(observableQuaternionArray);
+                    break;
+                case CountedArrayEntry<Quaternion> countedQuaternionArrayEntry:
+                    ObservableValue<Quaternion[]> observableCountedQuaternionArray = new ObservableValue<Quaternion[]>(countedQuaternionArrayEntry.Value);
+                    observableCountedQuaternionArray.PropertyChanged += (s, e) => countedQuaternionArrayEntry.Value = observableCountedQuaternionArray.Value;
+                    EditorHost.Content = new QuaternionArrayEditor(observableCountedQuaternionArray);
+                    break;
+                case RawArrayEntry<RawMeshClusterData> rawMeshClusterDataArrayEntry:
+                    ObservableValue<RawMeshClusterData[]> observableRawMeshClusterDataArray = new ObservableValue<RawMeshClusterData[]>(rawMeshClusterDataArrayEntry.Value);
+                    observableRawMeshClusterDataArray.PropertyChanged += (s, e) => rawMeshClusterDataArrayEntry.Value = observableRawMeshClusterDataArray.Value;
+                    EditorHost.Content = new RawMeshClusterDataArrayEntryEditor(observableRawMeshClusterDataArray);
+                    break;
+                case CountedArrayEntry<RawMeshClusterData> countedMeshClusterDataArrayEntry:
+                    ObservableValue<RawMeshClusterData[]> observableCountedMeshClusterDataArray = new ObservableValue<RawMeshClusterData[]>(countedMeshClusterDataArrayEntry.Value);
+                    observableCountedMeshClusterDataArray.PropertyChanged += (s, e) => countedMeshClusterDataArrayEntry.Value = observableCountedMeshClusterDataArray.Value;
+                    EditorHost.Content = new RawMeshClusterDataArrayEntryEditor(observableCountedMeshClusterDataArray);
+                    break;
+                case RawArrayEntry<Transform> transformArrayEntry:
+                    ObservableValue<Transform[]> observableTransformArray = new ObservableValue<Transform[]>(transformArrayEntry.Value);
+                    observableTransformArray.PropertyChanged += (s, e) => transformArrayEntry.Value = observableTransformArray.Value;
+                    EditorHost.Content = new TransformArrayEditor(observableTransformArray);
+                    break;
+                case CountedArrayEntry<Transform> countedTransformArrayEntry:
+                    ObservableValue<Transform[]> observableCountedTransformArray = new ObservableValue<Transform[]>(countedTransformArrayEntry.Value);
+                    observableCountedTransformArray.PropertyChanged += (s, e) => countedTransformArrayEntry.Value = observableCountedTransformArray.Value;
+                    EditorHost.Content = new TransformArrayEditor(observableCountedTransformArray);
+                    break;
+                case RawArrayEntry<ushort> uint16ArrayEntry:
+                    ObservableValue<ushort[]> observableRawUInt16Array = new ObservableValue<ushort[]>(uint16ArrayEntry.Value);
+                    observableRawUInt16Array.PropertyChanged += (s, e) => uint16ArrayEntry.Value = observableRawUInt16Array.Value;
+                    EditorHost.Content = new UInt16ArrayEditor(observableRawUInt16Array);
+                    break;
+                case CountedArrayEntry<ushort> countedUInt16ArrayEntry:
+                    ObservableValue<ushort[]> observableCountedUInt16Array = new ObservableValue<ushort[]>(countedUInt16ArrayEntry.Value);
+                    observableCountedUInt16Array.PropertyChanged += (s, e) => countedUInt16ArrayEntry.Value = observableCountedUInt16Array.Value;
+                    EditorHost.Content = new UInt16ArrayEditor(observableCountedUInt16Array);
+                    break;
+                case RawArrayEntry<uint> uint32ArrayEntry:
+                    ObservableValue<uint[]> observableRawUInt32Array = new ObservableValue<uint[]>(uint32ArrayEntry.Value);
+                    observableRawUInt32Array.PropertyChanged += (s, e) => uint32ArrayEntry.Value = observableRawUInt32Array.Value;
+                    EditorHost.Content = new UInt32ArrayEditor(observableRawUInt32Array);
+                    break;
+                case CountedArrayEntry<uint> countedUInt32ArrayEntry:
+                    ObservableValue<uint[]> observableCountedUInt32Array = new ObservableValue<uint[]>(countedUInt32ArrayEntry.Value);
+                    observableCountedUInt32Array.PropertyChanged += (s, e) => countedUInt32ArrayEntry.Value = observableCountedUInt32Array.Value;
+                    EditorHost.Content = new UInt32ArrayEditor(observableCountedUInt32Array);
+                    break;
+                case RawArrayEntry<ulong> uint64ArrayEntry:
+                    ObservableValue<ulong[]> observableRawUInt64Array = new ObservableValue<ulong[]>(uint64ArrayEntry.Value);
+                    observableRawUInt64Array.PropertyChanged += (s, e) => uint64ArrayEntry.Value = observableRawUInt64Array.Value;
+                    EditorHost.Content = new UInt64ArrayEditor(observableRawUInt64Array);
+                    break;
+                case CountedArrayEntry<ulong> countedUInt64ArrayEntry:
+                    ObservableValue<ulong[]> observableCountedUInt64Array = new ObservableValue<ulong[]>(countedUInt64ArrayEntry.Value);
+                    observableCountedUInt64Array.PropertyChanged += (s, e) => countedUInt64ArrayEntry.Value = observableCountedUInt64Array.Value;
+                    EditorHost.Content = new UInt64ArrayEditor(observableCountedUInt64Array);
+                    break;
+                case RawArrayEntry<Vector3> vector3ArrayEntry:
+                    ObservableValue<Vector3[]> observableRawVector3Array = new ObservableValue<Vector3[]>(vector3ArrayEntry.Value);
+                    observableRawVector3Array.PropertyChanged += (s, e) => vector3ArrayEntry.Value = observableRawVector3Array.Value;
+                    EditorHost.Content = new Vector3ArrayEditor(observableRawVector3Array);
+                    break;
+                case CountedArrayEntry<Vector3> countedVector3ArrayEntry:
+                    ObservableValue<Vector3[]> observableCountedVector3Array = new ObservableValue<Vector3[]>(countedVector3ArrayEntry.Value);
+                    observableCountedVector3Array.PropertyChanged += (s, e) => countedVector3ArrayEntry.Value = observableCountedVector3Array.Value;
+                    EditorHost.Content = new Vector3ArrayEditor(observableCountedVector3Array);
+                    break;
+                case RawArrayEntry<Vector4> vector4ArrayEntry:
+                    ObservableValue<Vector4[]> observableRawVector4Array = new ObservableValue<Vector4[]>(vector4ArrayEntry.Value);
+                    observableRawVector4Array.PropertyChanged += (s, e) => vector4ArrayEntry.Value = observableRawVector4Array.Value;
+                    EditorHost.Content = new Vector4ArrayEditor(observableRawVector4Array);
+                    break;
+                case CountedArrayEntry<Vector4> countedVector4ArrayEntry:
+                    ObservableValue<Vector4[]> observableCountedVector4Array = new ObservableValue<Vector4[]>(countedVector4ArrayEntry.Value);
+                    observableCountedVector4Array.PropertyChanged += (s, e) => countedVector4ArrayEntry.Value = observableCountedVector4Array.Value;
+                    EditorHost.Content = new Vector4ArrayEditor(observableCountedVector4Array);
+                    break;
+                case RawArrayEntry<VertexAttribute> vertexAttributeArrayEntry:
+                    ObservableValue<VertexAttribute[]> observableRawVertexAttributeArray = new ObservableValue<VertexAttribute[]>(vertexAttributeArrayEntry.Value);
+                    observableRawVertexAttributeArray.PropertyChanged += (s, e) => vertexAttributeArrayEntry.Value = observableRawVertexAttributeArray.Value;
+                    EditorHost.Content = new VertexAttributeArrayEditor(observableRawVertexAttributeArray);
+                    break;
+                case CountedArrayEntry<VertexAttribute> countedVertexAttributeArrayEntry:
+                    ObservableValue<VertexAttribute[]> observableCountedVertexAttributeArray = new ObservableValue<VertexAttribute[]>(countedVertexAttributeArrayEntry.Value);
+                    observableCountedVertexAttributeArray.PropertyChanged += (s, e) => countedVertexAttributeArrayEntry.Value = observableCountedVertexAttributeArray.Value;
+                    EditorHost.Content = new VertexAttributeArrayEditor(observableCountedVertexAttributeArray);
+                    break;
+                case MeshData meshData:
+                    EditorHost.Content = new MeshDataEditor(meshData);
+                    break;
+                case RawListEntry<VertexAttribute> vertexDeclaration:
+                    EditorHost.Content = new VertexDeclarationEditor(vertexDeclaration);
                     break;
                 case DDSTextures ddsTextures:
                     EditorHost.Content = new DDSTextureEditor(ddsTextures);
@@ -284,43 +510,6 @@ namespace Overlord_PackageManager
                     break;
                 case LuaEntry luaEntry:
                     EditorHost.Content = new LuaEntryEditor(luaEntry);
-                    break;
-                case RawArrayEntry<float> floatArrayEntry:
-                    ObservableValue<float[]> observableRawFloatArray = new ObservableValue<float[]>(floatArrayEntry.Value);
-                    observableRawFloatArray.PropertyChanged += (s, e) => floatArrayEntry.Value = observableRawFloatArray.Value;
-                    EditorHost.Content = new FloatArrayEditor(observableRawFloatArray);
-                    break;
-                case CountedArrayEntry<float> countedFloatArrayEntry:
-                    ObservableValue<float[]> observableCountedFloatArray = new ObservableValue<float[]>(countedFloatArrayEntry.Value);
-                    observableCountedFloatArray.PropertyChanged += (s, e) => countedFloatArrayEntry.Value = observableCountedFloatArray.Value;
-                    EditorHost.Content = new FloatArrayEditor(observableCountedFloatArray);
-                    break;
-                case RawArrayEntry<ushort> uint16ArrayEntry:
-                    ObservableValue<ushort[]> observableRawUInt16Array = new ObservableValue<ushort[]>(uint16ArrayEntry.Value);
-                    observableRawUInt16Array.PropertyChanged += (s, e) => uint16ArrayEntry.Value = observableRawUInt16Array.Value;
-                    EditorHost.Content = new UInt16ArrayEditor(observableRawUInt16Array);
-                    break;
-                case CountedArrayEntry<ushort> countedUInt16ArrayEntry:
-                    ObservableValue<ushort[]> observableCountedUInt16Array = new ObservableValue<ushort[]>(countedUInt16ArrayEntry.Value);
-                    observableCountedUInt16Array.PropertyChanged += (s, e) => countedUInt16ArrayEntry.Value = observableCountedUInt16Array.Value;
-                    EditorHost.Content = new UInt16ArrayEditor(observableCountedUInt16Array);
-                    break;
-                case MeshData meshData:
-                    EditorHost.Content = new MeshDataEditor(meshData);
-                    break;
-                case RawListEntry<VertexAttribute> vertexDeclaration:
-                    EditorHost.Content = new VertexDeclarationEditor(vertexDeclaration);
-                    break;
-                case RawArrayEntry<Matrix4x4> matricesArrayEntry:
-                    EditorHost.Content = new MatricesArrayEntryEditor(matricesArrayEntry);
-                    break;
-                case RawArrayEntry<MeshBoneShape> meshBoneShapeArray:
-                    EditorHost.Content = new MeshBoneShapeArrayEntryEditor(meshBoneShapeArray);
-                    break;
-                case RawArrayEntry<RawMeshClusterData> rawMeshClusterDataArray:
-                    ObservableValue<RawMeshClusterData[]> observable = new ObservableValue<RawMeshClusterData[]>(rawMeshClusterDataArray.Value);
-                    observable.PropertyChanged += (s, e) => rawMeshClusterDataArray.Value = observable.Value;
-                    EditorHost.Content = new RawMeshClusterDataArrayEntryEditor(observable);
                     break;
                 default:
                     EditorHost.Content = new TextBlock
