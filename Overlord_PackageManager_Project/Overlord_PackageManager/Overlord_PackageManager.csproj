@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="resources\GUI\Factories\**" />
+    <EmbeddedResource Remove="resources\GUI\Factories\**" />
+    <None Remove="resources\GUI\Factories\**" />
+    <Page Remove="resources\GUI\Factories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="resources\Tools\CommunityToolkit.Common.dll" />
     <None Remove="resources\Tools\CommunityToolkit.Diagnostics.dll" />
     <None Remove="resources\Tools\CommunityToolkit.Mvvm.dll" />
@@ -166,7 +173,6 @@
 
   <ItemGroup>
     <Folder Include="resources\GUI\EntryEditor\Leaf\CountedList\" />
-    <Folder Include="resources\GUI\Factories\" />
   </ItemGroup>
 
 </Project>

@@ -74,7 +74,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                 // When the cluster changes, update the array
                 observableData.PropertyChanged += (s, e) =>
                 {
-                    if (e.PropertyName == nameof(ObservableMatrix3x3.Matrix))
+                    if (e.PropertyName == nameof(ObservableMatrix3x3.Value))
                     {
                         UpdateArrayFromItems();
                     }
@@ -102,7 +102,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             _isUpdating = true;
             _observableArray.Value = _clusterItems
-                .Select(item => item.ObservableData.Matrix)
+                .Select(item => item.ObservableData.Value)
                 .ToArray();
             _isUpdating = false;
         }

@@ -4,9 +4,9 @@ using System.ComponentModel;
 namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 {
     /// <summary>
-    /// Observable wrapper for VertexAttribute for UI binding
+    /// Observable wrapper for VertexAttribute for UI binding.
     /// </summary>
-    public class ObservableVertexAttribute : INotifyPropertyChanged
+    public class ObservableVertexAttribute : ObservableComposite
     {
         private VertexAttribute _value;
 
@@ -17,8 +17,6 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 
         public VertexAttribute Value => _value;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         // Allowed sizes for the dropdown
         public static readonly byte[] AllowedSizes = [1, 4, 8, 12, 16];
 
@@ -26,23 +24,25 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
         {
             _value = initial;
 
-            Type = new ObservableValue<byte>(initial.Type);
-            Index = new ObservableValue<byte>(initial.Index);
-            Semantic = new ObservableValue<VertexAttributeSemantic>(SemanticFromByte(initial.SemanticByte));
-            ByteSize = new ObservableValue<byte>(ByteSizeFromFlags(initial.Flags));
+            Type = new(initial.Type);
+            Index = new(initial.Index);
+            Semantic = new(SemanticFromByte(initial.SemanticByte));
+            ByteSize = new(ByteSizeFromFlags(initial.Flags));
 
-            // Keep the VertexAttribute updated when any component changes
-            Type.PropertyChanged += OnComponentChanged;
-            Index.PropertyChanged += OnComponentChanged;
-            Semantic.PropertyChanged += OnComponentChanged;
-            ByteSize.PropertyChanged += OnComponentChanged;
+            Subscribe(
+                Type,
+                Index,
+                Semantic,
+                ByteSize);
         }
 
-        private void OnComponentChanged(object? sender, PropertyChangedEventArgs e)
+        protected override void OnComponentChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(ObservableValue<byte>.Value) &&
                 e.PropertyName != nameof(ObservableValue<VertexAttributeSemantic>.Value))
+            {
                 return;
+            }
 
             byte semanticByte = SemanticToByte(Semantic.Value);
             byte flags = FlagsFromByteSize(ByteSize.Value);
@@ -55,7 +55,7 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 
             _value = new VertexAttribute(raw);
 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+            OnPropertyChanged(nameof(Value));
         }
 
         private static byte SemanticToByte(VertexAttributeSemantic semantic)

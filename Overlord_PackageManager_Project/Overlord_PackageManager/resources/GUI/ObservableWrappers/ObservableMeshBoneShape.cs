@@ -3,23 +3,19 @@ using System.ComponentModel;
 
 namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 {
-    // Observable wrapper for UI binding
-    public class ObservableMeshBoneShape : INotifyPropertyChanged
+    /// <summary>
+    /// Observable wrapper for MeshBoneShape.
+    /// </summary>
+    public class ObservableMeshBoneShape : ObservableComposite
     {
         private MeshBoneShape _value;
 
-        // Individual float properties for binding
-
         public ObservableMatrix3x3 Matrix { get; }
-
         public ObservableVector3 Head { get; }
-
         public ObservableVector3 Tail { get; }
 
         public MeshBoneShape Value => _value;
-        
-        public event PropertyChangedEventHandler? PropertyChanged;
-        
+
         public ObservableMeshBoneShape(MeshBoneShape initial)
         {
             _value = initial;
@@ -28,25 +24,18 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
             Head = new ObservableVector3(initial.Head);
             Tail = new ObservableVector3(initial.Tail);
 
-            // Keep the Matrix4x4 updated when any component changes
-            Matrix.PropertyChanged += (s, e) => UpdateDataContext();
-            Head.PropertyChanged += (s, e) => UpdateDataContext();
-            Tail.PropertyChanged += (s, e) => UpdateDataContext();
+            Subscribe(Matrix, Head, Tail);
         }
 
-        private void UpdateDataContext()
+        protected override void OnComponentChanged(object? sender, PropertyChangedEventArgs e)
         {
-            _value = new MeshBoneShape(
-                new Matrix3x3(
-                    Matrix.M11, Matrix.M12, Matrix.M13,
-                    Matrix.M21, Matrix.M22, Matrix.M23,
-                    Matrix.M31, Matrix.M32, Matrix.M33
-                ),
-                Head.Value,
-                Tail.Value
-            );
+            // We only care when one of the child Value properties changes.
+            if (e.PropertyName != nameof(Value))
+                return;
 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MeshBoneShape)));
+            _value = new MeshBoneShape(Matrix.Value, Head.Value, Tail.Value);
+
+            OnPropertyChanged(nameof(Value));
         }
     }
 }

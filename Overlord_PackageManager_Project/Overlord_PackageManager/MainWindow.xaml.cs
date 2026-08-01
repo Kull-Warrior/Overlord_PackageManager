@@ -181,12 +181,12 @@ namespace Overlord_PackageManager
                     break;
                 case ScalarEntry<Matrix3x3> matrix3x3Entry:
                     ObservableMatrix3x3 wrapperMatrix3x3 = new ObservableMatrix3x3(matrix3x3Entry.Value);
-                    wrapperMatrix3x3.PropertyChanged += (s, e) => matrix3x3Entry.Value = wrapperMatrix3x3.Matrix;
+                    wrapperMatrix3x3.PropertyChanged += (s, e) => matrix3x3Entry.Value = wrapperMatrix3x3.Value;
                     EditorHost.Content = new Matrix3x3Editor(wrapperMatrix3x3);
                     break;
                 case ScalarEntry<Matrix4x4> matrix4x4Entry:
                     ObservableMatrix4x4 wrapperMatrix4x4 = new ObservableMatrix4x4(matrix4x4Entry.Value);
-                    wrapperMatrix4x4.PropertyChanged += (s, e) => matrix4x4Entry.Value = wrapperMatrix4x4.Matrix;
+                    wrapperMatrix4x4.PropertyChanged += (s, e) => matrix4x4Entry.Value = wrapperMatrix4x4.Value;
                     EditorHost.Content = new Matrix4x4Editor(wrapperMatrix4x4);
                     break;
                 case ScalarEntry<MeshBoneShape> meshBoneShapeEntry:
@@ -487,8 +487,15 @@ namespace Overlord_PackageManager
                 case MeshData meshData:
                     EditorHost.Content = new MeshDataEditor(meshData);
                     break;
-                case RawListEntry<VertexAttribute> vertexDeclaration:
-                    EditorHost.Content = new VertexDeclarationEditor(vertexDeclaration);
+                case RawListEntry<VertexAttribute> rawListVertexAttributeEntry:
+                    ObservableValue<List<VertexAttribute>> observableRawVertexAttributeList = new ObservableValue<List<VertexAttribute>>(rawListVertexAttributeEntry.Value);
+                    observableRawVertexAttributeList.PropertyChanged += (s, e) => rawListVertexAttributeEntry.Value = observableRawVertexAttributeList.Value;
+                    EditorHost.Content = new VertexAttributeListEditor(observableRawVertexAttributeList);
+                    break;
+                case CountedListEntry<VertexAttribute> countedListVertexAttributeEntry:
+                    ObservableValue<List<VertexAttribute>> observableCountedVertexAttributeList = new ObservableValue<List<VertexAttribute>>(countedListVertexAttributeEntry.Value);
+                    observableCountedVertexAttributeList.PropertyChanged += (s, e) => countedListVertexAttributeEntry.Value = observableCountedVertexAttributeList.Value;
+                    EditorHost.Content = new VertexAttributeListEditor(observableCountedVertexAttributeList);
                     break;
                 case DDSTextures ddsTextures:
                     EditorHost.Content = new DDSTextureEditor(ddsTextures);

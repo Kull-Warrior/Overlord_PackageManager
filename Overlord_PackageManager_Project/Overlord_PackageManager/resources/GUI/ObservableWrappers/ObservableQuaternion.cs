@@ -4,7 +4,7 @@ using System.Numerics;
 namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 {
     // Observable wrapper for UI binding
-    public class ObservableQuaternion : INotifyPropertyChanged
+    public class ObservableQuaternion : ObservableComposite
     {
         private Quaternion _value;
 
@@ -15,28 +15,26 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
         public ObservableValue<float> W { get; }
 
         public Quaternion Value => _value;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
         
         public ObservableQuaternion(Quaternion initial)
         {
             _value = initial;
-            X = new ObservableValue<float>(initial.X);
-            Y = new ObservableValue<float>(initial.Y);
-            Z = new ObservableValue<float>(initial.Z);
-            W = new ObservableValue<float>(initial.W);
+            X = new (initial.X);
+            Y = new (initial.Y);
+            Z = new (initial.Z);
+            W = new (initial.W);
 
             // Keep the Quaternion updated when any component changes
-            X.PropertyChanged += (s, e) => UpdateQuaternion();
-            Y.PropertyChanged += (s, e) => UpdateQuaternion();
-            Z.PropertyChanged += (s, e) => UpdateQuaternion();
-            W.PropertyChanged += (s, e) => UpdateQuaternion();
+            Subscribe(X, Y, Z, W);
         }
 
-        private void UpdateQuaternion()
+        protected override void OnComponentChanged(object? sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName != nameof(Value))
+                return;
+
             _value = new Quaternion(X.Value, Y.Value, Z.Value, W.Value);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+            OnPropertyChanged(nameof(Value));
         }
     }
 }
