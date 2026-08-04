@@ -99,7 +99,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Count of Clusters
-                21 => new RawArrayEntry<RawMeshClusterData>(id, relOffset, BinaryTypes.RawMeshClusterData),   // Cluster data
+                21 => new RawArrayEntry<MeshCluster>(id, relOffset, BinaryTypes.MeshCluster),   // Cluster data
                 22 => new MeshClusterIndexBuffer(id, relOffset),    // Cluster index buffer
                 _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),                  // Unknown entry
             };

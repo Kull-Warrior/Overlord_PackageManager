@@ -18,24 +18,24 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
     public class ClusterItem
     {
         public string Label { get; set; } = string.Empty;
-        public RawMeshClusterDataEditor? Editor { get; set; }
-        public ObservableRawMeshClusterData ObservableData { get; set; } = null!;
+        public MeshClusterEditor? Editor { get; set; }
+        public ObservableMeshCluster ObservableData { get; set; } = null!;
     }
 
-    public partial class RawMeshClusterDataArrayEntryEditor : UserControl, IValueEditor
+    public partial class MeshClusterArrayEditor : UserControl, IValueEditor
     {
-        private ObservableValue<RawMeshClusterData[]>? _observableArray;
+        private ObservableValue<MeshCluster[]>? _observableArray;
         private ObservableCollection<ClusterItem> _clusterItems = new();
         private bool _isUpdating;
-        private const int ClusterSize = 68; // Matrix(36) + Vector3(12) + Vector3(12) + ushort(2) + ushort(2) = 64? Check your actual size
+        private const int ClusterSize = 64; // Matrix(36) + Vector3(12) + Vector3(12) + ushort(2) + ushort(2) = 64
 
-        public RawMeshClusterDataArrayEntryEditor()
+        public MeshClusterArrayEditor()
         {
             InitializeComponent();
             ClustersItemsControl.ItemsSource = _clusterItems;
         }
 
-        public RawMeshClusterDataArrayEntryEditor(ObservableValue<RawMeshClusterData[]> array) : this()
+        public MeshClusterArrayEditor(ObservableValue<MeshCluster[]> array) : this()
         {
             BindToArray(array);
         }
@@ -46,7 +46,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             set { }
         }
 
-        private void BindToArray(ObservableValue<RawMeshClusterData[]> array)
+        private void BindToArray(ObservableValue<MeshCluster[]> array)
         {
             _observableArray = array;
             RebuildClusterItems(array.Value);
@@ -55,7 +55,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
         private void OnArrayChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (!_isUpdating && e.PropertyName == nameof(ObservableValue<RawMeshClusterData[]>.Value))
+            if (!_isUpdating && e.PropertyName == nameof(ObservableValue<MeshCluster[]>.Value))
             {
                 _isUpdating = true;
                 RebuildClusterItems(_observableArray!.Value);
@@ -63,24 +63,24 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             }
         }
 
-        private void RebuildClusterItems(RawMeshClusterData[] clusters)
+        private void RebuildClusterItems(MeshCluster[] clusters)
         {
             _clusterItems.Clear();
 
             for (int i = 0; i < clusters.Length; i++)
             {
-                ObservableRawMeshClusterData observableData = new ObservableRawMeshClusterData(clusters[i]);
+                ObservableMeshCluster observableData = new ObservableMeshCluster(clusters[i]);
 
                 // When the cluster changes, update the array
                 observableData.PropertyChanged += (s, e) =>
                 {
-                    if (e.PropertyName == nameof(ObservableRawMeshClusterData.Value))
+                    if (e.PropertyName == nameof(ObservableMeshCluster.Value))
                     {
                         UpdateArrayFromItems();
                     }
                 };
 
-                RawMeshClusterDataEditor editor = new RawMeshClusterDataEditor(observableData)
+                MeshClusterEditor editor = new MeshClusterEditor(observableData)
                 {
                     Label = $"Cluster {i}"
                 };
@@ -111,7 +111,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
         {
             if (_observableArray == null) return;
 
-            RawMeshClusterData newCluster = new RawMeshClusterData(
+            MeshCluster newCluster = new MeshCluster(
                 new Matrix3x3(
                     1, 0, 0,
                     0, 1, 0,
@@ -121,7 +121,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                 0,
                 0);
 
-            RawMeshClusterData[] newArray = new RawMeshClusterData[_observableArray.Value.Length + 1];
+            MeshCluster[] newArray = new MeshCluster[_observableArray.Value.Length + 1];
             Array.Copy(_observableArray.Value, newArray, _observableArray.Value.Length);
             newArray[^1] = newCluster;
 
@@ -150,7 +150,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             using BinaryWriter writer = new(File.Create(dialog.FileName));
 
-            foreach (RawMeshClusterData cluster in _observableArray.Value)
+            foreach (MeshCluster cluster in _observableArray.Value)
             {
                 writer.Write(cluster.Matrix.M11);
                 writer.Write(cluster.Matrix.M12);
@@ -195,7 +195,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                 return;
             }
 
-            List<RawMeshClusterData> list = [];
+            List<MeshCluster> list = [];
 
             using (BinaryReader reader = new(File.OpenRead(dialog.FileName)))
             {
@@ -215,7 +215,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                     ushort patchIndex = reader.ReadUInt16();
                     ushort triangleCount = reader.ReadUInt16();
 
-                    list.Add(new RawMeshClusterData(matrix, center, extents, patchIndex, triangleCount));
+                    list.Add(new MeshCluster(matrix, center, extents, patchIndex, triangleCount));
                 }
             }
 

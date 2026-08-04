@@ -4,9 +4,9 @@ using System.ComponentModel;
 namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 {
     // Observable wrapper for UI binding
-    public class ObservableRawMeshClusterData : ObservableComposite
+    public class ObservableMeshCluster : ObservableComposite
     {
-        private RawMeshClusterData _value;
+        private MeshCluster _value;
 
         public ObservableMatrix3x3 Matrix { get; }
         public ObservableVector3 Head { get; }
@@ -14,9 +14,9 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
         public ObservableValue<ushort> PatchIndex {  get; }
         public ObservableValue<ushort> TriangleCount {  get; }
 
-        public RawMeshClusterData Value => _value;
+        public MeshCluster Value => _value;
         
-        public ObservableRawMeshClusterData(RawMeshClusterData initial)
+        public ObservableMeshCluster(MeshCluster initial)
         {
             _value = initial;
 
@@ -26,7 +26,7 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
             PatchIndex = new (initial.PatchIndex);
             TriangleCount = new (initial.TriangleCount);
 
-            // Keep the RawMeshClusterData updated when any component changes
+            // Keep the MeshCluster updated when any component changes
             Subscribe(Matrix, Head, Tail, PatchIndex, TriangleCount);
         }
 
@@ -35,7 +35,7 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
             if (e.PropertyName != nameof(Value))
                 return;
 
-            _value = new RawMeshClusterData(
+            _value = new MeshCluster(
                 Matrix.Value,
                 Head.Value,
                 Tail.Value,

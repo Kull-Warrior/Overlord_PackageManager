@@ -7,5 +7,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh
     public class MeshClusterIndexBuffer(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => MeshFactory.CreateMeshClusterIndexBuffer;
+
+        public override string DisplayName => "Index Buffer";
     }
 }

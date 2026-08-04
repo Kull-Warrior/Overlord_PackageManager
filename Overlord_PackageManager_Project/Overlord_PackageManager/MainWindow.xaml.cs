@@ -204,10 +204,10 @@ namespace Overlord_PackageManager
                     observableQuaternion.PropertyChanged += (s, e) => quaternionEntry.Value = observableQuaternion.Value;
                     EditorHost.Content = new QuaternionEditor(observableQuaternion);
                     break;
-                case ScalarEntry<RawMeshClusterData> rawMeshClusterDataEntry:
-                    ObservableRawMeshClusterData observableRawMeshClusterData = new ObservableRawMeshClusterData(rawMeshClusterDataEntry.Value);
-                    observableRawMeshClusterData.PropertyChanged += (s, e) => rawMeshClusterDataEntry.Value = observableRawMeshClusterData.Value;
-                    EditorHost.Content = new RawMeshClusterDataEditor(observableRawMeshClusterData);
+                case ScalarEntry<MeshCluster> meshClusterEntry:
+                    ObservableMeshCluster observableMeshCluster = new ObservableMeshCluster(meshClusterEntry.Value);
+                    observableMeshCluster.PropertyChanged += (s, e) => meshClusterEntry.Value = observableMeshCluster.Value;
+                    EditorHost.Content = new MeshClusterEditor(observableMeshCluster);
                     break;
                 case ScalarEntry<Transform> transformEntry:
                     ObservableTransform observableTransform = new ObservableTransform(transformEntry.Value);
@@ -404,15 +404,15 @@ namespace Overlord_PackageManager
                     observableCountedQuaternionArray.PropertyChanged += (s, e) => countedQuaternionArrayEntry.Value = observableCountedQuaternionArray.Value;
                     EditorHost.Content = new QuaternionArrayEditor(observableCountedQuaternionArray);
                     break;
-                case RawArrayEntry<RawMeshClusterData> rawMeshClusterDataArrayEntry:
-                    ObservableValue<RawMeshClusterData[]> observableRawMeshClusterDataArray = new ObservableValue<RawMeshClusterData[]>(rawMeshClusterDataArrayEntry.Value);
-                    observableRawMeshClusterDataArray.PropertyChanged += (s, e) => rawMeshClusterDataArrayEntry.Value = observableRawMeshClusterDataArray.Value;
-                    EditorHost.Content = new RawMeshClusterDataArrayEntryEditor(observableRawMeshClusterDataArray);
+                case RawArrayEntry<MeshCluster> meshClusterArrayEntry:
+                    ObservableValue<MeshCluster[]> observableMeshClusterArray = new ObservableValue<MeshCluster[]>(meshClusterArrayEntry.Value);
+                    observableMeshClusterArray.PropertyChanged += (s, e) => meshClusterArrayEntry.Value = observableMeshClusterArray.Value;
+                    EditorHost.Content = new MeshClusterArrayEditor(observableMeshClusterArray);
                     break;
-                case CountedArrayEntry<RawMeshClusterData> countedMeshClusterDataArrayEntry:
-                    ObservableValue<RawMeshClusterData[]> observableCountedMeshClusterDataArray = new ObservableValue<RawMeshClusterData[]>(countedMeshClusterDataArrayEntry.Value);
-                    observableCountedMeshClusterDataArray.PropertyChanged += (s, e) => countedMeshClusterDataArrayEntry.Value = observableCountedMeshClusterDataArray.Value;
-                    EditorHost.Content = new RawMeshClusterDataArrayEntryEditor(observableCountedMeshClusterDataArray);
+                case CountedArrayEntry<MeshCluster> countedMeshClusterArrayEntry:
+                    ObservableValue<MeshCluster[]> observableCountedMeshClusterArray = new ObservableValue<MeshCluster[]>(countedMeshClusterArrayEntry.Value);
+                    observableCountedMeshClusterArray.PropertyChanged += (s, e) => countedMeshClusterArrayEntry.Value = observableCountedMeshClusterArray.Value;
+                    EditorHost.Content = new MeshClusterArrayEditor(observableCountedMeshClusterArray);
                     break;
                 case RawArrayEntry<Transform> transformArrayEntry:
                     ObservableValue<Transform[]> observableTransformArray = new ObservableValue<Transform[]>(transformArrayEntry.Value);

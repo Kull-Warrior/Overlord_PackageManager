@@ -300,14 +300,14 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
             }
         };
 
-        public static readonly BinaryType<RawMeshClusterData> RawMeshClusterData =
+        public static readonly BinaryType<MeshCluster> MeshCluster =
         new()
         {
             Size = 64, //Matrix3x3 Matrix, Vector3 Center, Vector3 Extents, ushort PatchIndex, ushort TriangleCount);
-            DisplayName = "MeshClusterData",
+            DisplayName = "MeshCluster",
             Read = r =>
             {
-                return new RawMeshClusterData(
+                return new MeshCluster(
                     new Matrix3x3(
                         r.ReadSingle(), r.ReadSingle(), r.ReadSingle(),
                         r.ReadSingle(), r.ReadSingle(), r.ReadSingle(),
