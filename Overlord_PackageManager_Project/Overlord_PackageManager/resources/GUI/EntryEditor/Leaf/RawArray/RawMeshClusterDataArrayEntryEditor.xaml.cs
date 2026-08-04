@@ -167,8 +167,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                 writer.Write(cluster.Extents.X);
                 writer.Write(cluster.Extents.Y);
                 writer.Write(cluster.Extents.Z);
-                writer.Write(cluster.patchIndex);
-                writer.Write(cluster.triangleCount);
+                writer.Write(cluster.PatchIndex);
+                writer.Write(cluster.TriangleCount);
             }
         }
 

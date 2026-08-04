@@ -303,7 +303,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         public static readonly BinaryType<RawMeshClusterData> RawMeshClusterData =
         new()
         {
-            Size = 68, //Matrix3x3 Matrix, Vector3 Center, Vector3 Extents, ushort PatchIndex, ushort TriangleCount);
+            Size = 64, //Matrix3x3 Matrix, Vector3 Center, Vector3 Extents, ushort PatchIndex, ushort TriangleCount);
             DisplayName = "MeshClusterData",
             Read = r =>
             {
@@ -347,8 +347,8 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
                 w.Write(v.Extents.Z);
 
                 // Patch Index and Triangle Count
-                w.Write(v.patchIndex);
-                w.Write(v.triangleCount);
+                w.Write(v.PatchIndex);
+                w.Write(v.TriangleCount);
             }
         };
 

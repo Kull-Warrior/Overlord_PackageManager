@@ -23,8 +23,8 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
             Matrix = new (initial.Matrix);
             Head = new (initial.Center);
             Tail = new (initial.Extents);
-            PatchIndex = new (initial.patchIndex);
-            TriangleCount = new (initial.triangleCount);
+            PatchIndex = new (initial.PatchIndex);
+            TriangleCount = new (initial.TriangleCount);
 
             // Keep the RawMeshClusterData updated when any component changes
             Subscribe(Matrix, Head, Tail, PatchIndex, TriangleCount);
