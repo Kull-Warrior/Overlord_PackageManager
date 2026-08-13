@@ -40,7 +40,8 @@
                      AcceptsReturn="True"
                      VerticalScrollBarVisibility="Auto"
                      FontFamily="Consolas"
-                     FontSize="13" />
+                     FontSize="13"
+                     MaxLength="{Binding MaxLength, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </Border>
     </Grid>
 </UserControl>

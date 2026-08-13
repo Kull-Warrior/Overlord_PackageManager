@@ -27,18 +27,18 @@
             </Grid.RowDefinitions>
 
             <!-- Row 0 -->
-            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource MatrixCellBorder}">
+            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource MatrixCellBorder}">
                 <local:Matrix4x4Editor x:Name="MatrixEditor" Label="Matrix4x4" />
             </Border>
 
             <!-- Row 1 -->
-            <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource MatrixCellBorder}">
+            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource MatrixCellBorder}">
                 <local:QuaternionEditor x:Name="RotationEditor" Label="Rotation" />
             </Border>
 
             <!-- Row 2 -->
-            <Border Grid.Row="2" Grid.Column="3" Style="{StaticResource MatrixCellBorder}">
-                <local:Vector3Editor x:Name="TranslationEditor" Label="Translation" />
+            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource MatrixCellBorder}">
+                <local:Vector4Editor x:Name="TranslationEditor" Label="Translation" />
             </Border>
         </Grid>
     </StackPanel>

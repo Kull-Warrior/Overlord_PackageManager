@@ -38,7 +38,12 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar
         private void BindToObjectBone(ObservableObjectBone objectBone)
         {
             // Bind each FloatEditor to its corresponding ObservableValue<float>
+            NameEditor.DataContext = objectBone.Name;
             TransformEditor.DataContext = objectBone.Transform;
+            ParentIndexEditor.DataContext = objectBone.ParentIndex;
+            NextSiblingIndexEditor.DataContext = objectBone.NextSiblingIndex;
+            NextTraversalIndexEditor.DataContext = objectBone.NextTraversalIndex;
+            ReservedEditor.DataContext = objectBone.Reserved;
         }
     }
 }

@@ -359,8 +359,14 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
             DisplayName = "ObjectBone",
             Read = r =>
             {
+                char[] name = r.ReadChars(32);
+
+                // Remove trailing null characters while keeping the result as char[].
+                int length = Array.FindLastIndex(name, c => c != '\0') + 1;
+                char[] trimmedName = name[..length];
+
                 return new ObjectBone(
-                    r.ReadChars(32),
+                    trimmedName,
                     new Transform(
                         new Matrix4x4(
                             r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle(),
@@ -384,7 +390,13 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
                 Quaternion rotation = transform.Rotation;
                 Vector4 translation = transform.Translation;
 
-                w.Write(v.Name);
+                // Always write exactly 32 characters.
+                char[] name = new char[32];
+
+                int length = Math.Min(v.Name.Length, 32);
+                Array.Copy(v.Name, name, length);
+
+                w.Write(name);
 
                 w.Write(matrix.M11); w.Write(matrix.M12); w.Write(matrix.M13); w.Write(matrix.M14);
                 w.Write(matrix.M21); w.Write(matrix.M22); w.Write(matrix.M23); w.Write(matrix.M24);
