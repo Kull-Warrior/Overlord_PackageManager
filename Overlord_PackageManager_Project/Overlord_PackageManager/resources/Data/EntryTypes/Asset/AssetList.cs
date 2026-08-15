@@ -3,6 +3,9 @@ using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Audio;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.DDS;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.ReflectionCubeMap;
 using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Images.Tga_Tif;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Material;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Mesh;
+using Overlord_PackageManager.resources.Data.EntryTypes.Asset.Object;
 using Overlord_PackageManager.resources.Data.Factories;
 using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
@@ -34,30 +37,40 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset
         {
             foreach (var entry in Table.Entries)
             {
-                if (entry is ReflectionCubeMapAsset)
+                string entryDir;
+
+                switch (entry)
                 {
-                    Directory.CreateDirectory(baseDir + "\\ReflectionCubeMap");
-                    ((ReflectionCubeMapAsset)entry).WriteToFile(baseDir + "\\ReflectionCubeMap\\");
-                }
-                if (entry is DDSTextureAsset)
-                {
-                    Directory.CreateDirectory(baseDir + "\\Image");
-                    Directory.CreateDirectory(baseDir + "\\Image\\DDS");
-                    ((DDSTextureAsset)entry).WriteToFile(baseDir + "\\Image\\DDS\\");
-                }
-                if (entry is TgaTifTextureAsset)
-                {
-                    Directory.CreateDirectory(baseDir + "\\Image");
-                    ((TgaTifTextureAsset)entry).WriteToFile(baseDir + "\\Image\\");
-                }
-                if (entry is SFXAsset)
-                {
-                    Directory.CreateDirectory(baseDir + "\\SFX");
-                    ((SFXAsset)entry).WriteToFile(baseDir + "\\SFX\\");
-                }
-                if (entry is AnimationAsset)
-                {
-                    //NotImplemented
+                    case ReflectionCubeMapAsset reflectionCubeMap:
+                        entryDir = Path.Combine(baseDir, "ReflectionCubeMap");
+                        Directory.CreateDirectory(entryDir);
+                        reflectionCubeMap.WriteToFile(entryDir);
+                        break;
+                    case DDSTextureAsset ddsTexture:
+                        entryDir = Path.Combine(baseDir, "Image", "DDS");
+                        Directory.CreateDirectory(entryDir);
+                        ddsTexture.WriteToFile(entryDir);
+                        break;
+                    case TgaTifTextureAsset tgaTifTexture:
+                        entryDir = Path.Combine(baseDir, "Image");
+                        Directory.CreateDirectory(entryDir);
+                        tgaTifTexture.WriteToFile(entryDir);
+                        break;
+                    case SFXAsset sfxAsset:
+                        entryDir = Path.Combine(baseDir, "SFX");
+                        Directory.CreateDirectory(entryDir);
+                        sfxAsset.WriteToFile(entryDir + "\\");
+                        break;
+                    case AnimationAsset animationAsset:
+                    case ObjectAsset objectAsset:
+                    case MeshAsset meshAsset:
+                    case BumpedDiffuseMaterial bumpedDiffuseMaterial:
+                    case DiffuseMaterial diffuseMaterial:
+                    case MaskedPBRMaterial maskedPBRMaterial:
+                        // NotImplemented
+                        break;
+                    default:
+                        break;
                 }
             }
         }
