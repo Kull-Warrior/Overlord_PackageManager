@@ -16,18 +16,18 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList
 
         public int Count => Value?.Count ?? 0;
 
-        public override void Read(BinaryReader reader, long origin)
+        protected override List<T> ReadValue(BinaryReader reader)
         {
-            reader.BaseStream.Position = origin + RelativeOffset;
-
             uint count = reader.ReadUInt32();
 
-            Value = new List<T>((int)count);
+            List<T> values = new((int)count);
 
             for (int i = 0; i < count; i++)
             {
-                Value.Add(BinaryType.Read(reader));
+                values.Add(BinaryType.Read(reader));
             }
+
+            return values;
         }
 
         public override long GetPayloadSize()
@@ -35,15 +35,13 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.CountedList
             return sizeof(uint) + Count * (long)BinaryType.Size;
         }
 
-        public override void Write(BinaryWriter writer, long origin)
+        protected override void WriteValue(BinaryWriter writer, List<T> value)
         {
-            writer.BaseStream.Position = origin + RelativeOffset;
+            writer.Write((uint)value.Count);
 
-            writer.Write((uint)Count);
-
-            foreach (var value in Value)
+            foreach (T item in value)
             {
-                BinaryType.Write(writer, value);
+                BinaryType.Write(writer, item);
             }
         }
     }

@@ -15,10 +15,9 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
             _binaryType = binaryType;
         }
 
-        public override void Read(BinaryReader reader, long origin)
+        protected override T ReadValue(BinaryReader reader)
         {
-            reader.BaseStream.Position = origin + RelativeOffset;
-            Value = _binaryType.Read(reader);
+            return _binaryType.Read(reader);
         }
 
         public override long GetPayloadSize()
@@ -26,10 +25,9 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.Scalar
             return _binaryType.Size;
         }
 
-        public override void Write(BinaryWriter writer, long origin)
+        protected override void WriteValue(BinaryWriter writer, T value)
         {
-            writer.BaseStream.Position = origin + RelativeOffset;
-            _binaryType.Write(writer, Value);
+            _binaryType.Write(writer, value);
         }
     }
 }

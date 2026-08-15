@@ -3,23 +3,24 @@ using System.IO;
 
 public abstract class CountedVariableArrayEntry<T>(uint id, uint relOffset) : ValueEntry<T[]>(id, relOffset)
 {
-    protected abstract T ReadValue(BinaryReader reader);
-    protected abstract void WriteValue(BinaryWriter writer, T value);
+    protected abstract T ReadElement(BinaryReader reader);
+    protected abstract void WriteElement(BinaryWriter writer, T value);
     protected abstract long GetValuePayloadSize(T value);
 
     public int Count => Value?.Length ?? 0;
 
-    public override void Read(BinaryReader reader, long origin)
+    protected override T[] ReadValue(BinaryReader reader)
     {
-        reader.BaseStream.Position = origin + RelativeOffset;
-
         int count = checked((int)reader.ReadUInt32());
-        Value = new T[count];
+
+        T[] values = new T[count];
 
         for (int i = 0; i < count; i++)
         {
-            Value[i] = ReadValue(reader);
+            values[i] = ReadElement(reader);
         }
+
+        return values;
     }
 
     public override long GetPayloadSize()
@@ -34,16 +35,15 @@ public abstract class CountedVariableArrayEntry<T>(uint id, uint relOffset) : Va
         return size;
     }
 
-    public override void Write(BinaryWriter writer, long origin)
+    protected override void WriteValue(BinaryWriter writer, T[] value)
     {
-        writer.BaseStream.Position = origin + RelativeOffset;
+        T[] values = value ?? [];
 
-        T[] values = Value ?? [];
         writer.Write((uint)values.Length);
 
-        foreach (T value in values)
+        foreach (T item in values)
         {
-            WriteValue(writer, value);
+            WriteElement(writer, item);
         }
     }
 }

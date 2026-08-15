@@ -5,23 +5,23 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth
 {
     public abstract class CountedVariableListEntry<T>(uint id, uint relOffset) : ValueEntry<List<T>>(id, relOffset)
     {
-        protected abstract T ReadValue(BinaryReader reader);
-        protected abstract void WriteValue(BinaryWriter writer, T value);
+        protected abstract T ReadElement(BinaryReader reader);
+        protected abstract void WriteElement(BinaryWriter writer, T value);
         protected abstract long GetValuePayloadSize(T value);
 
         public int Count => Value?.Count ?? 0;
 
-        public override void Read(BinaryReader reader, long origin)
+        protected override List<T> ReadValue(BinaryReader reader)
         {
-            reader.BaseStream.Position = origin + RelativeOffset;
-
             int count = checked((int)reader.ReadUInt32());
-            Value = new List<T>(count);
+            List<T> values = new List<T>(count);
 
             for (int i = 0; i < count; i++)
             {
-                Value.Add(ReadValue(reader));
+                values.Add(ReadElement(reader));
             }
+
+            return values;
         }
 
         public override long GetPayloadSize()
@@ -39,16 +39,14 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth
             return size;
         }
 
-        public override void Write(BinaryWriter writer, long origin)
+        protected override void WriteValue(BinaryWriter writer, List<T> value)
         {
-            writer.BaseStream.Position = origin + RelativeOffset;
-
-            List<T> values = Value ?? new List<T>();
+            List<T> values = value ?? new List<T>();
             writer.Write((uint)values.Count);
 
-            foreach (T value in values)
+            foreach (T item in values)
             {
-                WriteValue(writer, value);
+                WriteElement(writer, item);
             }
         }
     }

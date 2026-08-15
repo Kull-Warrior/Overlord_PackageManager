@@ -4,7 +4,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth
 {
     public sealed class CharListCountedArrayEntry(uint id, uint relOffset) : CountedVariableListEntry<char[]>(id, relOffset)
     {
-        protected override char[] ReadValue(BinaryReader reader)
+        protected override char[] ReadElement(BinaryReader reader)
         {
             int charCount = checked((int)reader.ReadUInt32());
             char[] characters = reader.ReadChars(charCount);
@@ -17,7 +17,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth
             return characters;
         }
 
-        protected override void WriteValue(BinaryWriter writer, char[] value)
+        protected override void WriteElement(BinaryWriter writer, char[] value)
         {
             writer.Write((uint)value.Length);
             writer.Write(value);

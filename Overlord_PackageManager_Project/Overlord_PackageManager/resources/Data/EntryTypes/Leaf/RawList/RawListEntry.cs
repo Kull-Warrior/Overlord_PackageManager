@@ -14,18 +14,18 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList
 
         public override string DisplayName => $"{(IsCounted ? "counted " : "")}{BinaryType.DisplayName}{CollectionSuffix}";
 
-        public override void Read(BinaryReader reader, long origin)
+        protected override List<T> ReadValue(BinaryReader reader)
         {
-            reader.BaseStream.Position = origin + RelativeOffset;
-
             int count = (int)(PayloadLength / BinaryType.Size);
 
-            Value = new List<T>(count);
+            List<T> values = new List<T>(count);
 
             for (int i = 0; i < count; i++)
             {
-                Value.Add(BinaryType.Read(reader));
+                values.Add(BinaryType.Read(reader));
             }
+
+            return values;
         }
 
         public override long GetPayloadSize()
@@ -33,13 +33,11 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.RawList
             return (Value?.Count ?? 0) * (long)BinaryType.Size;
         }
 
-        public override void Write(BinaryWriter writer, long origin)
+        protected override void WriteValue(BinaryWriter writer, List<T> value)
         {
-            writer.BaseStream.Position = origin + RelativeOffset;
-
-            foreach (var value in Value)
+            foreach (T item in value)
             {
-                BinaryType.Write(writer, value);
+                BinaryType.Write(writer, item);
             }
         }
     }
