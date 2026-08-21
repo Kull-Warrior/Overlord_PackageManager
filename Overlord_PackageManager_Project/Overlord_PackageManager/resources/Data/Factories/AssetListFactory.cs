@@ -45,7 +45,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 4259901 => new DDSTextureAsset(id, relOffset, typeIdentifier),
                 4259876 => new DDSTextures(id, relOffset, typeIdentifier),
                 4259845 => new AnimationAsset(id, relOffset, typeIdentifier),
-                4259847 => new BoneAnimationData(id, relOffset, typeIdentifier),
+                4259847 => new BoneAnimationAsset(id, relOffset, typeIdentifier),
                 10551296 => new SFXAsset(id, relOffset, typeIdentifier),
                 67109013 => new LuaAsset(id, relOffset, typeIdentifier),
                 4261412 => new MaskedPBRMaterial(id, relOffset, typeIdentifier),

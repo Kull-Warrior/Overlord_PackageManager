@@ -30,7 +30,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             };
         }
 
-        public static Entry CreateBoneAnimationSubTableType24(BinaryReader reader, uint id, uint relOffset)
+        public static Entry CreateTranslationKeyframes(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -43,7 +43,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             };
         }
 
-        public static Entry CreateBoneAnimationSubTableType25SubTableType21(BinaryReader reader, uint id, uint relOffset)
+        public static Entry CreateRotationKeyframeData(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
@@ -57,29 +57,29 @@ namespace Overlord_PackageManager.resources.Data.Factories
             };
         }
 
-        public static Entry CreateBoneAnimationSubTableType25(BinaryReader reader, uint id, uint relOffset)
+        public static Entry CreateRotationKeyframes(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
                 20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                                    // Unkown u32
-                21 => new BoneAnimationSubTableType25SubTableType21(id, relOffset),     // Contains Bone Rotation and Scale data
+                21 => new RotationKeyframeData(id, relOffset),     // Contains Bone Rotation and Scale data
                 // Add more IDs here
                 _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
         }
 
-        public static Entry CreateBoneAnimationData(BinaryReader reader, uint id, uint relOffset)
+        public static Entry CreateBoneAnimationAsset(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch
             {
-                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),                   // Bone Name
-                21 => new ScalarEntry<ulong>(id, relOffset, BinaryTypes.UInt64),                    // Unkown u64
-                22 => new BoneAnimationSubTableType22(id, relOffset),   // Unkown use
-                23 => new BoneAnimationSubTableType23(id, relOffset),   // Unkown use
-                24 => new BoneAnimationSubTableType24(id, relOffset),   // Contains Bone Position data at deeper levels
-                25 => new BoneAnimationSubTableType25(id, relOffset),   // Contains Bone Rotation and Scale data at deeper levels
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),     // Bone Name
+                21 => new ScalarEntry<ulong>(id, relOffset, BinaryTypes.UInt64),        // Unkown u64
+                22 => new BoneAnimationSubTableType22(id, relOffset),                   // Unkown use
+                23 => new BoneAnimationSubTableType23(id, relOffset),                   // Unkown use
+                24 => new TranslationKeyframes(id, relOffset),                          // Contains Keyframes with Bone Position
+                25 => new RotationKeyframes(id, relOffset),                             // Contains Keyframes with Bone Rotation
                 // Add more IDs here
-                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),          // Unknown entry
             };
         }
     }

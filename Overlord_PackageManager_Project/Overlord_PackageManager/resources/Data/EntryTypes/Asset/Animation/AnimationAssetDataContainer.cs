@@ -7,5 +7,7 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation
     class AnimationAssetDataContainer(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
         protected override Func<BinaryReader, uint, uint, Entry> EntryFactory => AnimationFactory.CreateAnimationAssetDataContainer;
+
+        public override string DisplayName => "Data Container";
     }
 }
