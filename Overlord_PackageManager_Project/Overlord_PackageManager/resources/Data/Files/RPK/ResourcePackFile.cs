@@ -1,6 +1,7 @@
 ﻿using Overlord_PackageManager.resources.Data.EntryTypes.Asset;
 using Overlord_PackageManager.resources.Data.EntryTypes.Resource;
 using Overlord_PackageManager.resources.Data.EntryTypes.XML;
+using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 using System.Text;
 
@@ -108,13 +109,30 @@ namespace Overlord_PackageManager.resources.Data.Files.RPK
                     if (entry is AssetListContainer)
                     {
                         AssetList? list = ((AssetListContainer)entry).Table.Entries.OfType<AssetList>().FirstOrDefault();
-                        Directory.CreateDirectory(baseDir);
-                        list.WriteToFiles(baseDir);
+                        Directory.CreateDirectory(baseDir + "\\" + "Assets");
+                        list.WriteToFiles(baseDir + "\\" + "Assets");
+                    }
+                    else if (entry is NamedAssetContainer)
+                    {
+                        AssetListContainer? assetListContainer = ((NamedAssetContainer)entry).Table.Entries.OfType<AssetListContainer>().FirstOrDefault();
+                        AssetList? assetList = assetListContainer?.Table.Entries.OfType<AssetList>().FirstOrDefault();
+                        string rawID = $"{entry.Id:X4}";
+                        Directory.CreateDirectory(baseDir + "\\" + "UnknownNamedAssetContainer_ID-" + rawID);
+                        assetList.WriteToFiles(baseDir + "\\" + "UnknownNamedAssetContainer_ID-" + rawID);
                     }
                     else if (entry is XMLEntry)
                     {
-                        Directory.CreateDirectory(baseDir);
-                        ((XMLEntry)entry).WriteToFile(baseDir);
+                        Directory.CreateDirectory(baseDir + "\\" + "XML");
+                        ((XMLEntry)entry).WriteToFile(baseDir + "\\" + "XML");
+                    }
+                    else if (entry is ValueEntry<byte[]> valueEntry)
+                    {
+                        Directory.CreateDirectory(baseDir + "\\" + "Byte[]");
+                        string fileName = Path.Combine(baseDir + "\\" + "Byte[]", $"UnknownData_{entry.Id:X8}.bin");
+                        using FileStream fs = new FileStream(fileName, FileMode.Create);
+                        {
+                            fs.Write(valueEntry.Value);
+                        }
                     }
 
                 }
