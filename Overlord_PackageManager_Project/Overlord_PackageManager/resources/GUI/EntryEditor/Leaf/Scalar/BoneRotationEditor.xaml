@@ -20,20 +20,19 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!-- Row 0 -->
-            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Vector4CellBorder}">
+            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource Vector4CellBorder}">
                 <local:FloatEditor x:Name="YawEditor" Label="Yaw" />
             </Border>
-            <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource Vector4CellBorder}">
+            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Vector4CellBorder}">
                 <local:FloatEditor x:Name="PitchEditor" Label="Pitch" />
             </Border>
-            <Border Grid.Row="0" Grid.Column="3" Style="{StaticResource Vector4CellBorder}">
+            <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource Vector4CellBorder}">
                 <local:FloatEditor x:Name="RollEditor" Label="Roll" />
             </Border>
         </Grid>
