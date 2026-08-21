@@ -70,6 +70,9 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset
                         // NotImplemented
                         break;
                     default:
+                        entryDir = Path.Combine(baseDir, "Unknown");
+                        Directory.CreateDirectory(entryDir);
+                        ((AssetEntry)entry).WriteToFile(entryDir);
                         break;
                 }
             }
