@@ -203,7 +203,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         public static readonly BinaryType<BonePosition> BonePosition =
         new()
         {
-            Size =  16, //Timestamp (uint) + float X, float Y, float Z
+            Size =  16, //Timestamp (UInt32 / microseconds) + float X, float Y, float Z
             DisplayName = "Position",
             Read = r =>
             {
@@ -221,17 +221,47 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         public static readonly BinaryType<BoneRotation> BoneRotation =
         new()
         {
-            Size = 12, //float Pitch, float Yaw, float Roll
+            Size = 6, //float Pitch, float Yaw, float Roll
             DisplayName = "Rotation",
             Read = r =>
             {
-                return new BoneRotation(r.ReadUInt32(), r.ReadSingle(), r.ReadSingle());
+                int rawX = r.ReadInt16();
+                int rawY = r.ReadInt16();
+                int rawZ = r.ReadInt16();
+
+                // Convert to radians.
+                // 32768 units = 180° (PI radians)
+                float radiusX = rawX * (MathF.PI / 32768.0f);
+                float radiusY = rawY * (MathF.PI / 32768.0f);
+                float radiusZ = rawZ * (MathF.PI / 32768.0f);
+
+                return new BoneRotation(radiusX, radiusY, radiusZ);
             },
             Write = (w, v) =>
             {
-                w.Write(v.Pitch);
-                w.Write(v.Yaw);
-                w.Write(v.Roll);
+                const float scale = 32768.0f / MathF.PI;
+
+                static short ToInt16(float rad)
+                {
+                    float val = rad * scale;
+
+                    // Clamp to the valid signed 16-bit range
+                    if (val > short.MaxValue)
+                    {
+                        val = short.MaxValue;
+                    }
+                    if (val < short.MinValue)
+                    {
+                        val = short.MinValue;
+                    }
+
+                    // Round to nearest integer
+                    return (short)Math.Round(val, MidpointRounding.AwayFromZero);
+                }
+
+                w.Write(ToInt16(v.Pitch));
+                w.Write(ToInt16(v.Yaw));
+                w.Write(ToInt16(v.Roll));
             }
         };
 

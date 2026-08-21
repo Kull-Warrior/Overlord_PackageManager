@@ -25,14 +25,14 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                01 => new AnimationAssetDataContainer(id, relOffset),   // Sub reference table containing a list of Bone Animation Data
-                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                    // FFFF Block unkown use
-                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),                   // Chunk or In-Game Object Name
-                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),                   // Animation name
-                30 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),                    // Unkown float and unknown use
-                31 => new ScalarEntry<ulong>(id, relOffset, BinaryTypes.UInt64),                    // unkown u64 and unknown use
+                01 => new AnimationAssetDataContainer(id, relOffset),                   // Sub reference table containing a list of Bone Animation Data
+                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),         // FFFF Block unkown use
+                20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),     // Chunk or In-Game Object Name
+                21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),     // Animation name
+                30 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),         // Unkown float and unknown use
+                31 => new ScalarEntry<ulong>(id, relOffset, BinaryTypes.UInt64),        // Total animation time in microseconds
                 // Add more IDs here
-                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),          // Unknown entry
             };
         }
     }

@@ -28,7 +28,7 @@
 
             <!-- Row 0 -->
             <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource Vector4CellBorder}">
-                <local:FloatEditor x:Name="TimestampEditor" Label="Timestamp" />
+                <local:FloatEditor x:Name="TimestampEditor" Label="Timestamp in µs" />
             </Border>
             <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Vector4CellBorder}">
                 <local:FloatEditor x:Name="XEditor" Label="X" />

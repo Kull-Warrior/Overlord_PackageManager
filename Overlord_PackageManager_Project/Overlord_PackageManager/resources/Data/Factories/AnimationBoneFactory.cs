@@ -36,7 +36,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Unkown u32
                 21 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Number of Bone positions, if the bone does not move in the animation only a single entry can be found here
-                //22 => new BonePositionDataArray(id, relOffset),     // Array of Bone positions
+                22 => new RawArrayEntry<BonePosition>(id, relOffset, BinaryTypes.BonePosition),// Array of Bone positions
+                
                 // Add more IDs here
                 _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
             };
@@ -46,13 +47,13 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                22 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Number of Bone rotations
-                //23 => new BoneRotationDataArray(id, relOffset),     // Array of Bone rotations
-                24 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),               // Unkown 12 Bytes
-                30 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                // Number of Bone scales
-                //31 => new BoneScaleDataArray(id, relOffset),        // Number of Bone scales
+                22 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                 // Number of Bone rotations
+                23 => new RawArrayEntry<BoneRotation>(id, relOffset, BinaryTypes.BoneRotation), // Array of Bone rotations
+                24 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),                 // Bitfield, potentially if its a keyframe or not, but this is not confirmed yet
+                //30 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),                 // Number of Bone scales
+                //31 => new BoneScaleDataArray(id, relOffset),                                  // Number of Bone scales
                 // Add more IDs here
-                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),                  // Unknown entry
             };
         }
 
