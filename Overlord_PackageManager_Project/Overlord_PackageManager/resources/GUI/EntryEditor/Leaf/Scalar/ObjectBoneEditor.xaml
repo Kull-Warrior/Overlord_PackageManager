@@ -28,6 +28,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <!-- Row 0 -->
@@ -42,21 +43,26 @@
 
             <!-- Row 2 -->
             <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource MatrixCellBorder}">
-                <local:Int32Editor x:Name="ParentIndexEditor" Label="Parent Index" />
+                <local:Int32Editor x:Name="SkinIDEditor" Label="Skin ID" />
             </Border>
 
             <!-- Row 3 -->
             <Border Grid.Row="3" Grid.Column="0" Style="{StaticResource MatrixCellBorder}">
-                <local:Int32Editor x:Name="NextSiblingIndexEditor" Label="Next Sibling Index" />
+                <local:Int32Editor x:Name="ParentIndexEditor" Label="Parent Index" />
             </Border>
 
             <!-- Row 4 -->
             <Border Grid.Row="4" Grid.Column="0" Style="{StaticResource MatrixCellBorder}">
-                <local:Int32Editor x:Name="NextTraversalIndexEditor" Label="Next Traversal Index" />
+                <local:Int32Editor x:Name="NextSiblingIndexEditor" Label="Next Sibling Index" />
             </Border>
 
             <!-- Row 5 -->
             <Border Grid.Row="5" Grid.Column="0" Style="{StaticResource MatrixCellBorder}">
+                <local:Int32Editor x:Name="FirstChildIndexEditor" Label="Next Traversal Index" />
+            </Border>
+
+            <!-- Row 6 -->
+            <Border Grid.Row="6" Grid.Column="0" Style="{StaticResource MatrixCellBorder}">
                 <local:Int32Editor x:Name="ReservedEditor" Label="Reserved" />
             </Border>
         </Grid>

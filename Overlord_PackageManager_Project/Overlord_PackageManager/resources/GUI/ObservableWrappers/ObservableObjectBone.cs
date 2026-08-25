@@ -10,9 +10,10 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 
         public ObservableValue<char[]> Name { get; }
         public ObservableTransform Transform { get; }
+        public ObservableValue<int> SkinID { get; }
         public ObservableValue<int> ParentIndex { get; }
         public ObservableValue<int> NextSiblingIndex { get; }
-        public ObservableValue<int> NextTraversalIndex { get; }
+        public ObservableValue<int> FirstChildIndex { get; }
         public ObservableValue<int> Reserved { get; }
 
         public ObjectBone Value => _value;
@@ -23,13 +24,14 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 
             Name = new (initial.Name);
             Transform = new (initial.Transform);
+            SkinID = new (initial.SkinID);
             ParentIndex = new (initial.ParentIndex);
             NextSiblingIndex = new (initial.NextSiblingIndex);
-            NextTraversalIndex = new (initial.NextTraversalIndex);
+            FirstChildIndex = new (initial.FirstChildIndex);
             Reserved = new (initial.Reserved);
 
             // Keep the Transform updated when any component changes
-            Subscribe(Name, Transform, ParentIndex, NextSiblingIndex, NextTraversalIndex, Reserved);
+            Subscribe(Name, Transform, SkinID, ParentIndex, NextSiblingIndex, FirstChildIndex, Reserved);
         }
 
         protected override void OnComponentChanged(object? sender, PropertyChangedEventArgs e)
@@ -40,9 +42,10 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
             _value = new ObjectBone(
                 Name.Value,
                 Transform.Value,
+                SkinID.Value,
                 ParentIndex.Value,
                 NextSiblingIndex.Value,
-                NextTraversalIndex.Value,
+                FirstChildIndex.Value,
                 Reserved.Value
             );
 

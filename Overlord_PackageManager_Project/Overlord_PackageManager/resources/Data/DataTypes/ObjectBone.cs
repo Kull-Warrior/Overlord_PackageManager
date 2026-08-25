@@ -3,9 +3,10 @@
     public sealed record ObjectBone(
         char[] Name,
         Transform Transform,
+        int SkinID,
         int ParentIndex,
         int NextSiblingIndex,
-        int NextTraversalIndex,
+        int FirstChildIndex,
         int Reserved
     );
 }

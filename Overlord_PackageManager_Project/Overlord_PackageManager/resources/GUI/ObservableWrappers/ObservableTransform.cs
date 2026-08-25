@@ -10,7 +10,7 @@ namespace Overlord_PackageManager.resources.GUI.ObservableWrappers
 
         public ObservableMatrix4x4 Matrix { get; }
         public ObservableQuaternion Rotation { get; }
-        public ObservableVector4 Translation { get; }
+        public ObservableVector3 Translation { get; }
 
         public Transform Value => _value;
         

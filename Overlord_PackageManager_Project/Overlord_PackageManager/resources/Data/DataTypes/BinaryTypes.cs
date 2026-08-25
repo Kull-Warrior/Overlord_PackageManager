@@ -385,7 +385,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         public static readonly BinaryType<ObjectBone> ObjectBone =
         new()
         {
-            Size = 144, //The size of an ObjectBone is 32 bytes for the name, 24 floats for the transform, and 4 integers for the indices.
+            Size = 144, //The size of an ObjectBone is 32 bytes for the name, 23 floats for the transform, and 5 integers for the indices.
             DisplayName = "ObjectBone",
             Read = r =>
             {
@@ -405,8 +405,9 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
                             r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle()
                         ),
                         new Quaternion(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle()),
-                        new Vector4(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle())
+                        new Vector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle())
                     ),
+                    r.ReadInt32(),
                     r.ReadInt32(),
                     r.ReadInt32(),
                     r.ReadInt32(),
@@ -418,7 +419,7 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
                 Transform transform = v.Transform;
                 Matrix4x4 matrix = transform.Matrix;
                 Quaternion rotation = transform.Rotation;
-                Vector4 translation = transform.Translation;
+                Vector3 translation = transform.Translation;
 
                 // Always write exactly 32 characters.
                 char[] name = new char[32];
@@ -433,11 +434,12 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
                 w.Write(matrix.M31); w.Write(matrix.M32); w.Write(matrix.M33); w.Write(matrix.M34);
                 w.Write(matrix.M41); w.Write(matrix.M42); w.Write(matrix.M43); w.Write(matrix.M44);
                 w.Write(rotation.X); w.Write(rotation.Y); w.Write(rotation.Z); w.Write(rotation.W);
-                w.Write(translation.X); w.Write(translation.Y); w.Write(translation.Z); w.Write(translation.W);
+                w.Write(translation.X); w.Write(translation.Y); w.Write(translation.Z);
 
+                w.Write(v.SkinID);
                 w.Write(v.ParentIndex);
                 w.Write(v.NextSiblingIndex);
-                w.Write(v.NextTraversalIndex);
+                w.Write(v.FirstChildIndex);
                 w.Write(v.Reserved);
             }
         };

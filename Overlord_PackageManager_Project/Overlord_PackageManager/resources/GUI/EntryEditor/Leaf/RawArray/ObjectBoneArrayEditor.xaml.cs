@@ -28,7 +28,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
         private ObservableValue<ObjectBone[]>? _observableArray;
         private ObservableCollection<ObjectBoneItem> _clusterItems = new();
         private bool _isUpdating;
-        private const int ClusterSize = 36; // 9 floats * 4 bytes each    
+        private const int ClusterSize = 32 + (16 * 4) + (4 * 4) + (4 * 3) + (4 * 3) + (4 * 3) + (4 * 3) + (4 * 1); // Size of ObjectBone in bytes   
 
         public ObjectBoneArrayEditor()
         {
@@ -122,12 +122,13 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                         0, 0, 0, 1
                     ), // Matrix
                     new Quaternion(0, 0, 0, 0), // Rotation
-                    new Vector4(0, 0, 0, 0)  // Translation
+                    new Vector3(0, 0, 0)  // Translation
                 ),
+                -1, // SkinID
                 -1, // ParentIndex
                 -1, // NextSiblingIndex
-                -1,
-                -1
+                -1, // FirstChildIndex
+                0   // Reserved
 
             );
             ObjectBone[] newArray = new ObjectBone[_observableArray.Value.Length + 1];
@@ -185,10 +186,10 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                 writer.Write(cluster.Transform.Translation.X);
                 writer.Write(cluster.Transform.Translation.Y);
                 writer.Write(cluster.Transform.Translation.Z);
-                writer.Write(cluster.Transform.Translation.W);
+                writer.Write(cluster.SkinID);
                 writer.Write(cluster.ParentIndex);
                 writer.Write(cluster.NextSiblingIndex);
-                writer.Write(cluster.NextTraversalIndex);
+                writer.Write(cluster.FirstChildIndex);
                 writer.Write(cluster.Reserved);
             }
         }
@@ -238,26 +239,27 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
                             reader.ReadSingle(),
                             reader.ReadSingle()
                         ),
-                        new Vector4(
-                            reader.ReadSingle(),
+                        new Vector3(
                             reader.ReadSingle(),
                             reader.ReadSingle(),
                             reader.ReadSingle()
                         )
                     );
 
+                    int skinID = reader.ReadInt32();
                     int parentIndex = reader.ReadInt32();
                     int nextSiblingIndex = reader.ReadInt32();
-                    int nextTraversalIndex = reader.ReadInt32();
+                    int firstChildIndex = reader.ReadInt32();
                     int reserved = reader.ReadInt32();
 
                     list.Add(new ObjectBone
                     (
                         name,
                         transform,
+                        skinID,
                         parentIndex,
                         nextSiblingIndex,
-                        nextTraversalIndex,
+                        firstChildIndex,
                         reserved
                     ));
                 }
