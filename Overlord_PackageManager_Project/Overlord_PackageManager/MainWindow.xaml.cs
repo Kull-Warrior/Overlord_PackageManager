@@ -244,6 +244,16 @@ namespace Overlord_PackageManager
                     observableVertexAttribute.PropertyChanged += (s, e) => vertexAttributeEntry.Value = observableVertexAttribute.Value;
                     EditorHost.Content = new VertexAttributeEditor(observableVertexAttribute);
                     break;
+                case ScalarEntry<MeshTransform> meshTransformEntry:
+                    ObservableMeshTransform observableMeshTransform = new ObservableMeshTransform(meshTransformEntry.Value);
+                    observableMeshTransform.PropertyChanged += (s, e) => meshTransformEntry.Value = observableMeshTransform.Value;
+                    EditorHost.Content = new MeshTransformEditor(observableMeshTransform);
+                    break;
+                case ScalarEntry<MeshBone> meshBoneEntry:
+                    ObservableMeshBone observableMeshBone = new ObservableMeshBone(meshBoneEntry.Value);
+                    observableMeshBone.PropertyChanged += (s, e) => meshBoneEntry.Value = observableMeshBone.Value;
+                    EditorHost.Content = new MeshBoneEditor(observableMeshBone);
+                    break;
                 case RawArrayEntry<BonePosition> rawBonePositionArrayEntry:
                     ObservableValue<BonePosition[]> observableRawBonePositionArray = new ObservableValue<BonePosition[]>(rawBonePositionArrayEntry.Value);
                     observableRawBonePositionArray.PropertyChanged += (s, e) => rawBonePositionArrayEntry.Value = observableRawBonePositionArray.Value;
@@ -496,6 +506,26 @@ namespace Overlord_PackageManager
                     ObservableValue<List<VertexAttribute>> observableCountedVertexAttributeList = new ObservableValue<List<VertexAttribute>>(countedListVertexAttributeEntry.Value);
                     observableCountedVertexAttributeList.PropertyChanged += (s, e) => countedListVertexAttributeEntry.Value = observableCountedVertexAttributeList.Value;
                     EditorHost.Content = new VertexAttributeListEditor(observableCountedVertexAttributeList);
+                    break;
+                case RawArrayEntry<MeshTransform> rawMeshTransformArrayEntry:
+                    ObservableValue<MeshTransform[]> observableRawMeshTransformArray = new ObservableValue<MeshTransform[]>(rawMeshTransformArrayEntry.Value);
+                    observableRawMeshTransformArray.PropertyChanged += (s, e) => rawMeshTransformArrayEntry.Value = observableRawMeshTransformArray.Value;
+                    EditorHost.Content = new MeshTransformArrayEditor(observableRawMeshTransformArray);
+                    break;
+                case CountedArrayEntry<MeshTransform> countedMeshTransformArrayEntry:
+                    ObservableValue<MeshTransform[]> observableCountedMeshTransformArray = new ObservableValue<MeshTransform[]>(countedMeshTransformArrayEntry.Value);
+                    observableCountedMeshTransformArray.PropertyChanged += (s, e) => countedMeshTransformArrayEntry.Value = observableCountedMeshTransformArray.Value;
+                    EditorHost.Content = new MeshTransformArrayEditor(observableCountedMeshTransformArray);
+                    break;
+                case RawArrayEntry<MeshBone> rawMeshBoneArrayEntry:
+                    ObservableValue<MeshBone[]> observableRawMeshBoneArray = new ObservableValue<MeshBone[]>(rawMeshBoneArrayEntry.Value);
+                    observableRawMeshBoneArray.PropertyChanged += (s, e) => rawMeshBoneArrayEntry.Value = observableRawMeshBoneArray.Value;
+                    EditorHost.Content = new MeshBoneArrayEditor(observableRawMeshBoneArray);
+                    break;
+                case CountedArrayEntry<MeshBone> countedMeshBoneArrayEntry:
+                    ObservableValue<MeshBone[]> observableCountedMeshBoneArray = new ObservableValue<MeshBone[]>(countedMeshBoneArrayEntry.Value);
+                    observableCountedMeshBoneArray.PropertyChanged += (s, e) => countedMeshBoneArrayEntry.Value = observableCountedMeshBoneArray.Value;
+                    EditorHost.Content = new MeshBoneArrayEditor(observableCountedMeshBoneArray);
                     break;
                 case DDSTextures ddsTextures:
                     EditorHost.Content = new DDSTextureEditor(ddsTextures);

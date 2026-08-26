@@ -124,6 +124,9 @@
     <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\BonePositionArrayEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\MeshBoneArrayEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="resources\GUI\EntryEditor\Leaf\RawArray\ObjectBoneArrayEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -157,7 +160,13 @@
     <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\Int16Editor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\MeshBoneEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\ObjectBoneEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\MeshTransformEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="resources\GUI\EntryEditor\Leaf\Scalar\TransformEditor.xaml.cs">

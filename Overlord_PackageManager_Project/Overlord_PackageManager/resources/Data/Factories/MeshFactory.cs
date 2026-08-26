@@ -75,7 +75,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 20 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Unkown uint
                 21 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Bone data stride
-                22 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),             // Raw Bone Data
+                22 => new RawArrayEntry<MeshBone>(id, relOffset, BinaryTypes.MeshBone),             // Raw Bone Data
                 23 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Unkown uint
                 24 => new MeshBoneBindPoseData(id, relOffset),  // Bind pose data for every bone, contains an array of 4x4 bind pose matrices (16 floats each)
                 25 => new MeshBoneShapeData(id, relOffset),     // Bone shape data
