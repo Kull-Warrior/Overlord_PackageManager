@@ -1,5 +1,6 @@
 ﻿using HelixToolkit.Maths;
 using Microsoft.Win32;
+using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar;
 using Overlord_PackageManager.resources.GUI.Interfaces;
 using Overlord_PackageManager.resources.GUI.ObservableWrappers;
@@ -147,15 +148,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             foreach (Matrix3x3 cluster in _observableArray.Value)
             {
-                writer.Write(cluster.M11);
-                writer.Write(cluster.M12);
-                writer.Write(cluster.M13);
-                writer.Write(cluster.M21);
-                writer.Write(cluster.M22);
-                writer.Write(cluster.M23);
-                writer.Write(cluster.M31);
-                writer.Write(cluster.M32);
-                writer.Write(cluster.M33);
+                BinaryTypes.Matrix3x3.Write(writer, cluster);
             }
         }
 
@@ -188,11 +181,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
-                    Matrix3x3 matrix = new(
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-
+                    Matrix3x3 matrix = BinaryTypes.Matrix3x3.Read(reader);
                     list.Add(matrix);
                 }
             }

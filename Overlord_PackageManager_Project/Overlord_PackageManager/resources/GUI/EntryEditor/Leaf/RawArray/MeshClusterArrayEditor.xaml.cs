@@ -152,23 +152,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             foreach (MeshCluster cluster in _observableArray.Value)
             {
-                writer.Write(cluster.Matrix.M11);
-                writer.Write(cluster.Matrix.M12);
-                writer.Write(cluster.Matrix.M13);
-                writer.Write(cluster.Matrix.M21);
-                writer.Write(cluster.Matrix.M22);
-                writer.Write(cluster.Matrix.M23);
-                writer.Write(cluster.Matrix.M31);
-                writer.Write(cluster.Matrix.M32);
-                writer.Write(cluster.Matrix.M33);
-                writer.Write(cluster.Center.X);
-                writer.Write(cluster.Center.Y);
-                writer.Write(cluster.Center.Z);
-                writer.Write(cluster.Extents.X);
-                writer.Write(cluster.Extents.Y);
-                writer.Write(cluster.Extents.Z);
-                writer.Write(cluster.PatchIndex);
-                writer.Write(cluster.TriangleCount);
+                BinaryTypes.MeshCluster.Write(writer, cluster);
             }
         }
 
@@ -201,21 +185,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
-                    Matrix3x3 matrix = new(
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-
-                    Vector3 center = new(
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-
-                    Vector3 extents = new(
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-
-                    ushort patchIndex = reader.ReadUInt16();
-                    ushort triangleCount = reader.ReadUInt16();
-
-                    list.Add(new MeshCluster(matrix, center, extents, patchIndex, triangleCount));
+                    MeshCluster cluster = BinaryTypes.MeshCluster.Read(reader);
+                    list.Add(cluster);
                 }
             }
 

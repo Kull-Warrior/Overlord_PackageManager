@@ -162,35 +162,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             foreach (ObjectBone cluster in _observableArray.Value)
             {
-                writer.Write(cluster.Name);
-                writer.Write(cluster.Transform.Matrix.M11);
-                writer.Write(cluster.Transform.Matrix.M12);
-                writer.Write(cluster.Transform.Matrix.M13);
-                writer.Write(cluster.Transform.Matrix.M14);
-                writer.Write(cluster.Transform.Matrix.M21);
-                writer.Write(cluster.Transform.Matrix.M22);
-                writer.Write(cluster.Transform.Matrix.M23);
-                writer.Write(cluster.Transform.Matrix.M24);
-                writer.Write(cluster.Transform.Matrix.M31);
-                writer.Write(cluster.Transform.Matrix.M32);
-                writer.Write(cluster.Transform.Matrix.M33);
-                writer.Write(cluster.Transform.Matrix.M34);
-                writer.Write(cluster.Transform.Matrix.M41);
-                writer.Write(cluster.Transform.Matrix.M42);
-                writer.Write(cluster.Transform.Matrix.M43);
-                writer.Write(cluster.Transform.Matrix.M44);
-                writer.Write(cluster.Transform.Rotation.X);
-                writer.Write(cluster.Transform.Rotation.Y);
-                writer.Write(cluster.Transform.Rotation.Z);
-                writer.Write(cluster.Transform.Rotation.W);
-                writer.Write(cluster.Transform.Translation.X);
-                writer.Write(cluster.Transform.Translation.Y);
-                writer.Write(cluster.Transform.Translation.Z);
-                writer.Write(cluster.SkinID);
-                writer.Write(cluster.ParentIndex);
-                writer.Write(cluster.NextSiblingIndex);
-                writer.Write(cluster.FirstChildIndex);
-                writer.Write(cluster.Reserved);
+                BinaryTypes.ObjectBone.Write(writer, cluster);
             }
         }
 
@@ -223,45 +195,8 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
-                    char[] name = reader.ReadChars(32);
-
-                    Transform transform = new Transform
-                    (
-                        new Matrix4x4(
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()
-                        ),
-                        new Quaternion(
-                            reader.ReadSingle(),
-                            reader.ReadSingle(),
-                            reader.ReadSingle(),
-                            reader.ReadSingle()
-                        ),
-                        new Vector3(
-                            reader.ReadSingle(),
-                            reader.ReadSingle(),
-                            reader.ReadSingle()
-                        )
-                    );
-
-                    int skinID = reader.ReadInt32();
-                    int parentIndex = reader.ReadInt32();
-                    int nextSiblingIndex = reader.ReadInt32();
-                    int firstChildIndex = reader.ReadInt32();
-                    int reserved = reader.ReadInt32();
-
-                    list.Add(new ObjectBone
-                    (
-                        name,
-                        transform,
-                        skinID,
-                        parentIndex,
-                        nextSiblingIndex,
-                        firstChildIndex,
-                        reserved
-                    ));
+                    ObjectBone cluster = BinaryTypes.ObjectBone.Read(reader);
+                    list.Add(cluster);
                 }
             }
 

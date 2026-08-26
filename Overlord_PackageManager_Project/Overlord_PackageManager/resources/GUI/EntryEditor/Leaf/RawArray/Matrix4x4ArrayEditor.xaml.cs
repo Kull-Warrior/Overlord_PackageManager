@@ -1,5 +1,6 @@
 ﻿using HelixToolkit.Maths;
 using Microsoft.Win32;
+using Overlord_PackageManager.resources.Data.DataTypes;
 using Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.Scalar;
 using Overlord_PackageManager.resources.GUI.Interfaces;
 using Overlord_PackageManager.resources.GUI.ObservableWrappers;
@@ -146,22 +147,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             foreach (Matrix4x4 matrix in _observableArray.Value)
             {
-                writer.Write(matrix.M11);
-                writer.Write(matrix.M12);
-                writer.Write(matrix.M13);
-                writer.Write(matrix.M14);
-                writer.Write(matrix.M21);
-                writer.Write(matrix.M22);
-                writer.Write(matrix.M23);
-                writer.Write(matrix.M24);
-                writer.Write(matrix.M31);
-                writer.Write(matrix.M32);
-                writer.Write(matrix.M33);
-                writer.Write(matrix.M34);
-                writer.Write(matrix.M41);
-                writer.Write(matrix.M42);
-                writer.Write(matrix.M43);
-                writer.Write(matrix.M44);
+                BinaryTypes.Matrix4x4.Write(writer, matrix);
             }
         }
 
@@ -194,12 +180,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
-                    Matrix4x4 matrix = new(
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),
-                        reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-
+                    Matrix4x4 matrix = BinaryTypes.Matrix4x4.Read(reader);
                     list.Add(matrix);
                 }
             }

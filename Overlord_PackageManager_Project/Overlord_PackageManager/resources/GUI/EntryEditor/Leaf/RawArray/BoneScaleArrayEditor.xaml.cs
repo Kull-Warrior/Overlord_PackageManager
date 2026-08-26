@@ -144,9 +144,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             foreach (BoneScale cluster in _observableArray.Value)
             {
-                writer.Write(cluster.ScaleX);
-                writer.Write(cluster.ScaleY);
-                writer.Write(cluster.ScaleZ);
+                BinaryTypes.BoneScale.Write(writer, cluster);
             }
         }
 
@@ -179,8 +177,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
-                    BoneScale cluster = new(reader.ReadHalf(), reader.ReadHalf(), reader.ReadHalf());
-
+                    BoneScale cluster = BinaryTypes.BoneScale.Read(reader);
                     list.Add(cluster);
                 }
             }

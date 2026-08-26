@@ -143,9 +143,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
 
             foreach (BoneRotation cluster in _observableArray.Value)
             {
-                writer.Write(cluster.Yaw);
-                writer.Write(cluster.Pitch);
-                writer.Write(cluster.Roll);
+                BinaryTypes.BoneRotation.Write(writer, cluster);
             }
         }
 
@@ -178,8 +176,7 @@ namespace Overlord_PackageManager.resources.GUI.EntryEditor.Leaf.RawArray
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
-                    BoneRotation cluster = new(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-
+                    BoneRotation cluster = BinaryTypes.BoneRotation.Read(reader);
                     list.Add(cluster);
                 }
             }
