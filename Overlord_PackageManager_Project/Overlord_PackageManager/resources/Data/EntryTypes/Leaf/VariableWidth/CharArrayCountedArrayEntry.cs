@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Overlord_PackageManager.resources.Data.DataTypes;
+using System.IO;
 
 namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth
 {
@@ -7,7 +8,13 @@ namespace Overlord_PackageManager.resources.Data.EntryTypes.Leaf.VariableWidth
         protected override char[] ReadElement(BinaryReader reader)
         {
             int charCount = checked((int)reader.ReadUInt32());
-            char[] characters = reader.ReadChars(charCount);
+
+            char[] characters = new char[charCount];
+            for (int i = 0; i < charCount; i++)
+            {
+                char c = BinaryTypes.Char.Read(reader);
+                characters[i] = c;
+            }
 
             if (characters.Length != charCount)
             {

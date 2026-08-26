@@ -27,7 +27,10 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
         {
             Size = 1,
             DisplayName = "char",
-            Read = r => r.ReadChar(),
+            Read = r => {
+                byte b = r.ReadByte();
+                return b == 0x92 ? (char)0x27 : (char)b;
+            },
             Write = (w, v) => w.Write(v)
         };
 
