@@ -529,5 +529,58 @@ namespace Overlord_PackageManager.resources.Data.DataTypes
                 w.Write(v.Unknown6);
             }
         };
+
+        public static readonly BinaryType<TerrainPoint> TerrainPoint =
+        new()
+        {
+            Size = 4, // A total of 4 bytes which can be read as 2 Bytes for height (float), 2 bytes for texture indices and flags
+            DisplayName = "TerrainPoint",
+            Read = r =>
+            {
+                uint raw = r.ReadUInt32();
+
+                uint b0 = raw & 0xFF;
+                uint b1 = (raw >> 8) & 0xFF;
+
+                int high = (int)(b1 & 0x0F);
+                int mid = (int)((b0 >> 4) & 0x0F);
+                int low = (int)(b0 & 0x0F);
+
+                float height = ((high << 8) | (mid << 4) | low) / 32f;
+
+                byte mainTextureIndex = (byte)((raw >> 16) & 0x0F);
+                byte foliageValue = (byte)((raw >> 20) & 0x0F);
+                byte cliffTextureIndex = (byte)((raw >> 24) & 0x0F);
+                byte unknownIndex = (byte)((raw >> 28) & 0x0F);
+
+                return new TerrainPoint(height, mainTextureIndex, foliageValue, cliffTextureIndex, unknownIndex);
+            },
+
+            Write = (w, v) =>
+            {
+                int packedHeight = Math.Clamp((int)MathF.Round(v.Height * 32f), 0, 4095);
+
+                uint high = (uint)((packedHeight >> 8) & 0x0F);
+                uint mid = (uint)((packedHeight >> 4) & 0x0F);
+                uint low = (uint)(packedHeight & 0x0F);
+
+                uint b0 = (mid << 4) | low;
+                uint b1 = high;
+
+                uint mainTex = (uint)(v.MainTextureIndex & 0x0F);
+                uint foliage = (uint)(v.HasFoliage & 0x0F);
+                uint cliffTex = (uint)(v.CliffTextureIndex & 0x0F);
+                uint unknown = (uint)(v.UnknownIndex & 0x0F);
+
+                uint raw = b0
+                         | (b1 << 8)
+                         | (mainTex << 16)
+                         | (foliage << 20)
+                         | (cliffTex << 24)
+                         | (unknown << 28);
+
+                w.Write(raw);
+            }
+        };
     }
 }

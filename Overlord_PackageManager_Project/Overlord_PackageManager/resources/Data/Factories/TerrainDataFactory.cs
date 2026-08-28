@@ -15,7 +15,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 30 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 31 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
-                33 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),
+                33 => new RawArrayEntry<TerrainPoint>(id, relOffset, BinaryTypes.TerrainPoint),
                 34 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
                 35 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
                 36 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),
