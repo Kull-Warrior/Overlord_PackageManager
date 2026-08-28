@@ -26,7 +26,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 1 => new SFXData(id, relOffset),        // Sub reference table containing a int32 and a full wav style file
-                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),    // FFFF Block unkown use
+                19 => new ScalarEntry<int>(id, relOffset, BinaryTypes.Int32),    // FFFF Block unkown use
                 20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),   // Chunk or In-Game Object Name
                 21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),   // Sound name
                 100 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),  // File name

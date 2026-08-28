@@ -25,7 +25,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 // Add more IDs here
-                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Unkown FFFFFF value
+                19 => new ScalarEntry<int>(id, relOffset, BinaryTypes.Int32),            // Unkown FFFFFF value
                 20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Tag
                 21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
@@ -48,7 +48,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Unkown FFFFFF value
+                19 => new ScalarEntry<int>(id, relOffset, BinaryTypes.Int32),            // Unkown FFFFFF value
                 20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Tag
                 21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture
@@ -62,7 +62,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),            // Unkown FFFFFF value
+                19 => new ScalarEntry<int>(id, relOffset, BinaryTypes.Int32),            // Unkown FFFFFF value
                 20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Tag
                 21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Material Name
                 30 => new MaterialTextureLink(id, relOffset),   // Color Texture

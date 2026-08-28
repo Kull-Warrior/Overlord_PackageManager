@@ -27,7 +27,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 01 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),
-                19 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
+                19 => new ScalarEntry<int>(id, relOffset, BinaryTypes.Int32),
                 20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
                 21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
                 30 => new TableEntry(id, relOffset),
