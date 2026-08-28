@@ -91,21 +91,21 @@ namespace Overlord_PackageManager.resources.Data.Factories
             {
                 20 => new TerrainDataEntry(id, relOffset),
                 21 => new WorldEntityPackage(id, relOffset),
-                22 => new RawArrayEntry<float>(id, relOffset, BinaryTypes.Float),           // Player/Camera Start Location
-                23 => new RawArrayEntry<float>(id, relOffset, BinaryTypes.Float),           // Player/Camera rotation
-                24 => new RawArrayEntry<float>(id, relOffset, BinaryTypes.Float),           // Player/Camera rotation
-                25 => new AssetListContainer(id, relOffset),
+                22 => new RawArrayEntry<float>(id, relOffset, BinaryTypes.Float),           // Player/Camera Start Location ???
+                23 => new RawArrayEntry<float>(id, relOffset, BinaryTypes.Float),           // Player/Camera rotation ???
+                24 => new RawArrayEntry<float>(id, relOffset, BinaryTypes.Float),           // Player/Camera rotation ???
+                25 => new AssetListContainer(id, relOffset),                                // Contains Assets of Type 95000004, which are LuaAssets
                 26 => new TableEntry(id, relOffset),   // Unknown entry
                 27 => new TableEntry(id, relOffset),   // Unknown entry
                 28 => new TableEntry(id, relOffset),   // Unknown entry
                 29 => new ScalarEntry<byte>(id, relOffset, BinaryTypes.Byte),
-                30 => new TableEntry(id, relOffset),   // Unknown entry
+                30 => new AssetListContainer(id, relOffset),                                // Contains Assets of Type 0000004
                 31 => new TableEntry(id, relOffset),
-                32 => new AssetListContainer(id, relOffset),
-                33 => new LuaEntry(id, relOffset),
+                32 => new AssetListContainer(id, relOffset),                                // Contains Assets of Type 1E000004, which seems to be a list of to be imported resource files with a priority?
+                33 => new LuaEntry(id, relOffset),                                          // Contains a pre-load lua script for this map
                 34 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
-                35 => new TableEntry(id, relOffset),   // Unknown entry
-                36 => new LuaEntry(id, relOffset),
+                35 => new AssetListContainer(id, relOffset),                                // Contains Assets of Type BA000004
+                36 => new LuaEntry(id, relOffset),                                          // Contains a post-load lua script for this map
                 37 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),
                 38 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),
                 39 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),
@@ -113,7 +113,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 41 => new ScalarEntry<byte>(id, relOffset, BinaryTypes.Byte),
                 42 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 43 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
-                45 => new LuaEntry(id, relOffset),
+                45 => new LuaEntry(id, relOffset),                                          // Contains a lua script for the conditional loading of RPK-Files, Post ResourcePack Load Script
                 46 => new CharListCountedArrayEntry(id, relOffset),
                 47 => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
                 48 => new TableEntry(id, relOffset),   // Unknown entry
@@ -121,10 +121,10 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 51 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 52 => new TableEntry(id, relOffset),   // Unknown entry
                 53 => new TableEntry(id, relOffset),   // Unknown entry
-                100 => new TableEntry(id, relOffset),   // Unknown entry
+                100 => new AssetListContainer(id, relOffset),                               // Contains Assets of Type 64004600
                 101 => new TableEntry(id, relOffset),   // Unknown entry
-                102 => new TableEntry(id, relOffset),   // Unknown entry
-                103 => new TableEntry(id, relOffset),   // Unknown entry
+                102 => new AssetListContainer(id, relOffset),                               // Contains Assets of Type 73004600
+                103 => new AssetListContainer(id, relOffset),                               // Contains Assets of Type 3B074600
                 104 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 106 => new ScalarEntry<byte>(id, relOffset, BinaryTypes.Byte),
                 108 => new ScalarEntry<byte>(id, relOffset, BinaryTypes.Byte),
@@ -136,14 +136,14 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 115 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 116 => new ScalarEntry<byte>(id, relOffset, BinaryTypes.Byte),
                 117 => new ScalarEntry<byte>(id, relOffset, BinaryTypes.Byte),
-                120 => new TableEntry(id, relOffset),   // Unknown entry
+                120 => new AssetListContainer(id, relOffset),                               // Contains Assets of 53064600 
                 121 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
-                122 => new LuaEntry(id, relOffset),
-                123 => new LuaEntry(id, relOffset),
-                124 => new TableEntry(id, relOffset),   // Unknown entry
+                122 => new LuaEntry(id, relOffset),                                         // Contains a lua script for Title Scripting and starts the Title Camera Sequence ? At least in the tower. 
+                123 => new LuaEntry(id, relOffset),                                         // Contains a lua script for on Entry Cut Scenes & Quest Logic
+                124 => new AssetListContainer(id, relOffset),                               // Contains Assets of Type 9F004600
                 125 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 126 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
-                127 => new LuaEntry(id, relOffset),
+                127 => new LuaEntry(id, relOffset),                                         // Contains a lua script for setting the Environment and Simulation Scripting
                 128 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 129 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),
                 130 => new TableEntry(id, relOffset),   // Unknown entry
@@ -152,7 +152,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 133 => new LuaEntry(id, relOffset),   // Unknown entry
                 134 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),
                 // Add more IDs here
-                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),   // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),              // Unknown entry
             };
         }
     }
