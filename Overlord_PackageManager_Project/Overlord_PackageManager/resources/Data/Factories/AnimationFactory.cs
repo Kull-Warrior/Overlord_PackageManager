@@ -15,9 +15,9 @@ namespace Overlord_PackageManager.resources.Data.Factories
         {
             return id switch
             {
-                10 => new AssetListContainer(id, relOffset),     // List of all bone animations making up the entire animation, meaning each bone and its corresponding animation data
+                10 => new AssetListContainer(id, relOffset),                            // List of all bone animations making up the entire animation, meaning each bone and its corresponding animation data
                 // Add more IDs here
-                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),      // Unknown entry
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),          // Unknown entry
             };
         }
 
@@ -26,10 +26,10 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 01 => new AnimationAssetDataContainer(id, relOffset),                   // Sub reference table containing a list of Bone Animation Data
-                19 => new ScalarEntry<int>(id, relOffset, BinaryTypes.Int32),         // FFFF Block unkown use
+                19 => new ScalarEntry<int>(id, relOffset, BinaryTypes.Int32),           // FFFF Block unkown use
                 20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),     // Chunk or In-Game Object Name
                 21 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),     // Animation name
-                30 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),         // Unkown float and unknown use
+                30 => new ScalarEntry<float>(id, relOffset, BinaryTypes.Float),         // Frame rate of the animation
                 31 => new ScalarEntry<ulong>(id, relOffset, BinaryTypes.UInt64),        // Total animation time in microseconds
                 // Add more IDs here
                 _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),          // Unknown entry

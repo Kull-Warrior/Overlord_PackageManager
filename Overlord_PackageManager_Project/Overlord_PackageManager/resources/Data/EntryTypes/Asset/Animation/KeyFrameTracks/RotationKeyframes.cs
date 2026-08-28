@@ -2,7 +2,7 @@
 using Overlord_PackageManager.resources.Data.Generic;
 using System.IO;
 
-namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation
+namespace Overlord_PackageManager.resources.Data.EntryTypes.Asset.Animation.KeyFrameTracks
 {
     class RotationKeyframes(uint id, uint relOffset) : TableEntry(id, relOffset)
     {
