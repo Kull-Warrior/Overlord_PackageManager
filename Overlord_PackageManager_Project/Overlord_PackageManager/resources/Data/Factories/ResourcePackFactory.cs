@@ -18,9 +18,8 @@ namespace Overlord_PackageManager.resources.Data.Factories
             return id switch
             {
                 20 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char),     // Name of the group
-                //21 => new AssetList(id, relOffset),       // Asset list
-                21 => new AssetListContainer(id, relOffset),       // Asset list
-                30 => new TableEntry(id, relOffset),        // Unknown table
+                21 => new AssetListContainer(id, relOffset),                            // Asset list
+                30 => new AssetListContainer(id, relOffset),                            // Asset list of asset type 57000004
                 _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte)
             };
         }
