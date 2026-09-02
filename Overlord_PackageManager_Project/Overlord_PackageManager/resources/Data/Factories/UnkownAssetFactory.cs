@@ -10,6 +10,17 @@ namespace Overlord_PackageManager.resources.Data.Factories
 {
     internal class UnkownAssetFactory
     {
+        public static Entry CreateUnkownAssetType57000004(BinaryReader reader, uint id, uint relOffset)
+        {
+            return id switch
+            {
+                10 => new CountedArrayEntry<char>(id, relOffset, BinaryTypes.Char), // Text
+                11 => new ScalarEntry<uint>(id, relOffset, BinaryTypes.UInt32),     // Unknown
+                // Add more IDs here
+                _ => new RawArrayEntry<byte>(id, relOffset, BinaryTypes.Byte),      // Unknown entry
+            };
+        }
+
         public static Entry CreateUnkownAssetType09004600SubTableType32(BinaryReader reader, uint id, uint relOffset)
         {
             return id switch

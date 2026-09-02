@@ -61,6 +61,7 @@ namespace Overlord_PackageManager.resources.Data.Factories
                 4605460 => new UnkownAssetType14464600(id, relOffset, typeIdentifier),
                 4605472 => new UnkownAssetType20464600(id, relOffset, typeIdentifier),
                 4259915 => new ObjectAsset(id, relOffset, typeIdentifier),
+                67108951 => new UnkownAssetType57000004(id, relOffset, typeIdentifier),
 
                 _ => new AssetEntry(id, relOffset, typeIdentifier)
             };
